@@ -1,0 +1,487 @@
+<!--index.wxml-->
+<view class="container">
+
+  <view>
+    <view class="card">
+
+      <!-- // first line: card info -->
+      <view class='card-first-line'>
+        <view class="card-header-left">
+          <image class='card-logo' src='../../images/basicprofile.jpeg'></image>
+          <text class='card-text'>7HAO卡</text>
+        </view>
+        <view class="card-header-right">
+          <text class='card-text-right'>美好生活，刷柒号卡</text>
+        </view>
+      </view>
+
+      <!-- // second line: user info -->
+      <view class='card-second-line'>
+        <view class='card-second-line-top'>
+          <view class="card-second-line-top-left">
+            <image class='card-user-avatar' src='../../images/basicprofile.jpeg'></image>
+            <text class='card-user-name'>暴富</text>
+          </view>
+          <view class="card-second-line-top-right">
+            <text class="card-second-line-top-right-content">黄金会员</text>
+          </view>
+        </view>
+        <view class='card-second-line-bottom'>
+          <view class="card-second-line-bottom-1">
+            <view class="card-second-line-bottom-up">
+              <text class="card-second-line-bottom-up-content">25</text>
+            </view>
+            <view class="card-second-line-bottom-down">
+              <text class="card-second-line-bottom-down-content">柒号积分</text>
+            </view>
+          </view>
+          <view class="card-second-line-bottom-2">
+            <view class="card-second-line-bottom-up">
+              <text class="card-second-line-bottom-up-content">19</text>
+            </view>
+            <view class=".card-second-line-bottom-down">
+              <text class=".card-second-line-bottom-down-content">我的订单</text>
+            </view>
+          </view>
+          <view class="card-second-line-bottom-3">
+            <view class="card-second-line-bottom-up">
+              <text class="card-second-line-bottom-up-content">309.25</text>
+            </view>
+            <view class="card-second-line-bottom-down">
+              <text class="card-second-line-bottom-down-content">余额</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- // third line: card number -->
+      <view class='card-third-line'>
+        <text class='card-number'>0 0 0 0 0 0 0 0 6 7 8 9 5 6 4 3 2 1</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能区 -->
+  <view class="options">
+    <view class="options-item">
+      <view class="options-item-content">
+        <view class="options-item-content-icon"></view>
+        <text class='options-item-content-text'>签到</text>
+      </view>
+    </view>
+    <view class="options-item">
+      <view class="options-item-content">
+        <view class="options-item-content-icon"></view>
+        <text class='options-item-content-text'>积分兑换</text>
+      </view>
+    </view>
+    <view class="options-item">
+      <view class="options-item-content">
+        <view class="options-item-content-icon"></view>
+        <text class='options-item-content-text'>商家搜索</text>
+      </view>
+    </view>
+    <view class="options-item">
+      <view class="options-item-content">
+        <view class="options-item-content-icon"></view>
+        <text class='options-item-content-text'>商家入住</text>
+      </view>
+    </view>
+  </view>
+
+<!-- 推荐区 recommendations -->
+  <view class="rec">
+      <view class="rec-tab">
+        <view class="rec-tab-item">
+          <text class="rec-tab-text-left">热门商家</text>
+          <text class="rec-tab-text-left">——</text>
+        </view>
+        <view class="rec-tab-item">
+          <text class="rec-tab-text-right">附近商家</text>
+        </view>
+      </view>
+      <view class="rec-list">
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- TODO remove -->
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item">
+          <image class="rec-list-item-left" src='../../images/logo.png'></image>
+          <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>麦当劳（颐和山庄店）</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">麦当劳全家桶，低到5折；饮品第二杯半价！</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <text>⭐️⭐️⭐️⭐️⭐️</text>
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <text>5.0分</text>
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>¥31</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">北京市海淀区西北旺镇颐和山庄9999号</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="rec-list-item"></view>
+        <view class="rec-list-item"></view>
+        <view class="rec-list-item"></view>
+      </view>
+  </view>
+
+  <!-- 用户 openid -->
+  <!-- <view class="userinfo">
+    <button 
+      open-type="getUserInfo" 
+      bindgetuserinfo="onGetUserInfo"
+      class="userinfo-avatar"
+      style="background-image: url({{avatarUrl}})"
+      size="default"
+    ></button>
+    <view class="userinfo-nickname-wrapper">
+      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
+    </view>
+  </view> -->
+
+
+  <!-- 上传图片 -->
+  <!-- <view class="uploader">
+    <view class="uploader-text" bindtap="doUpload">
+      <text>上传图片</text>
+    </view>
+    <view class="uploader-container" wx:if="{{imgUrl}}">
+      <image class="uploader-image" src="{{imgUrl}}" mode="aspectFit" bindtap="previewImg"></image>
+    </view>
+  </view> -->
+
+
+  <!-- 操作数据库 -->
+  <!-- <view class="uploader">
+    <navigator url="../databaseGuide/databaseGuide" open-type="navigate" class="uploader-text">
+      <text>前端操作数据库</text>
+    </navigator>
+  </view> -->
+
+  <!-- 即时通信 -->
+  <!-- <view class="uploader">
+    <navigator url="../im/im" open-type="navigate" class="uploader-text">
+      <text>即时通信 Demo</text>
+    </navigator>
+  </view> -->
+
+  <!-- 新建云函数 -->
+  <!-- <view class="uploader">
+    <navigator url="../addFunction/addFunction" open-type="navigate" class="uploader-text">
+      <text>快速新建云函数</text>
+    </navigator>
+  </view> -->
+
+  <!-- 云调用 -->
+  <!-- <view class="uploader">
+    <navigator url="../openapi/openapi" open-type="navigate" class="uploader-text">
+      <text>云调用</text>
+    </navigator>
+  </view> -->
+
+
+</view>
