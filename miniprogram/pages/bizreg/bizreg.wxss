@@ -9,6 +9,10 @@
   background: #fff;
 }
 
+.picker {
+  margin-left: 25rpx;
+}
+
 .title {
   font-size: 32rpx;
   margin-top: 26rpx;
@@ -155,7 +159,6 @@
 }
 
 .confirm {
-  background: #206e47;
   width: 100%;
   display: flex;
   justify-content: center;

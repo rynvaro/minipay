@@ -31,8 +31,13 @@
 
   <view class='bottom'>
     <view class='price'>
-      <text class='price-title'>折扣策略</text>
-      <input type='digit' bindinput='setPrice' value='{{price}}'></input>
+      <text class='price-title'>选择折扣</text>
+      <!-- <input type='digit' bindinput='setPrice' value='{{price}}'></input> -->
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+          {{array[index]}}折
+        </view>
+      </picker>
     </view>
 
     <view class='line'></view>
@@ -52,7 +57,7 @@
     <view class='line'></view> -->
   </view>
 
-  <view class='confirm' bindtap='publish'>确认发布</view>
+  <view class='confirm' bindtap='publish'>确认添加</view>
 
   </view>
 </view>

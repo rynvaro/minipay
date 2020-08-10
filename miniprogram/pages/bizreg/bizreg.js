@@ -1,4 +1,4 @@
-// pages/publish/publish.js
+// pages/bizreg/bizreg.js
 Page({
   /**
    * 页面的初始数据
@@ -10,18 +10,20 @@ Page({
     id: '',
     title:'',
     desc:'',
-    price:'',
+    price:'9',
     originalPrice:'',
     wxid:'',
     needUpdateImage: false,
-    // location:{
-    //   name:'',
-    //   address:'选择位置',
-    //   longitude:'',
-    //   latitude:'',
-    //   located:false,
-    // },
+    location:{
+      name:'',
+      address:'选择位置',
+      longitude:'',
+      latitude:'',
+      located:false,
+    },
     publishClicked:false,
+    array:[1,2,3,4,5,6,7,8,9],
+    index:8
   },
 
   /**
@@ -29,7 +31,7 @@ Page({
    */
   onLoad: function (options) {
     wx.setNavigationBarTitle({
-      title: '发布',
+      title: '添加商家',
     })
 
     this.setData({
@@ -53,6 +55,13 @@ Page({
     
   },
 
+  bindPickerChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value,
+      price: parseInt(e.detail.value)+1
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -141,25 +150,26 @@ Page({
   //   this.setData({ isCompletelyNew: !this.data.isCompletelyNew })
   // },
 
-  // selectLocation: function(){
-  //   var that = this
-  //   wx.chooseLocation({
-  //     success: function(res) {
-  //       that.setData({location:{
-  //         name: res.name,
-  //         address: res.address,
-  //         longitude: res.longitude,
-  //         latitude: res.latitude,
-  //         located:true,
-  //       }})
-  //     },
-  //     fail:function(){
-  //       wx.showToast({
-  //         title: '获取位置失败！',
-  //       })
-  //     }
-  //   })
-  // },
+  selectLocation: function(){
+    var that = this
+    wx.chooseLocation({
+      success: function(res) {
+        console.log(res)
+        that.setData({location:{
+          name: res.name,
+          address: res.address,
+          longitude: res.longitude,
+          latitude: res.latitude,
+          located:true,
+        }})
+      },
+      fail:function(){
+        wx.showToast({
+          title: '获取位置失败！',
+        })
+      }
+    })
+  },
 
   /**
    * 设置值
@@ -217,41 +227,42 @@ Page({
     // check param
     if (!this.data.title) {
       wx.showToast({
-        title: '请输入标题',
+        title: '请输入店铺名称',
       })
       return
     }
 
     if (!this.data.desc) {
       wx.showToast({
-        title: '请输入描述',
+        title: '请输入店铺描述',
       })
       return
     }
 
     if (!this.data.price) {
       wx.showToast({
-        title: '请输入价格',
+        title: '请输入折扣策略',
       })
       return
     }
 
     if (!this.data.originalPrice) {
       wx.showToast({
-        title: '请输入原价',
+        title: '请输入经营许可',
       })
       return
     } 
-    if (!this.data.wxid) {
-      wx.showToast({
-        title: '请输入微信号，方便买家联系您',
-      })
-      return
-    }
 
     if (this.data.files.length < 1 ) {
       wx.showToast({
         title: '请至少上传一张图片',
+      })
+      return
+    }
+
+    if (!this.data.location.located){
+      wx.showToast({
+        title: '请选择您的位置',
       })
       return
     }
@@ -306,6 +317,7 @@ Page({
           price: that.data.price,
           originalPrice: that.data.originalPrice,
           wxid:that.data.wxid,
+          location: that.data.location
         },
         success(res) {
           wx.hideLoading()
@@ -319,7 +331,12 @@ Page({
           })
           wx.navigateBack({})
         },
-        fail: console.error
+        fail:function(){
+          wx.hideLoading()
+          wx.showToast({
+            title: '发布失败s',
+          })
+        }
       })
     })
   },
