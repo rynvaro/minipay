@@ -1,0 +1,63 @@
+<!--miniprogram/pages/search/search.wxml-->
+
+<view class='search-container'>
+    <view class='search-bg'>
+      <input type='text' confirm-type='search' class='search' placeholder-class='search-placeholder' placeholder='搜索你需要的商家热门关键词' bindconfirm='search' bindfocus='onFocus' bindblur='onBlur'></input>
+      <icon class="{{icon_class}}" size='12' type='search' color='#1D1D1D'></icon>
+    </view>
+  </view>
+
+
+<!-- 推荐区 recommendations -->
+  <view class="rec">
+      <view class="rec-tab">
+        <view class="rec-tab-item">
+          <text class="rec-tab-text-left">热门商家</text>
+          <text class="rec-tab-text-left">——</text>
+        </view>
+        <view class="rec-tab-item">
+          <text class="rec-tab-text-right">附近商家</text>
+        </view>
+      </view>
+      <view class="rec-list">
+
+        <block wx:for="{{bizs}}" wx:key="_id">
+        
+            <view class="rec-list-item">
+              <image class="rec-list-item-left" src='{{item.images[0]}}'></image>
+              <view class="rec-list-item-right">
+            <view class="rec-list-item-right-1">
+              <text>{{item.title}}</text>
+            </view>
+            <view class="rec-list-item-right-2">
+              <text class="rec-list-item-right-2-desc">{{item.desc}}</text>
+            </view>
+            <view class="rec-list-item-right-3">
+              <view class="rec-list-item-right-3-l">
+                <!-- <text>⭐️⭐️⭐️⭐️⭐️</text> -->
+              </view>
+              <view class="rec-list-item-right-3-m">
+                <!-- <text>5.0分</text> -->
+              </view>
+              <view class="rec-list-item-right-3-r">
+                <text>{{item.price}}折</text>
+              </view>
+              
+            </view>
+            <view class="rec-list-item-right-4">
+              <view class="rec-list-item-right-4-l">
+                <text class="rec-list-item-right-4-l-text">{{item.location.address}}</text>
+              </view>
+              <view class="rec-list-item-right-4-r">
+                <text>3km</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        </block>
+
+        
+
+      </view>
+  </view>

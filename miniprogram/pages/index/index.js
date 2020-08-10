@@ -38,6 +38,11 @@ Page({
 
       // -------------------------------
 
+      unfinished: function(){
+        wx.showToast({
+          title: '敬请期待...',
+        })
+      },
 
       showDetail: function(){
         wx.navigateTo({
