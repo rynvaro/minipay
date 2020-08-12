@@ -12,7 +12,7 @@
   </view>
 
   <view class="thumbnail-box">
-    <view class="item" wx:for="{{files}}" wx:key="1">
+    <view class="item" wx:for="{{files}}" wx:key="id">
         <image src="{{item}}" data-src="{{item}}" bindtap="previewImage" mode="aspectFill" />
         <view class="delete" bindtap="deleteImg" data-index="{{index}}">+</view>
     </view>

@@ -1,0 +1,15 @@
+<!--miniprogram/pages/console/index/index.wxml-->
+<view class="bg-1"></view>
+<view class="bg-2"></view>
+<view class="bg-3"></view>
+
+<image class="user-avatar" src="../../../images/basicprofile.jpeg"></image>
+
+<view class="login-box">
+  <text class="login-box-item-header">登录</text>
+  <input class="login-box-item-input" placeholder="输入手机号码"></input>
+  <input class="login-box-item-input" placeholder="密码"></input>
+  <text class="login-box-item-footer">忘记密码?</text>
+</view>
+
+<button class="login-button">登录</button>

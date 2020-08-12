@@ -1,0 +1,93 @@
+/* miniprogram/pages/console/index/index.wxss */
+
+page {
+  background-color: white;
+}
+
+.bg-1 {
+  transform: rotate(-50deg);
+  border-radius: 10px;
+  width: 780rpx;
+  height: 600rpx;
+  background-color: #FF6502;
+  position: absolute;
+  top: -60rpx;
+  margin-left: 60rpx;
+}
+
+.bg-2 {
+  transform: rotate(-50deg);
+  border-radius: 10px;
+  width: 750rpx;
+  height: 80rpx;
+  background-color: #FA771D;
+  position: absolute;
+  left: -190rpx;
+}
+
+.bg-3 {
+  transform: rotate(-50deg);
+  border-radius: 10px;
+  width: 750rpx;
+  height: 190rpx;
+  background-color: #F67B27;
+  position: absolute;
+  left: -390rpx;
+}
+
+.user-avatar{
+  height: 150rpx;
+  width: 150rpx;
+  position: absolute;
+  top: 120rpx;
+  left: 300rpx;
+  border-radius: 200rpx;
+}
+
+.login-box{
+  width: 650rpx;
+  height: 500rpx;
+  background-color:white;
+  border-radius: 10px;
+  position: absolute;
+  top: 330rpx;
+  left: 50rpx;
+  box-shadow: 0rpx 10rpx 50rpx 0rpx #999999;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-box-item-header {
+  width: fit-content;
+  margin-left: 40rpx;
+  margin-top: 40rpx;
+  font-size: x-large;
+}
+
+.login-box-item-input {
+  margin-top: 10rpx;
+  width: 80%;
+  height: 120rpx;
+  border-bottom: 1px solid #999999;
+  border-bottom-style: inset;
+  margin-left: 40rpx;
+}
+
+.login-box-item-footer {
+  width: fit-content;
+  margin-left: 480rpx;
+  margin-top: 50rpx;
+  color: #EC9B76;
+  font-size: 20rpx;
+}
+
+
+
+.login-button:not([size='mini']) {
+  position: absolute;
+  top: 860rpx;
+  left: 180rpx;
+  color: rgb(235, 221, 221);
+  border-radius: 20rpx;
+  background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+}
