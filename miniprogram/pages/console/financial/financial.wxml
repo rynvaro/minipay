@@ -1,0 +1,25 @@
+<!--miniprogram/pages/console/financial/financial.wxml-->
+<view class="header">
+    <view class="headerLine1">
+        <text class="headerLine1Text">当前余额</text>
+    </view>
+    <view class="headerLine2">
+        <text class="headerLine2Text">18899.00</text>
+    </view>
+    <view class="headerLine3">
+        <view class="headerLine3Button">
+            <text class="headerLine3ButtonText">提现</text>
+        </view>
+    </view>
+</view>
+
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>
+<view class="item"></view>

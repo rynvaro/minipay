@@ -1,0 +1,74 @@
+/* miniprogram/pages/console/financial/financial.wxss */
+
+page {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    width: 90%;
+    height: 300rpx;
+    background-color: #FF6503;
+    border-radius: 20rpx;
+}
+
+.headerLine1 {
+    height: 40%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.headerLine1Text {
+    font-size: x-small;
+    color: wheat;
+    margin-left: 30rpx;
+    margin-bottom: 10rpx;
+}
+
+.headerLine2 {
+    height: 20%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.headerLine2Text {
+    font-size: x-large;
+    color: #FFFAF9;
+    margin-left: 30rpx;
+}
+
+.headerLine3 {
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.headerLine3Button {
+    width: 150rpx;
+    height: 60rpx;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 50rpx;
+    border-radius: 20rpx;
+}
+
+.headerLine3ButtonText {
+    font-size: small;
+    font-weight: 350;
+}
+
+.item {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 70rpx;
+    border-radius: 10rpx;
+    background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
+}

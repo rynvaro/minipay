@@ -1,48 +1,52 @@
 {
-  "pages": [
-    "pages/console/home/home",
-    "pages/console/index/index",
-    "pages/index/index",
-    "pages/bizreg/bizreg",
-    "pages/search/search"
-  ],
-  "window": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FFF",
-    "navigationBarTitleText": "7HAO",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#666666",
-    "selectedColor": "#000000",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home.png"
-      },
-      {
-        "pagePath": "pages/search/search",
-        "text": "查找",
-        "iconPath": "images/search.png",
-        "selectedIconPath": "images/search.png"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的",
-        "iconPath": "images/my.png",
-        "selectedIconPath": "images/my.png"
-      }
-    ]
-  },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2",
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    "pages": [
+        "pages/console/index/index",
+        "pages/console/financial/financial",
+        "pages/console/store/store",
+        "pages/console/orders/orders",
+        "pages/console/discount/discount",
+        "pages/console/home/home",
+        "pages/index/index",
+        "pages/bizreg/bizreg",
+        "pages/search/search"
+    ],
+    "window": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#FFF",
+        "navigationBarTitleText": "7HAO",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#666666",
+        "selectedColor": "#000000",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页",
+                "iconPath": "images/home.png",
+                "selectedIconPath": "images/home.png"
+            },
+            {
+                "pagePath": "pages/search/search",
+                "text": "查找",
+                "iconPath": "images/search.png",
+                "selectedIconPath": "images/search.png"
+            },
+            {
+                "pagePath": "pages/index/index",
+                "text": "我的",
+                "iconPath": "images/my.png",
+                "selectedIconPath": "images/my.png"
+            }
+        ]
+    },
+    "sitemapLocation": "sitemap.json",
+    "style": "v2",
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序位置接口的效果展示"
+        }
     }
-  }
 }

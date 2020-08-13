@@ -1,2 +1,79 @@
 <!--miniprogram/pages/console/home/home.wxml-->
-<sdnbar default-data="{{defaultData}}"></sdnbar>
+
+<view class="bizConsole">
+    <view class="bizConsole1">
+        <text class="bizConsole1Text">今日营业额（元）</text>
+    </view>
+    <view class="bizConsole2">
+        <text class="bizConsole2Text">899.00</text>
+    </view>
+    <view class="bizConsole3">
+        <view class="bizConsole3Item" bindtap="discount">
+            <view class="bizConsole3ItemU">
+                <text class="bizConsole3ItemUText">当前折扣率</text>
+            </view>
+            <view class="bizConsole3ItemD">
+                <text class="bizConsole3ItemDText">9.8</text>
+            </view>
+        </view>
+
+        <view class="bizConsole3Middle">
+            <view class="bizConsole3MiddleLine"></view>
+        </view>
+
+        <view class="bizConsole3Item">
+            <view class="bizConsole3ItemU">
+                <text class="bizConsole3ItemUText">今日订单</text>
+            </view>
+            <view class="bizConsole3ItemD">
+                <text class="bizConsole3ItemDText">9</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="bizConsoleF">
+    <view class="bizConsoleFItem" bindtap="orders">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/orderhis.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">历史订单</text>
+        </view>
+    </view>
+
+    <view class="bizConsoleFItem" bindtap="financial">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/financial.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">财务管理</text>
+        </view>
+    </view>
+
+    <view class="bizConsoleFItem" bindtap="store">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/bizsettings.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">店铺设置</text>
+        </view>
+    </view>
+
+    <view class="bizConsoleFItem">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/events.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">活动列表</text>
+        </view>
+    </view>
+
+    <view class="bizConsoleFItem">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/useradvice.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">客服反馈</text>
+        </view>
+    </view>
+</view>

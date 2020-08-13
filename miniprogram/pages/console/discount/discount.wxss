@@ -1,0 +1,58 @@
+/* miniprogram/pages/console/discount/discount.wxss */
+
+
+page {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.discountBox {
+    margin-top: 20rpx;
+    width: 650rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+    background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.discountSettings {
+    width: 500rpx;
+    height: 200rpx;
+}
+
+.discountSettingItem {
+    height: 25%;
+    margin-top: 20rpx;
+    display: flex;
+}
+
+.discountSettingItemL{
+    width: 50%;
+    font-size: small;
+}
+
+.discountSettingItemR{
+    width: 50%;
+    height: 40rpx;
+	min-height: 0.8rem;
+    background-color: #E6E6E6;
+    border-radius: 10rpx;
+}
+
+.discountSettingItemRPlaceHolder {
+    height: 40rpx;
+	min-height: 0.8rem;
+}
+
+
+.submit:not([size='mini']) {
+    margin-top: 50rpx;
+    color: rgb(235, 221, 221);
+    border-radius: 20rpx;
+    background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+  }

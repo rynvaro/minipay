@@ -1,0 +1,31 @@
+<!--miniprogram/pages/console/orders/orders.wxml-->
+
+
+<view class="orderBox">
+    <view class="orderBoxTime">
+        <text>2020.08.06</text>
+    </view>
+    <view class="orderList">
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+    </view>
+
+    <view class="orderBoxTime">
+        <text>2020.08.05</text>
+    </view>
+    <view class="orderList">
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+    </view>
+
+    <view class="orderBoxTime">
+        <text>2020.08.04</text>
+    </view>
+    <view class="orderList">
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+        <view class="orderListItem"></view>
+    </view>
+</view>

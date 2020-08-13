@@ -1,0 +1,114 @@
+/* miniprogram/pages/console/store/store.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    height: 300rpx;
+    background-color: #E6E6E6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerIcon {
+    height: 120rpx;
+    width: 120rpx;
+    border-radius: 200rpx;
+    background-color: #FE6702;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingsBox {
+    margin-top: 20rpx;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.settingItem {
+    display: flex;
+    margin-top: 20rpx;
+}
+
+.settingItemL {
+    margin-top: 10rpx;
+    width: 25%;
+    font-size: small;
+}
+
+.settingItemR {
+    margin-left: 20rpx;
+    width: 400rpx;
+    height: 60rpx;
+	min-height: 0.8rem;
+    background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
+    border-radius: 5rpx;
+    color: #999999;
+}
+
+
+.settingItemRPlaceHolder {
+    height: 40rpx;
+	min-height: 0.8rem;
+}
+
+.settingItemTitleImage {
+    width: 400rpx;
+    height: 200rpx;
+    background-color: #FAD1A9;
+    border-radius: 20rpx;
+    margin-left: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingItemTitleImageTakePhoto {
+    height: 100rpx;
+    width: 150rpx;
+}
+
+.settingItemTitleImageTakePhotoU {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.settingItemTitleImageTakePhotoUIcon {
+    width: 36rpx;
+    height: 36rpx;
+}
+
+.settingItemTitleImageTakePhotoD {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.settingItemTitleImageTakePhotoDText{
+    font-size: small;
+    color: white;
+}
+
+.publish:not([size='mini']) {
+    margin-top: 50rpx;
+    margin-bottom: 50rpx;
+    color: rgb(235, 221, 221);
+    border-radius: 20rpx;
+    background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+  }

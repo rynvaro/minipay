@@ -10,7 +10,7 @@
   <view class="login-box-item-input">
         <view class="inputView">
           <view class="inputViewUp">
-            <image class="inputViewUpIcon" src="../../../images/advice.png" mode="scaleToFill"></image>
+            <image class="inputViewUpIcon" src="../../../images/phone.png" mode="scaleToFill"></image>
             <input class="inputViewUpInput" placeholder="输入手机号"></input>
           </view>
           <view class="inputViewDown"></view>
@@ -21,7 +21,7 @@
   <view class="login-box-item-input">
         <view class="inputView">
           <view class="inputViewUp">
-            <image class="inputViewUpIcon" src="../../../images/advice.png" mode="scaleToFill"></image>
+            <image class="inputViewUpIcon" src="../../../images/paswd.png" mode="scaleToFill"></image>
             <input class="inputViewUpInput" placeholder="密码"></input>
           </view>
           <view class="inputViewDown"></view>
@@ -32,5 +32,5 @@
   <text class="login-box-item-footer">忘记密码?</text>
 </view>
 
-<button class="login-button">登录</button>
+<button class="login-button" bindtap="login">登录</button>
 

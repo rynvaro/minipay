@@ -67,5 +67,31 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  discount: function(){
+    wx.navigateTo({
+      url: '../discount/discount',
+    })
+  },
+
+  financial: function(){
+    wx.navigateTo({
+      url: '../financial/financial',
+    })
+  },
+
+  store: function(){
+    wx.navigateTo({
+      url: '../store/store',
+    })
+  },
+
+  orders: function(){
+    wx.navigateTo({
+      url: '../orders/orders',
+    })
   }
+
+
 })

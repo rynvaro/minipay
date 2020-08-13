@@ -1,0 +1,37 @@
+/* miniprogram/pages/console/orders/orders.wxss */
+
+page {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.orderBox {
+    margin-top: 20rpx;
+    width: 650rpx;
+    border-radius: 20rpx;
+    background-color: white;
+}
+
+.orderBoxTime {
+    margin-top: 10rpx;
+    margin-left: 35rpx;
+    font-size: small;
+}
+
+.orderList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20rpx;
+}
+
+.orderListItem {
+    width: 90%;
+    height: 80rpx;
+    margin-top: 20rpx;
+    background-color: #E6E6E6;
+    border-radius: 5rpx;
+}

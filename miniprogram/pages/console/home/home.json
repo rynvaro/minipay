@@ -1,6 +1,4 @@
 {
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "sdnbar": "../../../components/sdnbar/sdnbar"
-  }
+  "navigationBarTitleText":"商家后台",
+  "usingComponents": {}
 }

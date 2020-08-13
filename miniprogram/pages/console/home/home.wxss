@@ -1,1 +1,136 @@
 /* miniprogram/pages/console/home/home.wxss */
+
+page {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bizConsole {
+    width: 100%;
+    height: 450rpx;
+    background-color: #FF652F;
+    display: flex;
+    flex-direction: column;
+}
+
+.bizConsole1 {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    
+}
+
+.bizConsole1Text {
+    font-size: 25rpx;
+    color: #FFD37A;
+    margin-bottom: 20rpx;
+}
+
+.bizConsole2 {
+    width: 100%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+}
+.bizConsole2Text {
+    font-size: xx-large;
+    color: #FFFBE3;
+}
+
+
+.bizConsole3 {
+    width: 100%;
+    height: 40%;
+    display: flex;
+}
+
+.bizConsole3Item {
+    width: 54.5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.bizConsole3ItemU {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.bizConsole3ItemUText {
+    font-size: small;
+    color: wheat;
+}
+
+.bizConsole3ItemD {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.bizConsole3ItemDText {
+    margin-top: 20rpx;
+    font-size: small;
+    color: wheat;
+}
+
+.bizConsole3Middle {
+    width: 1%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.bizConsole3MiddleLine {
+    width: 5rpx;
+    height: 50rpx;
+    background-color: wheat;
+}
+
+.bizConsoleF {
+    margin-top: 20rpx;
+    width: 730rpx;
+    height: 200rpx;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.bizConsoleFItem {
+    width: 223rpx;
+    height: 150rpx;
+    background-color: white;
+    margin: 10rpx;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.bizConsoleFItemU  {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.bizConsoleFItemUIcon {
+    height: 42rpx;
+    width: 42rpx;
+    border-radius: 10rpx;
+}
+
+.bizConsoleFItemD  {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bizConsoleFItemDText {
+    font-size: small;
+    color: #999999;
+}
