@@ -1,0 +1,2 @@
+<!--miniprogram/pages/console/home/home.wxml-->
+<sdnbar default-data="{{defaultData}}"></sdnbar>

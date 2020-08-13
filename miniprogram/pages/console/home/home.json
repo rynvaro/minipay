@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "sdnbar": "../../../components/sdnbar/sdnbar"
+  }
+}

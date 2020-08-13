@@ -7,9 +7,30 @@
 
 <view class="login-box">
   <text class="login-box-item-header">登录</text>
-  <input class="login-box-item-input" placeholder="输入手机号码"></input>
-  <input class="login-box-item-input" placeholder="密码"></input>
+  <view class="login-box-item-input">
+        <view class="inputView">
+          <view class="inputViewUp">
+            <image class="inputViewUpIcon" src="../../../images/advice.png" mode="scaleToFill"></image>
+            <input class="inputViewUpInput" placeholder="输入手机号"></input>
+          </view>
+          <view class="inputViewDown"></view>
+        </view>
+    <view class="login-box-item-input-down"></view>
+  </view>
+
+  <view class="login-box-item-input">
+        <view class="inputView">
+          <view class="inputViewUp">
+            <image class="inputViewUpIcon" src="../../../images/advice.png" mode="scaleToFill"></image>
+            <input class="inputViewUpInput" placeholder="密码"></input>
+          </view>
+          <view class="inputViewDown"></view>
+        </view>
+    <view class="login-box-item-input-down"></view>
+  </view>
+
   <text class="login-box-item-footer">忘记密码?</text>
 </view>
 
 <button class="login-button">登录</button>
+

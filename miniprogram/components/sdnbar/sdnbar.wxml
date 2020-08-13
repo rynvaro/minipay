@@ -1,0 +1,11 @@
+<!--components/sdnbar/sdnbar.wxml-->
+<!-- self defined navigation bar -->
+<!-- 自定义顶部栏 -->
+<view class="nav-bar" style="height:{{navBarHeight}}px;">
+    <!-- <input class="search" placeholder="输入关键词！" style="height:{{menuHeight}}px; min-height:{{menuHeight}}px; line-height:{menuHeight}}px; left:{{menuRight}}px; bottom:{{menuBotton}}px;"></input> -->
+    <view style="height:{{menuHeight}}px; min-height:{{menuHeight}}px; line-height:{menuHeight}}px; left:{{menuRight}}px; bottom:{{menuBotton}}px;">
+      <text class="nbarLeftArror">《</text>
+      <text class="nbarLeftReturn">返回</text>
+      <text class="nbarLeftClose">关闭</text>
+    </view>
+</view>

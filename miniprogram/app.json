@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/console/home/home",
     "pages/console/index/index",
     "pages/index/index",
     "pages/bizreg/bizreg",

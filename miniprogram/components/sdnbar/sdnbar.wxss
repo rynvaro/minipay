@@ -1,0 +1,18 @@
+/* components/sdnbar/sdnbar.wxss */
+
+.nav-bar { 
+  position: fixed;
+  width: 100%; 
+  top: 0; 
+  background: white;
+  }
+
+
+.nav-bar .search { 
+  width: 60%; 
+  font-size: 14px; 
+  background: #fff; 
+  position: absolute; 
+  border-radius: 50px; 
+  padding-left: 14px;
+}

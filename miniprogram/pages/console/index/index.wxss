@@ -65,12 +65,12 @@ page {
 }
 
 .login-box-item-input {
-  margin-top: 10rpx;
+  height: 90rpx;
   width: 80%;
-  height: 120rpx;
-  border-bottom: 1px solid #999999;
-  border-bottom-style: inset;
+  display: flex;
+  flex-direction: column;
   margin-left: 40rpx;
+  margin-top: 40rpx;
 }
 
 .login-box-item-footer {
@@ -90,4 +90,38 @@ page {
   color: rgb(235, 221, 221);
   border-radius: 20rpx;
   background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+}
+
+
+/* input view */
+
+
+.inputView {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputViewUp {
+  display: flex;
+}
+
+
+.inputViewUpIcon {
+  height: 36rpx;
+  width: 27rpx;
+  margin-top: 5rpx;
+}
+
+.inputViewUpInput {
+  width: 100%;
+  margin-left: 15rpx;
+}
+
+
+.inputViewDown {
+  display: flex;
+  height: 1rpx;
+  background-color: #d3d0d0;
+  box-shadow: 0rpx 10rpx 50rpx 0rpx #999999;
 }
