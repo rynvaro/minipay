@@ -1,0 +1,164 @@
+/* miniprogram/pages/console/withdraw/withdraw.wxss */
+
+page  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F6F6F6;
+}
+
+.withdrawBox {
+  width: 90%;
+  height: 180rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+}
+
+.withdrawHeader {
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  font-size: x-small;
+}
+
+.withdrawContent {
+  margin-top: 20rpx;
+  display: flex;
+}
+
+.withdrawContextText {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+}
+
+.withdrawContextInput {
+  width: 70%;
+  font-size: x-large;
+  min-height: 0.8rem;
+  height: 60rpx;
+  /* border-bottom: 1rpx solid #999999; */
+}
+
+.withdrawContextInputPlaceholder {
+    height: 40rpx;
+    min-height: 0.8rem;
+    font-size: x-small;
+}
+
+.next:not([size='mini']) {
+  margin-top: 50rpx;
+  margin-bottom: 50rpx;
+  color: rgb(235, 221, 221);
+  border-radius: 20rpx;
+  background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+}
+
+.popBox {
+  width: 90%;
+  height: 700rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  position: absolute;
+  bottom: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popBoxHeader {
+  width: 100%;
+  margin-top: 20rpx;
+  display: flex;
+  color: #999999;
+}
+
+.popBoxHeaderL {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: small;
+}
+
+.popBoxHeaderR {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: small;
+}
+
+.popBoxAmount {
+  width: 100%;
+  margin-top: 10rpx;
+  display: flex;
+  font-size: large;
+}
+
+.popBoxAmountL {
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.popBoxAmountR {
+  width: 55%;
+}
+
+.popBoxDetail {
+  margin-top: 30rpx;
+  width: 70%;
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+  color: #999999;
+  font-size: small;
+}
+
+.popBoxDetailItemU {
+  height: 49%;
+  display: flex;
+}
+
+.popBoxDetailItemUL {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.popBoxDetailItemUR {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+
+.popBoxDetailItemD {
+  height: 49%;
+  display: flex;
+}
+
+.popBoxDetailItemDL {
+  width: 50%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.popBoxDetailItemDR {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.popBoxDetailMiddle {
+  height: 2rpx;
+  background-color: #d1cdcd;
+}

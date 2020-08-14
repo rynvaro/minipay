@@ -123,5 +123,5 @@ page {
   display: flex;
   height: 1rpx;
   background-color: #d3d0d0;
-  box-shadow: 0rpx 10rpx 50rpx 0rpx #999999;
+  box-shadow: 0rpx 2rpx 10rpx 0rpx #dad5d5;
 }

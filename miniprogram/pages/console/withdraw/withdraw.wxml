@@ -1,0 +1,37 @@
+<!--miniprogram/pages/console/withdraw/withdraw.wxml-->
+
+<view class="withdrawBox">
+  <view class="withdrawHeader">
+    <text>提现金额</text>
+  </view>
+  <view class="withdrawContent">
+    <text class="withdrawContextText">￥</text>
+    <input class="withdrawContextInput" placeholder-class="withdrawContextInputPlaceholder" type="number" placeholder="输入提现金额"></input>
+  </view>
+</view>
+
+<button class="next" bindtap="nextStep">下一步</button>
+
+<view class="popBox" animation="{{animation}}" style="visibility:{{show ? 'visible':'hidden'}}" >
+  <view class="popBoxHeader">
+    <text class="popBoxHeaderL" bindtap="hidden">X</text>
+    <text class="popBoxHeaderR">提现金额</text>
+  </view>
+  <view class="popBoxAmount">
+    <text class="popBoxAmountL">￥</text>
+    <text class="popBoxAmountR">1500.00</text>
+  </view>
+  <view class="popBoxDetail">
+    <view class="popBoxDetailItemU">
+      <text class="popBoxDetailItemUL">订单信息</text>
+      <text class="popBoxDetailItemUR">提现</text>
+    </view>
+    <view class="popBoxDetailMiddle"></view>
+    <view class="popBoxDetailItemD">
+      <text class="popBoxDetailItemDL">付款方式</text>
+      <text class="popBoxDetailItemDR">微信</text>
+    </view>
+  </view>
+
+  <button class="next" >立即提现</button>
+</view>

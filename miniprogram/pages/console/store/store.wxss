@@ -111,4 +111,4 @@ page {
     color: rgb(235, 221, 221);
     border-radius: 20rpx;
     background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
-  }
+}
