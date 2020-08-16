@@ -109,11 +109,16 @@ Page({
       },
       success(res) {
         wx.hideLoading()
-        console.log(res)
-        app.globalData.phone = res.result._id
-        wx.navigateTo({
-          url: '../home/home'
-        })
+          console.log(res)
+          if (res.result.data) {
+            app.globalData.phone = res.result.data.phone
+          } else {
+            app.globalData.phone = res.result._id
+          }
+          
+          wx.navigateTo({
+            url: '../home/home'
+          })
       },
       fail: function(e) {
         console.log(e.errMsg)
