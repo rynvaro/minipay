@@ -110,7 +110,7 @@ Page({
       success(res) {
         wx.hideLoading()
         console.log(res)
-        app.globalData.phone = res.result.data.phone
+        app.globalData.phone = res.result._id
         wx.navigateTo({
           url: '../home/home'
         })
