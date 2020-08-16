@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/console/withdraw/withdraw",
     "pages/console/index/index",
+    "pages/console/withdraw/withdraw",
     "pages/console/financial/financial",
     "pages/console/store/store", 
     "pages/console/orders/orders",

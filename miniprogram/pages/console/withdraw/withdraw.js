@@ -1,5 +1,5 @@
 // miniprogram/pages/console/withdraw/withdraw.js
-
+const app = getApp();
 var action = '';
 var moveY = 200;
 var animation = animation = wx.createAnimation({
@@ -17,6 +17,8 @@ Page({
   data: {
     show: false,
     animation: animation,
+    balance: 0,
+    withdrawAmount: 0,
   },
 
   /**
@@ -37,7 +39,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let thiz = this
+        wx.cloud.callFunction({
+            name:"getInfo",
+            data: {
+              phone: app.globalData.phone,
+            },
+            success(res) {
+                console.log(res)
+                thiz.setData({
+                    balance: res.result.data.balance
+                })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+            }
+        })
   },
 
   /**
@@ -74,8 +91,55 @@ Page({
   onShareAppMessage: function () {
 
   },
+
+  setWithdrawAmount: function(e) {
+    this.setData({
+      withdrawAmount: e.detail.value
+    })
+  },
+
+  submitWithdraw: function(e) {
+
+    if (this.data.withdrawAmount<=0) {
+      wx.showToast({
+        title: '请输入提现金额',
+      })
+      return
+    }
+
+    let thiz = this
+
+    wx.cloud.callFunction({
+        name:"submitWithdraw",
+        data: {
+          phone: app.globalData.phone,
+          withdrawAmount: parseInt(thiz.data.withdrawAmount),
+        },
+        success(res) {
+            console.log(res)
+            wx.showToast({
+              title: '提现申请已提交',
+              success: function(){
+                setTimeout(function(){wx.navigateBack()},1000)
+              }
+            })
+        },
+        fail: function(e) {
+          console.log(e.errMsg)
+        }
+    })
+
+  },
   
   nextStep: function(e){
+
+    if (this.data.withdrawAmount>this.data.balance) {
+      wx.showToast({
+        title: '余额不足',
+      })
+      return
+    }
+
       moveY = 0;
       action = 'show',
       animationEvents(this,moveY,action)

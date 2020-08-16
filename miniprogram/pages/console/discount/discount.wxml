@@ -4,17 +4,23 @@
     <view class="discountSettings">
         <view class="discountSettingItem">
             <text class="discountSettingItemL">折扣</text>
-            <input class="discountSettingItemR" value="9.8"></input>
+            <picker class="discountSettingItemR" range="{{array}}" value="{{index}}" bindchange="bindDicountChange">
+                <text class="discountSettingItemRText">{{currentDiscount}}</text>
+            </picker>
         </view>
         <view class="discountSettingItem">
             <text class="discountSettingItemL">打折起始时间</text>
-            <input class="discountSettingItemR" value="2020.08.08"></input>
+            <picker class="discountSettingItemR" mode="date" value="{{timeStart}}" bindchange="bindTimeStartChange">
+                <text class="discountSettingItemRText">{{timeStart}}</text>
+            </picker>
         </view>
         <view class="discountSettingItem">
             <text class="discountSettingItemL">打折结束时间</text>
-            <input class="discountSettingItemR" placeholder-class="discountSettingItemRPlaceHolder" value="2020.08.12"></input>
+            <picker class="discountSettingItemR" mode="date" value="{{timeEnd}}" bindchange="bindTimeEndChange">
+                <text class="discountSettingItemRText">{{timeEnd}}</text>
+            </picker>
         </view>
     </view>
 </view>
 
-<button class="submit">提交</button>
+<button class="submit" bindtap="submit">提交</button>

@@ -2,7 +2,7 @@
 
 <view class='search-container'>
     <view class='search-bg'>
-      <input type='text' confirm-type='search' class='search' placeholder-class='search-placeholder' placeholder='搜索你需要的商家热门关键词' bindconfirm='search' bindfocus='onFocus' bindblur='onBlur'></input>
+      <input type='text' confirm-type='search' class='search' placeholder-class='search-placeholder' placeholder='搜索你需要的商家热门关键词' bindconfirm='search' bindfocus='onFocus' bindinput='onBlur'></input>
       <icon class="{{icon_class}}" size='12' type='search' color='#1D1D1D'></icon>
     </view>
   </view>

@@ -4,22 +4,47 @@
         <text class="headerLine1Text">当前余额</text>
     </view>
     <view class="headerLine2">
-        <text class="headerLine2Text">18899.00</text>
+        <text class="headerLine2Text">{{balance}}</text>
     </view>
     <view class="headerLine3">
         <view class="headerLine3Button">
-            <text class="headerLine3ButtonText">提现</text>
+            <text class="headerLine3ButtonText" bindtap="withdraw">提现</text>
         </view>
     </view>
 </view>
 
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
-<view class="item"></view>
+<view class="itemBox">
+    <view class="itemHeader">提现记录</view>
+
+    <block wx:for="{{withdrawHis}}" wx:key="_id">
+        <view class="item">
+            <text class="withdrawTime">{{item.publishedAt}}</text>
+            <text class="withdrawAmount">¥{{item.withdrawAmount}}</text>
+            <text class="withdrawStatus">
+                <text wx:if="{{item.status==0}}">待审核</text>
+                <text wx:if="{{item.status==1}}">审核中</text>
+                <text wx:if="{{item.status==2}}">付款中</text>
+                <text wx:if="{{item.status==3}}">已付款</text>
+                <text wx:if="{{item.status==4}}">已撤销</text>
+            </text>
+            <view class="withdrawOperation">
+                <view wx:if="{{item.status==0}}" bindtap="cancelWithdraw" data-id="{{item._id}}">撤销</view>
+                <view wx:if="{{item.status==1}}" bindtap="cancelWithdraw" data-id="{{item._id}}">撤销</view>
+            </view>
+        </view>
+    </block>
+
+    
+
+    <!-- <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view>
+    <view class="item"></view> -->
+
+</view>
+

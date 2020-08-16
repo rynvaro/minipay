@@ -1,11 +1,13 @@
 <!--miniprogram/pages/console/home/home.wxml-->
 
+<image mode="aspectFill" class="storeImage" wx:if="{{storeImage}}" src="{{storeImage}}"></image>
+
 <view class="bizConsole">
     <view class="bizConsole1">
         <text class="bizConsole1Text">今日营业额（元）</text>
     </view>
     <view class="bizConsole2">
-        <text class="bizConsole2Text">899.00</text>
+        <text class="bizConsole2Text">{{data.dayBi}}</text>
     </view>
     <view class="bizConsole3">
         <view class="bizConsole3Item" bindtap="discount">
@@ -13,7 +15,7 @@
                 <text class="bizConsole3ItemUText">当前折扣率</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">9.8</text>
+                <text class="bizConsole3ItemDText">{{data.discount.discountValue}}</text>
             </view>
         </view>
 
@@ -21,16 +23,19 @@
             <view class="bizConsole3MiddleLine"></view>
         </view>
 
-        <view class="bizConsole3Item">
+        <view class="bizConsole3Item" bindtap="orders">
             <view class="bizConsole3ItemU">
                 <text class="bizConsole3ItemUText">今日订单</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">9</text>
+                <text class="bizConsole3ItemDText">0</text>
             </view>
         </view>
     </view>
+
 </view>
+
+
 <view class="bizConsoleF">
     <view class="bizConsoleFItem" bindtap="orders">
         <view class="bizConsoleFItemU">
@@ -59,17 +64,17 @@
         </view>
     </view>
 
-    <view class="bizConsoleFItem">
-        <view class="bizConsoleFItemU">
+    <!-- <view class="bizConsoleFItem">
+        <view class="bizConsoleFItemU" bindtap="events">
             <image class="bizConsoleFItemUIcon" src="../../../images/events.png"></image>
         </view>
         <view class="bizConsoleFItemD">
             <text class="bizConsoleFItemDText">活动列表</text>
         </view>
-    </view>
+    </view> -->
 
     <view class="bizConsoleFItem">
-        <view class="bizConsoleFItemU">
+        <view class="bizConsoleFItemU" bindtap="service">
             <image class="bizConsoleFItemUIcon" src="../../../images/useradvice.png"></image>
         </view>
         <view class="bizConsoleFItemD">

@@ -57,6 +57,7 @@ page {
     background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
     border-radius: 5rpx;
     color: #999999;
+    font-size: small;
 }
 
 

@@ -39,15 +39,18 @@ page {
 .discountSettingItemR{
     width: 50%;
     height: 40rpx;
-	min-height: 0.8rem;
     background-color: #E6E6E6;
     border-radius: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.discountSettingItemRPlaceHolder {
+.discountSettingItemRText {
+    font-size: x-small;
     height: 40rpx;
-	min-height: 0.8rem;
 }
+
 
 
 .submit:not([size='mini']) {

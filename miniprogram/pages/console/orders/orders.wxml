@@ -2,10 +2,10 @@
 
 
 <view class="orderBox">
-    <view class="orderBoxTime">
-        <text>2020.08.06</text>
+     <view class="orderBoxTime">
+        <text>暂无订单</text>
     </view>
-    <view class="orderList">
+    <!-- <view class="orderList">
         <view class="orderListItem"></view>
         <view class="orderListItem"></view>
         <view class="orderListItem"></view>
@@ -27,5 +27,5 @@
         <view class="orderListItem"></view>
         <view class="orderListItem"></view>
         <view class="orderListItem"></view>
-    </view>
+    </view> -->
 </view>

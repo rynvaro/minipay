@@ -1,11 +1,14 @@
 // miniprogram/pages/console/index/index.js
+
+var app = getApp();
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    phone: '',
+    password: ''
   },
 
   /**
@@ -64,9 +67,56 @@ Page({
 
   },
 
-  login: function(){
-    wx.navigateTo({
-      url: '../home/home',
+  setPhone: function(e) {
+    this.setData({
+      phone:  e.detail.value
     })
+  },
+
+  setPassword: function(e) {
+    this.setData({
+      password:  e.detail.value
+    })
+  },
+
+  login: function(){
+
+    // TODO validate data
+    if (!/^1[3456789]\d{9}$/.test(this.data.phone)) {
+      wx.showToast({
+        title: '手机号不合法',
+      })
+      return 
+    }
+
+
+    if (this.data.password.length < 6) {
+      wx.showToast({
+        title: '密码格式不正确',
+      })
+      return 
+    }
+
+    wx.cloud.callFunction({
+      name:"consoleLogin",
+      data:{
+        phone: this.data.phone,
+        password: this.data.password
+      },
+      success(res) {
+        console.log(res)
+        app.globalData.phone = res.result.data.phone
+        wx.navigateTo({
+          url: '../home/home'
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+        wx.showToast({
+          title: '密码错误',
+        })
+      }
+    })
+
   }
 })

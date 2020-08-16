@@ -11,7 +11,7 @@
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/phone.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" placeholder="输入手机号"></input>
+            <input class="inputViewUpInput" type="number" placeholder="输入手机号" bindinput="setPhone"></input>
           </view>
           <view class="inputViewDown"></view>
         </view>
@@ -22,7 +22,7 @@
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/paswd.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" placeholder="密码"></input>
+            <input class="inputViewUpInput" type="password" placeholder="密码" bindinput="setPassword"></input>
           </view>
           <view class="inputViewDown"></view>
         </view>

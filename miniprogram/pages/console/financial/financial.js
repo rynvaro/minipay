@@ -1,11 +1,13 @@
 // miniprogram/pages/console/financial/financial.js
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+      balance: 0,
+      withdrawHis: []
     },
 
     /**
@@ -26,7 +28,40 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+      let thiz = this
+      wx.cloud.callFunction({
+            name:"getInfo",
+            data: {
+              phone: app.globalData.phone,
+            },
+            success(res) {
+                console.log(res)
+                thiz.setData({
+                    balance: res.result.data.balance
+                })
+            },
+            fail: function(e) {
+            console.log(e.errMsg)
+            }
+        })
 
+        // TODO 函数合并
+
+        wx.cloud.callFunction({
+            name:"withdraws",
+            data: {
+              phone: app.globalData.phone,
+            },
+            success(res) {
+                console.log(res)
+                thiz.setData({
+                  withdrawHis: res.result.data,
+                })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+            }
+        })
     },
 
     /**
@@ -62,5 +97,98 @@ Page({
      */
     onShareAppMessage: function () {
 
+    },
+
+    cancelWithdraw: function(e) {
+      console.log(e.currentTarget.dataset.id)
+      wx.showLoading({
+        title: '撤销中...',
+      })
+      let thiz = this
+      var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"hasPermission",
+            data: {
+              phone: app.globalData.phone,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(false)
+            }
+        })
+      });
+
+      promise.then(function(hasPermission){
+        console.log("has permission: ", hasPermission)
+        if (!hasPermission) {
+          wx.showToast({
+            title: '没有权限',
+          })
+          wx.hideLoading()
+        } else {
+            wx.cloud.callFunction({
+              name:"cancelWithdraw",
+              data: {
+                phone: app.globalData.phone,
+                id: e.currentTarget.dataset.id
+              },
+              success(res) {
+                  console.log(res)
+                  thiz.onShow()
+                  wx.hideLoading()
+              },
+              fail: function(e) {
+                console.log(e.errMsg)
+                wx.hideLoading()
+              }
+            })
+        }
+      })
+    },
+
+    withdraw: function() {
+
+      if (this.data.balance<=0) {
+        wx.showToast({
+          title: '余额不足',
+        })
+        return
+      }
+
+      let thiz = this
+      var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"hasPermission",
+            data: {
+              phone: app.globalData.phone,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(false)
+            }
+        })
+      });
+
+      promise.then(function(hasPermission){
+        console.log("has permission: ", hasPermission)
+        if (!hasPermission) {
+          wx.showToast({
+            title: '没有权限',
+          })
+        } else {
+          wx.navigateTo({
+            url: '../withdraw/withdraw',
+          })
+        }
+      })
+      
     }
 })

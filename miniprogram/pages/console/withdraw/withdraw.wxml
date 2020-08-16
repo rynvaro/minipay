@@ -6,7 +6,7 @@
   </view>
   <view class="withdrawContent">
     <text class="withdrawContextText">￥</text>
-    <input class="withdrawContextInput" placeholder-class="withdrawContextInputPlaceholder" type="number" placeholder="输入提现金额"></input>
+    <input bindinput="setWithdrawAmount" class="withdrawContextInput" placeholder-class="withdrawContextInputPlaceholder" type="number" placeholder="输入提现金额"></input>
   </view>
 </view>
 
@@ -19,7 +19,7 @@
   </view>
   <view class="popBoxAmount">
     <text class="popBoxAmountL">￥</text>
-    <text class="popBoxAmountR">1500.00</text>
+    <text class="popBoxAmountR">{{withdrawAmount}}</text>
   </view>
   <view class="popBoxDetail">
     <view class="popBoxDetailItemU">
@@ -28,10 +28,10 @@
     </view>
     <view class="popBoxDetailMiddle"></view>
     <view class="popBoxDetailItemD">
-      <text class="popBoxDetailItemDL">付款方式</text>
-      <text class="popBoxDetailItemDR">微信</text>
+      <text class="popBoxDetailItemDL">提现方式</text>
+      <text class="popBoxDetailItemDR">银行卡</text>
     </view>
   </view>
 
-  <button class="next" >立即提现</button>
+  <button class="next" bindtap="submitWithdraw">提现</button>
 </view>

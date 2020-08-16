@@ -65,10 +65,65 @@ page {
     font-weight: 350;
 }
 
-.item {
+.itemBox {
     margin-top: 20rpx;
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 20rpx;
+}
+
+.itemHeader {
+    height: 30rpx;
+    font-size: small;
+    color: #999999;
+    margin-top: 10rpx;
+    margin-left: 10rpx;
+}
+
+.item {
+    margin-top: 20rpx;
+    width: 100%;
     height: 70rpx;
     border-radius: 10rpx;
     background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.withdrawTime {
+    width: 40%;
+    height: 100%;
+    font-size: 25rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.withdrawAmount {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: seagreen;
+}
+
+.withdrawStatus {
+    width: 20%;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+}
+
+.withdrawOperation {
+    width: 15%;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: blue;
 }

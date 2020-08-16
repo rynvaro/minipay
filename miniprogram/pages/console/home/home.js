@@ -7,9 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // 组件参数设置，传递到组件
-    defaultData: {
-      title: "商家后台", // 导航栏标题
+    data: {
+      storeImage: '',
     }
   },
 
@@ -17,7 +16,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // this.setData({
+    //   data: JSON.parse(options.data)
+    // })
+    // console.log(this.data)
   },
 
   /**
@@ -32,6 +34,44 @@ Page({
    */
   onShow: function () {
 
+    
+    let thiz = this
+
+    wx.cloud.callFunction({
+      name:"getInfo",
+      data: {
+        phone: app.globalData.phone,
+      },
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          data:res.result.data
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+      }
+    })
+
+    // TODO 合并成一个函数
+      wx.cloud.callFunction({
+          name:"getStoreSettingInfo",
+          data: {
+            phone: app.globalData.phone,
+          },
+          success(res) {
+              console.log(res)
+              thiz.setData({
+                storeImage: res.result.data.data.data.storeImage,
+              })
+              wx.setNavigationBarTitle({
+                title: res.result.data.data.data.storeName,
+              })
+          },
+          fail: function(e) {
+            console.log(e.errMsg)
+          }
+      })
   },
 
   /**
@@ -90,6 +130,18 @@ Page({
   orders: function(){
     wx.navigateTo({
       url: '../orders/orders',
+    })
+  },
+
+  events: function() {
+    wx.showToast({
+      title: '开发中',
+    })
+  },
+
+  service: function() {
+    wx.showToast({
+      title: '开发中',
     })
   }
 
