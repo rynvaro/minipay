@@ -97,6 +97,10 @@ Page({
       return 
     }
 
+    wx.showLoading({
+      title: '登录中...',
+    })
+
     wx.cloud.callFunction({
       name:"consoleLogin",
       data:{
@@ -104,6 +108,7 @@ Page({
         password: this.data.password
       },
       success(res) {
+        wx.hideLoading()
         console.log(res)
         app.globalData.phone = res.result.data.phone
         wx.navigateTo({
@@ -112,6 +117,7 @@ Page({
       },
       fail: function(e) {
         console.log(e.errMsg)
+        wx.hideLoading()
         wx.showToast({
           title: '密码错误',
         })
