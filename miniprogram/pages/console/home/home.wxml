@@ -74,11 +74,13 @@
     </view> -->
 
     <view class="bizConsoleFItem">
+        <button open-type="contact" class="bizConsoleFItem">
         <view class="bizConsoleFItemU" bindtap="service">
             <image class="bizConsoleFItemUIcon" src="../../../images/useradvice.png"></image>
         </view>
         <view class="bizConsoleFItemD">
             <text class="bizConsoleFItemDText">客服反馈</text>
         </view>
+        </button>
     </view>
 </view>

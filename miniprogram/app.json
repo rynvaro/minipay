@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/console/index/index",
+    "pages/console/home/home",
     "pages/console/withdraw/withdraw",
     "pages/console/financial/financial",
     "pages/console/store/store", 
     "pages/console/orders/orders",
     "pages/console/discount/discount",
-    "pages/console/home/home",
     "pages/index/index",
     "pages/bizreg/bizreg",
     "pages/search/search"

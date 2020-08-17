@@ -106,8 +106,8 @@ page {
 }
 
 .bizConsoleFItem {
-    width: 223rpx;
-    height: 150rpx;
+    width: 223rpx !important;
+    height: 150rpx !important;
     background-color: white;
     margin: 10rpx;
     border-radius: 20rpx;
