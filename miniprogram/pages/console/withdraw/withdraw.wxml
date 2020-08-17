@@ -33,5 +33,13 @@
     </view>
   </view>
 
+  <view class="sms">
+    <view class="smsPhone">{{phone}}</view>
+    <view class="smsGetCode">
+      <input type="number" bindinput="setCode" class="getCodeInput" placeholder="输入验证码"></input>
+      <view class="getCodeButton" bindtap="sendSMS" >{{label}}</view>
+    </view>
+  </view>
+
   <button class="next" bindtap="submitWithdraw">提现</button>
 </view>

@@ -162,3 +162,45 @@ page  {
   height: 2rpx;
   background-color: #d1cdcd;
 }
+
+
+/* 获取验证码 */
+
+.sms {
+  width: 70%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.smsPhone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: small;
+}
+
+.smsGetCode {
+  width: 60%;
+  margin-top: 20rpx;
+  display: flex;
+}
+
+.getCodeInput{
+  width: 50%;
+  font-size: small;
+  border-bottom: 1rpx solid #999999;
+}
+
+.getCodeButton {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25rpx;
+  color: white;
+  background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+  border-radius: 10rpx;
+}

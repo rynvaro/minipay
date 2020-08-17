@@ -19,13 +19,21 @@ Page({
     animation: animation,
     balance: 0,
     withdrawAmount: 0,
+    phone: '',
+    code: '',
+    codeID: '',
+    sendSMSClicked: false,
+    seconds: 60,
+    label: '获取验证码',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      phone: app.globalData.phone,
+    })
   },
 
   /**
@@ -100,6 +108,13 @@ Page({
 
   submitWithdraw: function(e) {
 
+    if (!this.data.code) {
+      wx.showToast({
+        title: '请输入验证码',
+      })
+      return
+    }
+
     if (this.data.withdrawAmount<=0) {
       wx.showToast({
         title: '请输入提现金额',
@@ -109,29 +124,116 @@ Page({
 
     let thiz = this
 
-    wx.cloud.callFunction({
-        name:"submitWithdraw",
-        data: {
-          phone: app.globalData.phone,
-          withdrawAmount: parseInt(thiz.data.withdrawAmount),
-        },
-        success(res) {
-            console.log(res)
-            wx.showToast({
-              title: '提现申请已提交',
-              success: function(){
-                setTimeout(function(){wx.navigateBack()},1000)
-              }
-            })
-        },
-        fail: function(e) {
-          console.log(e.errMsg)
-        }
+    wx.showLoading({
+      title: '正在提交...',
     })
 
+    var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"validateCode",
+            data: {
+              code: thiz.data.code,
+              codeID: thiz.data.codeID,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(false)
+            }
+        })
+      });
+
+      promise.then(function(validateOK){
+        if (!validateOK) {
+          wx.hideLoading()
+          wx.showToast({
+            title: '验证码错误',
+          })
+        } else {
+            wx.cloud.callFunction({
+              name:"submitWithdraw",
+              data: {
+                phone: app.globalData.phone,
+                withdrawAmount: parseInt(thiz.data.withdrawAmount),
+              },
+              success(res) {
+                  console.log(res)
+                  wx.hideLoading()
+                  wx.showToast({
+                    title: '提现申请已提交',
+                    success: function(){
+                      setTimeout(function(){wx.navigateBack()},1000)
+                    }
+                  })
+              },
+              fail: function(e) {
+                console.log(e.errMsg)
+                wx.hideLoading()
+              }
+            })
+        }
+      })
+
+  },
+
+  setCode: function(e) {
+    this.setData({
+      code: e.detail.value,
+    })
+  },
+
+  sendSMS: function(e) {
+    if (this.data.sendSMSClicked) {
+      return 
+    }
+    this.setData({
+      sendSMSClicked: true,
+    })
+
+    this.setData({
+      label: this.data.seconds + '秒'
+    });
+    // 启动以1s为步长的倒计时
+    var interval = setInterval(() => {
+        countdown(this);
+    }, 1000);
+    // 停止倒计时
+    setTimeout(function() {
+        clearInterval(interval);
+    }, this.data.seconds * 1000);
+
+    let thiz = this
+    wx.cloud.callFunction({
+      name:"sendSMS",
+      data: {
+        phone: app.globalData.phone,
+      },
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          codeID: res.result._id
+        })
+        wx.showToast({
+          title: '已发送',
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+      }
+    })
   },
   
   nextStep: function(e){
+
+    if (this.data.withdrawAmount<=0) {
+      wx.showToast({
+        title: '请输入提现金额',
+      })
+      return
+    }
 
     if (this.data.withdrawAmount>this.data.balance) {
       wx.showToast({
@@ -174,3 +276,22 @@ function animationEvents(that, moveY, action){
     })
   }
 } 
+
+function countdown(that) {
+  var seconds = that.data.seconds;
+  var label = that.data.label;
+  console.log(seconds)
+  if (seconds <= 1) {
+      label = '获取验证码';
+      seconds = 60;
+      that.setData({
+          sendSMSClicked: false
+      });
+  } else {
+      label = --seconds + '秒'
+  }
+  that.setData({
+      seconds: seconds,
+      label: label
+  });
+}
