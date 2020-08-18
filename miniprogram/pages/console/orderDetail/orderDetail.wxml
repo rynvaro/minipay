@@ -1,0 +1,38 @@
+<!--miniprogram/pages/console/orderDetail/orderDetail.wxml-->
+
+<view class="detailHeader">
+  <image class="detailHeaderLImage" src="{{order.thumbUrl}}"></image>
+  <text class="detailHeaderRText">测试测试测试测试测试</text>
+</view>
+
+<view class="detailItemBox">
+  <view class="detailItem">
+    <text class="detailItemKey">金额</text>
+    <text class="detailItemValue">{{order.amount}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">折扣</text>
+    <text class="detailItemValue">{{order.discount}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">本单已减</text>
+    <text class="detailItemValue">{{order.rebate}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">买家应付</text>
+    <text class="detailItemValue">{{order.realAmount}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">优惠券</text>
+    <text class="detailItemValue">{{order.coupon}}</text>
+  </view>
+</view>
+
+<view class="totalIncome">
+  <text class="totalIncomeKey">营收金额</text>
+  <text class="totalIncomeValue">{{order.totalAmount}}</text>
+</view>

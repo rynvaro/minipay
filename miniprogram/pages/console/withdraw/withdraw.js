@@ -47,22 +47,27 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: 'loading...',
+    })
     let thiz = this
-        wx.cloud.callFunction({
-            name:"getInfo",
-            data: {
-              phone: app.globalData.phone,
-            },
-            success(res) {
-                console.log(res)
-                thiz.setData({
-                    balance: res.result.data.balance
-                })
-            },
-            fail: function(e) {
-              console.log(e.errMsg)
-            }
-        })
+    wx.cloud.callFunction({
+        name:"getInfo",
+        data: {
+          phone: app.globalData.phone,
+        },
+        success(res) {
+            console.log(res)
+            thiz.setData({
+                balance: res.result.data.balance
+            })
+            wx.hideLoading()
+        },
+        fail: function(e) {
+          console.log(e.errMsg)
+          wx.hideLoading()
+        }
+    })
   },
 
   /**
@@ -163,9 +168,9 @@ Page({
                   console.log(res)
                   wx.hideLoading()
                   wx.showToast({
-                    title: '提现申请已提交',
+                    title: '已提交',
                     success: function(){
-                      setTimeout(function(){wx.navigateBack()},1000)
+                      setTimeout(function(){wx.navigateBack()},500)
                     }
                   })
               },
@@ -205,6 +210,9 @@ Page({
         clearInterval(interval);
     }, this.data.seconds * 1000);
 
+    wx.showLoading({
+      title: '发送中...',
+    })
     let thiz = this
     wx.cloud.callFunction({
       name:"sendSMS",
@@ -216,12 +224,14 @@ Page({
         thiz.setData({
           codeID: res.result._id
         })
+        wx.hideLoading()
         wx.showToast({
           title: '已发送',
         })
       },
       fail: function(e) {
         console.log(e.errMsg)
+        wx.hideLoading()
       }
     })
   },
@@ -288,7 +298,7 @@ function countdown(that) {
           sendSMSClicked: false
       });
   } else {
-      label = --seconds + '秒'
+      label = '（' + --seconds + '秒）'
   }
   that.setData({
       seconds: seconds,

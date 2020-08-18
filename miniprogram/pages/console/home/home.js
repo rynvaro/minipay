@@ -34,6 +34,9 @@ Page({
    */
   onShow: function () {
 
+    wx.showLoading({
+      title: 'loading...',
+    })
     
     let thiz = this
 
@@ -47,9 +50,11 @@ Page({
         thiz.setData({
           data:res.result.data
         })
+        wx.hideLoading()
       },
       fail: function(e) {
         console.log(e.errMsg)
+        wx.hideLoading()
       }
     })
 
@@ -139,11 +144,6 @@ Page({
     })
   },
 
-  service: function() {
-    wx.showToast({
-      title: '开发中',
-    })
-  }
 
 
 })

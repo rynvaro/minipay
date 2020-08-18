@@ -258,7 +258,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+      wx.showLoading({
+        title: 'loading...',
+      })
       this.data.data.phone=app.globalData.phone
       this.setData({
         data:this.data.data
@@ -276,10 +278,11 @@ Page({
                   data: res.result.data.data.data,
                   id:res.result.data._id
               })
-              console.log(thiz.data)
+              wx.hideLoading()
           },
           fail: function(e) {
             console.log(e.errMsg)
+            wx.hideLoading()
           }
       })
     },

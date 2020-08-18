@@ -61,6 +61,9 @@ Page({
             return 
         }
 
+        wx.showLoading({
+          title: '修改中...',
+        })
 
     wx.cloud.callFunction({
         name:"discountSetting",
@@ -75,12 +78,14 @@ Page({
           wx.navigateBack({
             delta: 0,
           })
+          wx.hideLoading()
         },
         fail: function(e) {
           console.log(e.errMsg)
           wx.showToast({
             title: '没有权限',
           })
+          wx.hideLoading()
         }
       })
     },
@@ -89,6 +94,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      wx.showLoading({
+        title: 'loading...',
+      })
         let thiz = this
         wx.cloud.callFunction({
             name:"getInfo",
@@ -105,9 +113,11 @@ Page({
                     currentDiscount: res.result.data.discount.discountValue,
                     currentDiscountIsNil: false,
                 })
+                wx.hideLoading()
             },
             fail: function(e) {
-            console.log(e.errMsg)
+              console.log(e.errMsg)
+              wx.hideLoading()
             }
         })
     },

@@ -28,6 +28,9 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+      wx.showLoading({
+        title: 'loading...',
+      })
       let thiz = this
       wx.cloud.callFunction({
             name:"getInfo",
@@ -39,9 +42,11 @@ Page({
                 thiz.setData({
                     balance: res.result.data.balance
                 })
+                wx.hideLoading()
             },
             fail: function(e) {
-            console.log(e.errMsg)
+              console.log(e.errMsg)
+              wx.hideLoading()
             }
         })
 
