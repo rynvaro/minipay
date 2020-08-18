@@ -29,7 +29,7 @@
     <view class="login-box-item-input-down"></view>
   </view>
 
-  <text class="login-box-item-footer">忘记密码?</text>
+  <text class="login-box-item-footer" bindtap="resetPassword">忘记密码?</text>
 </view>
 
 <button class="login-button" bindtap="login">登录</button>

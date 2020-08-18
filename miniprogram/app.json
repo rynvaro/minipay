@@ -2,6 +2,7 @@
   "pages": [
     "pages/console/index/index",
     "pages/console/orders/orders",
+    "pages/console/modifyPassword/modifyPassword",
     "pages/console/orderDetail/orderDetail",
     "pages/console/home/home",
     "pages/console/withdraw/withdraw",
