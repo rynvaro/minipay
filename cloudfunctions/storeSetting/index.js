@@ -1,15 +1,26 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+    env: cloud.DYNAMIC_CURRENT_ENV
+})
 
-const db = cloud.database()
+const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
     console.log(event)
+
+    try {
+        var msgR = await cloud.openapi.security.msgSecCheck({
+            content: JSON.stringify(event)
+        })
+        console.log(msgR)
+    }catch(e) {
+        return e
+    }
 
     // 发布到或者更新
     var result

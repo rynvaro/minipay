@@ -229,6 +229,21 @@ Page({
                         },
                         success(res) {
                           console.log(res)
+                          wx.hideLoading()
+                          if (res.result.errCode == 87014) {
+                            wx.showModal({
+                              title: '提示',
+                              content: '内容包含敏感词汇，请修改！',
+                              success (res) {
+                                if (res.confirm) {
+                                  console.log('用户点击确定')
+                                } else if (res.cancel) {
+                                  console.log('用户点击取消')
+                                }
+                              }
+                            })
+                            return
+                          }
                           wx.showToast({
                             title: '发布成功',
                             success: function(){
@@ -238,6 +253,7 @@ Page({
                         },
                         fail: function(e) {
                           console.log(e.errMsg)
+                          wx.hideLoading()
                           wx.showToast({
                             title: '发布失败',
                           })

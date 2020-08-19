@@ -1,9 +1,13 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV,
+})
 
-const db = cloud.database()
+const db = cloud.database({
+  env: cloud.DYNAMIC_CURRENT_ENV,
+})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -49,7 +53,7 @@ exports.main = async (event, context) => {
                 timeEnd:'请选择结束时间'
               },
               dayBi: 0.00,
-              balance: 1000,// TODO remove
+              balance: 0,
               orders: [],
               password: event.password,// TODO encrypt
               publishedAt: formatTime(new Date()),

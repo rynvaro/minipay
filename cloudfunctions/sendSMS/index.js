@@ -1,9 +1,11 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+    env: cloud.DYNAMIC_CURRENT_ENV
+})
 
-const db = cloud.database()
+const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 const Core = require('@alicloud/pop-core');
 
