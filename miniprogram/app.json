@@ -1,17 +1,17 @@
 {
   "pages": [
-    "pages/console/index/index",
-    "pages/console/orders/orders",
-    "pages/console/modifyPassword/modifyPassword",
-    "pages/console/orderDetail/orderDetail",
-    "pages/console/home/home",
-    "pages/console/withdraw/withdraw",
-    "pages/console/financial/financial",
-    "pages/console/store/store",
-    "pages/console/discount/discount",
     "pages/index/index",
     "pages/bizreg/bizreg",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/console/home/home",
+    "pages/console/index/index",
+    "pages/console/store/store",
+    "pages/console/orders/orders",
+    "pages/console/discount/discount",
+    "pages/console/withdraw/withdraw",
+    "pages/console/financial/financial",
+    "pages/console/orderDetail/orderDetail",
+    "pages/console/modifyPassword/modifyPassword"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
