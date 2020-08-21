@@ -5,7 +5,7 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .card {
@@ -20,16 +20,7 @@ page {
 }
 
 
-.cardLeftTriangle {
-  width: 0;
-  height: 0;
-  border-bottom: 200rpx solid #FF510B; 
-  border-right: 400rpx solid transparent;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-}
+
 
 .cardLine1 {
   width: 100%;
@@ -98,38 +89,21 @@ page {
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.progress1 {
+.vipProgress {
   width: 120rpx;
   height: 5rpx;
   background-color: white;
   z-index: 3;
 }
 
-.progress2 {
-  width: 120rpx;
-  height: 5rpx;
-  background-color: #FF2B06;
-  z-index: 3;
-}
-
-.progress3 {
-  width: 100rpx;
-  height: 5rpx;
-  background-color: #FF2B06;
-  z-index: 3;
-}
-
-.vipText {
-  color: white;
-  font-size: 20rpx;
-}
 
 
 .vipIcon {
-  height: 81rpx;
-  width: 81rpx;
+  height: 60rpx;
+  width: 60rpx;
 }
 
 .cardLine5 {
@@ -138,7 +112,41 @@ page {
   z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  font-size: small;
 }
+
+.vipText1 {
+  width: 18%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vipText2 {
+  width: 38%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vipText3 {
+  width: 26%;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.vipText4 {
+  width: 18%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .cardRightTriangle {
   width: 0;
@@ -148,6 +156,17 @@ page {
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: 1;
+}
+
+.cardLeftTriangle {
+  width: 0;
+  height: 0;
+  border-bottom: 200rpx solid #FF510B; 
+  border-right: 400rpx solid transparent;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   z-index: 1;
 }
 

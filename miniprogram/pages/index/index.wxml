@@ -1,10 +1,10 @@
 <!--index.wxml-->
 
 
-<!-- TODO 自定义导航栏 -->
-<!-- <view class="navigation">
-  <text class="navigation-text">7HAO</text>
-</view> -->
+<!-- <progress percent="40" stroke-width="12" />
+<progress percent="60" color="pink" />
+<progress percent="80" active /> -->
+
 
 <view class="card">
     <view class="cardLine1">
@@ -16,29 +16,33 @@
       <text class="cardLine3V">1025/6000</text>
       <text class="cardLine3Arrow">></text>
     </view>
+    <progress percent="20" />
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
-      <view class="progress1"></view>
+      <progress class="vipProgress" percent="60" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="true" />
       <image class="vipIcon" src="../../images/vip2.png"></image>
-      <view class="progress2"></view>
+      <progress class="vipProgress" percent="0" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" />
       <image class="vipIcon" src="../../images/vip3.png"></image>
-      <view class="progress2"></view>
+      <progress class="vipProgress" percent="0" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" />
       <image class="vipIcon" src="../../images/vip4.png"></image>
     </view>
     <view class="cardLine5">
-      <text class="vipText">普通会员</text>
-      <view class="progress3"></view>
-      <text class="vipText">黄金会员</text>
-      <view class="progress3"></view>
-      <text class="vipText">铂金会员</text>
-      <view class="progress3"></view>
-      <text class="vipText">钻石会员</text>
+      <text class="vipText1">普通会员</text>
+      <text class="vipText2">黄金会员</text>
+      <text class="vipText3">铂金会员</text>
+      <text class="vipText4">钻石会员</text>
     </view>
     <view class="cardLeftTriangle"></view>
     <view class="cardRightTriangle"></view>
 </view>
 <view class="cardTriangleAppendLine"></view>
 <view class="container">
+
+<progress percent="20" show-info />
+<progress percent="40" stroke-width="12" />
+<progress percent="60" color="pink" />
+<progress percent="80" active />
+
   <!-- assets -->
   <view class="assets">
     <view class="assets-item-deposit" bindtap="unfinished">
