@@ -6,9 +6,39 @@
   <text class="navigation-text">7HAO</text>
 </view> -->
 
+<view class="card">
+    <view class="cardLine1">
+      <image class="cardLine1Icon" src="../../images/basicprofile.jpeg"></image>
+    </view>
+    <text class="cardLine2">柒小仔</text>
+    <view class="cardLine3">
+      <text class="cardLine3T">会员经验</text>
+      <text class="cardLine3V">1025/6000</text>
+      <text class="cardLine3Arrow">></text>
+    </view>
+    <view class="cardLine4">
+      <image class="vipIcon" src="../../images/vip1.png"></image>
+      <view class="progress1"></view>
+      <image class="vipIcon" src="../../images/vip2.png"></image>
+      <view class="progress2"></view>
+      <image class="vipIcon" src="../../images/vip3.png"></image>
+      <view class="progress2"></view>
+      <image class="vipIcon" src="../../images/vip4.png"></image>
+    </view>
+    <view class="cardLine5">
+      <text class="vipText">普通会员</text>
+      <view class="progress3"></view>
+      <text class="vipText">黄金会员</text>
+      <view class="progress3"></view>
+      <text class="vipText">铂金会员</text>
+      <view class="progress3"></view>
+      <text class="vipText">钻石会员</text>
+    </view>
+    <view class="cardLeftTriangle"></view>
+    <view class="cardRightTriangle"></view>
+</view>
+<view class="cardTriangleAppendLine"></view>
 <view class="container">
-  <!-- card -->
-  <view class="card"></view>
   <!-- assets -->
   <view class="assets">
     <view class="assets-item-deposit" bindtap="unfinished">
