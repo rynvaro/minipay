@@ -1,0 +1,110 @@
+/* miniprogram/pages/coupon/coupon.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.headerBg {
+    width: 100%;
+    height: 300rpx;
+    background: linear-gradient(to bottom, #FF6610, #F7D8C2);
+    border-bottom-left-radius: 100rpx;
+    border-bottom-right-radius: 100rpx;
+}
+
+.box {
+    width: 95%;
+    background-color: white;
+    border-radius: 20rpx;
+    margin-top: -200rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item {
+    margin-top: 30rpx;
+    width: 600rpx;
+    height: 250rpx;
+    background: radial-gradient(circle at -20rpx 125rpx, transparent 40rpx, #FF6610 6px) top left, linear-gradient(0.25turn, #FF6610, #FF6610), radial-gradient(circle at 50rpx 125rpx, transparent 40rpx, #FF6610 16px) bottom right;
+    /* 三段 宽x高 */
+    background-size: 35rpx 300rpx, 535rpx 300rpx, 35rpx 300rpx;
+    background-repeat: no-repeat;
+    /* 三段 坐标 */
+    background-position: 0rpx 0rpx,35rpx 0rpx,565rpx 0rpx;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemL {
+    height: 70%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemLBox {
+    width: 90%;
+    height: 100%;
+    display: flex;
+}
+
+.itemLBoxL {
+    width: 35%;
+    height: 100%;
+    color: white;
+    font-size: 200rpx;
+    font-weight: 1200;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.itemLBoxR {
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.itemLBoxRU {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+}
+
+.itemLBoxRD {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    font-size: 25rpx;
+    color: white;
+}
+
+.itemLBoxR {
+    width: 60%;
+    height: 100%;
+}
+
+.itemR {
+    height: 70%;
+    width: 25%;
+    border-left: 2rpx dashed white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.itemRText {
+    margin-left: 20rpx;
+}

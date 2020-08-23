@@ -1,63 +1,114 @@
 <!--miniprogram/pages/search/search.wxml-->
 
-<view class='search-container'>
-    <view class='search-bg'>
-      <input type='text' confirm-type='search' class='search' placeholder-class='search-placeholder' placeholder='搜索你需要的商家热门关键词' bindconfirm='search' bindfocus='onFocus' bindinput='onBlur'></input>
-      <icon class="{{icon_class}}" size='12' type='search' color='#1D1D1D'></icon>
+<!-- TODO change name -->
+<view class="orderSearch">
+    <view class="orderSearchIconBox">
+        <image class="orderSearchIcon" src="../../images/search.png"></image>
     </view>
-  </view>
+    <input class="orderSearchInput" bindconfirm="search"></input>
+</view>
 
+<view class="orderTabs">
+    <text class="orderTabsItem" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0">热门商家</text>
+    <text class="orderTabsItem" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1">人气商家</text>
+    <text class="orderTabsItem" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2">附近商家</text>
+</view>
 
-<!-- 推荐区 recommendations -->
-  <view class="rec">
-      <view class="rec-tab">
-        <view class="rec-tab-item">
-          <text class="rec-tab-text-left">热门商家</text>
-          <text class="rec-tab-text-left">——</text>
+<view class="merchants">
+
+    <view class="merchant" bindtap="store">
+        <view class="merchantL">
+            <image class="merchantLImage" src="../../images/logo.png"></image>
         </view>
-        <view class="rec-tab-item">
-          <text class="rec-tab-text-right">附近商家</text>
+        <view class="merchantR">
+            <view class="merchantRBox">
+                <text class="merchantRText1">北京麦当劳</text>
+                <text class="merchantRText2">美国菜</text>
+                <view class="merchantRText3">
+                    <text class="merchantRText3Item">月销1323</text>
+                    <text class="merchantRText3Item">人均¥23</text>
+                    <text class="merchantRText3ItemLocation">300m</text>
+                </view>
+                <text class="merchantRText4">营业时间 10:00-22:00</text>
+                <text class="merchantRText5">“吃起来还不错，打折”</text>
+            </view>
         </view>
-      </view>
-      <view class="rec-list">
+    </view>
 
-        <block wx:for="{{bizs}}" wx:key="_id">
-        
-            <view class="rec-list-item">
-              <image class="rec-list-item-left" src='{{item.images[0]}}'></image>
-              <view class="rec-list-item-right">
-            <view class="rec-list-item-right-1">
-              <text>{{item.title}}</text>
-            </view>
-            <view class="rec-list-item-right-2">
-              <text class="rec-list-item-right-2-desc">{{item.desc}}</text>
-            </view>
-            <view class="rec-list-item-right-3">
-              <view class="rec-list-item-right-3-l">
-                <!-- <text>⭐️⭐️⭐️⭐️⭐️</text> -->
-              </view>
-              <view class="rec-list-item-right-3-m">
-                <!-- <text>5.0分</text> -->
-              </view>
-              <view class="rec-list-item-right-3-r">
-                <text>{{item.price}}折</text>
-              </view>
-              
-            </view>
-            <view class="rec-list-item-right-4">
-              <view class="rec-list-item-right-4-l">
-                <text class="rec-list-item-right-4-l-text">{{item.location.address}}</text>
-              </view>
-              <view class="rec-list-item-right-4-r">
-                <text>3km</text>
-              </view>
-            </view>
-          </view>
+    <view class="merchant" bindtap="store">
+        <view class="merchantL">
+            <image class="merchantLImage" src="../../images/logo.png"></image>
         </view>
+        <view class="merchantR">
+            <view class="merchantRBox">
+                <text class="merchantRText1">北京麦当劳</text>
+                <text class="merchantRText2">美国菜</text>
+                <view class="merchantRText3">
+                    <text class="merchantRText3Item">月销1323</text>
+                    <text class="merchantRText3Item">人均¥23</text>
+                    <text class="merchantRText3ItemLocation">300m</text>
+                </view>
+                <text class="merchantRText4">营业时间 10:00-22:00</text>
+                <text class="merchantRText5">“吃起来还不错，打折”</text>
+            </view>
+        </view>
+    </view>
 
-        </block>
+    <view class="merchant" bindtap="store">
+        <view class="merchantL">
+            <image class="merchantLImage" src="../../images/logo.png"></image>
+        </view>
+        <view class="merchantR">
+            <view class="merchantRBox">
+                <text class="merchantRText1">北京麦当劳</text>
+                <text class="merchantRText2">美国菜</text>
+                <view class="merchantRText3">
+                    <text class="merchantRText3Item">月销1323</text>
+                    <text class="merchantRText3Item">人均¥23</text>
+                    <text class="merchantRText3ItemLocation">300m</text>
+                </view>
+                <text class="merchantRText4">营业时间 10:00-22:00</text>
+                <text class="merchantRText5">“吃起来还不错，打折”</text>
+            </view>
+        </view>
+    </view>
 
-        
+    <view class="merchant" bindtap="store">
+        <view class="merchantL">
+            <image class="merchantLImage" src="../../images/logo.png"></image>
+        </view>
+        <view class="merchantR">
+            <view class="merchantRBox">
+                <text class="merchantRText1">北京麦当劳</text>
+                <text class="merchantRText2">美国菜</text>
+                <view class="merchantRText3">
+                    <text class="merchantRText3Item">月销1323</text>
+                    <text class="merchantRText3Item">人均¥23</text>
+                    <text class="merchantRText3ItemLocation">300m</text>
+                </view>
+                <text class="merchantRText4">营业时间 10:00-22:00</text>
+                <text class="merchantRText5">“吃起来还不错，打折”</text>
+            </view>
+        </view>
+    </view>
 
-      </view>
-  </view>
+    <view class="merchant" bindtap="store">
+        <view class="merchantL">
+            <image class="merchantLImage" src="../../images/logo.png"></image>
+        </view>
+        <view class="merchantR">
+            <view class="merchantRBox">
+                <text class="merchantRText1">北京麦当劳</text>
+                <text class="merchantRText2">美国菜</text>
+                <view class="merchantRText3">
+                    <text class="merchantRText3Item">月销1323</text>
+                    <text class="merchantRText3Item">人均¥23</text>
+                    <text class="merchantRText3ItemLocation">300m</text>
+                </view>
+                <text class="merchantRText4">营业时间 10:00-22:00</text>
+                <text class="merchantRText5">“吃起来还不错，打折”</text>
+            </view>
+        </view>
+    </view>
+
+</view>

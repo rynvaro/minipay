@@ -1,0 +1,46 @@
+/* miniprogram/pages/feedback/feedback.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.title {
+    width: 90%;
+    height: 60rpx;
+    border-radius: 10rpx;
+    background-color: white;
+}
+
+.titlePlaceholder {
+    color: #b4b4b4;
+    margin-left: 20rpx;
+}
+
+.textarea {
+    margin-top: 20rpx;
+    width: 90%;
+    background-color: white;
+    border-radius: 10rpx;
+}
+
+.content {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 200rpx;
+    background-color: white;
+    border-radius: 10rpx;
+    padding-left: 20rpx;
+}
+
+.contentPlaceholder {
+    color: #b4b4b4;
+}
+
+.button {
+    margin-top: 30rpx;
+    background-color: #FF540C;
+    color: white;
+}

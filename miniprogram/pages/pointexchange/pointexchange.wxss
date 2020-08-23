@@ -1,0 +1,128 @@
+/* miniprogram/pages/pointexchange/pointexchange.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.banner {
+    width: 95%;
+    height: 350rpx;
+    border-radius: 20rpx;
+}
+
+.bannerItem {
+    height: 100%;
+    width: 100%;
+    border-radius: 20rpx;
+}
+
+.box {
+    width: 95%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.boxItem {
+    height: 390rpx;
+    width: 315rpx;
+    border: 1rpx solid #c7c7c7;
+    margin: 20rpx;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxItemU {
+    width: 90%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxItemUContent {
+    width: 100%;
+    height: 90%;
+    background: radial-gradient(circle at 5rpx 80%, transparent 15rpx, #FF6610 6rpx) top left, linear-gradient(0.25turn, #FF6610, #FF3306), radial-gradient(circle at 30rpx 80%, transparent 15rpx, #FF3306 6rpx) bottom right;
+    /* 三段 宽x高 */
+    background-size: 35rpx 100%, 230rpx 100%, 35rpx 100%;
+    background-repeat: no-repeat;
+    /* 三段 坐标 */
+    background-position: 0rpx 0rpx,35rpx 0rpx,250rpx 0rpx;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxItemUContentU{
+    height: 60%;
+    width: 100%;
+    display: flex;
+}
+
+.boxItemUContentVip {
+    color: white;
+    font-size: 60rpx;
+    line-height: 60rpx;
+    font-weight: 900;
+}
+
+.boxItemUContentUL {
+    width: 50%;
+    height: 100%;
+    font-size: 180rpx;
+    line-height: 180rpx;
+    color: white;
+    font-weight: 900;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.boxItemUContentUR {
+    width: 50%;
+    height: 100%;
+    font-weight: bold;
+    font-size: 60rpx;
+    line-height: 60rpx;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+}
+
+
+.boxItemUContentD{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    color: white;
+}
+
+
+.boxItemD {
+    width: 95%;
+    height: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #999999;
+}
+
+
+.boxItemDLin2 {
+    font-size: xx-small;
+    display: flex;
+}
+
+.boxItemDLin2Row1 {
+    color: #FE6E11;
+}

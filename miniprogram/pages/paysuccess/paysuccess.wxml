@@ -1,0 +1,3 @@
+<!--miniprogram/pages/paysuccess/paysuccess.wxml-->
+
+<image class="paySuc" mode="scaleToFill" src="../../images/paysuc.png"></image>

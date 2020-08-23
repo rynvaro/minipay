@@ -1,0 +1,173 @@
+/* miniprogram/pages/signin/signin.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.card {
+    width: 90%;
+    height: 300rpx;
+    background: linear-gradient(to bottom right, #FF6610, #cc3604);
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.cardLin1 {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLin1Text {
+    width: 40%;
+    height: 100%;
+    color: white;
+    display: flex;
+    justify-items: flex-end;
+    align-items: center;
+}
+
+.cardLin1Arrow {
+    width: 10rpx;
+    height: 10rpx;
+    border-top: 5rpx solid #ffffff;
+    border-right: 5rpx solid #ffffff;
+    transform: rotate(45deg);
+    margin-right: 20rpx;
+}
+
+.cardLin2 {
+    width: 60%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.box {
+    height: 80%;
+    width: 80rpx;
+    background-color: white;
+    margin: 10rpx;
+    border-radius: 20rpx;
+    font-size: 80rpx;
+    font-weight: 900;
+    line-height: 50rpx;
+    color: #FF6610;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardDay {
+    color: white;
+    height: 80%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.dayBox {
+    margin-top: 60rpx;
+    height: 150rpx;
+    width: 90%;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.dayItem {
+    height: 90%;
+    width: 90rpx;
+    border-radius: 20rpx;
+    border: 1rpx solid #b9b9b9;
+    margin: 5rpx;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dayItemU {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: large;
+}
+
+.dayItemD {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    color: #999999;
+}
+
+.dayItem1 {
+    height: 90%;
+    width: 90rpx;
+    border-radius: 20rpx;
+    border: 1rpx solid #b9b9b9;
+    margin: 5rpx;
+    background-color: #FF6610;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.dayItemU1 {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-size: large;
+}
+
+.dayItemD1 {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    color: white;
+}
+
+
+.button {
+    margin-top: 50rpx;
+    background-color: #FF5C0E;
+    color: white;
+}
+
+.role {
+    margin-top: 150rpx;
+    width: 76%;
+    color: #999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.roleTile {
+    font-size: large;
+    font-weight: bold;
+}
+
+.roleContent {
+    margin-top: 20rpx;
+    font-size: 20rpx;
+}

@@ -1,0 +1,61 @@
+<!--miniprogram/pages/signin/signin.wxml-->
+
+<view class="card">
+    <view class="cardLin1">
+        <text class="cardLin1Text"> 当前积分：2323</text>
+        <view class="cardLin1Arrow"></view>
+    </view>
+    <view class="cardLin2">
+        <view class="box">0</view>
+        <view class="box">0</view>
+        <view class="box">1</view>
+        <text class="cardDay">天</text>
+    </view>
+</view>
+
+
+<view class="dayBox">
+    <view class="dayItem">
+        <text class="dayItemU">+1</text>
+        <text class="dayItemD">未签到</text>
+    </view>
+
+    <view class="dayItem1">
+        <text class="dayItemU1">+2</text>
+        <text class="dayItemD1">第二天</text>
+    </view>
+
+    <view class="dayItem">
+        <text class="dayItemU">+3</text>
+        <text class="dayItemD">第三天</text>
+    </view>
+
+    <view class="dayItem">
+        <text class="dayItemU">+4</text>
+        <text class="dayItemD">第四天</text>
+    </view>
+
+    <view class="dayItem">
+        <text class="dayItemU">+5</text>
+        <text class="dayItemD">第五天</text>
+    </view>
+
+    <view class="dayItem">
+        <text class="dayItemU">+10</text>
+        <text class="dayItemD">第六天</text>
+    </view>
+
+    <view class="dayItem">
+        <text class="dayItemU">+20</text>
+        <text class="dayItemD">第七天</text>
+    </view>
+</view>
+
+
+<button class="button">立即签到</button>
+
+
+<view class="role">
+    <text class="roleTile">签到规则</text>
+    <text class="roleContent">以一个礼拜为周期连续签到，用户连续签到会得到积分，每日签到会得到不同数量的积分，积分可兑换优惠券，第一天1积分，完成7天签到的循环；中间断签后，奖励重置，从1积分开始计算。</text>
+</view>

@@ -1,0 +1,12 @@
+/* miniprogram/pages/paysuccess/paysuccess.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paySuc {
+    width: 500rpx;
+    height: 500rpx;
+}

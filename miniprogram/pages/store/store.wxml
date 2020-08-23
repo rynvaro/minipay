@@ -1,0 +1,27 @@
+<!--miniprogram/pages/store/store.wxml-->
+<image class="storeImage"  src="../../images/tmp/store.png"></image>
+
+<view class="line1">
+    <text class="storeName">北京麦当劳（西山店）</text>
+    <text class="storeDiscount">9.8折</text>
+    <view class="buyButton" bindtap="order">折扣买单</view>
+</view>
+
+<view class="tips">199人购买</view>
+
+<text class="originalPrice">原价：69.0</text>
+
+<view class="liteBox">
+    <text class="liteBoxItem">营业时间：10:00-22:00</text>
+    <text class="liteBoxItem">商家电话：010-2939403</text>
+    <view class="liteBoxItem" bindtap="map">
+        <text class="liteBoxItemDL" >商家地址：北纬路甲一号出门右拐</text>
+        <image class="liteBoxItemDR" src="../../images/arrow.png"></image>
+    </view>
+</view>
+
+<text class="eventText">活动详情</text>
+
+<view class="eventTextUnderLine"></view>
+
+<image class="eventImage" src="../../images/tmp/event.png"></image>

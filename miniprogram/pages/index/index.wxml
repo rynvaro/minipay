@@ -11,12 +11,11 @@
       <image class="cardLine1Icon" src="../../images/basicprofile.jpeg"></image>
     </view>
     <text class="cardLine2">柒小仔</text>
-    <view class="cardLine3">
+    <view class="cardLine3" bindtap="vipexperience">
       <text class="cardLine3T">会员经验</text>
       <text class="cardLine3V">1025/6000</text>
       <text class="cardLine3Arrow">></text>
     </view>
-    <progress percent="20" />
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
       <progress class="vipProgress" percent="60" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="true" />
@@ -36,156 +35,96 @@
     <view class="cardRightTriangle"></view>
 </view>
 <view class="cardTriangleAppendLine"></view>
-<view class="container">
 
-<progress percent="20" show-info />
-<progress percent="40" stroke-width="12" />
-<progress percent="60" color="pink" />
-<progress percent="80" active />
-
-  <!-- assets -->
-  <view class="assets">
-    <view class="assets-item-deposit" bindtap="unfinished">
+<!-- assets -->
+<view class="assets">
+  <view class="assetsItem" bindtap="balance">
+    <view class="assets-item-content">
+      <text class="assets-item-content-up">余额</text>
+      <text class="assets-item-content-down">123.69</text>
+    </view>
+  </view>
+  <view class="assetsItem" bindtap="coupon">
+    <view class="assets-item-content">
+      <text class="assets-item-content-up">卡券</text>
+      <text class="assets-item-content-down">我的消费券</text>
+      </view>
+  </view>
+  <view class="assetsItem" bindtap="pointexchange">
       <view class="assets-item-content">
-        <view class="assets-item-content-up">充值</view>
-        <view class="assets-item-content-down">返现，立即提现</view>
+      <text class="assets-item-content-up">兑换</text>
+      <text class="assets-item-content-down">好礼换不停</text>
       </view>
-    </view>
-    <view class="assets-item-ticket" bindtap="unfinished">
-       <view class="assets-item-content">
-        <view class="assets-item-content-up">卡券</view>
-        <view class="assets-item-content-down">我的消费券</view>
-       </view>
-    </view>
-    <view class="assets-item-remaining" bindtap="unfinished">
-       <view class="assets-item-content">
-        <view class="assets-item-content-up">余额</view>
-        <view class="assets-item-content-down">即用即省</view>
-       </view>
-    </view>
   </view>
+</view>
 
-  <!-- signin -->
-  <view class="signin" bindtap="unfinished">
-    <view class="signin-u">
-      <view class="signin-ul">
-        <text class="signin-ul-text">签到专区</text>
-      </view>
-      <view class="signin-ur">
-        <text class="signin-ur-text">签到好礼></text>
-      </view>
-    </view>
-    <view class="signin-d">
-      <view class="signin-d-view">
-        <text class="signin-d-view-text">签到有惊喜，快去看看吧</text>
-      </view>
-    </view>
+  <!-- scan signin -->
+
+<view class="scanSignin">
+  <view class="scanSigninItem">
+    <text class="scanSigninItemU">扫描付款</text>
+    <text class="scanSigninItemD">扫描立即支付</text>
   </view>
+  <view class="scanSigninItem" bindtap="signin">
+    <text class="scanSigninItemU">签到专区</text>
+    <text class="scanSigninItemD">签到好礼，快去看看吧 ></text>
+  </view>
+</view>
 
+<!-- more 更多服务 -->
+<view class="more">
+<text class="moreHeader">更多服务</text>
+  <view class="moreList">
 
-  <!-- more 更多服务 -->
-
-  <view class="more">
-    <view class="more-header">
-       <text class="more-header-text">更多服务</text>
+    <view class="moreListItem" bindtap="orders">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/order.png"></image>
+      </view>
+      <text class="moreListItemD">订单管理</text>
     </view>
-    <view class="more-list">
-      <view class="more-list-line1">
-        <!-- 订单管理 -->
-        <view class="more-list-item-order" bindtap="unfinished">
 
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/order.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">订单管理</text>
-            </view>
-          </view>
-
-        </view>
-
-        <!-- 兑换中心 -->
-        <view class="more-list-item-exchange" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/exchange.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">兑换中心</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 会员积分 -->
-        <view class="more-list-item-point" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/point.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">会员积分</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 联系客服 -->
-        <view class="more-list-item-customer-service" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/customer-service.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">联系客服</text>
-            </view>
-          </view>
-        </view>
-        
+    <view class="moreListItem" bindtap="point">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/point.png"></image>
       </view>
+      <text class="moreListItemD">会员积分</text>
+    </view>
 
-      <!-- line 2 -->
-      <view class="more-list-line1">
-        <!-- 意见反馈 -->
-        <view class="more-list-item-order" bindtap="unfinished">
-
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/advice.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">意见反馈</text>
-            </view>
-          </view>
-
-        </view>
-
-        <!-- 邀请用户 -->
-        <view class="more-list-item-exchange" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/invite.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">邀请用户</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 商户入住 -->
-        <view class="more-list-item-point" bindtap="bizreg">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/bizreg.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">商户入住</text>
-            </view>
-          </view>
-        </view>
-        
+    <view class="moreListItem" bindtap="service">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/customer-service.png"></image>
       </view>
+      <text class="moreListItemD">联系客服</text>
+    </view>
+    
+
+    <view class="moreListItem" bindtap="feedback">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/advice.png"></image>
+      </view>
+      <text class="moreListItemD">意见反馈</text>
+    </view>
+
+    <view class="moreListItem" bindtap="storeregister">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/bizreg.png"></image>
+      </view>
+      <text class="moreListItemD">商户入住</text>
     </view>
 
   </view>
 
+<view class="popBox" style="visibility:{{show ? 'visible':'hidden'}}">
+  <view class="popBoxHeader">
+    <image class="wxlogo" src="../../images/icon64_wx_logo.png"></image>
+  </view>
+  <view class="popBoxContent">
+    <text class="popBoxContentText">点击  去回复  发送”1“</text>
+    <text class="popBoxContentText">添加七号客服微信</text>
+    <button class="popBoxContentButton" open-type="contact">去回复</button>
+  </view>
+
+  <text class="closeAdvice" bindtap="hidden">×</text>
+</view>
+  
 </view>

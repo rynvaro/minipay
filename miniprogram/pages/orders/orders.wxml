@@ -1,0 +1,46 @@
+<!--miniprogram/pages/orders/orders.wxml-->
+
+<view class="orderSearch">
+    <view class="orderSearchIconBox">
+        <image class="orderSearchIcon" src="../../images/search.png"></image>
+    </view>
+    <input class="orderSearchInput" bindconfirm="search"></input>
+</view>
+
+<view class="orderTabs">
+    <text class="orderTabsItem" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0">全部</text>
+    <text class="orderTabsItem" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1">已完成</text>
+    <text class="orderTabsItem" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2">已取消</text>
+    <text class="orderTabsItem" style="color: {{tabColors[3]}}; font-size: {{tabFontSizes[3]}}" bindtap="onTabClick" data-id="3">处理中</text>
+</view>
+
+<view class="orderBox">
+     <!-- <view class="orderBoxTime">
+        <text>2020.08.05</text>
+    </view> -->
+    <view wx:for="{{orders}}" wx:key="id" class="orderList">
+        <view class="orderListItem" data-id="{{item._id}}" bindtap="orderDetail">
+            <view class="orderItemL">
+                <image class="orderItemThumb" src="{{item.thumbUrl}}"></image>
+            </view>
+            <view class="orderItemR">
+                <!-- HL represents the head line -->
+                <view class="orderItemHL">
+                    <text class="orderItemTitle">{{item.title}}</text>
+                    <view class="orderItemHLArrowBox">
+                        <view class="orderItemHLArrow"></view>
+                    </view>
+                </view>
+                
+                <!-- BL represents bottom line -->
+                <view class="orderItemBL">
+                    <text class="orderItemBLText" wx:if="{{item.status==1}}">已完成</text>
+                    <text class="orderItemBLText" wx:if="{{item.status==2}}">已取消</text>
+                    <text class="orderItemBLText" wx:if="{{item.status==3}}">处理中</text>
+                    <text class="orderItemBLText" wx:if="{{item.status==4}}">待退款</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+

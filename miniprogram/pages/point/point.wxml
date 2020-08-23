@@ -1,0 +1,103 @@
+<!--miniprogram/pages/point/point.wxml-->
+
+<view class="header">
+    <view class="hLine">
+        <view class="hLine1">
+            <image class="hLine1Icon" src="../../images/basicprofile.jpeg"></image>
+            <text class="hLine1Text">小柒柒</text>
+        </view>
+        <view class="hLine3">
+            <text class="hLine3ExperienceText">我的积分  1025</text>
+            <view class="tips" bindtap="showTips">
+                <view class="tipsContent">?</view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<view class="tipsBox" hidden="{{tipsBoxHidden}}">
+    <text>积分获取方式</text>
+    <text>签到/活动/拉新</text>
+    <text>1积分=1经验</text>
+    <view class="tipsBoxClose" bindtap="hideTips">X</view>
+</view>
+
+<view class="history">
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+    <view class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text class="historyItemULText">签到</text>
+                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+            </view>
+            <text class="historyItemUR">+5</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+
+</view>

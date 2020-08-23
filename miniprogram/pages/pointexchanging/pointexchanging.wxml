@@ -1,0 +1,42 @@
+<!--miniprogram/pages/pointexchaning/pointexchanging.wxml-->
+
+<view class="header">
+    <view class="headerL">
+
+        <view class="couponBox">
+            <view class="couponBoxU">
+                <view class="couponBoxUL">5</view>
+                <view class="couponBoxUR">元</view>
+            </view>
+            <view class="couponBoxD">优惠券</view>
+        </view>
+    </view>
+    <view class="headerR">5元代金券</view>
+</view>
+
+<view class="exchangeCnt">
+    <text class="exchangeCntText">兑换数量</text>
+
+    <view class="exchangeCntInput">
+        <view class="stepper">
+            <!-- 减号 -->
+            <text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+            <!-- 数值 -->
+            <input type="number" bindchange="bindManual" value="{{num}}" />
+            <!-- 加号 -->
+            <text class="normal" bindtap="bindPlus">+</text>
+        </view>
+    </view>
+</view>
+
+<view class="sum">
+    <text class="sumL">小计</text>
+    <text class="sumR">50</text>
+</view>
+
+<view class="point">
+    <text class="pointL">积分</text>
+    <text class="pointR">50</text>
+</view>
+
+<button class="button" bindtap="doExchange">立即兑换</button>

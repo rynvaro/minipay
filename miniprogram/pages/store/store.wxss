@@ -1,0 +1,113 @@
+/* miniprogram/pages/store/store.wxss */
+
+page {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tips {
+    position: absolute;
+    top: 16rpx;
+    right: 18rpx;
+    font-size: small;
+    color: #FFA74F;
+    background-color: white;
+    border-radius: 20rpx;
+    width: 160rpx;
+    display: flex;
+    justify-content: center;
+}
+
+.storeImage {
+    width: 100%;
+    height: 400rpx;
+}
+
+.line1 {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 90rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.storeName {
+    width: 60%;
+    font-weight: bold;
+}
+
+.storeDiscount {
+    width: 10%;
+    font-size: 25rpx;
+    color: #999999;
+}
+
+.buyButton {
+    width: 30%;
+    height: 50rpx;
+    border-radius: 20rpx;
+    color: white;
+    background-color: #FF6610;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.originalPrice {
+    width: 90%;
+    font-size: small;
+    color: #999999;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-decoration: line-through;
+    text-decoration-color: black;
+}
+
+.liteBox {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 240rpx;
+    background-color: #F5F5F5;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30rpx;
+    font-weight: 350;
+    color: #c5c2c2;
+}
+
+.liteBoxItem {
+    margin-left: 50rpx;
+    display: flex;
+    align-items: center;
+}
+
+.liteBoxItemDR {
+    width: 32rpx;
+    height: 32rpx;
+    margin-left: 60rpx;
+}
+
+.eventText {
+    margin-top: 20rpx;
+    font-size: small;
+}
+
+.eventTextUnderLine {
+    width: 50rpx;
+    height: 6rpx;
+    background-color: #FF6610;
+    border-radius: 20rpx;
+    margin-top: 10rpx;
+}
+
+.eventImage {
+    width: 100%;
+    height: 1000rpx;
+}

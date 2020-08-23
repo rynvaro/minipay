@@ -1,0 +1,230 @@
+/* miniprogram/pages/pointexchaning/pointexchanging.wxss */
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.header {
+    width: 100%;
+    height: 300rpx;
+    background-color: white;
+    display: flex;
+}
+
+.headerR {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20rpx;
+    margin-top: 20rpx;
+}
+
+.headerL {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.boxItem {
+    height: 100%;
+    width: 315rpx;
+    margin: 20rpx;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxItemU {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.couponBox {
+    width: 300rpx;
+    height: 90%;
+    background: radial-gradient(circle at 5rpx 80%, transparent 15rpx, #FF6610 6rpx) top left, linear-gradient(0.25turn, #FF6610, #FF3306), radial-gradient(circle at 30rpx 80%, transparent 15rpx, #FF3306 6rpx) bottom right;
+    /* 三段 宽x高 */
+    background-size: 35rpx 100%, 250rpx 100%, 35rpx 100%;
+    background-repeat: no-repeat;
+    /* 三段 坐标 */
+    background-position: 0rpx 0rpx,35rpx 0rpx,270rpx 0rpx;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.couponBoxU{
+    height: 60%;
+    width: 100%;
+    display: flex;
+}
+
+.couponBoxUL {
+    width: 60%;
+    height: 100%;
+    font-size: 180rpx;
+    line-height: 120rpx;
+    color: white;
+    font-weight: 900;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+
+.couponBoxUR {
+    width: 40%;
+    height: 100%;
+    font-weight: bold;
+    font-size: 60rpx;
+    line-height: 60rpx;
+    display: flex;
+    align-items: flex-end;
+    color: white;
+}
+
+.couponBoxD{
+    height: 40%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    color: white;
+}
+
+.exchangeCnt {
+    margin-top: 20rpx;
+    width: 100%;
+    height: 90rpx;
+    background-color: white;
+    display: flex;
+}
+
+.exchangeCntText {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    margin-left: 20rpx;
+}
+
+.exchangeCntInput {
+    height: 100%;
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+
+/*主容器*/
+.stepper {
+	width: 80px;
+	height: 26px;
+	/*给主容器设一个边框*/
+	border: 1px solid #ccc;
+	border-radius: 3px;
+    margin:0 auto;
+}
+ 
+/*加号和减号*/
+.stepper text {
+	width: 19px;
+	line-height: 26px;
+	text-align: center;
+	float: left;
+}
+ 
+/*数值*/
+.stepper input {
+	width: 40px;
+	height: 26px;
+	float: left;
+	margin: 0 auto;
+	text-align: center;
+	font-size: 12px;
+	/*给中间的input设置左右边框即可*/
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+ 
+/*普通样式*/
+.stepper .normal{
+	color: black;
+}
+ 
+/*禁用样式*/
+.stepper .disabled{
+	color: #ccc;
+}
+
+.sum {
+    margin-top: 20rpx;
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    background-color: white;
+}
+
+.sumL {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 20rpx;
+}
+
+.sumR {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 40rpx;
+}
+
+
+.point {
+    margin-top: 20rpx;
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    background-color: white;
+}
+
+.pointL {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 20rpx;
+}
+
+.pointR {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 40rpx;
+    color: #F58220;
+}
+
+.button {
+    margin-top: 50rpx;
+    background-color: #FF5C0E;
+    color: white;
+}

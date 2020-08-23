@@ -5,7 +5,7 @@ page {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
 }
 
 .card {
@@ -18,9 +18,6 @@ page {
   flex-direction: column;
   align-items: center;
 }
-
-
-
 
 .cardLine1 {
   width: 100%;
@@ -99,15 +96,13 @@ page {
   z-index: 3;
 }
 
-
-
 .vipIcon {
   height: 60rpx;
   width: 60rpx;
 }
 
 .cardLine5 {
-  width: 90%;
+  width: 100%;
   height: 10%;
   z-index: 2;
   display: flex;
@@ -117,7 +112,7 @@ page {
 }
 
 .vipText1 {
-  width: 18%;
+  width: 25%;
   color: white;
   display: flex;
   align-items: center;
@@ -125,7 +120,7 @@ page {
 }
 
 .vipText2 {
-  width: 38%;
+  width: 25%;
   color: white;
   display: flex;
   justify-content: center;
@@ -133,14 +128,15 @@ page {
 }
 
 .vipText3 {
-  width: 26%;
+  width: 25%;
   color: white;
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .vipText4 {
-  width: 18%;
+  width: 25%;
   color: white;
   display: flex;
   justify-content: center;
@@ -151,7 +147,7 @@ page {
 .cardRightTriangle {
   width: 0;
   height: 0;
-  border-bottom: 150rpx solid #FF510B; 
+  border-bottom: 100rpx solid #FF510B; 
   border-left: 400rpx solid transparent;
   position: absolute;
   bottom: 0;
@@ -162,7 +158,7 @@ page {
 .cardLeftTriangle {
   width: 0;
   height: 0;
-  border-bottom: 200rpx solid #FF510B; 
+  border-bottom: 150rpx solid #FF510B; 
   border-right: 400rpx solid transparent;
   position: absolute;
   bottom: 0;
@@ -179,31 +175,19 @@ page {
 }
 
 
-
 /* assets */
 .assets {
   margin-top: 20rpx;
   height: 150rpx;
-  width: 100%;
+  width: 95%;
   border-radius: 20rpx;
   display: flex;
+  justify-content: space-between;
 }
 
-.assets-item-deposit {
-  width: 220rpx;
+.assetsItem {
+  width: 30%;
   height: 100%;
-}
-
-.assets-item-ticket {
-  width: 220rpx;
-  height: 100%;
-  margin-left: 15rpx;
-}
-
-.assets-item-remaining {
-  width: 220rpx;
-  height: 100%;
-  margin-left: 15rpx;
 }
 
 .assets-item-content {
@@ -218,9 +202,8 @@ page {
 .assets-item-content-up {
   width: 100%;
   height: 50%;
-  /* background-color: wheat; */
-  font-size: medium;
-  margin-left: 20rpx;
+  font-size: large;
+  margin-left: 40rpx;
   margin-top: 30rpx;
   font-weight: bold;
 }
@@ -230,162 +213,168 @@ page {
   height: 50%;
   font-size: 25rpx;
   color: #C7C7C7;
-  margin-left: 20rpx;
+  margin-left: 40rpx;
   margin-top: 10rpx;
   font-weight: 300;
 }
 
-/* signin */
+/* scan signin */
 
-.signin{
+.scanSignin {
   margin-top: 20rpx;
-  background-color: white;
-  width: 100%;
-  height: 180rpx;
-  border-radius: 20rpx;
-}
-
-.signin-u {
-  width: 100%;
-  height: 50%;
-  display: flex;
-}
-
-.signin-ul {
-  height: 100%;
-  width: 50%;
-  display: flex;
-}
-
-.signin-ul-text {
-  margin-top: 20rpx;
-  margin-left: 20rpx;
-  font-weight: bold;
-}
-
-.signin-ur {
-  width: 50%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.signin-ur-text {
-  margin-top: 25rpx;
-  margin-right: 15rpx;
-  font-size: 25rpx;
-  color: #C7C7C7;
-}
-
-.signin-d {
-  width: 100%;
-  height: 50%;
-  display: flex;
-  justify-content: center;
-}
-
-.signin-d-view {
-  background-color: #F6F6F6;
   width: 95%;
-  height: 60rpx;
-  border-radius: 20rpx;
+  height: 200rpx;
   display: flex;
+  justify-content: space-between;
 }
 
-.signin-d-view-text {
-  font-size: small;
-  color: #565656;
-  margin-top: 13rpx;
-  margin-left: 20rpx;
-}
-
-
-/* more */
-.more {
-  width: 100%;
-  height: 400rpx;
-  border-radius: 20rpx;
+.scanSigninItem {
+  width: 340rpx;
+  height: 100%;
   background-color: white;
-  margin-top: 20rpx;
-}
-
-.more-header {
-  width: 100%;
-  height: 25%;
-  display: flex;
-}
-
-.more-header-text {
-  margin-left: 20rpx;
-  margin-top: 20rpx;
-  font-weight: bold;
-}
-
-.more-list {
-  width: 100%;
-  height: 75%;
   border-radius: 20rpx;
   display: flex;
   flex-direction: column;
+}
+
+.scanSigninItemU {
+  width: 100%;
+  height: 60%;
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+}
+
+.scanSigninItemD {
+  width: 100%;
+  height: 40%;
+  font-size: small;
+  display: flex;
+  margin-left: 30rpx;
+  color: #999999;
+}
+
+/* more */
+.more {
+  width: 95%;
+  border-radius: 20rpx;
+  background-color: white;
+  margin-top: 20rpx;
+}
+
+.moreHeader {
+  height: 90rpx;
+  margin-left: 30rpx;
+  font-size: large;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.moreList {
+  width: 100%;
+  border-radius: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   background-color: white;
 }
 
-.more-list-line1 {
-  width: 100%;
-  height: 150rpx;
-  display: flex;
-}
-
-.more-list-item-order {
+.moreListItem {
   height: 150rpx;
   width: 150rpx;
+  margin: 10rpx;
+  border-radius: 20rpx;
 }
 
-.more-list-item-exchange {
-  height: 150rpx;
-  width: 150rpx;
-  margin-left: 30rpx;
-}
-
-.more-list-item-point {
-  height: 150rpx;
-  width: 150rpx;
-  margin-left: 30rpx;
-}
-
-.more-list-item-customer-service {
-  height: 150rpx;
-  width: 150rpx;
-  margin-left: 30rpx;
-}
-
-.more-list-item-content {
-  height: 100%;
-  width: 100%;
-}
-
-.more-list-item-content-u{
+.moreListItemU {
   height: 50%;
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: flex-end;
 }
 
-.more-list-item-content-u-icon {
-  width: 30rpx;
-  height: 40rpx;
-  margin-top: 30rpx;
+.moreListItemUIcon {
+  width: 36rpx;
+  height: 48rpx;
+  border-radius: 10rpx;
 }
 
-.more-list-item-content-d{
+.moreListItemUIconPoint {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 10rpx;
+}
+
+.moreListItemD {
   height: 50%;
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  color: #999999;
 }
 
-.more-list-item-content-d-text{
+.popBox {
+  width: 60%;
+  margin-left: 20%;
+  height: 500rpx;
+  position: absolute;
+  top: 350rpx;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+  box-shadow: 1rpx 10rpx 50rpx 0rpx #999999;
+}
+
+.popBoxHeader {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF6610;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+}
+
+.wxlogo {
+  width: 81rpx;
+  height: 81rpx;
+}
+
+.popBoxContent {
+  width: 100%;
+  height: 70%;
+  background-color: white;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popBoxContentText {
   font-size: small;
-  font-weight: 350;
+  color: #999999;
 }
 
+.popBoxContentButton {
+  margin-top: 60rpx;
+  background-color: #FF540C;
+  color: white;
+}
+
+.closeAdvice {
+  position: absolute;
+  top: 10rpx;
+  right: 20rpx;
+  color: white;
+}

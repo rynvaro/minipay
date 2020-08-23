@@ -1,0 +1,75 @@
+<!--miniprogram/pages/accountdetailed/accountdetailed.wxml-->
+
+<view class="box">
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+
+    <view class="item">
+        <view class="itemU">
+            <text class="itemUL">充值金额</text>
+            <text class="itemUM">+500元</text>
+            <text class="itemUR">2020.08.22 15:04:00</text>
+        </view>
+        <view class="itemD"></view>
+    </view>
+</view>

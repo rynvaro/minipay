@@ -1,0 +1,84 @@
+/* miniprogram/pages/balance/balance.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    margin-top: 90rpx;
+    width: 95%;
+    height: 300rpx;
+    background: linear-gradient(to bottom right,#FF6610, #c44007);
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLin1 {
+    height: 150rpx;
+    width: 150rpx;
+    position: relative;
+    top: -110rpx;
+    border-radius: 200rpx;
+    
+}
+
+.cardLin2 {
+    position: relative;
+    top: -90rpx;
+    width: 100%;
+    height: 50rpx;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLin3 {
+    position: relative;
+    top: -90rpx;
+    width: 100%;
+    height: 50rpx;
+    color: wheat;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item {
+    margin-top: 20rpx;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+
+.itemU {
+    height: 60rpx;
+    display: flex;
+}
+
+.itemUL {
+    width: 95%;
+    margin-left: 20rpx;
+    font-weight: bold;
+}
+
+.itemUR {
+    margin-top: 17rpx;
+    width: 20rpx;
+    height: 20rpx;
+    border-top: 5rpx solid #999999;
+    border-right: 5rpx solid #999999;
+    transform: rotate(45deg);
+    margin-right: 20rpx;
+}
+
+.itemD {
+    height: 4rpx;
+    background: linear-gradient(to right,#bbbbbb, #FFFFFF);
+}

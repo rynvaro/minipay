@@ -1,0 +1,27 @@
+<!--miniprogram/pages/map/map.wxml-->
+
+<map class="map" bgColor="#F6F6F6AA">
+    <view class="backButton">
+        <image class="backButtonImage" src="../../images/arrow.png"></image>
+    </view>
+
+    <view class="searchButton">
+        <image class="backButtonImage" src="../../images/search.png"></image>
+    </view>
+
+    <view class="msgButton">
+        <image class="backButtonImage" src="../../images/customer-service.png"></image>
+    </view>
+
+    <view class="locationButton">
+        <image class="backButtonImage" src="../../images/events.png"></image>
+    </view>
+</map>
+
+<view class="mapText">
+    <text class="mapTextHeader">北京麦当劳（西山分店）</text>
+    <text class="mapTextAddress">北纬路甲一号208楼</text>
+    <text class="mapTextAddress">出门右拐前行100米</text>
+    <view class="mapTextButton">查找路线</view>
+</view>
+
