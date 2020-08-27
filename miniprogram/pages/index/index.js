@@ -4,6 +4,12 @@ const app = getApp();
 Page({
   data: {
     show: false,
+    user: {
+      icon:'',
+      name: '登录/注册',
+      exp: 0,
+      expTotal: 6000,
+    }
   },
 
   onLoad: function() {

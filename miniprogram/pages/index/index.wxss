@@ -32,6 +32,7 @@ page {
   height: 120rpx;
   width: 120rpx;
   border-radius: 200rpx;
+  background-color: white;
   z-index: 2;
 }
 

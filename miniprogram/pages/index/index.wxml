@@ -8,21 +8,21 @@
 
 <view class="card">
     <view class="cardLine1">
-      <image class="cardLine1Icon" src="../../images/basicprofile.jpeg"></image>
+      <image class="cardLine1Icon" src="{{user.icon}}"></image>
     </view>
-    <text class="cardLine2">柒小仔</text>
+    <text class="cardLine2">{{user.name}}</text>
     <view class="cardLine3" bindtap="vipexperience">
       <text class="cardLine3T">会员经验</text>
-      <text class="cardLine3V">1025/6000</text>
+      <text class="cardLine3V">{{user.exp}}/{{user.expTotal}}</text>
       <text class="cardLine3Arrow">></text>
     </view>
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
-      <progress class="vipProgress" percent="60" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="true" />
+      <progress class="vipProgress" percent="{{ (user.exp >= 0 && user.exp <= 2000) ? user.exp/2000*100 : 100}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp >0 && user.exp <= 2000) ? true : false}}" />
       <image class="vipIcon" src="../../images/vip2.png"></image>
-      <progress class="vipProgress" percent="0" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" />
+      <progress class="vipProgress" percent="{{(user.exp <= 2000 ? 0 :(user.exp <= 4000 ? (user.exp-2000)/2000*100 : 100 ))}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp > 2000 && user.exp <= 4000) ? true : false}}" />
       <image class="vipIcon" src="../../images/vip3.png"></image>
-      <progress class="vipProgress" percent="0" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" />
+      <progress class="vipProgress" percent="{{(user.exp <= 4000 ? 0 :(user.exp <= 6000 ? (user.exp-4000)/2000*100 : 100 ))}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp > 4000 && user.exp <= 6000) ? true : false}}" />
       <image class="vipIcon" src="../../images/vip4.png"></image>
     </view>
     <view class="cardLine5">
