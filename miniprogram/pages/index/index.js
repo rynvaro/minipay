@@ -5,7 +5,7 @@ Page({
   data: {
     show: false,
     user: {
-      icon:'',
+      avatarUrl:'',
       name: '登录/注册',
       exp: 0,
       expTotal: 6000,
@@ -14,6 +14,18 @@ Page({
 
   onLoad: function() {
     
+  },
+
+  loginOrRegister: function(e) {
+    console.log(e)
+    this.setData({
+      user: {
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        name: e.detail.userInfo.nickName,
+        exp: 0,
+        expTotal: 6000,
+      }
+    })
   },
 
   vipexperience: function(){

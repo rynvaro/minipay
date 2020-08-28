@@ -1,16 +1,10 @@
 <!--index.wxml-->
 
-
-<!-- <progress percent="40" stroke-width="12" />
-<progress percent="60" color="pink" />
-<progress percent="80" active /> -->
-
-
 <view class="card">
     <view class="cardLine1">
-      <image class="cardLine1Icon" src="{{user.icon}}"></image>
+      <image class="cardLine1Icon" src="{{user.avatarUrl}}"></image>
     </view>
-    <text class="cardLine2">{{user.name}}</text>
+    <button open-type="getUserInfo" bindgetuserinfo="loginOrRegister" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
       <text class="cardLine3T">会员经验</text>
       <text class="cardLine3V">{{user.exp}}/{{user.expTotal}}</text>
