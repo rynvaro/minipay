@@ -4,11 +4,11 @@
     <view class="cardLine1">
       <image class="cardLine1Icon" src="{{user.avatarUrl}}"></image>
     </view>
-    <button open-type="getUserInfo" bindgetuserinfo="loginOrRegister" class="cardLine2">{{user.name}}</button>
+    <button open-type="getUserInfo" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
       <text class="cardLine3T">会员经验</text>
       <text class="cardLine3V">{{user.exp}}/{{user.expTotal}}</text>
-      <text class="cardLine3Arrow">></text>
+      <text class="cardLine3Arrow"></text>
     </view>
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
@@ -54,7 +54,7 @@
 
   <!-- scan signin -->
 
-<view class="scanSignin">
+<view class="scanSignin" bindtap="scan">
   <view class="scanSigninItem">
     <text class="scanSigninItemU">扫描付款</text>
     <text class="scanSigninItemD">扫描立即支付</text>

@@ -43,14 +43,13 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: small;
 }
 
 .cardLine3 {
   width: 60%;
   height: 20%;
   z-index: 2;
-  font-size: xx-small;
+  font-size: small;
   color: wheat;
   display: flex;
   justify-content: center;
@@ -74,10 +73,12 @@ page {
 }
 
 .cardLine3Arrow {
-  width: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 10rpx;
+  height: 10rpx;
+  border-top: 5rpx solid wheat;
+  border-right: 5rpx solid wheat;
+  transform: rotate(45deg);
+  margin-right: 20rpx;
   z-index: 2;
 }
 
@@ -317,6 +318,7 @@ page {
   justify-content: center;
   align-items: center;
   color: #999999;
+  font-size: small;
 }
 
 .popBox {
