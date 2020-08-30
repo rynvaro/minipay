@@ -1,40 +1,42 @@
 <!--miniprogram/pages/order/order.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
 
 <view class="detailHeader">
-  <image class="detailHeaderLImage" src="../../images/logo.png"></image>
-  <text class="detailHeaderRText">北京麦当劳（西山店）</text>
+  <image class="detailHeaderLImage" src="{{preOrder.productImage}}"></image>
+  <text class="detailHeaderRText">{{preOrder.storeName}}</text>
 </view>
 
 <view class="detailItemBox">
   <view class="detailItem">
     <text class="detailItemKey">金额</text>
-    <text class="detailItemValue">{{order.amount}}</text>
+    <text class="detailItemValue">{{filters.toFixed(payAmount)}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">折扣</text>
-    <text class="detailItemValue">{{order.discount}}</text>
+    <text class="detailItemValue">{{filters.toFixed(preOrder.realDiscount)}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">本单已减</text>
-    <text class="detailItemValue">{{order.rebate}}</text>
+    <text class="detailItemValue">{{preOrder.rebate}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">应付</text>
-    <text class="detailItemValue">{{order.realAmount}}</text>
+    <text class="detailItemValue">{{preOrder.realAmount}}</text>
   </view>
 
-  <view class="detailItem">
+  <view class="detailItem" bindtap="select">
     <text class="detailItemKey">优惠券</text>
-    <text class="detailItemValue">{{order.coupon}}</text>
+    <text wx:if="{{couponSelected}}" class="detailItemValue">{{coupon.coupon.value/100}}</text>
+    <text wx:else class="detailItemValue">点击选择</text>
   </view>
 </view>
 
 <view class="totalIncome">
   <text class="totalIncomeKey">合计待支付</text>
-  <text class="totalIncomeValue">¥{{order.totalAmount}}</text>
+  <text class="totalIncomeValue">¥{{preOrder.totalAmount}}</text>
   <view class="totalIncomePayButton" bindtap="pay">立即支付</view>
 </view>
 
@@ -44,12 +46,12 @@
     <text class="popBoxHeaderR">请输入支付密码</text>
   </view>
 
-  <text class="popBoxLin1">麦当劳</text>
-  <text class="popBoxLin2">¥65.99</text>
+  <text class="popBoxLin1">{{preOrder.storeName}}</text>
+  <text class="popBoxLin2">¥{{preOrder.totalAmount}}</text>
   <view class="popBoxLin3"></view>
   <view class="popBoxLin4">
     <text class="popBoxLin4L">支付方式</text>
-    <text class="popBoxLin4R">微信</text>
+    <text class="popBoxLin4R">余额</text>
     <view class="popBoxLin4Arrow"></view>
   </view>
   <view class="popBoxLin5">

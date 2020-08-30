@@ -6,9 +6,11 @@ Page({
      */
     data: {
         // input默认是1
-        num: 1,
+        num: 1,// 兑换份数
         // 使用data数据对象设置样式名
         minusStatus: 'disabled',
+        coupon: {},
+        user: {},
     },
     /* 点击减号 */
 	bindMinus: function() {
@@ -48,8 +50,52 @@ Page({
     },
     
     doExchange: function() {
-        wx.showToast({
-          title: '兑换成功',
+        if (this.data.num * this.data.coupon.point > this.data.user.point) {
+            wx.showToast({
+                title: '您的积分不足',
+              })
+            return 
+        }
+
+        let thiz = this
+        wx.cloud.callFunction({
+            name:"zdoexchange",
+            data: {
+                cnt: thiz.data.num,
+                couponID: thiz.data.coupon.id,
+            },
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                wx.showModal({
+                    title: '提示',
+                    content: '兑换成功！',
+                    success (res) {
+                      if (res.confirm) {
+                        if (thiz.data.coupon.type == 1) {
+                            wx.navigateTo({
+                                url: '../coupon/coupon',
+                              })
+                        }else if (thiz.data.coupon.type == 2) {
+                            wx.navigateTo({
+                                url: '../vipexperience/vipexperience',
+                            })
+                        }
+                        
+                      } else if (res.cancel) {
+                        console.log('用户点击取消')
+                        thiz.onLoad()// TODO
+                      }
+                    }
+                  })
+            },
+            fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+                wx.showToast({
+                  title: '兑换失败',
+                })
+            }
         })
     },
 
@@ -57,7 +103,22 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.setData({coupon: JSON.parse(options.coupon)})
+        let thiz = this
+        wx.cloud.callFunction({
+            name:"zgetuserinfo",
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                thiz.setData({
+                    user: res.result.data.data,
+                })
+            },
+            fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+            }
+        })
     },
 
     /**

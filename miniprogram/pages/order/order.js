@@ -14,21 +14,87 @@ Page({
      * 页面的初始数据
      */
     data: {
-        order: {
-            amount: 66.01,
-            discount: 9.8,
-            rebate: 2.3,
-            realAmount:32.3,
-            coupon: 3.9,
-            totalAmount: 22.90,
-        }
+        payAmount: 0,
+        preOrder: {
+          realDiscount: 0.00,
+          rebate: 0.00,
+          realAmount: 0.0,
+        },
+
+        couponSelected: false,
+        coupon: {},
+        merchantID: '',
+    },
+
+    select: function() {
+      wx.navigateTo({
+        url: '../coupon/coupon',
+      })
+    },
+
+    inputChange: function(e) {
+      if (e.detail.length==6) {
+        wx.showLoading({
+          title: 'loading...',
+        })
+        let thiz = this
+      wx.cloud.callFunction({
+          name:"zdorderpay",
+          data: {
+            merchantID: thiz.data.merchantID,
+            storeID: thiz.data.merchantID,
+            payAmount: thiz.data.payAmount,
+            couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
+            password: e.detail,
+          },
+          success(res) {
+              console.log(res)
+              wx.hideLoading()
+              wx.showModal({
+                title: '提示',
+                content: '支付成功',
+                success (res) {
+                  wx.switchTab({
+                    url: '../index/index',
+                  })
+                }
+              })
+          },
+          fail: function(e) {
+            console.log(e.errMsg)
+            wx.hideLoading()
+          }
+      })
+      }
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+      this.setData({payAmount: parseFloat(options.payAmount),merchantID: options.merchantID})
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      
+      wx.cloud.callFunction({
+          name:"zrebuildorder",
+          data: {
+            merchantID: options.merchantID,
+            storeID: options.merchantID,
+            payAmount: thiz.data.payAmount,
+          },
+          success(res) {
+              console.log(res)
+              thiz.setData({preOrder: res.result.data})
+              wx.hideLoading()
+          },
+          fail: function(e) {
+            console.log(e.errMsg)
+            wx.hideLoading()
+          }
+      })
     },
 
     /**
@@ -41,8 +107,11 @@ Page({
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow: function () {
-
+    onShow: function (e) {
+      if (this.data.couponSelected) {
+        this.data.preOrder.totalAmount = this.data.preOrder.totalAmount-this.data.coupon.coupon.value/100
+        this.setData({preOrder: this.data.preOrder})
+      }
     },
 
     /**

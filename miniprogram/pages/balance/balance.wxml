@@ -1,9 +1,9 @@
 <!--miniprogram/pages/balance/balance.wxml-->
 
 <view class="card">
-    <image class="cardLin1" src="../../images/basicprofile.jpeg"></image>
-    <text class="cardLin2">小柒柒</text>
-    <text class="cardLin3">当前余额：123.39</text>
+    <image class="cardLin1" src="{{user.avatarUrl}}"></image>
+    <text class="cardLin2">{{user.name}}</text>
+    <text class="cardLin3">当前余额：{{user.balance/100}}</text>
 </view>
 
 

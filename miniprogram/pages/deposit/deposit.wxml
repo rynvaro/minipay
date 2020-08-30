@@ -5,7 +5,7 @@
   </view>
   <view class="withdrawContent">
     <text class="withdrawContextText">￥</text>
-    <input bindinput="setWithdrawAmount" class="withdrawContextInput" placeholder-class="withdrawContextInputPlaceholder" type="number" placeholder="输入充值金额"></input>
+    <input bindinput="setDepositAmount" class="withdrawContextInput" placeholder-class="withdrawContextInputPlaceholder" type="number" placeholder="输入充值金额"></input>
   </view>
 </view>
 
@@ -18,7 +18,7 @@
   </view>
   <view class="popBoxAmount">
     <text class="popBoxAmountL">￥</text>
-    <text class="popBoxAmountR">1500</text>
+    <text class="popBoxAmountR">{{depositAmount}}</text>
   </view>
   <view class="popBoxDetail">
     <view class="popBoxDetailItemU">
@@ -32,13 +32,13 @@
     </view>
   </view>
 
-  <view class="sms">
-    <view class="smsPhone">{{phone}}</view>
+  <!-- <view class="sms">
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="smsPhone">{{phone}}</button>
     <view class="smsGetCode">
       <input type="number" bindinput="setCode" class="getCodeInput" placeholder="输入验证码"></input>
       <view class="getCodeButton" bindtap="sendSMS" >{{label}}</view>
     </view>
-  </view>
+  </view> -->
 
-  <button class="next" bindtap="submitWithdraw">立即充值</button>
+  <button class="next" bindtap="submitDeposit">立即充值</button>
 </view>

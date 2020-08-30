@@ -4,84 +4,47 @@
     <block wx:for="{{bannerUrls}}" wx:key="id">
       <swiper-item>
         <image mode="aspectFill" src="{{item}}" class="bannerItem"/>    
-        <!-- <video src="{{item}}"></video> -->
      </swiper-item>
     </block>
   </swiper>
 </view>
 
 <view class="box">
-    <view class="boxItem" bindtap="pointexchanging">
-        <view class="boxItemU">
-            <view class="boxItemUContent">
-                <view class="boxItemUContentU">
-                    <view class="boxItemUContentUL">1</view>
-                    <view class="boxItemUContentUR">元</view>
+    <block wx:for="{{coupons}}" wx:key="id">
+        <view wx:if="{{item.type==1}}" class="boxItem" bindtap="pointexchanging" data-id="{{item.id}}">
+            <view wx:if="{{item.type==1}}" class="boxItemU">
+                <view class="boxItemUContent">
+                    <view class="boxItemUContentU">
+                        <view class="boxItemUContentUL">{{item.value/100}}</view>
+                        <view class="boxItemUContentUR">元</view>
+                    </view>
+                    <view class="boxItemUContentD">优惠券</view>
                 </view>
-                <view class="boxItemUContentD">优惠券</view>
             </view>
-        </view>
-        <view class="boxItemD">
-            <text class="boxItemDLin1">1元店铺优惠券</text>
-            <view class="boxItemDLin2">
-                <text class="boxItemDLin2Row1">10</text>
-                <text class="boxItemDLin2Row2">积分</text>
-            </view>
-        </view>
-    </view>
-
-    <view class="boxItem" bindtap="pointexchanging">
-        <view class="boxItemU">
-            <view class="boxItemUContent">
-                <view class="boxItemUContentU">
-                    <view class="boxItemUContentUL">2</view>
-                    <view class="boxItemUContentUR">元</view>
+            <view class="boxItemD">
+                <text class="boxItemDLin1">{{item.value/100}}元店铺优惠券</text>
+                <view class="boxItemDLin2">
+                    <text class="boxItemDLin2Row1">{{item.point}}</text>
+                    <text class="boxItemDLin2Row2">积分</text>
                 </view>
-                <view class="boxItemUContentD">优惠券</view>
             </view>
         </view>
-        <view class="boxItemD">
-            <text class="boxItemDLin1">2元店铺优惠券</text>
-            <view class="boxItemDLin2">
-                <text class="boxItemDLin2Row1">20</text>
-                <text class="boxItemDLin2Row2">积分</text>
-            </view>
-        </view>
-    </view>
 
-    <view class="boxItem" bindtap="pointexchanging">
-        <view class="boxItemU">
-            <view class="boxItemUContent">
-                <view class="boxItemUContentU">
-                    <view class="boxItemUContentUL">5</view>
-                    <view class="boxItemUContentUR">元</view>
+        <view wx:else class="boxItem" bindtap="pointexchanging" data-id="{{item.id}}">
+            <view class="boxItemU">
+                <view class="boxItemUContent">
+                    <text class="boxItemUContentVip">会员</text>
+                    <text class="boxItemUContentVip">经验</text>
                 </view>
-                <view class="boxItemUContentD">优惠券</view>
+            </view>
+            <view class="boxItemD">
+                <text class="boxItemDLin1">会员经验</text>
+                <view class="boxItemDLin2">
+                    <text class="boxItemDLin2Row1">{{item.point}}</text>
+                    <text class="boxItemDLin2Row2">积分</text>
+                </view>
             </view>
         </view>
-        <view class="boxItemD">
-            <text class="boxItemDLin1">5元店铺优惠券</text>
-            <view class="boxItemDLin2">
-                <text class="boxItemDLin2Row1">50</text>
-                <text class="boxItemDLin2Row2">积分</text>
-            </view>
-        </view>
-    </view>
-
-    <view class="boxItem" bindtap="pointexchanging">
-        <view class="boxItemU">
-            <view class="boxItemUContent">
-                <text class="boxItemUContentVip">会员</text>
-                <text class="boxItemUContentVip">经验</text>
-            </view>
-        </view>
-        <view class="boxItemD">
-            <text class="boxItemDLin1">会员经验</text>
-            <view class="boxItemDLin2">
-                <text class="boxItemDLin2Row1">1</text>
-                <text class="boxItemDLin2Row2">积分</text>
-            </view>
-        </view>
-    </view>
+    </block>
 
 </view>

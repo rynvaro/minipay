@@ -63,6 +63,7 @@ page {
 .hLine1Icon {
     height: 80rpx;
     width: 80rpx;
+    background-color: white;
     border-radius: 200rpx;
 }
 

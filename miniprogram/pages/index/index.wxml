@@ -35,7 +35,7 @@
   <view class="assetsItem" bindtap="balance">
     <view class="assets-item-content">
       <text class="assets-item-content-up">余额</text>
-      <text class="assets-item-content-down">123.69</text>
+      <text class="assets-item-content-down">{{user.balance/100}}</text>
     </view>
   </view>
   <view class="assetsItem" bindtap="coupon">
@@ -99,12 +99,12 @@
       <text class="moreListItemD">意见反馈</text>
     </view>
 
-    <view class="moreListItem" bindtap="storeregister">
+    <!-- <view class="moreListItem" bindtap="storeregister">
       <view class="moreListItemU">
         <image class="moreListItemUIcon" src="../../images/bizreg.png"></image>
       </view>
-      <text class="moreListItemD">商户入住</text>
-    </view>
+      <text class="moreListItemD">商户入驻</text>
+    </view> -->
 
   </view>
 

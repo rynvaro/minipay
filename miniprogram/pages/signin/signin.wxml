@@ -1,19 +1,19 @@
 <!--miniprogram/pages/signin/signin.wxml-->
-
+<wxs src="../../utils/filter.wxs" module="filters"/>
 <view class="card">
-    <view class="cardLin1">
-        <text class="cardLin1Text"> 当前积分：2323</text>
+    <view class="cardLin1" bindtap="point">
+        <text class="cardLin1Text"> 当前积分：{{user.point}}</text>
         <view class="cardLin1Arrow"></view>
     </view>
     <view class="cardLin2">
-        <view class="box">0</view>
-        <view class="box">0</view>
-        <view class="box">1</view>
+        <view class="box">{{filters.parseToInt((user.signs%1000)/100)}}</view>
+        <view class="box">{{filters.parseToInt((user.signs%100)/10)}}</view>
+        <view class="box">{{user.signs%10}}</view>
         <text class="cardDay">天</text>
     </view>
 </view>
 
-
+<!-- 
 <view class="dayBox">
     <view class="dayItem">
         <text class="dayItemU">+1</text>
@@ -49,13 +49,13 @@
         <text class="dayItemU">+20</text>
         <text class="dayItemD">第七天</text>
     </view>
-</view>
+</view> -->
 
 
-<button class="button">立即签到</button>
+<button class="button" bindtap="sign" disabled="{{disable}}">立即签到</button>
 
 
 <view class="role">
     <text class="roleTile">签到规则</text>
-    <text class="roleContent">以一个礼拜为周期连续签到，用户连续签到会得到积分，每日签到会得到不同数量的积分，积分可兑换优惠券，第一天1积分，完成7天签到的循环；中间断签后，奖励重置，从1积分开始计算。</text>
+    <text class="roleContent">新用户前三天签到获：100，200，300积分，共计600积分，可兑换经验600，第四天开始：每天2个积分。</text>
 </view>

@@ -3,14 +3,23 @@
 <view class="header">
     <view class="hLine">
         <view class="hLine1">
-            <image class="hLine1Icon" src="../../images/basicprofile.jpeg"></image>
-            <text class="hLine1Text">小柒柒</text>
+            <image class="hLine1Icon" src="{{user.avatarUrl}}"></image>
+            <text class="hLine1Text">{{user.name}}</text>
         </view>
-        <progress class="hLine2" percent="30" activeColor="white" backgroundColor="#FF2B06" stroke-width="2" active="true" />
+        <progress class="hLine2" percent="{{user.exp/user.expTotal*100}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="2" active="true" />
         <view class="hLine3">
-            <image class="hLine3VipIcon" src="../../images/vip2.png"></image>
-            <text class="hLine3VipText">黄金会员</text>
-            <text class="hLine3ExperienceText">会员经验  1025/6000</text>
+
+            <image wx:if="{{user.exp >=0 && user.exp < 2000}}" class="hLine3VipIcon" src="../../images/vip1.png"></image>
+            <image wx:if="{{user.exp>=2000 && user.exp < 4000}}" class="hLine3VipIcon" src="../../images/vip2.png"></image>
+            <image wx:if="{{user.exp>=4000 && user.exp < 6000}}" class="hLine3VipIcon" src="../../images/vip3.png"></image>
+            <image wx:if="{{user.exp >= 6000}}" class="hLine3VipIcon" src="../../images/vip4.png"></image>
+
+            <text wx:if="{{user.exp >=0 && user.exp < 2000}}" class="hLine3VipText">普通会员</text>
+            <text wx:if="{{user.exp>=2000 && user.exp < 4000}}" class="hLine3VipText">黄金会员</text>
+            <text wx:if="{{user.exp>=4000 && user.exp < 6000}}" class="hLine3VipText">铂金会员</text>
+            <text wx:if="{{user.exp >= 6000}}" class="hLine3VipText">钻石会员</text>
+            <text class="hLine3ExperienceText">会员经验  {{user.exp}}/{{user.expTotal}}</text>
+
             <view class="tips" bindtap="showTips">
                 <view class="tipsContent">?</view>
             </view>

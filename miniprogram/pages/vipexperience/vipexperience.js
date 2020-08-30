@@ -1,11 +1,17 @@
 // miniprogram/pages/vipexperience/vipexperience.js
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        user: {},
         tipsBoxHidden: true,
+        navBarHeight: app.globalData.navBarHeight,
+        menuRight: app.globalData.menuRight,
+        menuBotton: app.globalData.menuBotton,
+        menuHeight: app.globalData.menuHeight,
     },
 
     showTips: function(e){
@@ -20,7 +26,24 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        wx.showLoading({
+            title: 'loading...',
+          })
+        let thiz = this
+        wx.cloud.callFunction({
+            name:"zgetuserinfo",
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                thiz.setData({
+                    user: res.result.data.data,
+                })
+            },
+            fail: function(e) {
+            wx.hideLoading()
+            console.log(e)
+            }
+        })
     },
 
     /**

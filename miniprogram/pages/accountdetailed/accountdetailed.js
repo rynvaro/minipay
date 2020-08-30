@@ -5,14 +5,29 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        deposits: []
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zdeposits",
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  thiz.setData({deposits: res.result.data})
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
     },
 
     /**

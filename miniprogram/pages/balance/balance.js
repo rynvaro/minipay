@@ -5,7 +5,9 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+      user:{
+        balance: 0,
+      }
     },
 
     deposit: function() {
@@ -38,7 +40,24 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      wx.cloud.callFunction({
+          name:"zgetuserinfo",
+          success(res) {
+              wx.hideLoading()
+              console.log(res)
+              thiz.setData({
+                  user: res.result.data.data,
+              })
+          },
+          fail: function(e) {
+            wx.hideLoading()
+            console.log(e)
+          }
+      })
     },
 
     /**

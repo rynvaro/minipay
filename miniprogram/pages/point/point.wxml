@@ -1,13 +1,13 @@
 <!--miniprogram/pages/point/point.wxml-->
-
+<wxs src="../../utils/filter.wxs" module="filters"/>
 <view class="header">
     <view class="hLine">
         <view class="hLine1">
-            <image class="hLine1Icon" src="../../images/basicprofile.jpeg"></image>
-            <text class="hLine1Text">小柒柒</text>
+            <image class="hLine1Icon" src="{{user.avatarUrl}}"></image>
+            <text class="hLine1Text">{{user.name}}</text>
         </view>
         <view class="hLine3">
-            <text class="hLine3ExperienceText">我的积分  1025</text>
+            <text class="hLine3ExperienceText">我的积分  {{user.point}}</text>
             <view class="tips" bindtap="showTips">
                 <view class="tipsContent">?</view>
             </view>
@@ -19,85 +19,20 @@
     <text>积分获取方式</text>
     <text>签到/活动/拉新</text>
     <text>1积分=1经验</text>
-    <view class="tipsBoxClose" bindtap="hideTips">X</view>
+    <view class="tipsBoxClose" bindtap="hideTips">×</view>
 </view>
 
 <view class="history">
-    <view class="historyItem">
+    <view wx:for="{{histories}}" wx:key="id" class="historyItem">
         <view class="historyItemU">
             <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+                <text wx:if="{{item.type==1}}" class="historyItemULText">签到</text>
+                <text wx:if="{{item.type==2}}" class="historyItemULText">兑换优惠券</text>
+                <text wx:if="{{item.type==3}}" class="historyItemULText">兑换会员经验</text>
+                <text class="historyItemULTime">{{filters.formatTime(item.timestamp)}}</text>
             </view>
-            <text class="historyItemUR">+5</text>
+            <text class="historyItemUR">{{item.action}}{{item.value}}</text>
         </view>
         <view class="historyItemD"></view>
     </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">签到</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
 </view>

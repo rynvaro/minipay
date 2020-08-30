@@ -73,6 +73,13 @@ page {
     display: flex;
 }
 
+.couponBoxUVIP {
+    color: white;
+    font-size: 60rpx;
+    line-height: 60rpx;
+    font-weight: 900;
+}
+
 .couponBoxUL {
     width: 60%;
     height: 100%;

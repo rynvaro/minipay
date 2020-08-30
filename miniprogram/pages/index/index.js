@@ -15,30 +15,38 @@ Page({
             language: '',
             nickName: '',
             province: '',
+            balance: 1,
+            point: 0,
+            signs: 0,
+            signDate: '',
         },
         login: false,
     },
 
     onLoad: function() {
-      wx.showLoading({
-        title: 'loading...',
-      })
-      let thiz = this
-      wx.cloud.callFunction({
-          name:"zlogin",
-          success(res) {
-              wx.hideLoading()
-              console.log(res)
-              thiz.setData({
-                  user: res.result.data.data,
-                  login: true,
-              })
-          },
-          fail: function(e) {
-            wx.hideLoading()
-            console.log(e)
-          }
-      })
+      
+    },
+
+    onShow: function(e) {
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zlogin",
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  thiz.setData({
+                      user: res.result.data.data,
+                      login: true,
+                  })
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
     },
 
     register: function(e) {
@@ -87,25 +95,18 @@ Page({
         //     success (res) {
         //         console.log(res)
         //         wx.navigateTo({
-        //           url: '../map/map',
+        //           url: '../scanpay/scanpay?merchantID='+res.result,
         //         })
         //     }
         // })
-        wx.requestPayment({
-            timeStamp: '',
-            nonceStr: '',
-            package: '',
-            signType: 'MD5',
-            paySign: '',
-            package:'xxxx',
-            success (res) { },
-            fail (res) { }
+        wx.navigateTo({
+            url: '../scanpay/scanpay?merchantID=13161686240',
           })
     },
 
     vipexperience: function(){
         wx.navigateTo({
-            url: '../vipexperience/vipexperience',
+            url: '../vipexperience/vipexperience?user='+JSON.stringify(this.data.user),
         })
     },
 

@@ -30,9 +30,9 @@ Page({
     },
 
     orderDetail: function(e) {
-        wx.navigateTo({
-            url: '../order/order?id='+e.currentTarget.dataset.id,
-        })
+        // wx.navigateTo({
+        //     url: '../order/order?id='+e.currentTarget.dataset.id,
+        // })
     },
 
     search: function(e) {

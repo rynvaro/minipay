@@ -67,7 +67,7 @@ page {
 .cardLine3V {
   width: 40%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   z-index: 2;
 }

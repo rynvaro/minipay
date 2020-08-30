@@ -1,18 +1,49 @@
 // miniprogram/pages/coupon/coupon.js
+
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        icoupons: [],
+    },
 
+    use: function(e){
+      var pages = getCurrentPages();
+      var prevPage = pages[pages.length - 2];
+
+      for (var i = 0;i<this.data.icoupons.length;i++) {
+        if (e.currentTarget.dataset.id==this.data.icoupons[i]._id){
+          prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true})
+          wx.navigateBack({
+            delta: 0,
+          })
+        }
+      }
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+            wx.cloud.callFunction({
+                name:"zicoupons",
+                success(res) {
+                    wx.hideLoading()
+                    console.log(res)
+                    thiz.setData({icoupons: res.result.data})
+                },
+                fail: function(e) {
+                  wx.hideLoading()
+                  console.log(e)
+                }
+            })
     },
 
     /**

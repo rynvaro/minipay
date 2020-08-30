@@ -18,8 +18,9 @@ Page({
     show: false,
     animation: animation,
     balance: 0,
-    withdrawAmount: 0,
-    phone: '',
+    depositAmount: 0,
+    phone: '点击获取手机号',
+    phoned: false,
     code: '',
     codeID: '',
     sendSMSClicked: false,
@@ -27,13 +28,39 @@ Page({
     label: '获取验证码',
   },
 
+  getPhoneNumber: function(e){
+    console.log(e)
+    if (!e.detail.cloudID) {
+      return
+    }
+    wx.showLoading({
+      title: 'loading...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+        name:"zgetphonenum",
+        data: {
+          phoneData: wx.cloud.CloudID(e.detail.cloudID),
+        },
+        success(res) {
+            console.log(res)
+            thiz.setData({
+              phone: res.result.phoneData.data.phoneNumber,
+              phoned: true,
+            })
+            wx.hideLoading()
+        },
+        fail: function(e) {
+          console.log(e)
+          wx.hideLoading()
+        }
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      phone: app.globalData.phone,
-    })
   },
 
   /**
@@ -105,13 +132,13 @@ Page({
 
   },
 
-  setWithdrawAmount: function(e) {
+  setDepositAmount: function(e) {
     this.setData({
-      withdrawAmount: e.detail.value
+      depositAmount: e.detail.value
     })
   },
 
-  submitWithdraw: function(e) {
+  submitDeposit: function(e) {
 
     // if (!this.data.code) {
     //   wx.showToast({
@@ -120,67 +147,112 @@ Page({
     //   return
     // }
 
-    // if (this.data.withdrawAmount<=0) {
-    //   wx.showToast({
-    //     title: '请输入提现金额',
-    //   })
-    //   return
-    // }
+    console.log(parseFloat(this.data.depositAmount))
 
-    // let thiz = this
 
-    // wx.showLoading({
-    //   title: '正在提交...',
-    // })
+    if (this.data.depositAmount<=0) {
+      wx.showToast({
+        title: '请输入充值金额',
+      })
+      return
+    }
 
-    // var promise = new Promise(function (resolve, reject) {
-    //     wx.cloud.callFunction({
-    //         name:"validateCode",
-    //         data: {
-    //           code: thiz.data.code,
-    //           codeID: thiz.data.codeID,
-    //         },
-    //         success(res) {
-    //             console.log(res)
-    //             resolve(true)
-    //         },
-    //         fail: function(e) {
-    //           console.log(e.errMsg)
-    //           resolve(false)
-    //         }
-    //     })
-    //   });
+    let thiz = this
 
-    //   promise.then(function(validateOK){
-    //     if (!validateOK) {
-    //       wx.hideLoading()
-    //       wx.showToast({
-    //         title: '验证码错误',
-    //       })
-    //     } else {
-    //         wx.cloud.callFunction({
-    //           name:"submitWithdraw",
-    //           data: {
-    //             phone: app.globalData.phone,
-    //             withdrawAmount: parseInt(thiz.data.withdrawAmount),
-    //           },
-    //           success(res) {
-    //               console.log(res)
-    //               wx.hideLoading()
-    //               wx.showToast({
-    //                 title: '已提交',
-    //                 success: function(){
-    //                   setTimeout(function(){wx.navigateBack()},500)
-    //                 }
-    //               })
-    //           },
-    //           fail: function(e) {
-    //             console.log(e.errMsg)
-    //             wx.hideLoading()
-    //           }
-    //         })
-    //     }
-    //   })
+    wx.showLoading({
+      title: '正在提交...',
+    })
+
+    /**
+     * 1. 验证码
+     * 2. 预下单，获取payment
+     * 3. 调用requestPayment
+     * 4. 等待支付结果确认
+     * 5. 支付反馈
+     */
+
+    var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"validateCode",
+            data: {
+              code: thiz.data.code,
+              codeID: thiz.data.codeID,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(true) // TODO maybe we should not use code
+            }
+        })
+      });
+
+      promise = promise.then(function(validateOK){
+        if (!validateOK) {
+          wx.hideLoading()
+          wx.showToast({
+            title: '验证码错误',
+          })
+        } else {
+            wx.cloud.callFunction({
+              name:"zgetpayinfo",
+              data: {
+                ip: '127.0.0.1', // TODO
+                depositAmount: parseFloat(thiz.data.depositAmount),
+              },
+              success(payInfoRes) {
+                  console.log("pay info is: ",payInfoRes)
+                  wx.hideLoading()
+
+                  //
+                  wx.requestPayment({
+                      timeStamp: payInfoRes.result.res.payment.timeStamp,
+                      nonceStr: payInfoRes.result.res.payment.nonceStr,
+                      signType: payInfoRes.result.res.payment.signType,
+                      paySign: payInfoRes.result.res.payment.paySign,
+                      package: payInfoRes.result.res.payment.package,
+                      success (payRes) { 
+                        console.log(payRes)
+                        // 1. 确认充值结果 TODO
+                        // 2. 更新balance
+                        wx.showLoading({
+                          title: '充值中...',
+                        })
+                        wx.cloud.callFunction({
+                          name:"zupdatebalance",
+                          data: {
+                            depositID: payInfoRes.result.deposit._id,
+                          },
+                          success(res) {
+                              console.log(res)
+                              wx.hideLoading()
+                              wx.navigateBack({
+                                delta: 0,
+                              })
+                          },
+                          fail: function(e) {
+                            console.log(e.errMsg)
+                            wx.hideLoading()
+                          }
+                      })
+
+                      },
+                      fail (res) { 
+                        wx.showToast({
+                          title: '充值失败',
+                        })
+                      }
+                    })
+              },
+              fail: function(e) {
+                console.log(e.errMsg)
+                wx.hideLoading()
+              }
+            })
+        }
+      })
 
   },
 
@@ -191,66 +263,67 @@ Page({
   },
 
   sendSMS: function(e) {
-    // if (this.data.sendSMSClicked) {
-    //   return 
-    // }
-    // this.setData({
-    //   sendSMSClicked: true,
-    // })
 
-    // this.setData({
-    //   label: this.data.seconds + '秒'
-    // });
-    // // 启动以1s为步长的倒计时
-    // var interval = setInterval(() => {
-    //     countdown(this);
-    // }, 1000);
-    // // 停止倒计时
-    // setTimeout(function() {
-    //     clearInterval(interval);
-    // }, this.data.seconds * 1000);
+    if (!this.data.phoned) {
+      wx.showToast({
+        title: '请先获取手机号',
+      })
+      return
+    }
 
-    // wx.showLoading({
-    //   title: '发送中...',
-    // })
-    // let thiz = this
-    // wx.cloud.callFunction({
-    //   name:"sendSMS",
-    //   data: {
-    //     phone: app.globalData.phone,
-    //   },
-    //   success(res) {
-    //     console.log(res)
-    //     thiz.setData({
-    //       codeID: res.result._id
-    //     })
-    //     wx.hideLoading()
-    //     wx.showToast({
-    //       title: '已发送',
-    //     })
-    //   },
-    //   fail: function(e) {
-    //     console.log(e.errMsg)
-    //     wx.hideLoading()
-    //   }
-    // })
+    if (this.data.sendSMSClicked) {
+      return 
+    }
+    this.setData({
+      sendSMSClicked: true,
+    })
+
+    this.setData({
+      label: this.data.seconds + '秒'
+    });
+    // 启动以1s为步长的倒计时
+    var interval = setInterval(() => {
+        countdown(this);
+    }, 1000);
+    // 停止倒计时
+    setTimeout(function() {
+        clearInterval(interval);
+    }, this.data.seconds * 1000);
+
+    wx.showLoading({
+      title: '发送中...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+      name:"sendSMS",
+      data: {
+        phone: thiz.data.phone,
+      },
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          codeID: res.result._id
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '已发送',
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+        wx.hideLoading()
+      }
+    })
   },
   
   nextStep: function(e){
-
-    // if (this.data.withdrawAmount<=0) {
-    //   wx.showToast({
-    //     title: '请输入提现金额',
-    //   })
-    //   return
-    // }
-
-    // if (this.data.withdrawAmount>this.data.balance) {
-    //   wx.showToast({
-    //     title: '余额不足',
-    //   })
-    //   return
-    // }
+    console.log(this.data.depositAmount)
+    if (this.data.depositAmount<=0) {
+      wx.showToast({
+        title: '请输入充值金额',
+      })
+      return
+    }
 
       moveY = 0;
       action = 'show',
