@@ -112,6 +112,24 @@ exports.main = async (event, context) => {
                     throw(e)
                 }
             })
+
+             // 积分变更记录
+             await db.collection('exprecords').add({
+                data: {
+                    openid: wxContext.OPENID,
+                    type: 2, // 积分兑换
+                    action: '+',
+                    value: coupon.point * cnt,
+                    timestamp: Date.parse(new Date()),
+                },
+                success: res => {
+                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                },
+                fail: err => {
+                    console.error('[数据库] [新增记录] 失败：', err)
+                    throw(e)
+                }
+            })
         }
 
         

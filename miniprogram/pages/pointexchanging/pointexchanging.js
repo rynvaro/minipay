@@ -57,6 +57,10 @@ Page({
             return 
         }
 
+        wx.showLoading({
+          title: 'loading...',
+        })
+
         let thiz = this
         wx.cloud.callFunction({
             name:"zdoexchange",

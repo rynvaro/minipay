@@ -15,18 +15,7 @@ Page({
         tabFontSizes: [tabFontSizeSelected,tabFontSize,tabFontSize,tabFontSize],
         currentTabIndex: 0,
 
-        orders: [
-            {"title":"测试订单bbb的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":1.0},
-{"title":"测试订单bbb的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":2.0},
-{"title":"测试订单bbb的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":3.0},
-{"title":"测试订单ccc的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":4.0},
-{"title":"测试订单ddd的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":1.0},
-{"title":"测试订单ddd的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":2.0},
-{"title":"测试订单abc的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":3.0},
-{"title":"测试订单aab的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":4.0},
-{"title":"测试订单bbc的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":1.0},
-{"title":"测试订单aaa的title","thumbUrl":"cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/020c435b-e85a-4895-8428-743a9165845b.jpeg","amount":76,"discount":9.8,"rebate":6.5,"realAmount":66.89,"coupon":1,"totalAmount":25.9,"status":2.0},
-        ]
+        orders: []
     },
 
     orderDetail: function(e) {
@@ -127,21 +116,20 @@ Page({
 
 function listOrder(thiz, q){
     wx.hideLoading()
-    // wx.cloud.callFunction({
-    //     name:"orderList",
-    //     data: {
-    //         q: q,
-    //         phone: app.globalData.phone,
-    //         status: thiz.data.currentTabIndex,
-    //     },
-    //     success(res) {
-    //         console.log(res)
-    //         thiz.setData({orders: res.result.data})
-    //         wx.hideLoading()
-    //     },
-    //     fail: function(e) {
-    //         console.log(e.errMsg)
-    //         wx.hideLoading()
-    //     }
-    // })
+    wx.cloud.callFunction({
+        name:"ziorders",
+        data: {
+            q: q,
+            status: thiz.data.currentTabIndex,
+        },
+        success(res) {
+            console.log(res)
+            thiz.setData({orders: res.result.data})
+            wx.hideLoading()
+        },
+        fail: function(e) {
+            console.log(e.errMsg)
+            wx.hideLoading()
+        }
+    })
 }

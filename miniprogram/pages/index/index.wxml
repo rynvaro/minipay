@@ -54,8 +54,8 @@
 
   <!-- scan signin -->
 
-<view class="scanSignin" bindtap="scan">
-  <view class="scanSigninItem">
+<view class="scanSignin">
+  <view class="scanSigninItem" bindtap="scan">
     <text class="scanSigninItemU">扫描付款</text>
     <text class="scanSigninItemD">扫描立即支付</text>
   </view>

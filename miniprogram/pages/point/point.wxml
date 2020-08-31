@@ -29,6 +29,7 @@
                 <text wx:if="{{item.type==1}}" class="historyItemULText">签到</text>
                 <text wx:if="{{item.type==2}}" class="historyItemULText">兑换优惠券</text>
                 <text wx:if="{{item.type==3}}" class="historyItemULText">兑换会员经验</text>
+                <text wx:if="{{item.type==4}}" class="historyItemULText">消费</text>
                 <text class="historyItemULTime">{{filters.formatTime(item.timestamp)}}</text>
             </view>
             <text class="historyItemUR">{{item.action}}{{item.value}}</text>

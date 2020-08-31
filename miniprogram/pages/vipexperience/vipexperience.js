@@ -7,6 +7,7 @@ Page({
      */
     data: {
         user: {},
+        histories: [],
         tipsBoxHidden: true,
         navBarHeight: app.globalData.navBarHeight,
         menuRight: app.globalData.menuRight,
@@ -42,6 +43,21 @@ Page({
             fail: function(e) {
             wx.hideLoading()
             console.log(e)
+            }
+        })
+
+        wx.cloud.callFunction({
+            name:"zexprecords",
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                thiz.setData({
+                    histories: res.result.data,
+                })
+            },
+            fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
             }
         })
     },

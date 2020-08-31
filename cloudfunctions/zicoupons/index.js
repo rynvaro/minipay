@@ -9,5 +9,11 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    return await db.collection('icoupons').where({openid: wxContext.OPENID}).orderBy('timestamp','desc').get()
+    const _ = db.command
+    var where = _.and({openid: _.eq(wxContext.OPENID)})
+    if (event.value) {
+        where = where.and({coupon:{value: _.lt(event.value*100)}})
+    }
+
+    return await db.collection('icoupons').where(where).orderBy('timestamp','desc').get()
 }

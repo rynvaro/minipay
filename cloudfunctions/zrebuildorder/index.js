@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
         }
 
         let realDiscount = merchant.data.discount.discountValue + delta
-        let rebate = payAmount*(1-(realDiscount/10)).toFixed(2)
+        let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let realAmount = (payAmount - rebate).toFixed(2)
         let totalAmount = realAmount
 

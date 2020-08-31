@@ -22,13 +22,17 @@ Page({
         },
 
         couponSelected: false,
-        coupon: {},
+        coupon: {
+          coupon: {
+            value: 0,
+          }
+        },
         merchantID: '',
     },
 
     select: function() {
       wx.navigateTo({
-        url: '../coupon/coupon',
+        url: '../coupon/coupon?value='+this.data.preOrder.realAmount,
       })
     },
 
@@ -50,6 +54,12 @@ Page({
           success(res) {
               console.log(res)
               wx.hideLoading()
+              if (res.result==-1) {
+                wx.showToast({
+                  title: '余额不足',
+                })
+                return
+              }
               wx.showModal({
                 title: '提示',
                 content: '支付成功',
@@ -108,10 +118,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function (e) {
-      if (this.data.couponSelected) {
-        this.data.preOrder.totalAmount = this.data.preOrder.totalAmount-this.data.coupon.coupon.value/100
-        this.setData({preOrder: this.data.preOrder})
-      }
+
     },
 
     /**

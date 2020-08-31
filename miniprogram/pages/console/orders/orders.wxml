@@ -21,12 +21,12 @@
     <view wx:for="{{orders}}" wx:key="id" class="orderList">
         <view class="orderListItem" data-id="{{item._id}}" bindtap="orderDetail">
             <view class="orderItemL">
-                <image class="orderItemThumb" src="{{item.thumbUrl}}"></image>
+                <image class="orderItemThumb" src="{{item.productImage}}"></image>
             </view>
             <view class="orderItemR">
                 <!-- HL represents the head line -->
                 <view class="orderItemHL">
-                    <text class="orderItemTitle">{{item.title}}</text>
+                    <text class="orderItemTitle">{{item.storeName}}</text>
                     <view class="orderItemHLArrowBox">
                         <view class="orderItemHLArrow"></view>
                     </view>

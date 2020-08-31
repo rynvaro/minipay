@@ -34,18 +34,21 @@ exports.main = async (event, context) => {
         }
 
         let realDiscount = merchant.data.discount.discountValue + delta
-        let rebate = payAmount*(1-(realDiscount/10)).toFixed(2)
+        let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let realAmount = (payAmount - rebate).toFixed(2)
         let totalAmount = realAmount
+        if (user.data.data.balance < totalAmount*100) {
+            return -1
+        }
 
         let couponValue = 0
-
-        console.log(couponID!=-1)
-        console.log("0-----")
         if (couponID!=-1) {
             const coupon = await db.collection('icoupons').doc(couponID).get()
             couponValue = coupon.data.coupon.value/100
             totalAmount = realAmount - couponValue
+            if (user.data.data.balance < totalAmount*100) {
+                return -1
+            }
             await db.collection('icoupons').doc(couponID).update({
                 data: {
                     status: 1,
@@ -60,19 +63,25 @@ exports.main = async (event, context) => {
             })
         }
 
+        var data = {
+            storeId: storeID,
+            couponId: couponID,
+            openid: wxContext.OPENID,
+            storeName: store.data.data.data.storeName,
+            productImage: store.data.data.data.productImage,
+            payAmount: payAmount,
+            realDiscount: realDiscount,
+            rebate: rebate,
+            realAmount: realAmount,
+            coupon: couponValue,
+            totalAmount: realAmount,
+            timestamp: Date.parse(new Date()),
+            payType: 1, // 余额
+            status: 1, // 已完成
+        }
+
         await db.collection('iorders').add({
-            data: {
-                couponId: couponID,
-                openid: wxContext.openid,
-                storeName: store.data.data.data.storeName,
-                productImage: store.data.data.data.productImage,
-                realDiscount: realDiscount,
-                rebate: rebate,
-                realAmount: realAmount,
-                coupon: couponValue,
-                totalAmount: realAmount,
-                timestamp: Date.parse(new Date()),
-            },
+            data: data,
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
             },
@@ -83,18 +92,63 @@ exports.main = async (event, context) => {
         })
 
         await db.collection('orders').add({
+            data: data,
+            success: res => {
+                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            },
+            fail: err => {
+                console.error('[数据库] [新增记录] 失败：', err)
+                throw(e)
+            }
+        })
+
+        let deltaPointAndExp = parseInt(totalAmount/10)
+        if (deltaPointAndExp > 0) {
+            // 积分变更记录
+            await db.collection('pointrecords').add({
+                data: {
+                    openid: wxContext.OPENID,
+                    type: 4, // 消费
+                    action: '+',
+                    value: deltaPointAndExp,
+                    timestamp: Date.parse(new Date()),
+                },
+                success: res => {
+                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                },
+                fail: err => {
+                    console.error('[数据库] [新增记录] 失败：', err)
+                    throw(e)
+                }
+            })
+
+            // 经验变更记录
+            await db.collection('exprecords').add({
+                data: {
+                    openid: wxContext.OPENID,
+                    type: 1, // 消费
+                    action: '+',
+                    value: deltaPointAndExp,
+                    timestamp: Date.parse(new Date()),
+                },
+                success: res => {
+                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                },
+                fail: err => {
+                    console.error('[数据库] [新增记录] 失败：', err)
+                    throw(e)
+                }
+            })
+        }
+        
+
+        await db.collection('users').doc(wxContext.OPENID).update({
             data: {
-                couponId: couponID,
-                openid: wxContext.openid,
-                storeId: storeID,
-                storeName: store.data.data.data.storeName,
-                productImage: store.data.data.data.productImage,
-                realDiscount: realDiscount,
-                rebate: rebate,
-                realAmount: realAmount,
-                coupon: couponValue,
-                totalAmount: realAmount,
-                timestamp: Date.parse(new Date()),
+                data: {
+                    balance: user.data.data.balance - totalAmount*100,
+                    point: user.data.data.point + parseInt(totalAmount/10),
+                    exp: user.data.data.exp + parseInt(totalAmount/10),
+                }
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -105,15 +159,10 @@ exports.main = async (event, context) => {
             }
         })
 
-        
-
-        await db.collection('users').doc(wxContext.OPENID).update({
+        await db.collection('merchants').doc(merchantID).update({
             data: {
-                data: {
-                    balance: user.data.data.balance - totalAmount*100,
-                    point: user.data.data.point + parseInt(totalAmount/10),
-                    exp: user.data.data.exp + parseInt(totalAmount/10),
-                }
+                balance: (parseFloat(merchant.data.balance) + parseFloat(totalAmount)),
+                dayBi: (parseFloat(merchant.data.dayBi) + parseFloat(totalAmount)),
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)

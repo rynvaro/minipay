@@ -34,6 +34,9 @@ Page({
           let thiz = this
             wx.cloud.callFunction({
                 name:"zicoupons",
+                data: {
+                  value: options.value,
+                },
                 success(res) {
                     wx.hideLoading()
                     console.log(res)

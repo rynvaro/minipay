@@ -1,5 +1,5 @@
 <!--miniprogram/pages/vipexperience/vipexperience.wxml-->
-
+<wxs src="../../utils/filter.wxs" module="filters"/>
 <view class="header">
     <view class="hLine">
         <view class="hLine1">
@@ -33,81 +33,17 @@
 </view>
 
 <view class="history">
-    <view class="historyItem">
+    <view wx:for="{{histories}}" wx:key="id" class="historyItem">
         <view class="historyItemU">
             <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
+                <text wx:if="{{item.type==1}}" class="historyItemULText">消费</text>
+                <text wx:if="{{item.type==2}}" class="historyItemULText">积分兑换</text>
+                <text class="historyItemULTime">{{filters.formatTime(item.timestamp)}}</text>
             </view>
-            <text class="historyItemUR">+5</text>
+            <text class="historyItemUR">{{item.action}}{{item.value}}</text>
         </view>
         <view class="historyItemD"></view>
     </view>
 
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
-
-    <view class="historyItem">
-        <view class="historyItemU">
-            <view class="historyItemUL">
-                <text class="historyItemULText">消费金额20元</text>
-                <text class="historyItemULTime">2020.08.22 15:04:00</text>
-            </view>
-            <text class="historyItemUR">+5</text>
-        </view>
-        <view class="historyItemD"></view>
-    </view>
 
 </view>

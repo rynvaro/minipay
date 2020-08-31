@@ -1,8 +1,8 @@
 <!--miniprogram/pages/console/orderDetail/orderDetail.wxml-->
 
 <view class="detailHeader">
-  <image class="detailHeaderLImage" src="{{order.thumbUrl}}"></image>
-  <text class="detailHeaderRText">测试测试测试测试测试</text>
+  <image class="detailHeaderLImage" src="{{order.productImage}}"></image>
+  <text class="detailHeaderRText">{{order.storeName}}</text>
 </view>
 
 <view class="detailItemBox">

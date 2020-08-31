@@ -36,7 +36,7 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">合计待支付</text>
-  <text class="totalIncomeValue">¥{{preOrder.totalAmount}}</text>
+  <text class="totalIncomeValue">¥{{filters.toFixed(preOrder.totalAmount-coupon.coupon.value/100)}}</text>
   <view class="totalIncomePayButton" bindtap="pay">立即支付</view>
 </view>
 
@@ -47,7 +47,7 @@
   </view>
 
   <text class="popBoxLin1">{{preOrder.storeName}}</text>
-  <text class="popBoxLin2">¥{{preOrder.totalAmount}}</text>
+  <text class="popBoxLin2">¥{{filters.toFixed(preOrder.totalAmount-coupon.coupon.value/100)}}</text>
   <view class="popBoxLin3"></view>
   <view class="popBoxLin4">
     <text class="popBoxLin4L">支付方式</text>

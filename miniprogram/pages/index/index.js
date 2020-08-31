@@ -15,7 +15,7 @@ Page({
             language: '',
             nickName: '',
             province: '',
-            balance: 1,
+            balance: 0,
             point: 0,
             signs: 0,
             signDate: '',
@@ -66,6 +66,11 @@ Page({
                 gender: e.detail.userInfo.gender,
                 language: e.detail.userInfo.language,
                 province: e.detail.userInfo.province,
+                province: '',
+                balance: 0,
+                point: 0,
+                signs: 0,
+                signDate: '',
             }
         })
         wx.showLoading({
@@ -91,17 +96,17 @@ Page({
 
     scan: function(e) {
         console.log(e)
-        // wx.scanCode({
-        //     success (res) {
-        //         console.log(res)
-        //         wx.navigateTo({
-        //           url: '../scanpay/scanpay?merchantID='+res.result,
-        //         })
-        //     }
-        // })
-        wx.navigateTo({
-            url: '../scanpay/scanpay?merchantID=13161686240',
-          })
+        wx.scanCode({
+            success (res) {
+                console.log(res)
+                wx.navigateTo({
+                  url: '../scanpay/scanpay?merchantID='+res.result,
+                })
+            }
+        })
+        // wx.navigateTo({
+        //     url: '../scanpay/scanpay?merchantID=',
+        //   })
     },
 
     vipexperience: function(){

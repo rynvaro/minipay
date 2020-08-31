@@ -1,33 +1,28 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init({
-    env: cloud.DYNAMIC_CURRENT_ENV
-})
+cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
 
-  let q = event.q
   let status = event.status
-  let phone = event.phone
+  let q = event.q
 
   const _ = db.command
-
   console.log(status == 0, status)
 
-  var where = _.and({storeId: _.eq(phone)})
+  var where = _.and({openid: _.eq(wxContext.OPENID)})
   if (status != 0) {
     where = where.and({status: _.eq(parseInt(status))})
   }
 
   if (q != '') {
-    where = where.and({title: db.RegExp({regexp: '.*'+q +'.*', options: 1})})
+    where = where.and({storeName: db.RegExp({regexp: '.*'+q +'.*', options: 1})})
   }
 
-  var result = await db.collection('orders').where(where).get()
-  
-  return result
+  return await db.collection('iorders').where(where).get()
 }
