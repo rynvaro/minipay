@@ -1,0 +1,84 @@
+/* miniprogram/pages/viprights/viprights.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.card {
+    margin-top: 20rpx;
+    width: 95%;
+    height: 300rpx;
+    border-radius: 20rpx;
+    background: linear-gradient(to bottom, #FFBB00, #FF6602);
+}
+
+.cardLine1 {
+    height: 100rpx;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cardLine1Text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    font-size: 80rpx;
+    line-height: 80rpx;
+    font-weight: 900;
+    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cardLine2 {
+    height: 80rpx;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLine2P1 {
+    width: 100rpx;
+    height: 5rpx;
+    background-color: white;
+}
+
+.cardLine2P2 {
+    width: 200rpx;
+    height: 5rpx;
+    background-color: white;
+}
+.cardLine2V1 {
+    height: 50rpx;
+    width: 50rpx;
+    background: linear-gradient(to bottom, #FFBB00, #FF5E00);
+    border-radius: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: small;
+}
+
+.cardLine3 {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardLine3Text {
+    width: 80%;
+    font-size: x-small;
+    color: white;
+}

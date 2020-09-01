@@ -12,9 +12,19 @@
     </view>
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
-      <progress class="vipProgress" percent="{{ (user.exp >= 0 && user.exp <= 2000) ? user.exp/2000*100 : 100}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp >0 && user.exp <= 2000) ? true : false}}" />
+      <progress class="vipProgress" percent="{{p1v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
+      <image class="vipIcon" src="../../images/vip2.png"></image>
+      <progress class="vipProgress" percent="{{p2v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
       <image class="vipIcon" src="../../images/vip4.png"></image>
     </view>
+
+    <view class="cardTopRight">
+      <view class="cardTopRightU">
+        <image class="cardTopRightUIcon" src="../../images/point.png"></image>
+      </view>
+      <text class="cardTopRightD">会员权益 ></text>
+    </view>
+
 </view>
 
 <!-- assets -->
@@ -39,8 +49,16 @@
   </view>
 </view>
 
-  <!-- scan signin -->
+<!-- invite -->
+<view class="invite">
+  <view class="inviteLine1">
+    <text class="inviteLine1L">邀请会员·</text>
+    <text class="inviteLine1R">享受更多优惠折扣</text>
+  </view>
+  <text class="inviteLine2">立即邀请</text>
+</view>
 
+<!-- scan signin -->
 <view class="scanSignin">
   <view class="scanSigninItem" bindtap="scan">
     <text class="scanSigninItemU">扫描付款</text>

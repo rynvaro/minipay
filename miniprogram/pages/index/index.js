@@ -21,6 +21,10 @@ Page({
             signDate: '',
         },
         login: false,
+
+        // progress value
+        p1v: 0,
+        p2v: 0,
     },
 
     onLoad: function() {
@@ -37,8 +41,22 @@ Page({
               success(res) {
                   wx.hideLoading()
                   console.log(res)
+                  let user = res.result.data.data
+                  let p1v = 0
+                  let p2v = 0
+                  if (user.exp>=0 && user.exp<=1000) {
+                    p1v = user.exp/1000*100
+                  }else if (user.exp > 1000 && user.exp<=10000) {
+                      p1v = 100
+                      p2v = user.exp/9000*100
+                  }else if (user.exp > 10000) {
+                    p1v = 100
+                    p2v = 100
+                  }
                   thiz.setData({
-                      user: res.result.data.data,
+                      user: user,
+                      p1v: p1v,
+                      p2v: p2v,
                       login: true,
                   })
               },

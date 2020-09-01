@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/viprights/viprights",
         "pages/index/index",
         "pages/scanpay/scanpay",
         "pages/point/point",

@@ -1,0 +1,56 @@
+<!--miniprogram/pages/viprights/viprights.wxml-->
+<view class="card">
+    <view class="cardLine1">
+        <text class="cardLine1Text">V1</text>
+    </view>
+    <view class="cardLine2">
+        <view class="cardLine2P1"></view>
+        <view class="cardLine2V1">v1</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1">v2</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1">v3</view>
+        <view class="cardLine2P1"></view>
+    </view>
+    <view class="cardLine3">
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折，享新人优惠券</text>
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折 >>></text>
+    </view>
+</view>
+
+<view class="card" style="background: #CCCCCC">
+    <view class="cardLine1">
+        <text class="cardLine1Text" style="color: white">V2</text>
+    </view>
+    <view class="cardLine2">
+        <view class="cardLine2P1"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v1</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v2</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v3</view>
+        <view class="cardLine2P1"></view>
+    </view>
+    <view class="cardLine3">
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折，享新人优惠券</text>
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折 >>></text>
+    </view>
+</view>
+<view class="card" style="background: #CCCCCC">
+    <view class="cardLine1">
+        <text class="cardLine1Text" style="color: white">V3</text>
+    </view>
+    <view class="cardLine2">
+        <view class="cardLine2P1"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v1</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v2</view>
+        <view class="cardLine2P2"></view>
+        <view class="cardLine2V1" style="background: white;color: #CCCCCC">v3</view>
+        <view class="cardLine2P1"></view>
+    </view>
+    <view class="cardLine3">
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折，享新人优惠券</text>
+        <text class="cardLine3Text">VIP可换购，享受基础折扣95折 >>></text>
+    </view>
+</view>
