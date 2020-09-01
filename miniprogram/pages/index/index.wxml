@@ -13,22 +13,9 @@
     <view class="cardLine4">
       <image class="vipIcon" src="../../images/vip1.png"></image>
       <progress class="vipProgress" percent="{{ (user.exp >= 0 && user.exp <= 2000) ? user.exp/2000*100 : 100}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp >0 && user.exp <= 2000) ? true : false}}" />
-      <image class="vipIcon" src="../../images/vip2.png"></image>
-      <progress class="vipProgress" percent="{{(user.exp <= 2000 ? 0 :(user.exp <= 4000 ? (user.exp-2000)/2000*100 : 100 ))}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp > 2000 && user.exp <= 4000) ? true : false}}" />
-      <image class="vipIcon" src="../../images/vip3.png"></image>
-      <progress class="vipProgress" percent="{{(user.exp <= 4000 ? 0 :(user.exp <= 6000 ? (user.exp-4000)/2000*100 : 100 ))}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="3" active="{{(user.exp > 4000 && user.exp <= 6000) ? true : false}}" />
       <image class="vipIcon" src="../../images/vip4.png"></image>
     </view>
-    <view class="cardLine5">
-      <text class="vipText1">普通会员</text>
-      <text class="vipText2">黄金会员</text>
-      <text class="vipText3">铂金会员</text>
-      <text class="vipText4">钻石会员</text>
-    </view>
-    <view class="cardLeftTriangle"></view>
-    <view class="cardRightTriangle"></view>
 </view>
-<view class="cardTriangleAppendLine"></view>
 
 <!-- assets -->
 <view class="assets">
