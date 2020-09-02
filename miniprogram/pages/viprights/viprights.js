@@ -1,6 +1,7 @@
 // miniprogram/pages/viprights/viprights.js
+const defaultH = '300rpx'
+const toggledH = '600rpx'
 Page({
-
     /**
      * 页面的初始数据
      */
@@ -8,16 +9,15 @@ Page({
         cards: [
             {
                 "id": 0,
-                "level":"V1",
+                "level":"1",
                 "tips":[
-                    "VIP可换购，享受基础折扣9.5折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.5折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.5折，享新人优惠券",
                 ]
             },
             {
                 "id": 1,
-                "level":"V2",
+                "level":"2",
                 "tips":[
                     "VIP可换购，享受基础折扣9.3折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.3折，享新人优惠券",
@@ -26,14 +26,41 @@ Page({
             },
             {
                 "id": 2,
-                "level":"V3",
+                "level":"3",
                 "tips":[
+                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
+                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.0折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.0折，享新人优惠券",
                     "VIP可换购，享受基础折扣9.0折，享新人优惠券",
                 ]
             }
-        ]
+        ],
+        level: 1,
+        toggles: [false, false, false],
+        cardHeights: [defaultH,defaultH,defaultH],
+    },
+
+    toggle: function(e) {
+        let id = e.currentTarget.dataset.id
+        for (var i in this.data.toggles) {
+            if (i == id) {
+                this.data.toggles[i] = true
+            }else {
+                this.data.toggles[i] = false
+            }
+        }
+        for (var i in this.data.cardHeights) {
+            if (i == id) {
+                this.data.cardHeights[i] = toggledH
+            }else {
+                this.data.cardHeights[i] = defaultH
+            }
+        }
+        this.setData({
+            toggles: this.data.toggles,
+            cardHeights: this.data.cardHeights,
+        })
     },
 
     /**
