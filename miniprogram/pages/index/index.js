@@ -31,6 +31,12 @@ Page({
       
     },
 
+    viprights: function(e) {
+        wx.navigateTo({
+          url: '../viprights/viprights',
+        })
+    },
+
     onShow: function(e) {
         wx.showLoading({
             title: 'loading...',

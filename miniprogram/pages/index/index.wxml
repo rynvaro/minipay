@@ -18,7 +18,7 @@
       <image class="vipIcon" src="../../images/v3.png"></image>
     </view>
 
-    <view class="cardTopRight">
+    <view class="cardTopRight" bindtap="viprights">
       <view class="cardTopRightU">
         <image class="cardTopRightUIcon" src="../../images/viprights.png"></image>
       </view>

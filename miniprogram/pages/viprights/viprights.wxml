@@ -1,7 +1,8 @@
 <!--miniprogram/pages/viprights/viprights.wxml-->
-<view class="card">
+<view wx:for="{{cards}}" wx:key="id" class="card">
+    <image class="cardBGI" src="../../images/viprightsbg.png"></image>
     <view class="cardLine1">
-        <text class="cardLine1Text">V1</text>
+        <text class="cardLine1Text">{{item.level}}</text>
     </view>
     <view class="cardLine2">
         <view class="cardLine2P1"></view>
@@ -13,8 +14,9 @@
         <view class="cardLine2P1"></view>
     </view>
     <view class="cardLine3">
-        <text class="cardLine3Text">VIP可换购，享受基础折扣95折，享新人优惠券</text>
-        <text class="cardLine3Text">VIP可换购，享受基础折扣95折 >>></text>
+        <block wx:for="{{item.tips}}" wx:key="id">
+            <text class="cardLine3Text">{{item}}</text>
+        </block>
     </view>
 </view>
 
