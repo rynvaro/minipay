@@ -59,8 +59,6 @@ page {
 .cardLine2V1 {
     height: 50rpx;
     width: 50rpx;
-    background: linear-gradient(to bottom, #FFBB00, #FF5E00);
-    border-radius: 100rpx;
     display: flex;
     justify-content: center;
     align-items: center;

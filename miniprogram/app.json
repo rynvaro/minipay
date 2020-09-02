@@ -1,7 +1,7 @@
 {
     "pages": [
-        "pages/viprights/viprights",
         "pages/index/index",
+        "pages/viprights/viprights",
         "pages/scanpay/scanpay",
         "pages/point/point",
         "pages/signin/signin",
@@ -44,15 +44,15 @@
         "list": [
             {
                 "pagePath": "pages/index/index",
-                "text": "我的",
-                "iconPath": "images/i.png",
-                "selectedIconPath": "images/i.png"
+                "text": "会有中心",
+                "iconPath": "images/vcenter.png",
+                "selectedIconPath": "images/vcenter.png"
             },
             {
                 "pagePath": "pages/search/search",
-                "text": "查找",
-                "iconPath": "images/search.png",
-                "selectedIconPath": "images/search.png"
+                "text": "柒号生活",
+                "iconPath": "images/home.png",
+                "selectedIconPath": "images/home.png"
             }
         ]
     },

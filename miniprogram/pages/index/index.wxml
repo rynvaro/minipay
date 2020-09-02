@@ -11,16 +11,16 @@
       <text class="cardLine3Arrow"></text>
     </view>
     <view class="cardLine4">
-      <image class="vipIcon" src="../../images/vip1.png"></image>
+      <image class="vipIcon" src="../../images/v1.png"></image>
       <progress class="vipProgress" percent="{{p1v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
-      <image class="vipIcon" src="../../images/vip2.png"></image>
+      <image class="vipIcon" src="../../images/v2.png"></image>
       <progress class="vipProgress" percent="{{p2v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
-      <image class="vipIcon" src="../../images/vip4.png"></image>
+      <image class="vipIcon" src="../../images/v3.png"></image>
     </view>
 
     <view class="cardTopRight">
       <view class="cardTopRightU">
-        <image class="cardTopRightUIcon" src="../../images/point.png"></image>
+        <image class="cardTopRightUIcon" src="../../images/viprights.png"></image>
       </view>
       <text class="cardTopRightD">会员权益 ></text>
     </view>

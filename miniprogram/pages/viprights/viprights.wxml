@@ -5,11 +5,11 @@
     </view>
     <view class="cardLine2">
         <view class="cardLine2P1"></view>
-        <view class="cardLine2V1">v1</view>
+        <image class="cardLine2V1" src="../../images/v1StarFilled.png"></image>
         <view class="cardLine2P2"></view>
-        <view class="cardLine2V1">v2</view>
+        <image class="cardLine2V1" src="../../images/v2StarFilled.png"></image>
         <view class="cardLine2P2"></view>
-        <view class="cardLine2V1">v3</view>
+        <image class="cardLine2V1" src="../../images/v3StarFilled.png"></image>
         <view class="cardLine2P1"></view>
     </view>
     <view class="cardLine3">
