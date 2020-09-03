@@ -13,47 +13,11 @@ Page({
    */
   
   data: {
-      tabColors: [tabColorSelected,tabColor,tabColor,tabColor],
-      tabFontSizes: [tabFontSizeSelected,tabFontSize,tabFontSize,tabFontSize],
-      currentTabIndex: 0,
-
-      orders: []
-  },
-
-  orderDetail: function(e) {
-      wx.navigateTo({
-          url: '../orderDetail/orderDetail?id='+e.currentTarget.dataset.id,
-      })
+    stores: [],
   },
 
   search: function(e) {
-    //   wx.showLoading({
-    //       title: 'loading...',
-    //   })
-    //   listOrder(this,e.detail.value)
-  },
-
-  onTabClick: function(e) {
-    //   wx.showLoading({
-    //     title: 'loading...',
-    //   })
-      var index = e.currentTarget.dataset.id
-      for (var i in  this.data.tabColors) {
-          if (i == index) {
-              this.data.tabColors[i]=tabColorSelected
-              this.data.tabFontSizes[i]=tabFontSizeSelected
-          } else {
-              this.data.tabColors[i]=tabColor
-              this.data.tabFontSizes[i]=tabFontSize
-          }
-      }
-      this.setData({
-          tabColors:this.data.tabColors,
-          tabFontSizes: this.data.tabFontSizes,
-          currentTabIndex: index,
-      })
-
-    //   listOrder(this,'')
+    console.log(e.currentTarget.dataset.id)
   },
 
   store: function(){
@@ -66,10 +30,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    //   wx.showLoading({
-    //       title: 'loading...',
-    //   })
-    //   listOrder(this,'')
+
   },
 
   /**
@@ -121,23 +82,3 @@ Page({
 
   }
 })
-
-function listOrder(thiz, q){
-  wx.cloud.callFunction({
-      name:"orderList",
-      data: {
-          q: q,
-          phone: app.globalData.phone,
-          status: thiz.data.currentTabIndex,
-      },
-      success(res) {
-          console.log(res)
-          thiz.setData({orders: res.result.data})
-          wx.hideLoading()
-      },
-      fail: function(e) {
-          console.log(e.errMsg)
-          wx.hideLoading()
-      }
-  })
-}

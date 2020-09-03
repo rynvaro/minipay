@@ -1,7 +1,9 @@
 {
     "pages": [
-        "pages/viprights/viprights",
+        "pages/plates/plates",
+        "pages/search/search",
         "pages/index/index",
+        "pages/viprights/viprights",
         "pages/scanpay/scanpay",
         "pages/point/point",
         "pages/signin/signin",
@@ -19,7 +21,6 @@
         "pages/order/order",
         "pages/map/map",
         "pages/store/store",
-        "pages/search/search",
         "pages/console/home/home",
         "pages/console/index/index",
         "pages/console/store/store",
@@ -28,7 +29,8 @@
         "pages/console/withdraw/withdraw",
         "pages/console/financial/financial",
         "pages/console/orderDetail/orderDetail",
-        "pages/console/modifyPassword/modifyPassword"
+        "pages/console/modifyPassword/modifyPassword",
+        "pages/home/home"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",
@@ -49,7 +51,7 @@
                 "selectedIconPath": "images/vcenter.png"
             },
             {
-                "pagePath": "pages/search/search",
+                "pagePath": "pages/home/home",
                 "text": "柒号生活",
                 "iconPath": "images/home.png",
                 "selectedIconPath": "images/home.png"

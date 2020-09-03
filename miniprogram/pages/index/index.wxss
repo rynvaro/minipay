@@ -107,7 +107,6 @@ page {
   border-right: 5rpx solid wheat;
   transform: rotate(45deg);
   margin-right: 20rpx;
-  
 }
 
 .cardLine4 {

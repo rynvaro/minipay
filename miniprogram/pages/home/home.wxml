@@ -1,0 +1,57 @@
+<!--miniprogram/pages/home/home.wxml-->
+
+<view class="header">
+    <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+    <view class="navBar" style="height:{{navBarHeight}}px;">
+        柒号生活
+    </view>
+    <view class="search">
+        <view class="searchIconBox">
+            <image class="searchIcon" src="../../images/search.png"></image>
+        </view>
+        <input class="searchInput" bindconfirm="search"></input>
+    </view>
+</view>
+
+<view class="tabs">
+    <view class="tabItem">
+        <view class="tabItemU">
+            <image class="tabItemUIcon" src="../../images/food.png"></image>
+        </view>
+        <text class="tabItemD">食在上饶</text>
+    </view>
+
+    <view class="tabItem">
+        <view class="tabItemU">
+            <image class="tabItemUIcon" src="../../images/entertainment.png"></image>
+        </view>
+        <text class="tabItemD">玩乐途游</text>
+    </view>
+
+    <view class="tabItem">
+        <view class="tabItemU">
+            <image class="tabItemUIcon" src="../../images/around.png"></image>
+        </view>
+        <text class="tabItemD">附近商家</text>
+    </view>
+</view>
+
+<view wx:for="{{plates}}" class="box">
+    <view class="boxTitle">
+        <view class="boxTitleIconBox">
+            <image class="boxTitleIcon" src="../../images/star.png"></image>
+        </view>
+        <text class="boxTitleName">{{item.title}}</text>
+        <text class="boxTitleMore">>>></text>
+    </view>
+    <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}"></image>
+    <view class="innerBox">
+        <view wx:for="{{item.items}}" class="innerBoxItem">
+            <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
+            <view class="innerBoxItemDesc">
+                <text class="innerBoxItemDescTitle">{{item.title}}</text>
+                <text class="innerBoxItemDescContent">{{item.desc}}</text>
+            </view>
+        </view>
+    </view>
+</view>
