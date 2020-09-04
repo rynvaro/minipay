@@ -44,13 +44,14 @@ page {
     margin-top: 30rpx;
     width: 600rpx;
     height: 250rpx;
-    background: radial-gradient(circle at -20rpx 125rpx, transparent 40rpx, #FF6610 6px) top left, linear-gradient(0.25turn, #FF6610, #FF6610), radial-gradient(circle at 50rpx 125rpx, transparent 40rpx, #FF6610 16px) bottom right;
+    background: radial-gradient(circle at -10rpx 125rpx, transparent 40rpx, #FE6D0A 6px) top left, linear-gradient(0.25turn, #FE6D0A, #FFEF01), radial-gradient(circle at 40rpx 125rpx, transparent 40rpx, #FFEF01 6px) bottom right;
     /* 三段 宽x高 */
     background-size: 35rpx 300rpx, 535rpx 300rpx, 35rpx 300rpx;
     background-repeat: no-repeat;
     /* 三段 坐标 */
     background-position: 0rpx 0rpx,35rpx 0rpx,565rpx 0rpx;
 
+    border-radius: 20rpx 20rpx 20rpx;
     display: flex;
     justify-content: center;
     align-items: center;

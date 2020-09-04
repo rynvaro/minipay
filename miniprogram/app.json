@@ -1,8 +1,9 @@
 {
     "pages": [
+        "pages/index/index",
+        "pages/stores/stores",
         "pages/plates/plates",
         "pages/search/search",
-        "pages/index/index",
         "pages/viprights/viprights",
         "pages/scanpay/scanpay",
         "pages/point/point",

@@ -25,6 +25,8 @@
       <text class="cardTopRightD">会员权益 ></text>
     </view>
 
+    <!-- 背景图片 -->
+    <image mode="aspectFill" class="cardBG" src="../../images/bg/index_card_bg.png"></image>
 </view>
 
 <!-- assets -->
@@ -56,6 +58,7 @@
     <text class="inviteLine1R">享受更多优惠折扣</text>
   </view>
   <text class="inviteLine2">立即邀请</text>
+  <image class="inviteBG" src="../../images/bg/invite_bg.png"></image>
 </view>
 
 <!-- scan signin -->

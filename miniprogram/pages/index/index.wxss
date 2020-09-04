@@ -17,6 +17,17 @@ page {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 0;
+}
+
+.cardBG {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .cardTopRight {
@@ -139,6 +150,17 @@ page {
   background: linear-gradient(to right, #FEC900,#FF8B00);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 0;
+}
+
+.inviteBG {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
 }
 
 .inviteLine1 {
