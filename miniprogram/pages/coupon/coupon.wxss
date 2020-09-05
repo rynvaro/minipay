@@ -4,6 +4,7 @@ page {
     display: flex;
     justify-content: center;
     align-items: center;
+    --couponH: 260rpx;
 }
 
 .headerBg {
@@ -27,13 +28,15 @@ page {
 .itemUsed {
     margin-top: 30rpx;
     width: 600rpx;
-    height: 250rpx;
-    background: radial-gradient(circle at -20rpx 125rpx, transparent 40rpx, #B3B3B3 6px) top left, linear-gradient(0.25turn, #B3B3B3, #B3B3B3), radial-gradient(circle at 50rpx 125rpx, transparent 40rpx, #B3B3B3 16px) bottom right;
+    height: var(--couponH);
+    background: radial-gradient(circle at -10rpx 140rpx, transparent 40rpx, #B3B3B3 6px) top left, linear-gradient(0.25turn, #B3B3B3, #B3B3B3), radial-gradient(circle at 40rpx 140rpx, transparent 40rpx, #B3B3B3 16px) bottom right;
     /* 三段 宽x高 */
-    background-size: 35rpx 300rpx, 535rpx 300rpx, 35rpx 300rpx;
+    background-size: 35rpx var(--couponH), 533rpx var(--couponH), 40rpx var(--couponH);
     background-repeat: no-repeat;
     /* 三段 坐标 */
     background-position: 0rpx 0rpx,35rpx 0rpx,565rpx 0rpx;
+
+    border-radius: 20rpx 20rpx 20rpx;
 
     display: flex;
     justify-content: center;
@@ -43,10 +46,10 @@ page {
 .item {
     margin-top: 30rpx;
     width: 600rpx;
-    height: 250rpx;
-    background: radial-gradient(circle at -10rpx 125rpx, transparent 40rpx, #FE6D0A 6px) top left, linear-gradient(0.25turn, #FE6D0A, #FFEF01), radial-gradient(circle at 40rpx 125rpx, transparent 40rpx, #FFEF01 6px) bottom right;
+    height: var(--couponH);
+    background: radial-gradient(circle at -10rpx 140rpx, transparent 40rpx, #FE6D0A 6px) top left, linear-gradient(0.25turn, #FE6D0A, #FFEF01), radial-gradient(circle at 40rpx 140rpx, transparent 40rpx, #FFEF01 6px) bottom right;
     /* 三段 宽x高 */
-    background-size: 35rpx 300rpx, 535rpx 300rpx, 35rpx 300rpx;
+    background-size: 35rpx var(--couponH), 533rpx var(--couponH), 40rpx var(--couponH);
     background-repeat: no-repeat;
     /* 三段 坐标 */
     background-position: 0rpx 0rpx,35rpx 0rpx,565rpx 0rpx;
@@ -119,9 +122,11 @@ page {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: white;
 }
 
 .itemRText {
-    margin-left: 20rpx;
+    width: 120rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -31,7 +31,8 @@
                 </view>
             </view>
             <view class="itemR">
-                <text class="itemRText">已使用</text>
+                <text class="itemRText">已</text>
+                <text class="itemRText">使用</text>
             </view>
         </view>
 
