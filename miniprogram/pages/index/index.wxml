@@ -2,7 +2,10 @@
 
 <view class="card">
     <view class="cardLine1">
-      <image class="cardLine1Icon" src="{{user.avatarUrl}}"></image>
+      <view class="cardLine1Icon">
+        <image class="cardLine1IconBG" src="{{user.avatarUrl}}"></image>
+        <view class="cardLine1IconText" bindtap="showMoreInfo">完善信息</view>
+      </view>
     </view>
     <button open-type="getUserInfo" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
@@ -57,7 +60,7 @@
     <text class="inviteLine1L">邀请会员·</text>
     <text class="inviteLine1R">享受更多优惠折扣</text>
   </view>
-  <text class="inviteLine2">立即邀请</text>
+  <text class="inviteLine2" bindtap="invite">立即邀请</text>
   <image class="inviteBG" src="../../images/bg/invite_bg.png"></image>
 </view>
 
@@ -128,5 +131,43 @@
 
   <text class="closeAdvice" bindtap="hidden">×</text>
 </view>
+
+
+<view class="redpack" style="visibility:{{redpackShow ? 'visible':'hidden'}}">
+  <image wx:if="{{open}}" class="redpackBG" src="../../images/redpackopen.png"></image>
+  <image wx:else class="redpackBG" src="../../images/redpack.png" bindtap="openRedpack"></image>
+  <text class="closeRedpack" bindtap="hiddenRedpack" bindtap="hideRedpack">×</text>
+</view>
+
+
+<view class="moreInfo" style="visibility:{{moreInfoShow ? 'visible':'hidden'}}">
+  <view class="moreInfoTitle">信息完善</view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">姓名</text>
+    <input class="moreInfoItemR"></input>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">手机号</text>
+    <input class="moreInfoItemR"></input>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">验证码</text>
+    <view class="moreInfoItemR">
+      <input class="moreInfoItemRCode"></input>
+      <view class="moreInfoItemRButton">点击获取</view>
+    </view>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">兑换码</text>
+    <input class="moreInfoItemR" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"></input>
+  </view>
+  <view class="moreInfoButtonBox">
+    <button class="moreInfoButton">提交</button>
+  </view>
+
+  <text class="closeMoreInfo" bindtap="clodeMoreInfo">×</text>
+  
+</view>
+
   
 </view>

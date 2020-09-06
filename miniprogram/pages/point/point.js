@@ -1,10 +1,13 @@
 // miniprogram/pages/point/point.js
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        statusBarHeight: app.globalData.statusBarHeight,
+        navBarHeight: app.globalData.navBarHeight,
         tipsBoxHidden: true,
         user: {},
         histories: [],
@@ -54,6 +57,12 @@ Page({
                 wx.hideLoading()
                 console.log(e)
             }
+        })
+    },
+
+    back: function(e) {
+        wx.navigateBack({
+            delta: 0,
         })
     },
 

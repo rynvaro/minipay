@@ -11,6 +11,7 @@
         <view class="box">{{user.signs%10}}</view>
         <text class="cardDay">天</text>
     </view>
+    <image class="cardBG" src="../../images/bg/sign_bg.png"></image>
 </view>
 
 <!-- 

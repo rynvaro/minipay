@@ -25,10 +25,35 @@ Page({
         // progress value
         p1v: 0,
         p2v: 0,
+        open: false,
+        redpackShow: false,
+        moreInfoShow: false,
     },
 
     onLoad: function() {
       
+    },
+
+    showMoreInfo: function(e) {
+        this.setData({moreInfoShow: true})
+    },
+
+    clodeMoreInfo: function(e) {
+        this.setData({moreInfoShow: false})
+    },
+
+    invite: function(e) {
+        wx.navigateTo({
+          url: '../invite/invite',
+        })
+    },
+
+    openRedpack: function(e) {
+        this.setData({open: true})
+    },
+
+    hideRedpack:  function(e) {
+        this.setData({redpackShow: false})
     },
 
     viprights: function(e) {

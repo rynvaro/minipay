@@ -5,7 +5,7 @@
     <view class="navBar" style="height:{{navBarHeight}}px;">
         柒号生活
     </view>
-    <view class="search">
+    <view class="search" bindtap="search">
         <view class="searchIconBox">
             <image class="searchIcon" src="../../images/search.png"></image>
         </view>
@@ -14,21 +14,21 @@
 </view>
 
 <view class="tabs">
-    <view class="tabItem">
+    <view class="tabItem" bindtap="stores">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/food.png"></image>
         </view>
         <text class="tabItemD">食在上饶</text>
     </view>
 
-    <view class="tabItem">
+    <view class="tabItem" bindtap="stores">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/entertainment.png"></image>
         </view>
         <text class="tabItemD">玩乐途游</text>
     </view>
 
-    <view class="tabItem">
+    <view class="tabItem" bindtap="stores">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/around.png"></image>
         </view>
@@ -36,17 +36,17 @@
     </view>
 </view>
 
-<view wx:for="{{plates}}" class="box">
+<view wx:for="{{plates}}" wx:key="id" class="box">
     <view class="boxTitle">
         <view class="boxTitleIconBox">
             <image class="boxTitleIcon" src="../../images/star.png"></image>
         </view>
         <text class="boxTitleName">{{item.title}}</text>
-        <text class="boxTitleMore">>>></text>
+        <text class="boxTitleMore" bindtap="plates">>>></text>
     </view>
     <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}"></image>
     <view class="innerBox">
-        <view wx:for="{{item.items}}" class="innerBoxItem">
+        <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem">
             <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
             <view class="innerBoxItemDesc">
                 <text class="innerBoxItemDescTitle">{{item.title}}</text>

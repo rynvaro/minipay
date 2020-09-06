@@ -4,6 +4,7 @@
     <image class="cardLin1" src="{{user.avatarUrl}}"></image>
     <text class="cardLin2">{{user.name}}</text>
     <text class="cardLin3">当前余额：{{user.balance/100}}</text>
+    <image class="cardBG" src="../../images/bg/balance_bg.png"></image>
 </view>
 
 

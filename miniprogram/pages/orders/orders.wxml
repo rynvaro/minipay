@@ -9,9 +9,9 @@
 
 <view class="orderTabs">
     <text class="orderTabsItem" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0">全部</text>
-    <text class="orderTabsItem" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1">已完成</text>
-    <text class="orderTabsItem" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2">已取消</text>
-    <text class="orderTabsItem" style="color: {{tabColors[3]}}; font-size: {{tabFontSizes[3]}}" bindtap="onTabClick" data-id="3">处理中</text>
+    <text class="orderTabsItem" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1">待评价</text>
+    <text class="orderTabsItem" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2">完成</text>
+    <text class="orderTabsItem" style="color: {{tabColors[3]}}; font-size: {{tabFontSizes[3]}}" bindtap="onTabClick" data-id="3">退款/售后</text>
 </view>
 
 <view class="orderBox">

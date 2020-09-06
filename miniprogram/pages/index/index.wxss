@@ -62,32 +62,60 @@ page {
 
 .cardLine1 {
   width: 100%;
-  height: 40%;
+  height: 35%;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
 
 .cardLine1Icon {
-  height: 100rpx;
-  width: 100rpx;
+  position: relative;
+  height: 120rpx;
+  width: 120rpx;
   border-radius: 200rpx;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 0;
+}
+
+.cardLine1IconText {
+  width: 100%;
+  height: 50%;
+  font-size: 20rpx;
+  background-color: #646464;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 0 0 50% 50%/0 0 100% 100%;
+}
+
+.cardLine1IconBG {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 200rpx;
+  z-index: -1;
 }
 
 .cardLine2 {
   width: 100% !important;
-  height: 10% !important;
+  height: 15% !important;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 30rpx;
-  font-weight: 350 !important;
+  font-weight: 400 !important;
 }
 
 .cardLine3 {
   width: 60%;
-  height: 20%;
+  height: 15%;
   font-size: small;
   color: wheat;
   display: flex;
@@ -367,7 +395,7 @@ page {
 
 .wxlogo {
   width: 81rpx;
-  height: 81rpx;
+  height: 65rpx;
 }
 
 .popBoxContent {
@@ -398,4 +426,131 @@ page {
   top: 10rpx;
   right: 20rpx;
   color: white;
+}
+
+.redpack {
+  position: absolute;
+  height: 560rpx;
+  width: 350rpx;
+  top: 350rpx;
+  left: 200rpx;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.redpackBG {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.closeRedpack {
+  width: 50rpx;
+  height: 50rpx;
+  border: 1rpx solid white;
+  font-size: 35rpx;
+  color: white;
+  border-radius: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150rpx;
+}
+
+.moreInfo {
+  position: absolute;
+  top: 250rpx;
+  left: 50rpx;
+  width: 650rpx;
+  height: 600rpx;
+  border-radius: 30rpx;
+  background-color: white;
+  box-shadow: 0 20rpx 20rpx 0 #999999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.moreInfoTitle {
+  width: 60%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
+
+.moreInfoItem {
+  width: 60%;
+  height: 10%;
+  display: flex;
+}
+
+.moreInfoItemL {
+  width: 20%;
+  font-size: small;
+  flood-color: #999999;
+  text-align: justify;
+}
+
+.moreInfoItemL:after {
+  width: 100%;
+  display: inline-block;
+  content: '';
+}
+
+.moreInfoItemR {
+  border-radius: 10rpx;
+  width: 80%;
+  height: 40rpx;
+  background-color: #F6F6F6;
+  display: flex;
+}
+
+.moreInfoItemRCode {
+  width: 50%;
+  background-color:#F6F6F6;
+  border-radius: 10rpx;
+}
+
+.moreInfoItemRButton {
+  width: 50%;
+  height: 100%;
+  border-radius: 10rpx;
+  background-color: #FF6602;
+  color: white;
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moreInfoItemRPlaceholder {
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moreInfoButtonBox {
+  width: 60%;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moreInfoButton {
+  width: 60%;
+  background-color: #FF6602;
+}
+
+.closeMoreInfo {
+  position: absolute;
+  top: 10rpx;
+  right: 20rpx;
 }

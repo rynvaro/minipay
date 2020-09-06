@@ -1,6 +1,14 @@
 <!--miniprogram/pages/coupon/coupon.wxml-->
 
-<view class="headerBg"></view>
+<view class="header">
+    <view class="bar" style="height: {{statusBarHeight + navBarHeight}}">
+        <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+        <view class="navBar" style="height:{{navBarHeight}}px;">
+            <view class="leftArrow" bindtap="back"></view>
+            <text class="navBarTitle">我的卡券</text>
+        </view>
+    </view>
+</view>
 
 <view class="box">
     <block wx:for="{{icoupons}}" wx:key="id">
@@ -9,8 +17,9 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text class="itemLBoxRU">元店铺优惠券</text>
-                        <text class="itemLBoxRD">有效期至2020-08-22</text>
+                        <text class="itemLBoxRU">有效期至2020-08-22</text>
+                        <text class="itemLBoxRM">元店铺优惠券</text>
+                        <text class="itemLBoxRD">元</text>
                     </view>
                 </view>
             </view>
@@ -25,13 +34,14 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text class="itemLBoxRU">元店铺优惠券</text>
-                        <text class="itemLBoxRD">有效期至2020-08-22</text>
+                        <text class="itemLBoxRU">有效期至2020-08-22</text>
+                        <text class="itemLBoxRM">元店铺优惠券</text>
+                        <text class="itemLBoxRD">元</text>
                     </view>
                 </view>
             </view>
-            <view class="itemR">
-                <text class="itemRText">已</text>
+            <view class="itemR" style="color: gray">
+                <text class="itemRText">立即</text>
                 <text class="itemRText">使用</text>
             </view>
         </view>
@@ -41,13 +51,14 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text class="itemLBoxRU">元店铺优惠券</text>
-                        <text class="itemLBoxRD">有效期至2020-08-22</text>
+                        <text class="itemLBoxRU">有效期至2020-08-22</text>
+                        <text class="itemLBoxRM">元店铺优惠券</text>
+                        <text class="itemLBoxRD">元</text>
                     </view>
                 </view>
             </view>
             <view class="itemR">
-                <text class="itemRText">已过期</text>
+                <text class="itemRText" style="color: gray">已过期</text>
             </view>
         </view>
 

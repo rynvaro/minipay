@@ -1,5 +1,14 @@
 <!--miniprogram/pages/point/point.wxml-->
 <wxs src="../../utils/filter.wxs" module="filters"/>
+
+<view class="bar" style="height: {{statusBarHeight + navBarHeight}}">
+    <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+    <view class="navBar" style="height:{{navBarHeight}}px;">
+        <view class="leftArrow" bindtap="back"></view>
+        <text class="navBarTitle">我的积分</text>
+    </view>
+</view>
+
 <view class="header">
     <view class="hLine">
         <view class="hLine1">
@@ -13,6 +22,7 @@
             </view>
         </view>
     </view>
+    <image class="headerBG" src="../../images/bg/vip_exp_bg.png"></image>
 </view>
 
 <view class="tipsBox" hidden="{{tipsBoxHidden}}">

@@ -1,13 +1,15 @@
 // miniprogram/pages/coupon/coupon.js
 
-
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        icoupons: [],
+      statusBarHeight: app.globalData.statusBarHeight,
+      navBarHeight: app.globalData.navBarHeight,
+      icoupons: [],
     },
 
     use: function(e){
@@ -28,6 +30,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      console.log(this)
         wx.showLoading({
             title: 'loading...',
           })
@@ -47,6 +50,12 @@ Page({
                   console.log(e)
                 }
             })
+    },
+
+    back: function(e) {
+      wx.navigateBack({
+        delta: 0,
+      })
     },
 
     /**

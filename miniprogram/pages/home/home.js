@@ -205,6 +205,24 @@ Page({
 
   },
 
+  search: function(e) {
+    wx.navigateTo({
+      url: '../search/search',
+    })
+  },
+
+  plates: function(e) {
+    wx.navigateTo({
+      url: '../plates/plates',
+    })
+  },
+
+  stores: function(e) {
+    wx.navigateTo({
+      url: '../stores/stores',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

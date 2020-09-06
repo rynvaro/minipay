@@ -1,0 +1,160 @@
+/* miniprogram/pages/invite/invite.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    background-color: #F6F6F6;
+    align-items: center;
+}
+
+.inviteBox {
+    width: 95%;
+    height: 400rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inviteTitle {
+    width: 80%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #555555;
+}
+
+.inviteCode {
+    height: 100rpx;
+    width: 80%;
+    display: flex;
+}
+
+.inviteCodeL {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #FEDC59,#FF6500);
+    border-radius: 20rpx;
+    font-size: xx-large;
+    font-weight: bold;
+    color: white;
+}
+
+.inviteCodeR {
+    width: 25%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to left, #FEDC59,#FF6500);
+    border-radius: 20rpx;
+    font-size: x-large;
+    color: white;
+}
+
+.inviteDesc {
+    height: 50%;
+    width: 80%;
+    font-size: xx-small;
+    color: #999999;
+    display: flex;
+    align-items: flex-end;
+}
+
+.steps {
+    position: relative;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 0;
+}
+
+.stepBGLine {
+    position: absolute;
+    width: 5rpx;
+    height: 1000rpx;
+    background-color: rgb(199, 199, 199);
+    z-index: -1;
+    top: 140rpx;
+    right: 118rpx;
+}
+
+.stepTitle {
+    height: 120rpx;
+    width: 100%;
+    color: #999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.step {
+    margin-top: 20rpx;
+    width: 100%;
+    height: 150rpx;
+    display: flex;
+}
+
+.stepL {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #999999;
+}
+
+.stepR {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stepRBox {
+    width: 150rpx;
+    height: 150rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stepQRCode {
+    width: 100rpx;
+    height: 100rpx;
+}
+
+.stepRBoxVIPU {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.stepRBoxVIPUIcon {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.stepRBoxVIPD {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: small;
+}
+
+.stepCoupon {
+    width: 100rpx;
+    height: 50rpx;
+}

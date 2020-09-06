@@ -9,10 +9,8 @@ Page({
         user: {},
         histories: [],
         tipsBoxHidden: true,
+        statusBarHeight: app.globalData.statusBarHeight,
         navBarHeight: app.globalData.navBarHeight,
-        menuRight: app.globalData.menuRight,
-        menuBotton: app.globalData.menuBotton,
-        menuHeight: app.globalData.menuHeight,
     },
 
     showTips: function(e){
@@ -59,6 +57,12 @@ Page({
                 wx.hideLoading()
                 console.log(e)
             }
+        })
+    },
+
+    back: function(e) {
+        wx.navigateBack({
+            delta: 0,
         })
     },
 
