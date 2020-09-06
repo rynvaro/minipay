@@ -1,11 +1,11 @@
 <!--miniprogram/pages/map/map.wxml-->
 
-<map class="map" bgColor="#F6F6F6AA">
-    <view class="backButton">
-        <image class="backButtonImage" src="../../images/arrow.png"></image>
+<map class="map" bgColor="#F6F6F6AA" longitude="{{store.location.longitude}}" latitude="{{store.location.latitude}}" markers="{{markers}}" polyline="{{polyline}}">
+    <view class="backButton" bindtap="back">
+        <view class="leftArrow"></view>
     </view>
 
-    <view class="searchButton">
+    <!-- <view class="searchButton">
         <image class="backButtonImage" src="../../images/search.png"></image>
     </view>
 
@@ -15,13 +15,13 @@
 
     <view class="locationButton">
         <image class="backButtonImage" src="../../images/events.png"></image>
-    </view>
+    </view> -->
 </map>
 
 <view class="mapText">
-    <text class="mapTextHeader">北京麦当劳（西山分店）</text>
-    <text class="mapTextAddress">北纬路甲一号208楼</text>
-    <text class="mapTextAddress">出门右拐前行100米</text>
-    <view class="mapTextButton">查找路线</view>
+    <text class="mapTextHeader">{{store.storeName}}</text>
+    <text class="mapTextAddress">{{store.location.address}}</text>
+    <text class="mapTextAddress"></text>
+    <view class="mapTextButton" bindtap="searchRoad">查找路线</view>
 </view>
 

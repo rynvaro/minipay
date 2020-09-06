@@ -14,7 +14,7 @@
         <view wx:for="{{plate.items}}" wx:key="id" class="innerBoxItem">
             <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
             <view class="innerBoxItemDesc">
-                <text class="innerBoxItemDescTitle">{{item.title}}</text>
+                <text class="innerBoxItemDescTitle">{{item.discount}}折买单</text>
                 <text class="innerBoxItemDescContent">{{item.desc}}</text>
             </view>
         </view>

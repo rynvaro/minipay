@@ -5,18 +5,23 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+      store: {},
+      v1discount: 0,
+      v2discount: 0,
+      v3discount: 0,
+      discount: 0,
+      viplevel: 1,
     },
 
     map: function(){
         wx.navigateTo({
-          url: '../map/map',
+          url: '../map/map?store='+JSON.stringify(this.data.store),
         })
     },
 
     order: function(){
         wx.navigateTo({
-          url: '../order/order',
+          url: '../scanpay/scanpay?merchantID='+this.data.store.phone
         })
     },
 
@@ -24,7 +29,33 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      wx.cloud.callFunction({
+        name:"zgetstore",
+        data: {
+          storeID: options.storeID,
+          merchantID: options.storeID,
+        },
+        success(res) {
+            console.log(res)
+            thiz.setData({
+              store: res.result.store,
+              v1discount: res.result.v1discount,
+              v2discount: res.result.v2discount,
+              v3discount: res.result.v3discount,
+              discount: res.result.discount,
+              viplevel: res.result.viplevel,
+            })
+            wx.hideLoading()
+        },
+        fail: function(e) {
+          wx.hideLoading()
+          console.log(e)
+        }
+    })
     },
 
     /**

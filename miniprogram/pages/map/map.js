@@ -5,14 +5,59 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+      store: {},
+      markers: [],
     },
-
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      let store = JSON.parse(options.store)
+      let marker  = {
+        latitude: store.location.latitude,
+        longitude: store.location.longitude,
+      }
+      this.setData({store: store,markers: [marker]})
+    },
 
+    searchRoad: function(e) {
+      let thiz = this
+      wx.getLocation({
+        type: 'wgs84',
+        success (res) {
+          wx.openLocation({
+            latitude: thiz.data.markers[0].latitude,
+            longitude: thiz.data.markers[0].longitude,
+            name: thiz.data.store.storeName,
+            address: thiz.data.store.location.address,
+          })
+          // console.log(res)
+          // let pointFrom = {
+          //   longitude: res.longitude,
+          //   latitude: res.latitude
+          // }
+          // let pointTo = {
+          //   longitude: thiz.data.markers[0].longitude,
+          //   latitude: thiz.data.markers[0].latitude
+          // }
+          // thiz.setData({
+          //   polyline: [
+          //     {
+          //       points: [pointFrom,pointTo],
+          //       color: "#FF0000DD",
+          //       width: 2
+          //     }
+          //   ]
+          // })
+        }
+       })
+       
+    },
+
+    back: function(e) {
+        wx.navigateBack({
+          delta: 0,
+        })
     },
 
     /**

@@ -15,7 +15,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.getLocation({
+      type: 'wgs84',
+      success (res) {
+        console.log(res)
+        app.globalData.location = res
+      }
+    })
   },
 
   search: function(e) {
@@ -26,13 +32,20 @@ Page({
 
   plates: function(e) {
     wx.navigateTo({
-      url: '../plates/plates?plateID='+e.currentTarget.dataset.id,
+      url: '../plates/plates?plateID=' + e.currentTarget.dataset.id,
     })
   },
 
   stores: function(e) {
     wx.navigateTo({
       url: '../stores/stores',
+    })
+  },
+
+  store: function(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../store/store?storeID=' + e.currentTarget.dataset.id,
     })
   },
 

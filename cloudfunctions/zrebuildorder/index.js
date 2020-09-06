@@ -23,10 +23,12 @@ exports.main = async (event, context) => {
         let exp = user.data.data.exp
 
         let delta = 0.0
-        if ( exp < 1000 ) {
-            delta = 0.5
-        }else if (exp >= 1000 && exp <10000) {
-            delta = 0.3
+        if (merchant.data.discount.discountValue <=9) {
+            if ( exp < 1000 ) {
+                delta = 0.5
+            }else if (exp >= 1000 && exp <10000) {
+                delta = 0.3
+            }
         }
 
         let realDiscount = merchant.data.discount.discountValue + delta

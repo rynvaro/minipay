@@ -1,22 +1,46 @@
 <!--miniprogram/pages/store/store.wxml-->
-<image class="storeImage"  src="../../images/tmp/store.png"></image>
+<image mode="aspectFill" class="storeImage"  src="{{store.storeImage}}"></image>
 
 <view class="line1">
-    <text class="storeName">北京麦当劳（西山店）</text>
-    <text class="storeDiscount">9.8折</text>
+    <text class="storeName">{{store.storeName}}</text>
+    <text class="storeDiscount">{{discount}}折</text>
     <view class="buyButton" bindtap="order">折扣买单</view>
 </view>
 
-<view class="tips">199人购买</view>
+<view class="tips">{{store.sales}}人购买</view>
 
-<text class="originalPrice">原价：69.0</text>
+
+<view class="viprights">
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 1}}" class="viprightsTinyBoxUIcon" src="../../images/v1StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v1Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v1discount}}折</text>
+    </view>
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 2}}" class="viprightsTinyBoxUIcon" src="../../images/v2StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v2Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v2discount}}折</text>
+    </view>
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 3}}" class="viprightsTinyBoxUIcon" src="../../images/v3StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v3Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v3discount}}折</text>
+    </view>
+    <view class="viprightsBGLine"></view>
+</view>
 
 <view class="liteBox">
-    <text class="liteBoxItem">营业时间：10:00-22:00</text>
-    <text class="liteBoxItem">商家电话：010-2939403</text>
+    <text class="liteBoxItem">营业时间：{{store.seTime}}</text>
+    <text class="liteBoxItem">商家电话：{{store.phone}}</text>
     <view class="liteBoxItem" bindtap="map">
-        <text class="liteBoxItemDL" >商家地址：北纬路甲一号出门右拐</text>
-        <image class="liteBoxItemDR" src="../../images/arrow.png"></image>
+        <text class="liteBoxItemDL" >商家地址：{{store.location.address}}</text>
+        <view class="liteBoxItemDR"></view>
     </view>
 </view>
 
@@ -24,4 +48,4 @@
 
 <view class="eventTextUnderLine"></view>
 
-<image class="eventImage" src="../../images/tmp/event.png"></image>
+<image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image>
