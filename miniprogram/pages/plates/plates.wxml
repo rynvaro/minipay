@@ -2,7 +2,7 @@
 
 <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
 <view class="navBar" style="height:{{navBarHeight}}px;">
-    <view class="leftArrow"></view>
+    <view class="leftArrow" bindtap="back"></view>
     <view class="navBarIconBox">
         <image class="navBarIcon" src="../../images/star.png"></image>
     </view>

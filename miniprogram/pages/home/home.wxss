@@ -128,7 +128,7 @@ page {
 
 .boxHeaderImage {
     width: 100%;
-    height: 120rpx;
+    height: 200rpx;
     border-radius: 20rpx;
 }
 

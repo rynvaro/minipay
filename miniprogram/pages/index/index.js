@@ -19,7 +19,9 @@ Page({
             point: 0,
             signs: 0,
             signDate: '',
+            phone: '',
         },
+        phoneFilled: true,
         login: false,
 
         // progress value
@@ -28,10 +30,133 @@ Page({
         open: false,
         redpackShow: false,
         moreInfoShow: false,
+
+        moreInfoUsername: '',
+        moreInfoPhone: '',
+        moreInfoInviteCode: '',
+
+        code: '',
+        codeID: '',
+        sendSMSClicked: false,
+        seconds: 60,
+        label: '获取验证码',
     },
 
     onLoad: function() {
       
+    },
+
+    setUsername: function(e) {
+        this.setData({moreInfoUsername: e.detail.value})
+    },
+
+    setPhone: function(e) {
+        this.setData({moreInfoPhone: e.detail.value})
+    },
+
+    setCode: function(e) {
+        this.setData({code: e.detail.value})
+    },
+
+    setInviteCode: function(e) {
+        this.setData({moreInfoInviteCode: e.detail.value})
+    },
+
+    submit: function(e) {
+        if (this.data.moreInfoUsername.length<=0) {
+            wx.showToast({
+              title: '请输入姓名',
+            })
+            return
+        }
+
+        if (this.data.moreInfoPhone.length<=0) {
+            wx.showToast({
+              title: '请输入手机号',
+            })
+            return
+        }
+
+        if (!/^1[3456789]\d{9}$/.test(this.data.moreInfoPhone)) {
+            wx.showToast({
+              title: '手机号不合法',
+            })
+            return 
+        }
+
+        if (this.data.code.length <= 0) {
+            wx.showToast({
+              title: '请输入验证码',
+            })
+            return
+        }
+
+        if (this.data.code.length < 6) {
+            wx.showToast({
+              title: '验证码格式错误',
+            })
+            return
+        }
+
+        wx.showLoading({
+          title: 'loading...',
+        })
+
+        let thiz = this
+
+        var promise = new Promise(function (resolve, reject) {
+            wx.cloud.callFunction({
+                name:"validateCode",
+                data: {
+                  code: thiz.data.code,
+                  codeID: thiz.data.codeID,
+                },
+                success(res) {
+                    console.log(res)
+                    resolve(true)
+                },
+                fail: function(e) {
+                  console.log(e)
+                  resolve(true) // TODO maybe we should not use code
+                }
+            })
+         });
+    
+
+         promise.then(function(validateOK){
+            if (!validateOK) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '验证码错误',
+              })
+            } else {
+                wx.cloud.callFunction({
+                    name:"zupdateuserinfo",
+                    data: {
+                        username: thiz.data.moreInfoUsername,
+                        phone: thiz.data.moreInfoPhone,
+                        inviteBy: thiz.data.moreInfoInviteCode,
+                    },
+                    success(res) {
+                        console.log(res)
+                        wx.hideLoading()
+                        wx.showToast({
+                          title: '已更新',
+                        })
+                        thiz.setData({phoneFilled: true})
+                        thiz.clodeMoreInfo()
+                        thiz.onShow()
+                    },
+                    fail: function(e) {
+                      console.log(e.errMsg)
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '更新失败',
+                      })
+                    }
+                })
+            }
+        })
     },
 
     showMoreInfo: function(e) {
@@ -84,11 +209,18 @@ Page({
                     p1v = 100
                     p2v = 100
                   }
+
+                  let phoneFilled = true
+                  if (!user.phone) {
+                      phoneFilled = false
+                  }
+
                   thiz.setData({
                       user: user,
                       p1v: p1v,
                       p2v: p2v,
                       login: true,
+                      phoneFilled: phoneFilled,
                   })
               },
               fail: function(e) {
@@ -220,4 +352,78 @@ Page({
         this.setData({show:false})
     },
 
+
+  sendSMS: function(e) {
+
+    if (!/^1[3456789]\d{9}$/.test(this.data.moreInfoPhone)) {
+        wx.showToast({
+          title: '请输入合法手机号',
+        })
+        return 
+    }
+
+    if (this.data.sendSMSClicked) {
+      return 
+    }
+    this.setData({
+      sendSMSClicked: true,
+    })
+
+    this.setData({
+      label: this.data.seconds + '秒'
+    });
+    // 启动以1s为步长的倒计时
+    var interval = setInterval(() => {
+        countdown(this);
+    }, 1000);
+    // 停止倒计时
+    setTimeout(function() {
+        clearInterval(interval);
+    }, this.data.seconds * 1000);
+
+    wx.showLoading({
+      title: '发送中...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+      name:"sendSMS",
+      data: {
+        phone: thiz.data.moreInfoPhone,
+      },
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          codeID: res.result._id
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '已发送',
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+        wx.hideLoading()
+      }
+    })
+  },
 })
+
+
+function countdown(that) {
+    var seconds = that.data.seconds;
+    var label = that.data.label;
+    console.log(seconds)
+    if (seconds <= 1) {
+        label = '获取验证码';
+        seconds = 60;
+        that.setData({
+            sendSMSClicked: false
+        });
+    } else {
+        label = '（' + --seconds + '秒）'
+    }
+    that.setData({
+        seconds: seconds,
+        label: label
+    });
+  }

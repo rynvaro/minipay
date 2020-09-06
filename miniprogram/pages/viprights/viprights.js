@@ -6,36 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        cards: [
-            {
-                "id": 0,
-                "level":"1",
-                "tips":[
-                    "VIP可换购，享受基础折扣9.5折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.5折，享新人优惠券",
-                ]
-            },
-            {
-                "id": 1,
-                "level":"2",
-                "tips":[
-                    "VIP可换购，享受基础折扣9.3折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.3折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.3折，享新人优惠券",
-                ]
-            },
-            {
-                "id": 2,
-                "level":"3",
-                "tips":[
-                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
-                    "VIP可换购，享受基础折扣9.0折，享新人优惠券",
-                ]
-            }
-        ],
+        cards: [],
         level: 1,
         toggles: [false, false, false],
         cardHeights: [defaultH,defaultH,defaultH],
@@ -81,7 +52,25 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zviprights",
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  thiz.setData({
+                      level: res.result.level,
+                      cards: res.result.viprights,
+                  })
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
     },
 
     /**

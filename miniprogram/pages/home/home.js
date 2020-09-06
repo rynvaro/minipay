@@ -8,194 +8,7 @@ Page({
   data: {
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navBarHeight,
-    plates: [
-      {
-        id: 0,
-        title: "超实惠",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      },
-      {
-        id: 1,
-        title: "最新款",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "今天吃啥",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      },
-      {
-        id: 3,
-        title: "去哪浪",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      },
-      {
-        id: 4,
-        title: "附近商家",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      },
-      {
-        id: 5,
-        title: "有型有fan",
-        headerImage: '../../images/tmp/store.png',
-        items: [
-          {
-            id: 0,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 1,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 2,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          },
-          {
-            id: 3,
-            image: '../../images/logo.png',
-            title: '买单8.8折扣',
-            desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-          }
-        ]
-      }
-    ]
+    plates: []
   },
 
   /**
@@ -213,7 +26,7 @@ Page({
 
   plates: function(e) {
     wx.navigateTo({
-      url: '../plates/plates',
+      url: '../plates/plates?plateID='+e.currentTarget.dataset.id,
     })
   },
 
@@ -234,7 +47,24 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.showLoading({
+      title: 'loading...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+        name:"zplates",
+        success(res) {
+            wx.hideLoading()
+            console.log(res)
+            thiz.setData({
+                plates: res.result.data,
+            })
+        },
+        fail: function(e) {
+          wx.hideLoading()
+          console.log(e)
+        }
+    })
   },
 
   /**

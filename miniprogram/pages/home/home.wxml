@@ -42,7 +42,7 @@
             <image class="boxTitleIcon" src="../../images/star.png"></image>
         </view>
         <text class="boxTitleName">{{item.title}}</text>
-        <text class="boxTitleMore" bindtap="plates">>>></text>
+        <text class="boxTitleMore" bindtap="plates" data-id="{{item._id}}">>>></text>
     </view>
     <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}"></image>
     <view class="innerBox">

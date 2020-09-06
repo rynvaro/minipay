@@ -7,44 +7,40 @@ Page({
     data: {
         statusBarHeight: app.globalData.statusBarHeight,
         navBarHeight: app.globalData.navBarHeight,
-        plate: {
-            id: 0,
-            title: "超实惠",
-            headerImage: '../../images/tmp/store.png',
-            items: [
-            {
-                id: 0,
-                image: '../../images/logo.png',
-                title: '买单8.8折扣',
-                desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-            },
-            {
-                id: 1,
-                image: '../../images/logo.png',
-                title: '买单8.8折扣',
-                desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-            },
-            {
-                id: 2,
-                image: '../../images/logo.png',
-                title: '买单8.8折扣',
-                desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-            },
-            {
-                id: 3,
-                image: '../../images/logo.png',
-                title: '买单8.8折扣',
-                desc: '麦当劳西直门店，好吃。色香味俱全，优惠好礼送不完。甜品第二杯半价。更多优惠!',
-            }
-            ]
-        },
+        plate: {},
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zplate",
+              data: {
+                plateID: options.plateID
+              },
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  thiz.setData({
+                      plate: res.result.data
+                  })
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
+    },
 
+    back: function(e) {
+        wx.navigateBack({
+          delta: 0,
+        })
     },
 
     /**

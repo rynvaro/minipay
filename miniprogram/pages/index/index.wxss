@@ -491,7 +491,7 @@ page {
 }
 
 .moreInfoItemL {
-  width: 20%;
+  width: 25%;
   font-size: small;
   flood-color: #999999;
   text-align: justify;
@@ -504,15 +504,18 @@ page {
 }
 
 .moreInfoItemR {
+  margin-left: 10rpx;
   border-radius: 10rpx;
-  width: 80%;
+  width: 75%;
   height: 40rpx;
   background-color: #F6F6F6;
   display: flex;
+  font-size: small;
 }
 
 .moreInfoItemRCode {
   width: 50%;
+  height: 100%;
   background-color:#F6F6F6;
   border-radius: 10rpx;
 }
@@ -523,7 +526,7 @@ page {
   border-radius: 10rpx;
   background-color: #FF6602;
   color: white;
-  font-size: small;
+  font-size: xx-small;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -547,6 +550,7 @@ page {
 .moreInfoButton {
   width: 60%;
   background-color: #FF6602;
+  color: white;
 }
 
 .closeMoreInfo {
