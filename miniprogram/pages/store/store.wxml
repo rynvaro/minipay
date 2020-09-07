@@ -1,5 +1,18 @@
 <!--miniprogram/pages/store/store.wxml-->
-<image mode="aspectFill" class="storeImage"  src="{{store.storeImage}}"></image>
+<!-- <image mode="aspectFill" class="storeImage"  src="{{store.storeImage}}"></image>
+ -->
+<view class="banner">
+  <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" >
+    <block wx:for="{{bannerUrls}}" wx:key="id">
+    <swiper-item wx:if="{{item.isVideo}}">
+        <video src="{{item.url}}" class="bannerItem" autoplay="true" loop="true"></video>
+     </swiper-item>
+    <swiper-item wx:else>
+        <image mode="aspectFill" src="{{item.url}}" class="bannerItem"/>
+     </swiper-item>
+    </block>
+  </swiper>
+</view>
 
 <view class="line1">
     <text class="storeName">{{store.storeName}}</text>
@@ -48,4 +61,5 @@
 
 <view class="eventTextUnderLine"></view>
 
-<image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image>
+<image mode="widthFix" class="eventImage" src="cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/product_image.jpeg"></image>
+<!-- <image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image> -->

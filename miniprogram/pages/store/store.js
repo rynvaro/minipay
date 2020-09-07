@@ -5,6 +5,27 @@ Page({
      * 页面的初始数据
      */
     data: {
+        swiperCurrent: 0,//当前所在页面的 index
+        indicatorDots: true, //是否显示面板指示点
+        autoplay: true, //是否自动切换
+        interval: 3000, //自动切换时间间隔,3s
+        duration: 1000, //滑动动画时长1s
+        circular: true, //是否采用衔接滑动
+        bannerUrls: [
+          {
+            isVideo: true,
+            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_video.mp4",
+          },
+          {
+            isVideo: false,
+            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_image_1.jpeg",
+          },
+          {
+            isVideo: false,
+            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_image_2.jpeg",
+          },
+        ],
+
       store: {},
       v1discount: 0,
       v2discount: 0,

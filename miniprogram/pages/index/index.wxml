@@ -140,7 +140,7 @@
 </view>
 
 
-<view class="moreInfo" style="visibility:{{moreInfoShow ? 'visible':'hidden'}}">
+<view class="moreInfo" hidden="{{!moreInfoShow}}">
   <view class="moreInfoTitle">信息完善</view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">姓名</text>

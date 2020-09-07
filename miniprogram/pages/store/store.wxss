@@ -21,9 +21,24 @@ page {
     justify-content: center;
 }
 
-.storeImage {
+/* .storeImage {
     width: 100%;
     height: 400rpx;
+} */
+
+.banner {
+    width: 100%;
+    height: 400rpx;
+}
+
+.swiper {
+    height: 100%;
+    width: 100%;
+}
+
+.bannerItem {
+    height: 100%;
+    width: 100%;
 }
 
 .line1 {
@@ -148,5 +163,5 @@ page {
 
 .eventImage {
     width: 100%;
-    height: 1000rpx;
+    /* height: 10000rpx; */
 }
