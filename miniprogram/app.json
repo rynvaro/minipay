@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/console/index/index",
         "pages/invite/invite",
         "pages/vipexperience/vipexperience",
         "pages/balance/balance",
@@ -24,7 +25,6 @@
         "pages/map/map",
         "pages/store/store",
         "pages/console/home/home",
-        "pages/console/index/index",
         "pages/console/store/store",
         "pages/console/orders/orders",
         "pages/console/discount/discount",

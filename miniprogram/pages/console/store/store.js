@@ -22,7 +22,9 @@ Page({
           address: '点击选择地址',
         },
         seTime: '',
-        productImage: ''
+        productImage: '',
+        storeType: 1,// 1 餐饮 2 娱乐
+        sales: 0,
       }
     },
 
@@ -82,6 +84,14 @@ Page({
       })
     },
 
+    change: function(e) {
+      console.log(e)
+      this.data.data.storeType=e.detail.value
+      this.setData({
+        data:this.data.data
+      })
+    },
+
     publish: function(e){
       if (!this.data.data.storeName){
         wx.showToast({
@@ -133,6 +143,13 @@ Page({
       if (!this.data.data.seTime){
         wx.showToast({
           title: '请填写营业时间',
+        })
+        return 
+      }
+
+      if (!this.data.data.storeType){
+        wx.showToast({
+          title: '请选择店铺类型',
         })
         return 
       }
@@ -226,6 +243,8 @@ Page({
                         data:{
                           id:thiz.data.id,
                           data:thiz.data.data,
+                          storeType: thiz.data.data.storeType,
+                          sales: 0,
                         },
                         success(res) {
                           console.log(res)

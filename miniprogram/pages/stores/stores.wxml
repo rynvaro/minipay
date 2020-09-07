@@ -2,34 +2,34 @@
 
 <view class="tabs">
     <view class="tab">
-        <text class="tabText" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0">热门商家</text>
+        <text class="tabText" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0" data-orderType="1">人气商家</text>
         <view class="tabUnderLine" hidden="{{!tabSelected[0]}}"></view>
     </view>
     <view class="tab">
-        <text class="tabText" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1">人气商家</text>
+        <text class="tabText" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1" data-orderType="2">最新商家</text>
         <view class="tabUnderLine" hidden="{{!tabSelected[1]}}"></view>
     </view>
     <view class="tab">
-        <text class="tabText" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2">附近商家</text>
+        <text class="tabText" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2" data-orderType="0">附近商家</text>
         <view class="tabUnderLine" hidden="{{!tabSelected[2]}}"></view>
     </view>
 </view>
 
 <view class="stores">
 
-    <view wx:for="{{stores}}" wx:key="id" class="store" bindtap="store">
+    <view wx:for="{{stores}}" wx:key="id" class="store" bindtap="store" data-id="{{item._id}}">
         <view class="storeL">
-            <image class="storeLImage" src="{{item.productImage}}"></image>
+            <image mode="aspectFill" class="storeLImage" src="{{item.data.data.productImage}}"></image>
         </view>
         <view class="storeR">
             <view class="storeRBox">
-                <text class="storeRText1">{{item.storeName}}</text>
+                <text class="storeRText1">{{item.data.data.storeName}}</text>
                 <view class="storeRText3">
                     <text class="storeRText3Item">{{item.storeType}}</text>
                     <text class="storeRText3Item">人均¥{{item.price}}</text>
                     <text class="storeRText3ItemLocation">{{item.distance}}</text>
                 </view>
-                <text class="storeRText4">营业时间 {{item.seTime}}</text>
+                <text class="storeRText4">营业时间 {{item.data.data.seTime}}</text>
                 <view class="viprights">
                     <view class="viprightsTinyBox">
                         <view class="viprightsTinyBoxU">

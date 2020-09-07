@@ -28,10 +28,13 @@ exports.main = async (event, context) => {
         result = await db.collection('stores').add({
         data: {
             _id: event.data.phone,
+            sales: event.data.sales,
+            storeType: parseInt(event.data.storeType),
             data: event,
             openid: wxContext.OPENID,
-            publishedAt: new Date(),
-            updatedAt: new Date()
+            geoPoint: db.Geo.Point(event.data.location.longitude, event.data.location.latitude),
+            publishedAt: Date.parse(new Date()),
+            updatedAt: Date.parse(new Date()),
         },
         success: res => {
             console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)

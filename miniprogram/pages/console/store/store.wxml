@@ -59,6 +59,15 @@
             <text class="settingItemL">营业时间</text>
             <input bindinput="setSETime" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.seTime}}"></input>
         </view>
+        
+        <view class="settingItem">
+            <text class="settingItemL">店铺类型</text>
+            <radio-group bindchange="change">
+                <radio value="1">餐饮</radio>
+                <radio value="2">娱乐</radio>
+            </radio-group>
+        </view>
+        
 
         <view class="settingItem">
             <text class="settingItemL">产品详情</text>

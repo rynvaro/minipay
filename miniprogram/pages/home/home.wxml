@@ -14,21 +14,21 @@
 </view>
 
 <view class="tabs">
-    <view class="tabItem" bindtap="stores">
+    <view class="tabItem" bindtap="stores" data-id="1">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/food.png"></image>
         </view>
         <text class="tabItemD">食在上饶</text>
     </view>
 
-    <view class="tabItem" bindtap="stores">
+    <view class="tabItem" bindtap="stores" data-id="2">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/entertainment.png"></image>
         </view>
         <text class="tabItemD">玩乐途游</text>
     </view>
 
-    <view class="tabItem" bindtap="stores">
+    <view class="tabItem" bindtap="stores" data-id="0">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/around.png"></image>
         </view>

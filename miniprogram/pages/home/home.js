@@ -38,7 +38,7 @@ Page({
 
   stores: function(e) {
     wx.navigateTo({
-      url: '../stores/stores',
+      url: '../stores/stores?storeType='+e.currentTarget.dataset.id,
     })
   },
 
