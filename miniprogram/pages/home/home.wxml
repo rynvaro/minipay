@@ -46,7 +46,7 @@
     </view>
     <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}" bindtap="store" data-id="{{item.headerStoreId}}"></image>
     <view class="innerBox">
-        <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem">
+        <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem" data-id="{{item.storeId}}" bindtap="scanpay">
             <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
             <view class="innerBoxItemDesc">
                 <text class="innerBoxItemDescTitle">{{item.discount}}折买单</text>

@@ -25,7 +25,7 @@
             <view class="storeRBox">
                 <text class="storeRText1">{{item.data.data.storeName}}</text>
                 <view class="storeRText3">
-                    <text class="storeRText3Item">{{item.storeType}}</text>
+                    <text class="storeRText3Item">{{item.data.data.merchantInfo}}</text>
                     <text class="storeRText3Item">人均¥{{item.price}}</text>
                     <text class="storeRText3ItemLocation">{{item.distance}}</text>
                 </view>
