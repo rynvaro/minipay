@@ -61,4 +61,4 @@
 
 <view class="eventTextUnderLine"></view>
 
-<image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image>
+<image mode="widthFix" class="eventImage" src="{{store.productImage}}"></image>

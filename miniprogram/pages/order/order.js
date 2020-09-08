@@ -98,6 +98,12 @@ Page({
                 })
                 return
               }
+              if (res.result==-2) {
+                wx.showToast({
+                  title: '密码错误',
+                })
+                return
+              }
               wx.showModal({
                 title: '提示',
                 content: '支付成功',

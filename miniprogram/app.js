@@ -25,7 +25,6 @@ App({
     }
   
     this.globalData.statusBarHeight = systemInfo.statusBarHeight;
-    console.log(this)
   },
 
   // 数据都是根据当前机型进行计算，这样的方式兼容大部分机器
