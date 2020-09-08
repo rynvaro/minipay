@@ -13,8 +13,11 @@ exports.main = async (event, context) => {
 
     let merchantID = event.merchantID
     let storeID = event.storeID
-    let payAmount = event.payAmount
+    let payAmount = parseFloat(event.payAmount)
     let couponID = event.couponID
+    let mustPayAmount = parseFloat(event.mustPayAmount)
+
+    let payby = event.payby
 
     var result = {}
 
@@ -35,20 +38,23 @@ exports.main = async (event, context) => {
 
         let realDiscount = merchant.data.discount.discountValue + delta
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
-        let realAmount = (payAmount - rebate).toFixed(2)
-        let totalAmount = realAmount
-        if (user.data.data.balance < totalAmount*100) {
-            return -1
-        }
-
+        let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
+        let totalAmount = (parseFloat(realAmount) + mustPayAmount).toFixed(2)
+        
         let couponValue = 0
         if (couponID!=-1) {
             const coupon = await db.collection('icoupons').doc(couponID).get()
             couponValue = coupon.data.coupon.value/100
-            totalAmount = realAmount - couponValue
+            totalAmount = (realAmount - couponValue + mustPayAmount).toFixed(2)
+        }
+
+        if (payby == 2) {
             if (user.data.data.balance < totalAmount*100) {
                 return -1
             }
+        }
+
+        if ( couponID != -1 ){
             await db.collection('icoupons').doc(couponID).update({
                 data: {
                     status: 1,
@@ -75,8 +81,9 @@ exports.main = async (event, context) => {
             realAmount: realAmount,
             coupon: couponValue,
             totalAmount: realAmount,
+            mustPayAmount: mustPayAmount,
             timestamp: Date.parse(new Date()),
-            payType: 1, // 余额
+            payType: payby, // 1 wechat 2 balance
             status: 1, // 已完成
         }
 
@@ -140,14 +147,24 @@ exports.main = async (event, context) => {
                 }
             })
         }
-        
+
+        let isFirstPay = false
+        if (user.data.data.payTimes ==  0) {
+            isFirstPay = true
+        }
+        let balance = user.data.data.balance
+        if (payby == 2) {
+            balance = user.data.data.balance - totalAmount*100
+        }
 
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
-                    balance: user.data.data.balance - totalAmount*100,
+                    balance: balance,
                     point: user.data.data.point + parseInt(totalAmount/10),
                     exp: user.data.data.exp + parseInt(totalAmount/10),
+                    payTimes: user.data.data.payTimes + 1,
+                    isFirstPay: isFirstPay,
                 }
             },
             success: res => {
@@ -159,10 +176,52 @@ exports.main = async (event, context) => {
             }
         })
 
+        // 邀请者收益
+        if (user.data.data.inviteBy) {
+            const upLineUser = await db.collection('users').where({inviteCode: user.data.data.inviteBy}).get()
+            if (upLineUser.data.length > 0) {
+                upLineU = upLineUser.data[0]
+                await db.collection('users').doc(upLineU._id).update({
+                    data: {
+                        data: {
+                            exp: upLineU.data.exp + 10
+                        }
+                    },
+                    success: res => {
+                        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                    },
+                    fail: err => {
+                        console.error('[数据库] [新增记录] 失败：', err)
+                        throw(e)
+                    }
+                })
+
+                await db.collection('exprecords').add({
+                    data: {
+                        openid: upLineU._id,
+                        type: 1, // 消费
+                        action: '+',
+                        value: 10,
+                        timestamp: Date.parse(new Date()),
+                    },
+                    success: res => {
+                        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+                    },
+                    fail: err => {
+                        console.error('[数据库] [新增记录] 失败：', err)
+                        throw(e)
+                    }
+                })
+            }
+        }
+        
+
+        // 商户收入
         await db.collection('merchants').doc(merchantID).update({
             data: {
                 balance: (parseFloat(merchant.data.balance) + parseFloat(totalAmount)),
                 dayBi: (parseFloat(merchant.data.dayBi) + parseFloat(totalAmount)),
+                sales: merchant.data + 1,
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)

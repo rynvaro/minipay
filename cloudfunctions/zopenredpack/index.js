@@ -9,32 +9,19 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    let username = event.username
-    let phone = event.phone
-    let inviteBy = event.inviteBy
-    
-
     try {
-
         const user = await db.collection('users').doc(wxContext.OPENID).get()
-        if (user.data.inviteCode == inviteBy) {
-            return -1 // 不能邀请自己
+        if (!user.data.data.isFirstPay) {
+            throw(e)
         }
 
-        const users = await db.collection('users').where({inviteCode: inviteBy}).get()
-
-        if (users.data.length == 0) {
-            return -2 // 兑换码不存在
-        }
-
+        let redpackValue = event.redpackValue
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
-                    phone: phone,
-                    username: username,
-                    inviteBy: inviteBy,
-                },
-                updateAt: Date.parse(new Date()),
+                    balance: user.data.data.balance + redpackValue,
+                    isFirstPay: false,
+                }
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -49,5 +36,4 @@ exports.main = async (event, context) => {
     }
 
     return {}
-
 }

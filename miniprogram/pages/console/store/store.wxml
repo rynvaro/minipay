@@ -59,6 +59,11 @@
             <text class="settingItemL">营业时间</text>
             <input bindinput="setSETime" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.seTime}}"></input>
         </view>
+
+        <view class="settingItem">
+            <text class="settingItemL">描述</text>
+            <textarea bindinput="setDesc" class="settingItemR"></textarea>
+        </view>
         
         <view class="settingItem">
             <text class="settingItemL">店铺类型</text>

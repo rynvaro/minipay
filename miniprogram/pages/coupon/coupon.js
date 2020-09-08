@@ -18,7 +18,15 @@ Page({
 
       for (var i = 0;i<this.data.icoupons.length;i++) {
         if (e.currentTarget.dataset.id==this.data.icoupons[i]._id){
-          prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true})
+
+          let totalAmount = parseFloat(prevPage.data.realAmount)
+          let couponValue = this.data.icoupons[i].coupon.value/100
+          if (couponValue < totalAmount) {
+            totalAmount = totalAmount - couponValue
+          }
+          totalAmount = (totalAmount + prevPage.data.mustPayment).toFixed(2)
+
+          prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true, totalAmount: totalAmount})
           wx.navigateBack({
             delta: 0,
           })

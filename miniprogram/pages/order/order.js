@@ -15,10 +15,11 @@ Page({
      */
     data: {
         payAmount: 0,
+        rebate: 0,
+        realAmount: 0,
+        totalAmount: 0,// 最终要支付的金额
         preOrder: {
           realDiscount: 0.00,
-          rebate: 0.00,
-          realAmount: 0.0,
         },
 
         couponSelected: false,
@@ -28,12 +29,47 @@ Page({
           }
         },
         merchantID: '',
+        payby: 1, // 1 wechat 2 balance
+        mustPayment: 0.00,
+    },
+
+    setPayment: function(e) {
+      
+      let payAmount = e.detail.value=='' ? 0 : e.detail.value * 1
+      let rebate = (payAmount*(1-(this.data.preOrder.realDiscount/10))).toFixed(2)
+      let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
+      let totalAmount = parseFloat(realAmount)
+      let couponValue = this.data.coupon.coupon.value/100
+
+      if (couponValue < totalAmount) {
+        totalAmount = totalAmount - couponValue
+      }
+      totalAmount = (totalAmount + this.data.mustPayment).toFixed(2)
+
+      this.setData({payAmount: payAmount, rebate: rebate, realAmount: realAmount, totalAmount: totalAmount})
+    },
+
+    setMustPayment: function(e) {
+      let mustPay = e.detail.value=='' ? 0 : e.detail.value * 1
+
+      let totalAmount = parseFloat(this.data.realAmount)
+      let couponValue = this.data.coupon.coupon.value/100
+      if (couponValue < totalAmount) {
+        totalAmount = totalAmount - couponValue
+      }
+      totalAmount = (totalAmount + mustPay).toFixed(2)
+
+      this.setData({mustPayment: mustPay, totalAmount: totalAmount})
     },
 
     select: function() {
       wx.navigateTo({
-        url: '../coupon/coupon?value='+this.data.preOrder.realAmount,
+        url: '../coupon/coupon?value='+this.data.realAmount,
       })
+    },
+
+    selectPay: function(e) {
+      this.setData({payby: e.detail.value})
     },
 
     inputChange: function(e) {
@@ -48,8 +84,10 @@ Page({
             merchantID: thiz.data.merchantID,
             storeID: thiz.data.merchantID,
             payAmount: thiz.data.payAmount,
+            mustPayAmount: thiz.data.mustPayment,
             couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
             password: e.detail,
+            payby: thiz.data.payby,
           },
           success(res) {
               console.log(res)
@@ -82,7 +120,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-      this.setData({payAmount: parseFloat(options.payAmount),merchantID: options.merchantID})
+      this.setData({merchantID: options.merchantID})
       wx.showLoading({
         title: 'loading...',
       })
@@ -93,7 +131,6 @@ Page({
           data: {
             merchantID: options.merchantID,
             storeID: options.merchantID,
-            payAmount: thiz.data.payAmount,
           },
           success(res) {
               console.log(res)
@@ -157,9 +194,82 @@ Page({
     },
 
     pay: function(e){
-          moveY = 0;
-          action = 'show',
-          animationEvents(this,moveY,action)
+      if (this.data.totalAmount <=0 ) {
+        wx.showToast({
+          title: '请输入支付金额',
+        })
+        return
+      }
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+          if (this.data.payby == 2) {
+            wx.hideLoading()
+            moveY = 0;
+            action = 'show',
+            animationEvents(this,moveY,action)
+          } else {
+            wx.cloud.callFunction({
+              name:"zgetpayinfo",
+              data: {
+                ip: '127.0.0.1', // TODO
+                depositAmount: parseFloat(thiz.data.totalAmount),
+                body: "柒号生活-消费",
+              },
+              success(payInfoRes) {
+                  console.log("pay info is: ",payInfoRes)
+                  wx.hideLoading()
+
+                  wx.requestPayment({
+                      timeStamp: payInfoRes.result.res.payment.timeStamp,
+                      nonceStr: payInfoRes.result.res.payment.nonceStr,
+                      signType: payInfoRes.result.res.payment.signType,
+                      paySign: payInfoRes.result.res.payment.paySign,
+                      package: payInfoRes.result.res.payment.package,
+                      success (payRes) { 
+                        console.log(payRes)
+                        // 1. 确认充值结果 TODO
+                        wx.showLoading({
+                          title: '支付中...',
+                        })
+                        wx.cloud.callFunction({
+                          name:"zdorderpay",
+                          data: {
+                            merchantID: thiz.data.merchantID,
+                            storeID: thiz.data.merchantID,
+                            payAmount: thiz.data.payAmount,
+                            couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
+                            password: e.detail,
+                            payby: thiz.data.payby,
+                            mustPayAmount: thiz.data.mustPayment,
+                          },
+                          success(res) {
+                              console.log(res)
+                              wx.hideLoading()
+                              wx.navigateTo({
+                                url: '../paysuccess/paysuccess',
+                              })
+                          },
+                          fail: function(e) {
+                            console.log(e.errMsg)
+                            wx.hideLoading()
+                          }
+                      })},
+
+                      fail (res) { 
+                        wx.showToast({
+                          title: '支付失败',
+                        })
+                      }
+                    })
+              },
+              fail: function(e) {
+                console.log(e.errMsg)
+                wx.hideLoading()
+              }
+            })
+          }
       },
     
       hidden: function(e) {

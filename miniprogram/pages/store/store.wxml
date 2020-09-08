@@ -2,10 +2,10 @@
 <!-- <image mode="aspectFill" class="storeImage"  src="{{store.storeImage}}"></image>
  -->
 <view class="banner">
-  <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" >
+  <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" current="{{current}}">
     <block wx:for="{{bannerUrls}}" wx:key="id">
     <swiper-item wx:if="{{item.isVideo}}">
-        <video src="{{item.url}}" class="bannerItem" autoplay="true" loop="true"></video>
+        <video src="{{item.url}}" class="bannerItem" autoplay="true" bindended="videoEnded"></video>
      </swiper-item>
     <swiper-item wx:else>
         <image mode="aspectFill" src="{{item.url}}" class="bannerItem"/>
@@ -61,5 +61,4 @@
 
 <view class="eventTextUnderLine"></view>
 
-<image mode="widthFix" class="eventImage" src="cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/product_image.jpeg"></image>
-<!-- <image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image> -->
+<image mode="aspectFill" class="eventImage" src="{{store.productImage}}"></image>

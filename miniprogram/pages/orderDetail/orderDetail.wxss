@@ -1,4 +1,5 @@
-/* miniprogram/pages/order/order.wxss */
+/* miniprogram/pages/orderDetail/orderDetail.wxss */
+
 
 page {
     background-color: #F6F6F6;
@@ -79,6 +80,7 @@ page {
     align-items: flex-end;
   }
   
+  
   .totalIncome {
     width: 100%;
     height: 90rpx;
@@ -89,7 +91,7 @@ page {
   }
   
   .totalIncomeKey {
-    width: 50%;
+    width: 70%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -97,21 +99,13 @@ page {
   }
   
   .totalIncomeValue {
-    width: 20%;
+    width: 30%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: large;
     color: red;
-  }
-
-  .couponArrow {
-    width: 20rpx;
-    height: 20rpx;
-    border-top: 2rpx solid black;
-    border-right: 2rpx solid black;
-    transform: rotate(45deg);
   }
 
   .totalIncomePayButton {
@@ -124,108 +118,6 @@ page {
     color: white;
     background-color: #FF6610;
   }
-
-
-  .popBox {
-    width: 90%;
-    height: 600rpx;
-    background-color: white;
-    border-radius: 20rpx;
-    position: absolute;
-    top: 200rpx;
-  
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0rpx 20rpx 20rpx 0rpx #808080;
-  }
-
-  .popBoxHeader {
-    width: 100%;
-    margin-top: 20rpx;
-    display: flex;
-  }
-
-  .popBoxHeaderL {
-    width: 10%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: small;
-  }
-  
-  .popBoxHeaderR {
-    width: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: small;
-  }
-  
-  .popBoxLin1 {
-    margin-top: 10rpx;
-    width: 90%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    font-size: small;
-  }
-
-  .popBoxLin2 {
-    margin-top: 10rpx;
-    width: 90%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: xx-large;
-    font-weight: bold;
-  }
-
-  .popBoxLin3 {
-    margin-top: 10rpx;
-    width: 90%;
-    height: 4rpx;
-    background-color: #bdbdbd;
-  }
-
-
-  .popBoxLin4 {
-    margin-top: 10rpx;
-    width: 90%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: small;
-    color: #999999;
-  }
-
-
-  .popBoxLin4L {
-    height: 100%;
-    width: 50%;
-    display: flex;
-    align-items: center;
-  }
-
-  .popBoxLin4R {
-    height: 100%;
-    width: 45%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-.popBoxLin4Arrow {
-    width: 20rpx;
-    height: 20rpx;
-    border-top: 5rpx solid #999999;
-    border-right: 5rpx solid #999999;
-    transform: rotate(45deg);
-    margin-right: 20rpx;
-}
 
   .popBoxLin5 {
     margin-top: 10rpx;

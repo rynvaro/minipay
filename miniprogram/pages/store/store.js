@@ -11,20 +11,8 @@ Page({
         interval: 3000, //自动切换时间间隔,3s
         duration: 1000, //滑动动画时长1s
         circular: true, //是否采用衔接滑动
-        bannerUrls: [
-          {
-            isVideo: true,
-            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_video.mp4",
-          },
-          {
-            isVideo: false,
-            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_image_1.jpeg",
-          },
-          {
-            isVideo: false,
-            url: "cloud://dev-osmu3.6465-dev-osmu3-1302781643/images/test/banner_image_2.jpeg",
-          },
-        ],
+        current: 0,
+        bannerUrls: [],
 
       store: {},
       v1discount: 0,
@@ -32,6 +20,10 @@ Page({
       v3discount: 0,
       discount: 0,
       viplevel: 1,
+    },
+
+    videoEnded: function(e) {
+      this.setData({autoplay: true, current: 1})
     },
 
     map: function(){
@@ -42,7 +34,7 @@ Page({
 
     order: function(){
         wx.navigateTo({
-          url: '../scanpay/scanpay?merchantID='+this.data.store.phone
+          url: '../order/order?merchantID='+this.data.store.phone
         })
     },
 
@@ -62,13 +54,21 @@ Page({
         },
         success(res) {
             console.log(res)
+            let autoPlay = true
+            for (var i = 0;i < res.result.banners.length; i++) {
+                if (res.result.banners[i].isVideo) {
+                  autoPlay = false
+                }
+            }
             thiz.setData({
+              autoplay: autoPlay,
               store: res.result.store,
               v1discount: res.result.v1discount,
               v2discount: res.result.v2discount,
               v3discount: res.result.v3discount,
               discount: res.result.discount,
               viplevel: res.result.viplevel,
+              bannerUrls: res.result.banners,
             })
             wx.hideLoading()
         },

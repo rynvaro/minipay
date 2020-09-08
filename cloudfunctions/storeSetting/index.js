@@ -28,6 +28,7 @@ exports.main = async (event, context) => {
         result = await db.collection('stores').add({
         data: {
             _id: event.data.phone,
+            desc: event.desc,
             sales: event.data.sales,
             storeType: parseInt(event.data.storeType),
             data: event,
@@ -35,6 +36,21 @@ exports.main = async (event, context) => {
             geoPoint: db.Geo.Point(event.data.location.longitude, event.data.location.latitude),
             publishedAt: Date.parse(new Date()),
             updatedAt: Date.parse(new Date()),
+            discount: {
+                discountValue: 10,
+                timeStart: '',
+                timeEnd: '',
+            },
+            banners:[
+                {
+                    isVideo: false,
+                    url: event.data.storeImage,
+                },
+                {
+                    isVideo: false,
+                    url: event.data.productImage,
+                }
+            ]
         },
         success: res => {
             console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -47,9 +63,22 @@ exports.main = async (event, context) => {
     }else {
         result = await db.collection('stores').doc(event.id).update({
         data: {
+            desc: event.desc,
+            storeType: parseInt(event.data.storeType),
+            geoPoint: db.Geo.Point(event.data.location.longitude, event.data.location.latitude),
             data:event,
             openid: wxContext.OPENID,
-            updatedAt: new Date()
+            updatedAt: Date.parse(new Date()),
+            banners:[
+                {
+                    isVideo: false,
+                    url: event.data.storeImage,
+                },
+                {
+                    isVideo: false,
+                    url: event.data.productImage,
+                }
+            ]
         },
         success: res => {
             console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)

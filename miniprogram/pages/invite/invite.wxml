@@ -3,8 +3,8 @@
 <view class="inviteBox">
     <text class="inviteTitle">专属兑换码</text>
     <view class="inviteCode">
-        <text class="inviteCodeL">123455</text>
-        <text class="inviteCodeR">复制</text>
+        <text class="inviteCodeL">{{user.inviteCode}}</text>
+        <text class="inviteCodeR" bindtap="copy">复制</text>
     </view>
     <text class="inviteDesc">点击生成邀请，会打开如下窗口。在此如下点击成邀请，会打开如属兑换码下窗口。在此窗口复制，点击成邀请，会打开如下窗口。在此窗属兑换码口复制，点击成邀请，会打开复制，点击</text>
 </view>
@@ -16,7 +16,7 @@
         <text class="stepL">识别二维码进入公众号</text>
         <view class="stepR">
             <view class="stepRBox">
-                <image class="stepQRCode" src="../../images/basicprofile.jpeg"></image>
+                <image class="stepQRCode" src="../../images/qrcode.jpeg" data-src="../../images/qrcode.jpeg" ></image>
             </view>
         </view>
     </view>

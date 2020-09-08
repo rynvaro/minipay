@@ -7,6 +7,7 @@ cloud.init({
 
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
+// TODO 环境ID
 const envId = "dev-osmu3"
 const subMchId = "1601917642"
 
@@ -19,6 +20,7 @@ exports.main = async (event, context) => {
   let id = (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
   let nonceStr = (Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)).substr(0,32).toUpperCase()
   let depositAmount = event.depositAmount*100
+  let body = event.body
 
   const deposit = await db.collection('deposits').add({
     data: {
@@ -44,7 +46,7 @@ exports.main = async (event, context) => {
   console.log("evn is: ",cloud.DYNAMIC_CURRENT_ENV)
 
   const res = await cloud.cloudPay.unifiedOrder({
-    "body" : "柒号生活-充值",
+    "body" : body,
     "outTradeNo" : id,
     "spbillCreateIp" : event.ip,
     "subMchId" : subMchId,
@@ -56,17 +58,4 @@ exports.main = async (event, context) => {
   })
 
   return {deposit,res}
-  // const result = await db.runTransaction(async transaction => {
-  //   console.log("00010100101010")
-  //   try {
-      
-  //     console.log("33333333")
-      
-  //   }catch(e) {
-  //     console.log("error is: ",e)
-  //     await transaction.rollback(-100)
-  //   }
-  // })
-
-  
 }

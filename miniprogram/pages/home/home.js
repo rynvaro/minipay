@@ -8,20 +8,15 @@ Page({
   data: {
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navBarHeight,
-    plates: []
+    plates: [],
+    internalPlates: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.getLocation({
-      type: 'wgs84',
-      success (res) {
-        console.log(res)
-        app.globalData.location = res
-      }
-    })
+    
   },
 
   search: function(e) {
@@ -49,12 +44,6 @@ Page({
     })
   },
 
-  scanpay: function(e) {
-    wx.navigateTo({
-      url: '../scanpay/scanpay?merchantID=' + e.currentTarget.dataset.id,
-    })
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -66,23 +55,35 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: 'loading...',
-    })
     let thiz = this
-    wx.cloud.callFunction({
-        name:"zplates",
-        success(res) {
-            wx.hideLoading()
-            console.log(res)
-            thiz.setData({
-                plates: res.result.data,
-            })
-        },
-        fail: function(e) {
-          wx.hideLoading()
-          console.log(e)
-        }
+    wx.getLocation({
+      type: 'wgs84',
+      success (res) {
+        console.log(res)
+        app.globalData.location = res
+        wx.showLoading({
+          title: 'loading...',
+        })
+        wx.cloud.callFunction({
+            name:"zplates",
+            data: {
+              lat: res.latitude,
+              lon: res.longitude
+            },
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                thiz.setData({
+                    plates: res.result.plates,
+                    internalPlates: res.result.internalPlates,
+                })
+            },
+            fail: function(e) {
+              wx.hideLoading()
+              console.log(e)
+            }
+        })
+      }
     })
   },
 

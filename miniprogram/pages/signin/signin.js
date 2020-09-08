@@ -5,9 +5,10 @@ Page({
      * 页面的初始数据
      */
     data: {
-        user: {
+        signconf: {
             signs: 0,
         },
+        btnText: '立即签到',
         disable: false,
     },
 
@@ -61,13 +62,20 @@ Page({
           })
         let thiz = this
         wx.cloud.callFunction({
-            name:"zgetuserinfo",
+            name:"zsignconfs",
             success(res) {
                 wx.hideLoading()
                 console.log(res)
                 thiz.setData({
-                    user: res.result.data.data,
+                    signconf: res.result,
                 })
+                if (res.result.signed) {
+                    thiz.setData({
+                        disable: true,
+                        btnText: '今日已签到',
+                    })
+                }
+                
             },
             fail: function(e) {
             wx.hideLoading()

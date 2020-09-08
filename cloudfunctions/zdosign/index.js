@@ -12,32 +12,52 @@ exports.main = async (event, context) => {
     try {
         const user = await db.collection('users').doc(wxContext.OPENID).get()
 
-        let today = formatDate(new Date())
-        if (user.data.data.signDate==today) {
+        const signConfs = await db.collection('signconfs').get()
+        let signconf = signConfs.data[0]
+
+        let signDate = new Date(user.data.data.signDate)
+        let today = Date.parse(new Date())
+        if (user.data.data.signDate != 0 && formatDate(new Date(signDate))==formatDate(new Date(today))) {
             return 2 // 今日已签到
         }
-        var delta = 0
 
-        if (user.data.data.signs==0) {
-            delta = 100
-        }else if (user.data.data.signs==1) {
-            delta = 200
-        } else if (user.data.data.signs==2) {
-            delta = 300
-        }else {
-            if (user.data.data.exp>10000) {
-                delta = 3
-            }else {
-                delta = 2
-            }
+        let date = new Date(user.data.data.createAt)
+        date.setDate(date.getDate() + 7)
+        let isNew = false
+        // 新用户
+        if (formatDate(date) > (formatDate(new Date(today)))){
+            isNew = true
         }
+        
+        let terminated = false
+        signDate.setDate(signDate.getDate()+1)
+        if (user.data.data.signDate != 0 && formatDate(signDate) != formatDate(new Date(today))) {
+            terminated = true
+        }
+
+
+        var sevenSigns = user.data.data.sevenSigns + 1
+        var pointDelta = 0
+        let confs = signconf.confs
+
+        if (isNew && !terminated) {
+            confs = signconf.onSaleConfs
+        }
+        if (terminated || sevenSigns > 7) {
+            sevenSigns = 1
+        }
+
+        let index = sevenSigns - 1
+        pointDelta = confs[index]
+
 
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
                     signDate: today,
                     signs: user.data.data.signs + 1,
-                    point: user.data.data.point + delta,
+                    point: user.data.data.point + pointDelta,
+                    sevenSigns: sevenSigns,
                 }
             },
             success: res => {
@@ -55,7 +75,7 @@ exports.main = async (event, context) => {
                 openid: wxContext.OPENID,
                 type: 1, // 签到
                 action: '+',
-                value: delta,
+                value: pointDelta,
                 timestamp: Date.parse(new Date()),
             },
             success: res => {

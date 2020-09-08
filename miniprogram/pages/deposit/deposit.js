@@ -184,7 +184,7 @@ Page({
             },
             fail: function(e) {
               console.log(e.errMsg)
-              resolve(true) // TODO maybe we should not use code
+              resolve(false) // TODO maybe we should not use code
             }
         })
       });
@@ -201,6 +201,7 @@ Page({
               data: {
                 ip: '127.0.0.1', // TODO
                 depositAmount: parseFloat(thiz.data.depositAmount),
+                body: "柒号生活-充值",
               },
               success(payInfoRes) {
                   console.log("pay info is: ",payInfoRes)

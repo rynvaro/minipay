@@ -1,53 +1,49 @@
-// miniprogram/pages/invite/invite.js
+// miniprogram/pages/orderDetail/orderDetail.js
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-        user: {},
+        order: {},
+        wxChecked: false,
+        balanceChecked: false,
+        coupon: {
+            coupon: {
+                value: 0
+            }
+        }
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        let thiz = this
         wx.showLoading({
-            title: 'loading...',
-          })
-          let thiz = this
-          wx.cloud.callFunction({
-              name:"zlogin",
-              success(res) {
-                  wx.hideLoading()
-                  console.log(res)
-                  thiz.setData({
-                      user: res.result.data,
-                  })
-              },
-              fail: function(e) {
+          title: 'loading...',
+        })
+        wx.cloud.callFunction({
+            name:"zorder",
+            data: {
+                id: options.id
+            },
+            success(res) {
+                console.log(res)
+                thiz.setData({order: res.result.order, coupon: res.result.coupon.data})
+                if (res.result.order.payType==1) {
+                    thiz.setData({wxChecked: true})
+                }else {
+                    thiz.setData({balanceChecked: true})
+                }
                 wx.hideLoading()
+            },
+            fail: function(e) {
                 console.log(e)
-              }
-          })
-    },
-
-    copy: function(e) {
-        wx.setClipboardData({
-            data: this.data.user.inviteCode,
-            success (res) {
-                wx.showToast({
-                  title: '已复制',
-                })
+                wx.hideLoading()
             }
         })
     },
-
-    previewImage: function (e) {  
-		wx.previewImage({
-              urls:[e.target.dataset.src]
-		})
-	},
 
     /**
      * 生命周期函数--监听页面初次渲染完成

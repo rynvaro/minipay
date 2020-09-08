@@ -133,10 +133,14 @@
 </view>
 
 
-<view class="redpack" style="visibility:{{redpackShow ? 'visible':'hidden'}}">
+<view class="redpack" hidden="{{!redpackShow}}">
   <image wx:if="{{open}}" class="redpackBG" src="../../images/redpackopen.png"></image>
   <image wx:else class="redpackBG" src="../../images/redpack.png" bindtap="openRedpack"></image>
-  <text class="closeRedpack" bindtap="hiddenRedpack" bindtap="hideRedpack">×</text>
+  <view class="closeRedpack" bindtap="hideRedpack" hidden="{{!closeRedpack}}">×</view>
+  <view class="redpackValueBox" hidden="{{!closeRedpack}}">
+    <text class="redpackValue">{{redpackValue}}</text>
+    <text>元</text>
+  </view>
 </view>
 
 

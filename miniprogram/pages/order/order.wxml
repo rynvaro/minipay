@@ -9,7 +9,10 @@
 <view class="detailItemBox">
   <view class="detailItem">
     <text class="detailItemKey">金额</text>
-    <text class="detailItemValue">{{filters.toFixed(payAmount)}}</text>
+    <view class="detailItemValue">
+      <input class="paymentInput" type="number" placeholder="输入金额" style="text-align:center" bindinput="setPayment"></input>
+      <text class="paymentText">元</text>
+    </view>
   </view>
 
   <view class="detailItem">
@@ -19,35 +22,54 @@
 
   <view class="detailItem">
     <text class="detailItemKey">本单已减</text>
-    <text class="detailItemValue">{{preOrder.rebate}}</text>
+    <text class="detailItemValue">{{rebate}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">应付</text>
-    <text class="detailItemValue">{{preOrder.realAmount}}</text>
+    <text class="detailItemValue">{{realAmount}}</text>
   </view>
 
   <view class="detailItem" bindtap="select">
     <text class="detailItemKey">优惠券</text>
-    <text wx:if="{{couponSelected}}" class="detailItemValue">{{coupon.coupon.value/100}}</text>
-    <text wx:else class="detailItemValue">点击选择</text>
+    <view class="detailItemValue">
+      <text >{{coupon.coupon.value/100}}</text>
+      <view class="couponArrow"></view>
+    </view>
   </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">不参与优惠金额</text>
+    <view class="detailItemValue">
+      <input class="paymentInput" type="number" placeholder="0.00" style='text-align:center' bindinput="setMustPayment"></input>
+      <text class="paymentText">元</text>
+    </view>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">支付方式</text>
+    <radio-group class="payby" bindchange="selectPay">
+      <radio value="1" class="paybyItem" checked="true">微信</radio>
+      <radio value="2" class="paybyItem">余额</radio>
+    </radio-group>
+  </view>
+
 </view>
 
 <view class="totalIncome">
   <text class="totalIncomeKey">合计待支付</text>
-  <text class="totalIncomeValue">¥{{filters.toFixed(preOrder.totalAmount-coupon.coupon.value/100)}}</text>
+  <text class="totalIncomeValue">¥{{totalAmount}}</text>
   <view class="totalIncomePayButton" bindtap="pay">立即支付</view>
 </view>
 
-<view class="popBox" animation="{{animation}}" style="visibility:{{show ? 'visible':'hidden'}}">
+<view class="popBox" animation="{{animation}}" hidden="{{!show}}">
   <view class="popBoxHeader">
     <text class="popBoxHeaderL" bindtap="hidden">X</text>
     <text class="popBoxHeaderR">请输入支付密码</text>
   </view>
 
   <text class="popBoxLin1">{{preOrder.storeName}}</text>
-  <text class="popBoxLin2">¥{{filters.toFixed(preOrder.totalAmount-coupon.coupon.value/100)}}</text>
+  <text class="popBoxLin2">¥{{totalAmount}}</text>
   <view class="popBoxLin3"></view>
   <view class="popBoxLin4">
     <text class="popBoxLin4L">支付方式</text>

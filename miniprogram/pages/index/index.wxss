@@ -346,8 +346,8 @@ page {
 }
 
 .moreListItemUIcon {
-  width: 36rpx;
-  height: 48rpx;
+  width: 42rpx;
+  height: 42rpx;
   border-radius: 10rpx;
 }
 
@@ -431,7 +431,7 @@ page {
 .redpack {
   position: absolute;
   height: 560rpx;
-  width: 350rpx;
+  width: 373rpx;
   top: 350rpx;
   left: 200rpx;
   z-index: 0;
@@ -448,16 +448,31 @@ page {
 }
 
 .closeRedpack {
+  position: absolute;
   width: 50rpx;
   height: 50rpx;
   border: 1rpx solid white;
-  font-size: 35rpx;
   color: white;
+  font-size: large;
   border-radius: 50rpx;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 150rpx;
+  top: 320rpx;
+  left: 170rpx;
+}
+
+.redpackValueBox {
+  position: absolute;
+  top: 10rpx;
+  left: 140rpx;
+  color: #C20908;
+}
+
+.redpackValue {
+  font-size: 150rpx;
+  font-weight: 900;
+  color: #C20908;
 }
 
 .moreInfo {
@@ -485,15 +500,15 @@ page {
 }
 
 .moreInfoItem {
-  width: 60%;
+  margin-top: 20rpx;
+  width: 80%;
   height: 10%;
   display: flex;
 }
 
 .moreInfoItemL {
   width: 25%;
-  font-size: small;
-  flood-color: #999999;
+  color: #999999;
   text-align: justify;
 }
 
@@ -507,7 +522,7 @@ page {
   margin-left: 10rpx;
   border-radius: 10rpx;
   width: 75%;
-  height: 40rpx;
+  height: 60rpx;
   background-color: #F6F6F6;
   display: flex;
   font-size: small;
@@ -526,7 +541,7 @@ page {
   border-radius: 10rpx;
   background-color: #FF6602;
   color: white;
-  font-size: xx-small;
+  font-size: small;
   display: flex;
   justify-content: center;
   align-items: center;

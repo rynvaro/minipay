@@ -76,6 +76,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let title = '附近商家'
+    if (options.storeType==1) {
+      title="食在上饶"
+    }
+    if (options.storeType==1){
+        title="玩乐途游"
+    }
+    wx.setNavigationBarTitle({
+      title: title,
+    })
+
     this.setData({storeType: options.storeType})
     this.setData({point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude}})
       wx.showLoading({

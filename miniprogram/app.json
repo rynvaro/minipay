@@ -2,11 +2,12 @@
     "pages": [
         "pages/index/index",
         "pages/console/index/index",
+        "pages/order/order",
+        "pages/signin/signin",
         "pages/invite/invite",
         "pages/vipexperience/vipexperience",
         "pages/balance/balance",
         "pages/point/point",
-        "pages/signin/signin",
         "pages/coupon/coupon",
         "pages/stores/stores",
         "pages/plates/plates",
@@ -21,7 +22,6 @@
         "pages/pointexchanging/pointexchanging",
         "pages/accountdetailed/accountdetailed",
         "pages/paysuccess/paysuccess",
-        "pages/order/order",
         "pages/map/map",
         "pages/store/store",
         "pages/console/home/home",
@@ -32,7 +32,8 @@
         "pages/console/financial/financial",
         "pages/console/orderDetail/orderDetail",
         "pages/console/modifyPassword/modifyPassword",
-        "pages/home/home"
+        "pages/home/home",
+        "pages/orderDetail/orderDetail"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",

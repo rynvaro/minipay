@@ -25,7 +25,12 @@ Page({
         productImage: '',
         storeType: 1,// 1 餐饮 2 娱乐
         sales: 0,
-      }
+      },
+      desc: '',
+    },
+
+    setDesc: function(e) {
+      this.setData({desc: e.detail.value})
     },
 
     selectLocation: function(){
@@ -154,6 +159,13 @@ Page({
         return 
       }
 
+      if (!this.data.desc){
+        wx.showToast({
+          title: '请输入描述',
+        })
+        return 
+      }
+
       if (!this.data.data.storeImage) {
         wx.showToast({
           title: '请选择门头图片',
@@ -245,6 +257,7 @@ Page({
                           data:thiz.data.data,
                           storeType: thiz.data.data.storeType,
                           sales: 0,
+                          desc: thiz.data.desc,
                         },
                         success(res) {
                           console.log(res)

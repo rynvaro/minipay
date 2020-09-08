@@ -24,7 +24,25 @@ exports.main = async (event, context) => {
               timeStart: event.timeStart,
               timeEnd: event.timeEnd, 
           },
-          updatedAt: new Date()
+          updatedAt: Date.parse(new Date())
+        },
+        success: res => {
+          console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)
+        },
+        fail: err => {
+          console.error('[数据库] [更新记录] 失败：', err)
+          throw("update failed")
+        }
+      })
+
+      await db.collection('stores').doc(event.phone).update({
+        data: {
+          discount:{
+              discountValue: event.discount,
+              timeStart: event.timeStart,
+              timeEnd: event.timeEnd, 
+          },
+          updatedAt: Date.parse(new Date())
         },
         success: res => {
           console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)

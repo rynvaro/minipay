@@ -11,7 +11,6 @@ exports.main = async (event, context) => {
 
     let merchantID = event.merchantID
     let storeID = event.storeID
-    let payAmount = event.payAmount
 
     var result = {}
 
@@ -32,20 +31,12 @@ exports.main = async (event, context) => {
         }
 
         let realDiscount = merchant.data.discount.discountValue + delta
-        let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
-        let realAmount = (payAmount - rebate).toFixed(2)
-        let totalAmount = realAmount
-
-        console.log("store is: ",store)
         
         result = {
             data: {
                 storeName: store.data.data.data.storeName,
                 productImage: store.data.data.data.productImage,
                 realDiscount: realDiscount,
-                rebate: rebate,
-                realAmount: realAmount,
-                totalAmount: realAmount,
             }
         }
 

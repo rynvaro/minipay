@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
@@ -13,6 +13,10 @@ exports.main = async (event, context) => {
 
     try {
         result = await db.collection("users").doc(wxContext.OPENID).get()
+
+        const redpacks = await db.collection('redpacks').get()
+        redpack = redpacks.data[0]
+        result.redpackValue = redpack.value
     } catch(e) {
         throw(e)
     }

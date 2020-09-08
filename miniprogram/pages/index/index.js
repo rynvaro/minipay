@@ -8,7 +8,7 @@ Page({
             avatarUrl:'',
             name: '登录/注册',
             exp: 0,
-            expTotal: 6000,
+            expTotal: 10000,
             city: '',
             country: '',
             gender: 0,
@@ -18,8 +18,10 @@ Page({
             balance: 0,
             point: 0,
             signs: 0,
-            signDate: '',
+            signDate: 0,
+            sevenSigns: 0,// 七日连续签到数
             phone: '',
+            payTimes: 0,
         },
         phoneFilled: true,
         login: false,
@@ -29,6 +31,9 @@ Page({
         p2v: 0,
         open: false,
         redpackShow: false,
+        redpackValue: 0,
+        redpackBtnShow: false,
+
         moreInfoShow: false,
 
         moreInfoUsername: '',
@@ -42,8 +47,7 @@ Page({
         label: '获取验证码',
     },
 
-    onLoad: function() {
-      
+    onLoad: function(e) {
     },
 
     setUsername: function(e) {
@@ -117,7 +121,7 @@ Page({
                 },
                 fail: function(e) {
                   console.log(e)
-                  resolve(true) // TODO maybe we should not use code
+                  resolve(false) // TODO maybe we should not use code
                 }
             })
          });
@@ -140,6 +144,21 @@ Page({
                     success(res) {
                         console.log(res)
                         wx.hideLoading()
+
+                        if (res.result==-1) {
+                          wx.showToast({
+                            title: '不能邀请自己',
+                          })
+                          return 
+                        }
+
+                        if (res.result==-2) {
+                          wx.showToast({
+                            title: '兑换码不存在',
+                          })
+                          return 
+                        }
+
                         wx.showToast({
                           title: '已更新',
                         })
@@ -174,11 +193,34 @@ Page({
     },
 
     openRedpack: function(e) {
-        this.setData({open: true})
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      wx.cloud.callFunction({
+        name:"zopenredpack",
+        data: {
+          redpackValue: thiz.data.redpackValue*100
+        },
+        success(res) {
+            console.log(res)
+            wx.hideLoading()
+            thiz.setData({open: true, closeRedpack: true})
+        },
+        fail: function(e) {
+            console.log(e.errMsg)
+            wx.hideLoading()
+            wx.showToast({
+              title: '领取失败',
+            })
+            thiz.setData({closeRedpack: true})
+        }
+      })
     },
 
     hideRedpack:  function(e) {
         this.setData({redpackShow: false})
+        this.onShow()
     },
 
     viprights: function(e) {
@@ -221,6 +263,8 @@ Page({
                       p2v: p2v,
                       login: true,
                       phoneFilled: phoneFilled,
+                      redpackValue: res.result.redpackValue/100,
+                      redpackShow: user.isFirstPay,
                   })
               },
               fail: function(e) {
@@ -241,7 +285,7 @@ Page({
                 name: e.detail.userInfo.nickName,
                 nickName: e.detail.userInfo.nickName,
                 exp: 0,
-                expTotal: 6000,
+                expTotal: 10000,
                 city: e.detail.userInfo.city,
                 country: e.detail.userInfo.country,
                 gender: e.detail.userInfo.gender,
@@ -251,7 +295,10 @@ Page({
                 balance: 0,
                 point: 0,
                 signs: 0,
-                signDate: '',
+                signDate: 0,
+                sevenSigns: 0,
+                phone: '',
+                payTimes: 0,
             }
         })
         wx.showLoading({
@@ -267,6 +314,7 @@ Page({
                 thiz.setData({
                     login: true,
                 })
+                thiz.onShow()
             },
             fail: function(e) {
               wx.hideLoading()
@@ -281,13 +329,10 @@ Page({
             success (res) {
                 console.log(res)
                 wx.navigateTo({
-                  url: '../scanpay/scanpay?merchantID='+res.result,
+                  url: '../order/order?merchantID='+res.result,
                 })
             }
         })
-        // wx.navigateTo({
-        //     url: '../scanpay/scanpay?merchantID=',
-        //   })
     },
 
     vipexperience: function(){

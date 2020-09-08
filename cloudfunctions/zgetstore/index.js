@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
     let v1discount = 0
     let v2discount = 0
     let v3discount = 0
+    let banners = []
     try {
         const merchant = await db.collection('merchants').doc(merchantID).get()
         const user = await db.collection('users').doc(wxContext.OPENID).get()
@@ -48,6 +49,7 @@ exports.main = async (event, context) => {
         }
         const storeRecord = await db.collection('stores').doc(storeID).get()
         store = storeRecord.data.data.data
+        banners = storeRecord.data.banners
     }catch(e) {
         throw(e)
     }
@@ -59,5 +61,6 @@ exports.main = async (event, context) => {
         discount: discount,
         viplevel: viplevel,
         store: store,
+        banners: banners,
     }
 }
