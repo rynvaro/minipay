@@ -26,9 +26,8 @@
 </view>
 
 <view class="tipsBox" hidden="{{tipsBoxHidden}}">
-    <text>积分获取方式</text>
-    <text>签到/活动/拉新</text>
-    <text>1积分=1经验</text>
+    <text>积分获取方式:</text>
+    <text>可通过每日签到、日常活动、日常消费、邀请新用户获得。1积分可兑换1经验，消费10元可获得1积分。</text>
     <view class="tipsBoxClose" bindtap="hideTips">×</view>
 </view>
 

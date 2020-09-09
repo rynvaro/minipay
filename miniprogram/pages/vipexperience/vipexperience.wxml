@@ -38,7 +38,7 @@
 </view>
 
 <view class="tipsBox" hidden="{{tipsBoxHidden}}">
-    <text>消费10元=1经验</text>
+    <text>消费10元得1经验，1积分可在积分兑换专区兑换1经验，经验可用于会员等级升级，开启更多会员折扣优惠特权。</text>
     <view class="tipsBoxClose" bindtap="hideTips">X</view>
 </view>
 

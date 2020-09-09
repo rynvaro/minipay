@@ -47,6 +47,12 @@ Page({
         label: '获取验证码',
     },
 
+    console: function(e) {
+      wx.navigateTo({
+        url: '../console/index/index',
+      })
+    },
+
     onLoad: function(e) {
     },
 

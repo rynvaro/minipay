@@ -44,19 +44,20 @@ page {
 
 .tipsBox {
     position: absolute;
-    top: 390rpx;
+    top: 250rpx;
     right: 250rpx;
     font-size: small;
     color: #FF6A11;
     background-color: white;
     border-radius: 20rpx;
-    height: 160rpx;
-    width: 280rpx;
+    height: 180rpx;
+    width: 380rpx;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     box-shadow: 1rpx 10rpx 50rpx 0rpx #FFA74F;
+    padding: 10rpx;
 }
 
 .tipsBoxClose {
@@ -66,9 +67,9 @@ page {
     border: 2rpx double #FFA74F;
     border-radius: 20rpx;
     font-size: 25rpx;
-    position: relative;
-    top: -135rpx;
-    right: -100rpx;
+    position: absolute;
+    top: -30rpx;
+    right: 10rpx;
     display: flex;
     justify-content: center;
     align-items: center;
