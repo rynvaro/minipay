@@ -43,9 +43,10 @@ Page({
         })
     },
 
-    stores: function(e) {
+    store: function(e) {
+      console.log(e)
       wx.navigateTo({
-        url: '../stores/stores?storeType='+e.currentTarget.dataset.id,
+        url: '../store/store?storeID=' + e.currentTarget.dataset.id,
       })
     },
 
