@@ -28,7 +28,7 @@ exports.main = async (event, context) => {
         const store = await db.collection('stores').doc(storeID).get()
         const user = await db.collection('users').doc(wxContext.OPENID).get()
 
-        if (sha1(password) != user.data.payPassword) {
+        if (payby == 2 && sha1(password) != user.data.payPassword) {
             return -2 // 支付密码错误
         }
 

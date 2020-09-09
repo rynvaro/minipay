@@ -1,5 +1,5 @@
 // miniprogram/pages/console/home/home.js
-
+import drawQrcode from '../../../utils/weapp.qrcode.min'
 const app = getApp();
 Page({
 
@@ -9,7 +9,22 @@ Page({
   data: {
     data: {
       storeImage: '',
-    }
+    },
+    show: false,
+  },
+
+  hidden: function(e) {
+    this.setData({show: false})
+  },
+
+  showQRCode: function(e)   {
+    this.setData({show: true})
+    drawQrcode({
+      width: 200,
+      height: 200,
+      canvasId: 'myQrcode',
+      text: app.globalData.phone,
+    })
   },
 
   /**
@@ -143,7 +158,4 @@ Page({
       title: '开发中',
     })
   },
-
-
-
 })

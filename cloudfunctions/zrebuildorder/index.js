@@ -36,6 +36,7 @@ exports.main = async (event, context) => {
             data: {
                 storeName: store.data.data.data.storeName,
                 productImage: store.data.data.data.productImage,
+                storeImage: store.data.data.data.storeImage,
                 realDiscount: realDiscount,
             }
         }

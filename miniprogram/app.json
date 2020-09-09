@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/console/index/index",
+        "pages/console/home/home",
         "pages/order/order",
         "pages/signin/signin",
         "pages/invite/invite",
@@ -24,7 +25,6 @@
         "pages/paysuccess/paysuccess",
         "pages/map/map",
         "pages/store/store",
-        "pages/console/home/home",
         "pages/console/store/store",
         "pages/console/orders/orders",
         "pages/console/discount/discount",

@@ -2,7 +2,7 @@
 <wxs src="../../utils/filter.wxs" module="filters"/>
 
 <view class="detailHeader">
-  <image class="detailHeaderLImage" src="{{preOrder.productImage}}"></image>
+  <image class="detailHeaderLImage" src="{{preOrder.storeImage}}"></image>
   <text class="detailHeaderRText">{{preOrder.storeName}}</text>
 </view>
 
