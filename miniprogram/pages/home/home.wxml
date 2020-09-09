@@ -9,7 +9,7 @@
         <view class="searchIconBox">
             <image class="searchIcon" src="../../images/search.png"></image>
         </view>
-        <input class="searchInput" bindconfirm="search"></input>
+        <view class="searchInput" bindconfirm="search"></view>
     </view>
 </view>
 

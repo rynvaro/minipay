@@ -40,7 +40,7 @@ page {
       background: linear-gradient(to right, #FFCA00, #FD5B00);
   }
   
-  /* order list */
+  /* stores */
   .stores {
     width: 90%;
     border-radius: 20rpx;

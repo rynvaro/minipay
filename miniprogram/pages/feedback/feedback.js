@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-
+        title: '',
+        content: '',
     },
 
     /**
@@ -13,6 +14,78 @@ Page({
      */
     onLoad: function (options) {
 
+    },
+
+    setTitle: function(e) {
+        this.setData({title: e.detail.value})
+    },
+
+    setContent: function(e) {
+        this.setData({content: e.detail.value})
+    },
+    
+    submit: function(e) {
+
+        if (!this.data.title) {
+            wx.showToast({
+              title: '请输入标题',
+            })
+            return
+        }
+
+        if (!this.data.content) {
+            wx.showToast({
+              title: '请输入内容',
+            })
+            return
+        }
+
+          wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zfeedback",
+              data: {
+                  title: thiz.data.title,
+                  content: thiz.data.content,
+              },
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  if (res.result.errCode == 87014) {
+                    wx.showModal({
+                      title: '提示',
+                      content: '内容包含敏感词汇，请修改！',
+                      success (res) {
+                        if (res.confirm) {
+                          console.log('用户点击确定')
+                        } else if (res.cancel) {
+                          console.log('用户点击取消')
+                        }
+                      }
+                    })
+                    return
+                  }
+                  wx.showModal({
+                    title: '提示',
+                    content: '已提交',
+                    success (res) {
+                      if (res.confirm) {
+                        wx.switchTab({
+                          url: '../index/index',
+                        })
+                      } else if (res.cancel) {
+                        console.log('用户点击取消')
+                      }
+                    }
+                  })
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
     },
 
     /**

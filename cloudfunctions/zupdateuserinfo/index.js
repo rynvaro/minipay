@@ -9,6 +9,15 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
+    try {
+        var msgR = await cloud.openapi.security.msgSecCheck({
+            content: JSON.stringify(event)
+        })
+        console.log(msgR)
+    }catch(e) {
+        return e
+    }
+
     let username = event.username
     let phone = event.phone
     let inviteBy = event.inviteBy
@@ -21,10 +30,11 @@ exports.main = async (event, context) => {
             return -1 // 不能邀请自己
         }
 
-        const users = await db.collection('users').where({inviteCode: inviteBy}).get()
-
-        if (users.data.length == 0) {
-            return -2 // 兑换码不存在
+        if (inviteBy!='') {
+            const users = await db.collection('users').where({inviteCode: inviteBy}).get()
+            if (users.data.length == 0) {
+                return -2 // 兑换码不存在
+            }
         }
 
         await db.collection('users').doc(wxContext.OPENID).update({

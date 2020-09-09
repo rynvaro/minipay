@@ -13,16 +13,59 @@ Page({
    */
   
   data: {
+    vipLevel: 1,
+    q: '',
+    point: {lat: 0, lon: 0},
     stores: [],
+    hotSearchs: [],
+    hisSearchs: [],
+    hotShow: true,
   },
 
   search: function(e) {
-    console.log(e.currentTarget.dataset.id)
+    wx.showLoading({
+      title: 'loading...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+        name:"zdosearch",
+        data: {
+          q: thiz.data.q,
+          lat: thiz.data.point.lat,
+          lon: thiz.data.point.lon,
+        },
+        success(res) {
+            wx.hideLoading()
+            console.log(res)
+            thiz.setData({stores: res.result.data, vipLevel: res.result.viplevel, hotShow: false})
+            thiz.onShow()
+        },
+        fail: function(e) {
+          wx.hideLoading()
+          console.log(e)
+        }
+    })
   },
 
-  store: function(){
+  focus: function(e) {
+    this.setData({hotShow: true})
+  },
+
+  setQ: function(e) {
+    this.setData({q: e.detail.value})
+  },
+
+  selectHot: function(e) {
+    this.setData({q: this.data.hotSearchs[e.currentTarget.dataset.index]})
+  },
+
+  selectHis: function(e) {
+    this.setData({q: this.data.hisSearchs[e.currentTarget.dataset.index]})
+  },
+
+  store: function(e){
     wx.navigateTo({
-      url: '../store/store',
+      url: '../store/store?storeID=' + e.currentTarget.dataset.id,
     })
   },
 
@@ -30,7 +73,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude}})
   },
 
   /**
@@ -44,7 +87,22 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.showLoading({
+      title: 'loading...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+        name:"zhotsearch",
+        success(res) {
+            wx.hideLoading()
+            console.log(res)
+            thiz.setData({hisSearchs: res.result.his, hotSearchs: res.result.hot})
+        },
+        fail: function(e) {
+          wx.hideLoading()
+          console.log(e)
+        }
+    })
   },
 
   /**
