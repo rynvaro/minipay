@@ -208,9 +208,12 @@ Page({
     },
 
     invite: function(e) {
-        wx.navigateTo({
-          url: '../invite/invite',
-        })
+      wx.showToast({
+        title: '暂未开放',
+      })
+        // wx.navigateTo({
+        //   url: '../invite/invite',
+        // })
     },
 
     openRedpack: function(e) {

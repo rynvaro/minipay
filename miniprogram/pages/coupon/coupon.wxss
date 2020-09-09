@@ -59,6 +59,7 @@ page {
 }
 
 .itemUsed {
+    position: relative;
     margin-top: 30rpx;
     width: 600rpx;
     height: var(--couponH);
@@ -77,6 +78,7 @@ page {
 }
 
 .item {
+    position: relative;
     margin-top: 30rpx;
     width: 600rpx;
     height: var(--couponH);
@@ -97,8 +99,18 @@ page {
     height: 70%;
     width: 75%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.couponTips {
+    height: 10%;
+    width: 90%;
+    position: absolute;
+    font-size: 20rpx;
+    color: white;
+    bottom: 10rpx;
 }
 
 .itemLBox {
@@ -174,4 +186,5 @@ page {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #633134;
 }

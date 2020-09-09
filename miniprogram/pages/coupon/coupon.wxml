@@ -1,4 +1,5 @@
 <!--miniprogram/pages/coupon/coupon.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
 
 <view class="header">
     <view class="bar" style="height: {{statusBarHeight + navBarHeight}}">
@@ -17,9 +18,11 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text class="itemLBoxRU">有效期至2020-08-22</text>
-                        <text class="itemLBoxRM">元店铺优惠券</text>
-                        <text class="itemLBoxRD">元</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRU">无门槛使用券</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRM">新用户卡券</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRD">元</text>
                     </view>
                 </view>
             </view>
@@ -27,6 +30,7 @@
                 <text class="itemRText">立即</text>
                 <text class="itemRText">使用</text>
             </view>
+            <text wx:if="{{item.coupon.type == 2}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
         </view>
 
         <view wx:elif="{{item.status==1}}" class="itemUsed">
@@ -34,9 +38,11 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text class="itemLBoxRU">有效期至2020-08-22</text>
-                        <text class="itemLBoxRM">元店铺优惠券</text>
-                        <text class="itemLBoxRD">元</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRU">无门槛使用券</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRM">新用户卡券</text>
+                        <text wx:if="{{item.coupon.type == 2}}" class="itemLBoxRD">元</text>
                     </view>
                 </view>
             </view>
@@ -44,6 +50,7 @@
                 <text class="itemRText">立即</text>
                 <text class="itemRText">使用</text>
             </view>
+            <text wx:if="{{item.coupon.type == 2}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
         </view>
 
         <view wx:elif="{{item.status==2}}" class="itemUsed">
