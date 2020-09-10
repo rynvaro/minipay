@@ -67,8 +67,8 @@
 <!-- scan signin -->
 <view class="scanSignin">
   <view class="scanSigninItem" bindtap="scan">
-    <text class="scanSigninItemU">扫描付款</text>
-    <text class="scanSigninItemD">扫描立即支付</text>
+    <text class="scanSigninItemU">扫码付款</text>
+    <text class="scanSigninItemD">扫码立即支付</text>
   </view>
   <view class="scanSigninItem" bindtap="signin">
     <text class="scanSigninItemU">签到专区</text>
@@ -146,23 +146,30 @@
 
 <view class="moreInfo" hidden="{{!moreInfoShow}}">
   <view class="moreInfoTitle">信息完善</view>
-  <view class="moreInfoItem">
+  <!-- <view class="moreInfoItem">
     <text class="moreInfoItemL">姓名</text>
     <input class="moreInfoItemR" bindinput="setUsername"></input>
+  </view> -->
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">出生日期</text>
+    <!-- <input class="moreInfoItemR" bindinput="setBirthday"></input> -->
+    <picker class="moreInfoItemR" mode="date" value="{{birthday}}" bindchange="setBirthday">
+      <view class="birthday">{{birthday}}</view>
+  </picker>
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">手机号</text>
     <input class="moreInfoItemR" type="number" bindinput="setPhone"></input>
   </view>
   <view class="moreInfoItem">
-    <text class="moreInfoItemL" type="number" >验证码</text>
+    <text class="moreInfoItemL">验证码</text>
     <view class="moreInfoItemR">
-      <input class="moreInfoItemRCode" bindinput="setCode"></input>
+      <input class="moreInfoItemRCode" bindinput="setCode" focus="{{focused}}"></input>
       <view class="moreInfoItemRButton" bindtap="sendSMS">{{label}}</view>
     </view>
   </view>
   <view class="moreInfoItem">
-    <text class="moreInfoItemL">兑换码</text>
+    <text class="moreInfoItemL">邀请码</text>
     <input class="moreInfoItemR" type="number" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"  bindinput="setInviteCode"></input>
   </view>
   <view class="moreInfoButtonBox">

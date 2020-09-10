@@ -36,7 +36,6 @@ Page({
 
         moreInfoShow: false,
 
-        moreInfoUsername: '',
         moreInfoPhone: '',
         moreInfoInviteCode: '',
 
@@ -45,6 +44,17 @@ Page({
         sendSMSClicked: false,
         seconds: 60,
         label: '获取验证码',
+        birthday: '点击选择',
+        birthed: false,
+        focused: false,
+    },
+
+    onTabItemTap: function(e) {
+      console.log(e)
+    },
+
+    setBirthday: function(e) {
+      this.setData({birthday: e.detail.value, birthed: true})
     },
 
     console: function(e) {
@@ -54,10 +64,6 @@ Page({
     },
 
     onLoad: function(e) {
-    },
-
-    setUsername: function(e) {
-        this.setData({moreInfoUsername: e.detail.value})
     },
 
     setPhone: function(e) {
@@ -73,12 +79,19 @@ Page({
     },
 
     submit: function(e) {
-        if (this.data.moreInfoUsername.length<=0) {
-            wx.showToast({
-              title: '请输入姓名',
-            })
-            return
-        }
+        // if (this.data.moreInfoUsername.length<=0) {
+        //     wx.showToast({
+        //       title: '请输入姓名',
+        //     })
+        //     return
+        // }
+
+        if (!this.data.birthed) {
+          wx.showToast({
+            title: '请选择出生日期',
+          })
+          return
+      }
 
         if (this.data.moreInfoPhone.length<=0) {
             wx.showToast({
@@ -144,6 +157,7 @@ Page({
                     name:"zupdateuserinfo",
                     data: {
                         username: thiz.data.moreInfoUsername,
+                        birthday: thiz.data.birthday,
                         phone: thiz.data.moreInfoPhone,
                         inviteBy: thiz.data.moreInfoInviteCode,
                     },
@@ -175,7 +189,7 @@ Page({
 
                         if (res.result==-2) {
                           wx.showToast({
-                            title: '兑换码不存在',
+                            title: '邀请码不存在',
                           })
                           return 
                         }
@@ -281,6 +295,21 @@ Page({
                       phoneFilled = false
                   }
 
+                  if (!phoneFilled) {
+                    wx.hideTabBar({
+                      animation: true,
+                    })
+                  } else {
+                    wx.showTabBar({
+                      animation: true,
+                    })
+                  }
+
+                  let redpackShow = false
+                  if (user.isFirstPay) {
+                    redpackShow = true
+                  }
+
                   thiz.setData({
                       user: user,
                       p1v: p1v,
@@ -288,7 +317,7 @@ Page({
                       login: true,
                       phoneFilled: phoneFilled,
                       redpackValue: res.result.redpackValue/100,
-                      redpackShow: user.isFirstPay,
+                      redpackShow: redpackShow,
                   })
               },
               fail: function(e) {
@@ -436,6 +465,7 @@ Page({
     }
     this.setData({
       sendSMSClicked: true,
+      focused: true,
     })
 
     this.setData({

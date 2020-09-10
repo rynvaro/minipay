@@ -18,9 +18,9 @@ exports.main = async (event, context) => {
         return e
     }
 
-    let username = event.username
     let phone = event.phone
     let inviteBy = event.inviteBy
+    let birthday = event.birthday
     
 
     try {
@@ -41,8 +41,8 @@ exports.main = async (event, context) => {
             data: {
                 data: {
                     phone: phone,
-                    username: username,
                     inviteBy: inviteBy,
+                    birthday: birthday,
                 },
                 updateAt: Date.parse(new Date()),
             },

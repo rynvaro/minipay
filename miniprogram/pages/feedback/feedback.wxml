@@ -1,9 +1,13 @@
 <!--miniprogram/pages/feedback/feedback.wxml-->
 
-<input class="title" placeholder="标题" placeholder-class="titlePlaceholder" bindinput="setTitle"></input>
+<view class="title">
+    <input class="titleInput" placeholder="标题" bindinput="setTitle"></input>
+</view>
 
 <view class="textarea">
-    <textarea class="content" placeholder="内容" placeholder-class="contentPlaceholder" bindinput="setContent"></textarea>
+    <textarea class="content" placeholder="内容" bindinput="setContent"></textarea>
 </view>
 
 <button class="button" bindtap="submit">提交</button>
+
+<text class="tips">意见一经采纳，可获得惊喜礼包。</text>

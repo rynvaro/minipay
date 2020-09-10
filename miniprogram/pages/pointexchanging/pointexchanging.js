@@ -11,6 +11,7 @@ Page({
         minusStatus: 'disabled',
         coupon: {},
         user: {},
+        viplevel: 1,
     },
     /* 点击减号 */
 	bindMinus: function() {
@@ -55,6 +56,13 @@ Page({
                 title: '您的积分不足',
               })
             return 
+        }
+
+        if (this.data.viplevel == 1 && this.data.coupon.type == 1) {
+            wx.showToast({
+              title: '当前等级不可兑换',
+            })
+            return
         }
 
         wx.showLoading({
@@ -114,8 +122,16 @@ Page({
             success(res) {
                 wx.hideLoading()
                 console.log(res)
+                let user = res.result.data.data
+                let viplevel = 1
+                if (user.exp >= 10000) {
+                    viplevel = 3
+                }else if (user.exp < 10000 && user.exp > 1000) {
+                    viplevel = 2
+                }
                 thiz.setData({
-                    user: res.result.data.data,
+                    viplevel: viplevel,
+                    user: user,
                 })
             },
             fail: function(e) {

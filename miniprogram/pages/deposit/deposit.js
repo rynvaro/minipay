@@ -184,7 +184,8 @@ Page({
             },
             fail: function(e) {
               console.log(e.errMsg)
-              resolve(false) // TODO maybe we should not use code
+              // 先不加验证码
+              resolve(true) // TODO maybe we should not use code
             }
         })
       });

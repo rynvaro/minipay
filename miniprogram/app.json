@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/feedback/feedback",
         "pages/console/index/index",
         "pages/console/home/home",
         "pages/order/order",
@@ -17,7 +18,6 @@
         "pages/scanpay/scanpay",
         "pages/orders/orders",
         "pages/deposit/deposit",
-        "pages/feedback/feedback",
         "pages/pointexchange/pointexchange",
         "pages/storeregister/storeregister",
         "pages/pointexchanging/pointexchanging",

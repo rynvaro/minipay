@@ -12,13 +12,21 @@ Page({
         duration: 1000, //滑动动画时长1s
         circular: true, //是否采用衔接滑动
         bannerUrls: [],
-        coupons: []
+        coupons: [],
+        viplevel: 1,
     },
 
     pointexchanging: function(e) {
+      let coupon = this.data.coupons[e.currentTarget.dataset.id-1]
+      if (this.data.viplevel == 1 && coupon.type == 1) {
+        wx.showToast({
+          title: 'v2开启兑换优惠券特权',
+        })
+        return
+      }
         console.log(e)
         wx.navigateTo({
-          url: '../pointexchanging/pointexchanging?coupon='+JSON.stringify(this.data.coupons[e.currentTarget.dataset.id-1]),
+          url: '../pointexchanging/pointexchanging?coupon='+JSON.stringify(coupon),
         })
     },
     
@@ -36,8 +44,9 @@ Page({
                   wx.hideLoading()
                   console.log(res)
                   thiz.setData({
-                      coupons: res.result.data[0].coupons,
-                      bannerUrls: res.result.data[0].banners,
+                      coupons: res.result.data.coupons,
+                      bannerUrls: res.result.data.banners,
+                      viplevel: res.result.viplevel,
                   })
               },
               fail: function(e) {

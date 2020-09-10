@@ -54,7 +54,7 @@ page  {
     margin-bottom: 50rpx;
     color: rgb(235, 221, 221);
     border-radius: 20rpx;
-    background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+    background: linear-gradient(to bottom right,#F56507, #FF5403); 
   }
   
   .popBox {
@@ -201,6 +201,6 @@ page  {
     align-items: center;
     font-size: 25rpx;
     color: white;
-    background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+    background: linear-gradient(to bottom right,#F56507, #FF5403); 
     border-radius: 10rpx;
   }

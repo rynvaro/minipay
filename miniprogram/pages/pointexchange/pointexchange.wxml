@@ -12,6 +12,10 @@
 <view class="box">
     <block wx:for="{{coupons}}" wx:key="id">
         <view wx:if="{{item.type==1}}" class="boxItem" bindtap="pointexchanging" data-id="{{item.id}}">
+            <view wx:if="{{viplevel == 1}}" class="mask">
+                <text>v2开启</text>
+                <text>兑换优惠券特权</text>
+            </view>
             <view wx:if="{{item.type==1}}" class="boxItemU">
                 <view class="boxItemUContent">
                     <view class="boxItemUContentU">
