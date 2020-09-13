@@ -310,6 +310,12 @@ Page({
                     redpackShow = true
                   }
 
+                  if (user.exp < 1000) {
+                    user.expTotal = 1000
+                  }else if (user.exp > 1000 && user.exp < 10000) {
+                    user.expTotal = 1000
+                  }
+
                   thiz.setData({
                       user: user,
                       p1v: p1v,

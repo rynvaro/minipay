@@ -34,8 +34,14 @@ Page({
             success(res) {
                 wx.hideLoading()
                 console.log(res)
+                let user = res.result.data.data
+                if (user.exp < 1000) {
+                    user.expTotal = 1000
+                  }else if (user.exp > 1000 && user.exp < 10000) {
+                    user.expTotal = 1000
+                  }
                 thiz.setData({
-                    user: res.result.data.data,
+                    user: user,
                 })
             },
             fail: function(e) {
