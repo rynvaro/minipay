@@ -11,8 +11,17 @@ Page({
         tipsBoxHidden: true,
         statusBarHeight: app.globalData.statusBarHeight,
         navBarHeight: app.globalData.navBarHeight,
+        barBG: 'transparent',
     },
 
+    onPageScroll: function(e) {
+        if (e.scrollTop >= 145) {
+            this.setData({barBG: '#FF7513'})
+        }else {
+            this.setData({barBG: 'transparent'})
+        }
+    },
+    
     showTips: function(e){
         this.setData({tipsBoxHidden:false})
     },
@@ -35,11 +44,6 @@ Page({
                 wx.hideLoading()
                 console.log(res)
                 let user = res.result.data.data
-                if (user.exp < 1000) {
-                    user.expTotal = 1000
-                  }else if (user.exp > 1000 && user.exp < 10000) {
-                    user.expTotal = 1000
-                  }
                 thiz.setData({
                     user: user,
                 })

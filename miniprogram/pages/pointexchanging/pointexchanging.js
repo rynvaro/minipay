@@ -123,14 +123,8 @@ Page({
                 wx.hideLoading()
                 console.log(res)
                 let user = res.result.data.data
-                let viplevel = 1
-                if (user.exp >= 10000) {
-                    viplevel = 3
-                }else if (user.exp < 10000 && user.exp > 1000) {
-                    viplevel = 2
-                }
                 thiz.setData({
-                    viplevel: viplevel,
+                    viplevel: user.level,
                     user: user,
                 })
             },

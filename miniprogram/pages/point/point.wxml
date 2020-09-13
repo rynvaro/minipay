@@ -1,7 +1,7 @@
 <!--miniprogram/pages/point/point.wxml-->
 <wxs src="../../utils/filter.wxs" module="filters"/>
 
-<view class="bar" style="height: {{statusBarHeight + navBarHeight}}">
+<view class="bar" style="height: {{statusBarHeight + navBarHeight}}px; background-color: {{barBG}}">
     <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
     <view class="navBar" style="height:{{navBarHeight}}px;">
         <view class="leftArrow" bindtap="back"></view>
@@ -11,6 +11,8 @@
 
 <view class="header">
     <view class="hLine">
+        <!-- 占位 -->
+        <view class="hLine0" style="height: {{statusBarHeight + navBarHeight}}px"></view>
         <view class="hLine1">
             <image class="hLine1Icon" src="{{user.avatarUrl}}"></image>
             <text class="hLine1Text">{{user.name}}</text>

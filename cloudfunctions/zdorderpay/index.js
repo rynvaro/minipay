@@ -161,12 +161,22 @@ exports.main = async (event, context) => {
             balance = user.data.data.balance - totalAmount*100
         }
 
+        let exp = user.data.data.exp + parseInt(totalAmount/10)
+        let level = 1
+        if (exp > 1000) {
+            level = 2
+        }
+        if (exp > 10000) {
+            level = 3
+        }
+
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
                     balance: balance,
                     point: user.data.data.point + parseInt(totalAmount/10),
-                    exp: user.data.data.exp + parseInt(totalAmount/10),
+                    exp: exp,
+                    level: level,
                     payTimes: user.data.data.payTimes + 1,
                     isFirstPay: isFirstPay,
                 }
@@ -181,43 +191,43 @@ exports.main = async (event, context) => {
         })
 
         // 邀请者收益
-        if (user.data.data.inviteBy) {
-            const upLineUser = await db.collection('users').where({inviteCode: user.data.data.inviteBy}).get()
-            if (upLineUser.data.length > 0) {
-                upLineU = upLineUser.data[0]
-                await db.collection('users').doc(upLineU._id).update({
-                    data: {
-                        data: {
-                            exp: upLineU.data.exp + 10
-                        }
-                    },
-                    success: res => {
-                        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                    },
-                    fail: err => {
-                        console.error('[数据库] [新增记录] 失败：', err)
-                        throw(e)
-                    }
-                })
+        // if (user.data.data.inviteBy) {
+        //     const upLineUser = await db.collection('users').where({inviteCode: user.data.data.inviteBy}).get()
+        //     if (upLineUser.data.length > 0) {
+        //         upLineU = upLineUser.data[0]
+        //         await db.collection('users').doc(upLineU._id).update({
+        //             data: {
+        //                 data: {
+        //                     exp: upLineU.data.exp + 10
+        //                 }
+        //             },
+        //             success: res => {
+        //                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        //             },
+        //             fail: err => {
+        //                 console.error('[数据库] [新增记录] 失败：', err)
+        //                 throw(e)
+        //             }
+        //         })
 
-                await db.collection('exprecords').add({
-                    data: {
-                        openid: upLineU._id,
-                        type: 1, // 消费
-                        action: '+',
-                        value: 10,
-                        timestamp: Date.parse(new Date()),
-                    },
-                    success: res => {
-                        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                    },
-                    fail: err => {
-                        console.error('[数据库] [新增记录] 失败：', err)
-                        throw(e)
-                    }
-                })
-            }
-        }
+        //         await db.collection('exprecords').add({
+        //             data: {
+        //                 openid: upLineU._id,
+        //                 type: 1, // 消费
+        //                 action: '+',
+        //                 value: 10,
+        //                 timestamp: Date.parse(new Date()),
+        //             },
+        //             success: res => {
+        //                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        //             },
+        //             fail: err => {
+        //                 console.error('[数据库] [新增记录] 失败：', err)
+        //                 throw(e)
+        //             }
+        //         })
+        //     }
+        // }
         
         orders = store.data.orders
         if (orders == 0) {

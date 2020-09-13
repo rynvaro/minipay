@@ -4,10 +4,11 @@
     <view class="cardLine1">
       <view class="cardLine1Icon">
         <image class="cardLine1IconBG" src="{{user.avatarUrl}}"></image>
+        <button open-type="getUserInfo" bindgetuserinfo="register" class="hbt"></button>
         <view wx:if="{{!phoneFilled}}" class="cardLine1IconText" bindtap="showMoreInfo">完善信息</view>
       </view>
     </view>
-    <button open-type="getUserInfo" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
+    <button open-type="getUserInfo" hover-class="pressbtn" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
       <text class="cardLine3T">会员经验</text>
       <text class="cardLine3V">{{user.exp}}/{{user.expTotal}}</text>
@@ -145,7 +146,10 @@
 
 
 <view class="moreInfo" hidden="{{!moreInfoShow}}">
-  <view class="moreInfoTitle">信息完善</view>
+  <view class="moreInfoTitle"> 
+    <text>完善资料</text> 
+    <text>解锁更多惊喜</text> 
+  </view>
   <!-- <view class="moreInfoItem">
     <text class="moreInfoItemL">姓名</text>
     <input class="moreInfoItemR" bindinput="setUsername"></input>
@@ -182,5 +186,3 @@
 
   
 </view>
-
-<view class="mask" bindtap="showMoreInfo" hidden="{{phoneFilled}}"></view>

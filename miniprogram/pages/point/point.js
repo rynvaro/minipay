@@ -11,6 +11,7 @@ Page({
         tipsBoxHidden: true,
         user: {},
         histories: [],
+        barBG: 'transparent',
     },
 
     showTips: function(e){
@@ -19,6 +20,14 @@ Page({
 
     hideTips: function(e){
         this.setData({tipsBoxHidden:true})
+    },
+
+    onPageScroll: function(e) {
+        if (e.scrollTop >= 145) {
+            this.setData({barBG: '#FF7513'})
+        }else {
+            this.setData({barBG: 'transparent'})
+        }
     },
 
     /**

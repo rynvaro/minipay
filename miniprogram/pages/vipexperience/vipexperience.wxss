@@ -16,8 +16,6 @@ page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #FF7F00;
-    opacity: 0.8;
     z-index: 1;
 }
 
@@ -79,7 +77,7 @@ page {
 .header {
     position: relative;
     width: 100%;
-    height: 500rpx;
+    height: 450rpx;
     background-color: #FF6610;
     border-bottom-left-radius: 20rpx;
     border-bottom-right-radius: 20rpx;
@@ -100,13 +98,17 @@ page {
 }
 
 .hLine {
-    width: 90%;
-    height: 200rpx;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+
 .hLine1 {
-    width: 100%;
-    height: 50%;
+    width: 90%;
+    height: 25%;
     display: flex;
     align-items: center;
 }
@@ -124,13 +126,13 @@ page {
 }
 
 .hLine2 {
-    width: 100%;
-    height: 25%;
+    width: 90%;
+    height: 10%;
 }
 
 .hLine3 {
-    width: 100%;
-    height: 25%;
+    width: 90%;
+    height: 15%;
     display: flex;
     align-items: center;
 }

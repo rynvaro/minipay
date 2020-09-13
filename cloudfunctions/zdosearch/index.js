@@ -86,12 +86,6 @@ exports.main = async (event, context) => {
         
 
         const user = await db.collection('users').doc(wxContext.OPENID).get()
-        let exp = user.data.data.exp
-        if (exp > 1000 && exp <10000) {
-            viplevel = 2
-        }else if (exp >=10000) {
-            viplevel = 3
-        }
 
         result = await db.collection("mstores").where(db.command.or(
             [
@@ -114,7 +108,7 @@ exports.main = async (event, context) => {
             let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)
             result.data[i].distance = dis.toFixed(2)+'km'
         }
-        result.viplevel = viplevel
+        result.viplevel = user.data.data.level
 
     }catch(e) {
         throw(e)

@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 
     const userData = await db.collection('users').doc(wxContext.OPENID).get()
     let user = userData.data.data
-    let exp = user.exp
+    let level = user.level
     
     let lat = event.lat
     let lon = event.lon
@@ -33,9 +33,9 @@ exports.main = async (event, context) => {
             var realDiscount = res.data[x].discount
             if (realDiscount <= 9) {
                 let delta = 0.0
-                if ( exp < 1000 ) {
+                if ( level == 1 ) {
                     delta = 0.5
-                }else if (exp >= 1000 && exp <10000) {
+                }else if (level == 2) {
                     delta = 0.3
                 }
                 realDiscount = realDiscount + delta
@@ -58,9 +58,9 @@ exports.main = async (event, context) => {
         var realDiscount = foodStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
-            if ( exp < 1000 ) {
+            if ( level == 1 ) {
                 delta = 0.5
-            }else if (exp >= 1000 && exp <10000) {
+            }else if (level == 2) {
                 delta = 0.3
             }
             realDiscount = realDiscount + delta
@@ -92,9 +92,9 @@ exports.main = async (event, context) => {
         var realDiscount = eStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
-            if ( exp < 1000 ) {
+            if ( level == 1 ) {
                 delta = 0.5
-            }else if (exp >= 1000 && exp <10000) {
+            }else if (level == 2) {
                 delta = 0.3
             }
             realDiscount = realDiscount + delta
@@ -131,9 +131,9 @@ exports.main = async (event, context) => {
         var realDiscount = nearStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
-            if ( exp < 1000 ) {
+            if ( level == 1 ) {
                 delta = 0.5
-            }else if (exp >= 1000 && exp <10000) {
+            }else if (level == 2) {
                 delta = 0.3
             }
             realDiscount = realDiscount + delta

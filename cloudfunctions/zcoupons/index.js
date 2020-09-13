@@ -12,16 +12,9 @@ exports.main = async (event, context) => {
 
     const coupons = await db.collection('coupons').get()
     const user = await db.collection('users').doc(wxContext.OPENID).get()
-    let viplevel = 1
-    let exp = user.data.data.exp
-    if (exp >1000 && exp < 10000) {
-        viplevel = 2
-    }else if (exp >= 10000) {
-        viplevel = 3
-    }
     
     return {
         data: coupons.data[0],
-        viplevel: viplevel,
+        viplevel: user.data.data.level,
     } 
 }

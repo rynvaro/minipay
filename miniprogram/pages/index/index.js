@@ -8,7 +8,7 @@ Page({
             avatarUrl:'',
             name: '登录/注册',
             exp: 0,
-            expTotal: 10000,
+            expTotal: 1000,
             city: '',
             country: '',
             gender: 0,
@@ -22,6 +22,7 @@ Page({
             sevenSigns: 0,// 七日连续签到数
             phone: '',
             payTimes: 0,
+            level: 1,
         },
         phoneFilled: true,
         login: false,
@@ -197,9 +198,10 @@ Page({
                         wx.showToast({
                           title: '已更新',
                         })
-                        thiz.setData({phoneFilled: true})
+                        thiz.setData({phoneFilled: true, redpackShow:true, open: true, closeRedpack: true})
                         thiz.clodeMoreInfo()
                         thiz.onShow()
+                        
                     },
                     fail: function(e) {
                       console.log(e.errMsg)
@@ -231,6 +233,9 @@ Page({
     },
 
     openRedpack: function(e) {
+
+      this.setData({redpackShow: false, moreInfoShow: true})
+
       wx.showLoading({
         title: 'loading...',
       })
@@ -243,7 +248,6 @@ Page({
         success(res) {
             console.log(res)
             wx.hideLoading()
-            thiz.setData({open: true, closeRedpack: true})
         },
         fail: function(e) {
             console.log(e.errMsg)
@@ -251,7 +255,6 @@ Page({
             wx.showToast({
               title: '领取失败',
             })
-            thiz.setData({closeRedpack: true})
         }
       })
     },
@@ -280,12 +283,12 @@ Page({
                   let user = res.result.data.data
                   let p1v = 0
                   let p2v = 0
-                  if (user.exp>=0 && user.exp<=1000) {
+                  if (user.level == 1) {
                     p1v = user.exp/1000*100
-                  }else if (user.exp > 1000 && user.exp<=10000) {
+                  }else if (user.level == 1) {
                       p1v = 100
                       p2v = user.exp/9000*100
-                  }else if (user.exp > 10000) {
+                  }else if (user.level == 3) {
                     p1v = 100
                     p2v = 100
                   }
@@ -295,26 +298,10 @@ Page({
                       phoneFilled = false
                   }
 
-                  if (!phoneFilled) {
-                    wx.hideTabBar({
-                      animation: true,
-                    })
-                  } else {
-                    wx.showTabBar({
-                      animation: true,
-                    })
-                  }
-
-                  let redpackShow = false
-                  if (user.isFirstPay) {
-                    redpackShow = true
-                  }
-
-                  if (user.exp < 1000) {
-                    user.expTotal = 1000
-                  }else if (user.exp > 1000 && user.exp < 10000) {
-                    user.expTotal = 1000
-                  }
+                  // let redpackShow = false
+                  // if (user.isFirstPay) {
+                  //   redpackShow = true
+                  // }
 
                   thiz.setData({
                       user: user,
@@ -323,7 +310,7 @@ Page({
                       login: true,
                       phoneFilled: phoneFilled,
                       redpackValue: res.result.redpackValue/100,
-                      redpackShow: redpackShow,
+                      // redpackShow: redpackShow,
                   })
               },
               fail: function(e) {
@@ -344,7 +331,7 @@ Page({
                 name: e.detail.userInfo.nickName,
                 nickName: e.detail.userInfo.nickName,
                 exp: 0,
-                expTotal: 10000,
+                expTotal: 1000,
                 city: e.detail.userInfo.city,
                 country: e.detail.userInfo.country,
                 gender: e.detail.userInfo.gender,
@@ -358,6 +345,7 @@ Page({
                 sevenSigns: 0,
                 phone: '',
                 payTimes: 0,
+                level: 1,
             }
         })
         wx.showLoading({
@@ -372,6 +360,7 @@ Page({
                 console.log(res)
                 thiz.setData({
                     login: true,
+                    redpackShow: true,
                 })
                 thiz.onShow()
             },

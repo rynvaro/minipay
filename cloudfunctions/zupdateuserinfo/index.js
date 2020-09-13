@@ -44,6 +44,9 @@ exports.main = async (event, context) => {
                     inviteBy: inviteBy,
                     birthday: birthday,
                 },
+                redpack: {
+                    status: 0, //可用
+                },
                 updateAt: Date.parse(new Date()),
             },
             success: res => {

@@ -63,14 +63,16 @@ page {
 }
 
 .item {
-    margin-top: 20rpx;
+    margin-top: 10rpx;
+    background-color: white;
+    border-radius: 20rpx;
     width: 95%;
     display: flex;
     flex-direction: column;
 }
 
 .itemU {
-    height: 60rpx;
+    height: 80rpx;
     display: flex;
 }
 
@@ -78,19 +80,22 @@ page {
     width: 95%;
     margin-left: 20rpx;
     font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .itemUR {
-    margin-top: 17rpx;
+    margin-top: 30rpx;
     width: 20rpx;
     height: 20rpx;
-    border-top: 5rpx solid #999999;
-    border-right: 5rpx solid #999999;
+    border-top: 3rpx solid #999999;
+    border-right: 3rpx solid #999999;
     transform: rotate(45deg);
     margin-right: 20rpx;
 }
 
 .itemD {
-    height: 4rpx;
-    background: linear-gradient(to right,#dbdbdb, #FFFFFF);
+    height: 0rpx;
+    background: #cccccc;
+    box-shadow: 0 20rpx 20rpx 0 #afafaf;
 }

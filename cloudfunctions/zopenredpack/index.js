@@ -11,17 +11,14 @@ exports.main = async (event, context) => {
 
     try {
         const user = await db.collection('users').doc(wxContext.OPENID).get()
-        if (!user.data.data.isFirstPay) {
-            throw(e)
-        }
 
         let redpackValue = event.redpackValue
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
-                data: {
-                    balance: user.data.data.balance + redpackValue,
-                    isFirstPay: false,
-                }
+                redpack: {
+                        redpackValue: redpackValue,
+                        status: -1, // 禁用
+                    }
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
