@@ -5,22 +5,22 @@
         <view class="discountSettingItem">
             <text class="discountSettingItemL">折扣</text>
             <picker class="discountSettingItemR" range="{{array}}" value="{{index}}" bindchange="bindDicountChange">
-                <text class="discountSettingItemRText">{{currentDiscount}}</text>
+                <text class="discountSettingItemRText">{{discount}} 折</text>
             </picker>
         </view>
         <view class="discountSettingItem">
             <text class="discountSettingItemL">打折起始时间</text>
-            <picker class="discountSettingItemR" mode="date" value="{{timeStart}}" bindchange="bindTimeStartChange">
-                <text class="discountSettingItemRText">{{timeStart}}</text>
+            <picker class="discountSettingItemR" mode="date" value="{{startTime}}" bindchange="bindTimeStartChange">
+                <text class="discountSettingItemRText">{{startTime}}</text>
             </picker>
         </view>
         <view class="discountSettingItem">
             <text class="discountSettingItemL">打折结束时间</text>
-            <picker class="discountSettingItemR" mode="date" value="{{timeEnd}}" bindchange="bindTimeEndChange">
-                <text class="discountSettingItemRText">{{timeEnd}}</text>
+            <picker class="discountSettingItemR" mode="date" value="{{endTime}}" bindchange="bindTimeEndChange">
+                <text class="discountSettingItemRText">{{endTime}}</text>
             </picker>
         </view>
     </view>
 </view>
 
-<button class="submit" bindtap="submit">提交</button>
+<!-- <button class="submit" bindtap="submit">提交</button> -->

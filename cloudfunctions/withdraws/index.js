@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
     var result = {}
 
     try {
-        result = await db.collection("withdraws").where({ phone: event.phone}).get()
+        result = await db.collection("withdraws").where({ storeID: event.storeID}).get()
     } catch(e) {
         throw(e)
     }

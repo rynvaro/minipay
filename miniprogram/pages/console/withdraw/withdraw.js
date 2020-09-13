@@ -19,6 +19,7 @@ Page({
     animation: animation,
     balance: 0,
     withdrawAmount: 0,
+    storeID: '',
     phone: '',
     code: '',
     codeID: '',
@@ -32,7 +33,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      phone: app.globalData.phone,
+      storeID: app.globalData.storeID,
     })
   },
 
@@ -54,17 +55,18 @@ Page({
     wx.cloud.callFunction({
         name:"getInfo",
         data: {
-          phone: app.globalData.phone,
+          storeID: app.globalData.storeID,
         },
         success(res) {
             console.log(res)
             thiz.setData({
-                balance: res.result.data.balance
+                balance: res.result.data.balance,
+                phone: res.result.data.merchantPhone,
             })
             wx.hideLoading()
         },
         fail: function(e) {
-          console.log(e.errMsg)
+          console.log(e)
           wx.hideLoading()
         }
     })
@@ -161,7 +163,7 @@ Page({
             wx.cloud.callFunction({
               name:"submitWithdraw",
               data: {
-                phone: app.globalData.phone,
+                storeID: app.globalData.storeID,
                 withdrawAmount: parseInt(thiz.data.withdrawAmount),
               },
               success(res) {
@@ -217,7 +219,7 @@ Page({
     wx.cloud.callFunction({
       name:"sendSMS",
       data: {
-        phone: app.globalData.phone,
+        phone: thiz.data.phone,
       },
       success(res) {
         console.log(res)

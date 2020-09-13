@@ -43,18 +43,18 @@ exports.main = async (event, context) => {
                 })
             }
             if (orderType == 1) {
-                result = await db.collection('stores').where(where).orderBy('sales','desc').get()
+                result = await db.collection('mstores').where(where).orderBy('orders','desc').get()
             }else if (orderType == 2) {
-                result = await db.collection('stores').where(where).orderBy('publishedAt','desc').get()
+                result = await db.collection('mstores').where(where).orderBy('createdAt','desc').get()
             }else {
-                result = await db.collection('stores').where(where).get()
+                result = await db.collection('mstores').where(where).get()
             }
         }else {
-            let orderBy = 'sales'
+            let orderBy = 'orders'
             if (orderType == 2) {
-                orderBy = 'publishedAt'
+                orderBy = 'createdAt'
             }
-            result = await db.collection('stores').where({
+            result = await db.collection('mstores').where({
                 geoPoint: _.geoNear({
                     geometry: db.Geo.Point(lon,lat),
                     maxDistance: 50000,
@@ -67,9 +67,8 @@ exports.main = async (event, context) => {
         // }
 
         for (var i = 0; i < result.data.length; i++){
-            let dis = distance(result.data[i].data.data.location.latitude,result.data[i].data.data.location.longitude,lat,lon)
+            let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)
             result.data[i].distance = dis.toFixed(2)+'km'
-            result.data[i].price = 23.8
         }
         result.viplevel = viplevel
 

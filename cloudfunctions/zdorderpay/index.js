@@ -11,7 +11,6 @@ exports.main = async (event, context) => {
 
     console.log("event is ", event)
 
-    let merchantID = event.merchantID
     let storeID = event.storeID
     let payAmount = parseFloat(event.payAmount)
     let couponID = event.couponID
@@ -24,8 +23,7 @@ exports.main = async (event, context) => {
     var result = {}
 
     try {
-        const merchant = await db.collection('merchants').doc(merchantID).get()
-        const store = await db.collection('stores').doc(storeID).get()
+        const store = await db.collection('mstores').doc(storeID).get()
         const user = await db.collection('users').doc(wxContext.OPENID).get()
 
         if (payby == 2 && sha1(password) != user.data.payPassword) {
@@ -42,7 +40,7 @@ exports.main = async (event, context) => {
             delta = 0.3
         }
 
-        let realDiscount = merchant.data.discount.discountValue + delta
+        let realDiscount = store.data.discount + delta
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
         let totalAmount = (parseFloat(realAmount) + mustPayAmount).toFixed(2)
@@ -79,8 +77,8 @@ exports.main = async (event, context) => {
             storeId: storeID,
             couponId: couponID,
             openid: wxContext.OPENID,
-            storeName: store.data.data.data.storeName,
-            productImage: store.data.data.data.productImage,
+            storeName: store.data.storeName,
+            productImage: store.data.productImages[0],
             payAmount: payAmount,
             realDiscount: realDiscount,
             rebate: rebate,
@@ -221,12 +219,19 @@ exports.main = async (event, context) => {
             }
         }
         
+        orders = store.data.orders
+        if (orders == 0) {
+            avgPrice = parseFloat(totalAmount)
+        }else {
+            avgPrice = (avgPrice * orders)+parseFloat(totalAmount)/(orders + 1)
+        }
 
         // 商户收入
-        await db.collection('merchants').doc(merchantID).update({
+        await db.collection('mstores').doc(storeID).update({
             data: {
-                balance: (parseFloat(merchant.data.balance) + parseFloat(totalAmount)),
-                dayBi: (parseFloat(merchant.data.dayBi) + parseFloat(totalAmount)),
+                balance: (parseFloat(store.data.balance) + parseFloat(totalAmount)),
+                orders: store.data.orders + 1,
+                avgPrice: avgPrice,
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -236,35 +241,12 @@ exports.main = async (event, context) => {
                 throw(e)
             }
         })
-
-        await db.collection('stores').doc(storeID).update({
-            data: {
-                sales: store.data.sales + 1,
-                data: {
-                    data:{
-                        sales: store.data.data.data.sales + 1,
-                    }
-                }
-            },
-            success: res => {
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-            },
-            fail: err => {
-                console.error('[数据库] [新增记录] 失败：', err)
-                throw(e)
-            }
-        })
-        
-
-
     }catch(e) {
         throw(e)
     }
 
     return result
 }
-
-
 
 function encodeUTF8(s) {
     var i, r = [], c, x;
@@ -279,10 +261,10 @@ function encodeUTF8(s) {
         r.push(0x80 + (c >> 6 & 0x3F), 0x80 + (c & 0x3F));
       };
     return r;
-  };
-  
-  // 字符串加密成 hex 字符串
-  function sha1(s) {
+}
+
+// 字符串加密成 hex 字符串
+function sha1(s) {
     var data = new Uint8Array(encodeUTF8(s))
     var i, j, t;
     var l = ((data.length + 8) >>> 6 << 4) + 16, s = new Uint8Array(l << 2);
@@ -291,28 +273,28 @@ function encodeUTF8(s) {
     s[data.length >> 2] |= 0x80 << (24 - (data.length & 3) * 8);
     s[l - 1] = data.length << 3;
     var w = [], f = [
-      function () { return m[1] & m[2] | ~m[1] & m[3]; },
-      function () { return m[1] ^ m[2] ^ m[3]; },
-      function () { return m[1] & m[2] | m[1] & m[3] | m[2] & m[3]; },
-      function () { return m[1] ^ m[2] ^ m[3]; }
+        function () { return m[1] & m[2] | ~m[1] & m[3]; },
+        function () { return m[1] ^ m[2] ^ m[3]; },
+        function () { return m[1] & m[2] | m[1] & m[3] | m[2] & m[3]; },
+        function () { return m[1] ^ m[2] ^ m[3]; }
     ], rol = function (n, c) { return n << c | n >>> (32 - c); },
-      k = [1518500249, 1859775393, -1894007588, -899497514],
-      m = [1732584193, -271733879, null, null, -1009589776];
+        k = [1518500249, 1859775393, -1894007588, -899497514],
+        m = [1732584193, -271733879, null, null, -1009589776];
     m[2] = ~m[0], m[3] = ~m[1];
     for (i = 0; i < s.length; i += 16) {
-      var o = m.slice(0);
-      for (j = 0; j < 80; j++)
+        var o = m.slice(0);
+        for (j = 0; j < 80; j++)
         w[j] = j < 16 ? s[i + j] : rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1),
-          t = rol(m[0], 5) + f[j / 20 | 0]() + m[4] + w[j] + k[j / 20 | 0] | 0,
-          m[1] = rol(m[1], 30), m.pop(), m.unshift(t);
-      for (j = 0; j < 5; j++)m[j] = m[j] + o[j] | 0;
+            t = rol(m[0], 5) + f[j / 20 | 0]() + m[4] + w[j] + k[j / 20 | 0] | 0,
+            m[1] = rol(m[1], 30), m.pop(), m.unshift(t);
+        for (j = 0; j < 5; j++)m[j] = m[j] + o[j] | 0;
     };
     t = new DataView(new Uint32Array(m).buffer);
     for (var i = 0; i < 5; i++)m[i] = t.getUint32(i << 2);
-  
+
     var hex = Array.prototype.map.call(new Uint8Array(new Uint32Array(m).buffer), function (e) {
-      return (e < 16 ? "0" : "") + e.toString(16);
+        return (e < 16 ? "0" : "") + e.toString(16);
     }).join("");
-  
+
     return hex;
-  };
+}

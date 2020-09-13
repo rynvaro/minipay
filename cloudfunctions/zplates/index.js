@@ -13,8 +13,6 @@ exports.main = async (event, context) => {
     let user = userData.data.data
     let exp = user.exp
     
-    
-
     let lat = event.lat
     let lon = event.lon
  
@@ -22,16 +20,42 @@ exports.main = async (event, context) => {
     const _ = db.command
 
     const plates =  await db.collection('plates').get()
+    for (var i = 0; i < plates.data.length; i++) {
+        plate = plates.data[i]
+        let ids = []
+        for (var j = 0; j < plate.items.length; j++ ) {
+            ids.push(plate.items[j].storeId)
+        }
+        let res = await db.collection('mstores').where({_id: _.in(ids)}).get()
+
+        for (var x = 0; x<res.data.length; x++) {
+
+            var realDiscount = res.data[x].discount
+            if (realDiscount <= 9) {
+                let delta = 0.0
+                if ( exp < 1000 ) {
+                    delta = 0.5
+                }else if (exp >= 1000 && exp <10000) {
+                    delta = 0.3
+                }
+                realDiscount = realDiscount + delta
+            }
+
+            plate.items[x].discount = realDiscount
+        }
+    }
+
+
     result.plates = plates.data
 
     let internalPlates = []
 
 
-    const foodStores = await db.collection('stores').where({storeType: 1}).orderBy('sales','desc').limit(10).get()
+    const foodStores = await db.collection('mstores').where({storeType: 1}).orderBy('orders','desc').limit(10).get()
     let internalPlateFood = {items: []}
     for (var i = 0; i< foodStores.data.length; i++) {
         foodStore = foodStores.data[i]
-        var realDiscount = foodStore.discount.discountValue
+        var realDiscount = foodStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
             if ( exp < 1000 ) {
@@ -45,13 +69,13 @@ exports.main = async (event, context) => {
             internalPlateFood.type = 1 // foods
             internalPlateFood.title = "食在上饶"
             internalPlateFood.headerStoreId = foodStore._id
-            internalPlateFood.headerImage = foodStore.data.data.storeImage
+            internalPlateFood.headerImage = foodStore.storeImages[0]
         }else {
             var item = {
                 storeId: foodStore._id,
-                image: foodStore.data.data.storeImage,
+                image: foodStore.storeImages[0],
                 discount: realDiscount,
-                desc: foodStore.desc,
+                desc: foodStore.storeDesc,
             }
             internalPlateFood.items.push(item)
         }
@@ -60,12 +84,12 @@ exports.main = async (event, context) => {
 
 
     // 娱乐
-    const eStores = await db.collection('stores').where({storeType: 2}).orderBy('sales','desc').limit(10).get()
+    const eStores = await db.collection('mstores').where({storeType: 2}).orderBy('orders','desc').limit(10).get()
 
     let internalPlateE = {items: []}
     for (var i = 0; i< eStores.data.length; i++) {
         eStore = eStores.data[i]
-        var realDiscount = eStore.discount.discountValue
+        var realDiscount = eStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
             if ( exp < 1000 ) {
@@ -79,13 +103,13 @@ exports.main = async (event, context) => {
             internalPlateE.type = 2 // entertainments
             internalPlateE.title = "玩乐途游"
             internalPlateE.headerStoreId = eStore._id
-            internalPlateE.headerImage = eStore.data.data.storeImage
+            internalPlateE.headerImage = eStore.storeImages[0]
         }else {
             var item = {
                 storeId: eStore._id,
-                image: eStore.data.data.storeImage,
+                image: eStore.storeImages[0],
                 discount: realDiscount,
-                desc: eStore.desc,
+                desc: eStore.storeDesc,
             }
             internalPlateE.items.push(item)
         }
@@ -94,17 +118,17 @@ exports.main = async (event, context) => {
 
 
     // 附近
-    const nearStores = await db.collection('stores').where({
+    const nearStores = await db.collection('mstores').where({
         geoPoint: _.geoNear({
             geometry: db.Geo.Point(lon,lat),
             maxDistance: 50000,
         })
-    }).orderBy('publishedAt','desc').limit(10).get()
+    }).orderBy('createdAt','desc').limit(10).get()
 
     let internalPlateNear = {items: []}
     for (var i = 0; i< nearStores.data.length; i++) {
         nearStore = nearStores.data[i]
-        var realDiscount = nearStore.discount.discountValue
+        var realDiscount = nearStore.discount
         if (realDiscount <= 9) {
             let delta = 0.0
             if ( exp < 1000 ) {
@@ -118,13 +142,13 @@ exports.main = async (event, context) => {
             internalPlateNear.type = 0 // nearby
             internalPlateNear.title = "附近商家"
             internalPlateNear.headerStoreId = nearStore._id
-            internalPlateNear.headerImage = nearStore.data.data.storeImage
+            internalPlateNear.headerImage = nearStore.storeImages[0]
         }else {
             var item = {
                 storeId: nearStore._id,
-                image: nearStore.data.data.storeImage,
+                image: nearStore.storeImages[0],
                 discount: realDiscount,
-                desc: nearStore.desc,
+                desc: nearStore.storeDesc,
             }
             internalPlateNear.items.push(item)
         }

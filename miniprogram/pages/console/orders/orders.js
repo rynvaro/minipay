@@ -120,7 +120,7 @@ function listOrder(thiz, q){
         name:"orderList",
         data: {
             q: q,
-            phone: app.globalData.phone,
+            storeID: app.globalData.storeID,
             status: thiz.data.currentTabIndex,
         },
         success(res) {

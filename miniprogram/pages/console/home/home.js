@@ -7,9 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    data: {
-      storeImage: '',
-    },
+    store: {},
     show: false,
   },
 
@@ -23,7 +21,7 @@ Page({
       width: 200,
       height: 200,
       canvasId: 'myQrcode',
-      text: app.globalData.phone,
+      text: this.data.store._id,
     })
   },
 
@@ -31,10 +29,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // this.setData({
-    //   data: JSON.parse(options.data)
-    // })
-    // console.log(this.data)
+
   },
 
   /**
@@ -48,7 +43,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
     wx.showLoading({
       title: 'loading...',
     })
@@ -58,40 +52,20 @@ Page({
     wx.cloud.callFunction({
       name:"getInfo",
       data: {
-        phone: app.globalData.phone,
+        storeID: app.globalData.storeID,
       },
       success(res) {
         console.log(res)
         thiz.setData({
-          data:res.result.data
+          store:res.result.data
         })
         wx.hideLoading()
       },
       fail: function(e) {
-        console.log(e.errMsg)
+        console.log(e)
         wx.hideLoading()
       }
     })
-
-    // TODO 合并成一个函数
-      wx.cloud.callFunction({
-          name:"getStoreSettingInfo",
-          data: {
-            phone: app.globalData.phone,
-          },
-          success(res) {
-              console.log(res)
-              thiz.setData({
-                storeImage: res.result.data.data.data.storeImage,
-              })
-              wx.setNavigationBarTitle({
-                title: res.result.data.data.data.storeName,
-              })
-          },
-          fail: function(e) {
-            console.log(e.errMsg)
-          }
-      })
   },
 
   /**

@@ -1,18 +1,12 @@
 <!--miniprogram/pages/console/store/store.wxml-->
 
-<view class="header">
-    <view class="headerIcon" src="../../../images/home.png">
-        <image class="settingItemTitleImageTakePhotoUIcon" src="../../../images/home.png"></image>
-    </view>
-</view>
-
 <view class="settingsBox">
     <view class="settings">
         <view class="settingItem">
             <text class="settingItemL">店铺门头</text>
 
-            <image wx:if="{{data.storeImage}}" class="settingItemTitleImage" src="{{data.storeImage}}" bindtap="select"></image>
-            <view wx:else class="settingItemTitleImage" bindtap="select">
+            <image wx:if="{{store.storeImages[0]}}" class="settingItemTitleImage" src="{{store.storeImages[0]}}"></image>
+            <view wx:else class="settingItemTitleImage">
                 <view class="settingItemTitleImageTakePhoto">
                     <view class="settingItemTitleImageTakePhotoU">
                         <image class="settingItemTitleImageTakePhotoUIcon" src="../../../images/orderhis.png"></image>
@@ -27,49 +21,54 @@
 
          <view class="settingItem">
             <text class="settingItemL">店铺名称</text>
-            <input bindinput="setStoreName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.storeName}}"></input>
+            <input bindinput="setStoreName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.storeName}}"></input>
         </view>
 
         <view class="settingItem">
-            <text class="settingItemL">商家信息</text>
-            <input bindinput="setMerchantInfo" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.merchantInfo}}"></input>
-        </view>
-        <view class="settingItem">
             <text class="settingItemL">真实姓名</text>
-            <input bindinput="setRealName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.realName}}"></input>
+            <input bindinput="setRealName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantName}}"></input>
         </view>
 
         <view class="settingItem">
             <text class="settingItemL">银行卡号</text>
-            <input bindinput="setCardNumber" type="number" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.cardNumber}}"></input>
+            <input bindinput="setCardNumber" type="number" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantBankCard}}"></input>
         </view>
 
         <view class="settingItem">
             <text class="settingItemL">电话</text>
-            <input bindinput="setPhone" disabled="true" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.phone}}"></input>
+            <input bindinput="setPhone" disabled="true" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantPhone}}"></input>
         </view>
 
         <view class="settingItem">
             <text class="settingItemL">地址</text>
             <!-- <input class="settingItemR" placeholder-class="settingItemRPlaceHolder"></input> -->
-            <view class="settingItemR" bindtap="selectLocation">{{data.location.address}}</view>
+            <view class="settingItemR" bindtap="selectLocation">{{store.address}}</view>
         </view>
 
         <view class="settingItem">
             <text class="settingItemL">营业时间</text>
-            <input bindinput="setSETime" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{data.seTime}}"></input>
+            <view class="settingItemR">
+                <picker class="startTime" mode="time" value="{{store.startTime}}" start="09:01" end="21:01" bindchange="bindStartTimeChange">
+                    {{store.startTime}}
+                </picker>
+                -
+                <picker class="endTime" mode="time" value="{{store.endTime}}" start="09:01" end="21:01" bindchange="bindEndTimeChange">
+                    {{store.endTime}}
+                </picker>
+            </view>
         </view>
 
         <view class="settingItem">
             <text class="settingItemL">描述</text>
-            <textarea bindinput="setDesc" class="settingItemR"></textarea>
+            <textarea bindinput="setDesc" class="settingItemRDesc" value="{{store.storeDesc}}"></textarea>
         </view>
         
         <view class="settingItem">
             <text class="settingItemL">店铺类型</text>
-            <radio-group bindchange="change">
-                <radio value="1">餐饮</radio>
-                <radio value="2">娱乐</radio>
+            <radio-group bindchange="change" >
+                <radio value="1" checked="{{store.storeType == 1}}">餐饮</radio>
+                <radio value="2" checked="{{store.storeType == 2}}">娱乐</radio>
+                <radio value="3" checked="{{store.storeType == 3}}">其他</radio>
             </radio-group>
         </view>
         
@@ -77,9 +76,8 @@
         <view class="settingItem">
             <text class="settingItemL">产品详情</text>
 
-            <image wx:if="{{data.productImage}}" class="settingItemTitleImage" src="{{data.productImage}}" bindtap="selectProductImage"></image>
-
-            <view wx:else class="settingItemTitleImage" bindtap="selectProductImage">
+            <image wx:if="{{store.productImages[0]}}" class="settingItemTitleImage" src="{{store.productImages[0]}}"></image>
+            <view wx:else class="settingItemTitleImage">
                 <view class="settingItemTitleImageTakePhoto">
                     <view class="settingItemTitleImageTakePhotoU">
                         <image class="settingItemTitleImageTakePhotoUIcon" src="../../../images/orderhis.png"></image>

@@ -1,8 +1,9 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/feedback/feedback",
         "pages/console/index/index",
+        "pages/console/discount/discount",
+        "pages/feedback/feedback",
         "pages/console/home/home",
         "pages/order/order",
         "pages/signin/signin",
@@ -15,7 +16,6 @@
         "pages/plates/plates",
         "pages/search/search",
         "pages/viprights/viprights",
-        "pages/scanpay/scanpay",
         "pages/orders/orders",
         "pages/deposit/deposit",
         "pages/pointexchange/pointexchange",
@@ -27,7 +27,6 @@
         "pages/store/store",
         "pages/console/store/store",
         "pages/console/orders/orders",
-        "pages/console/discount/discount",
         "pages/console/withdraw/withdraw",
         "pages/console/financial/financial",
         "pages/console/orderDetail/orderDetail",

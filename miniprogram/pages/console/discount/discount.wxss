@@ -33,7 +33,6 @@ page {
 
 .discountSettingItemL{
     width: 50%;
-    font-size: small;
 }
 
 .discountSettingItemR{
@@ -47,7 +46,6 @@ page {
 }
 
 .discountSettingItemRText {
-    font-size: x-small;
     height: 40rpx;
 }
 

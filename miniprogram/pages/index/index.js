@@ -382,7 +382,7 @@ Page({
             success (res) {
                 console.log(res)
                 wx.navigateTo({
-                  url: '../order/order?merchantID='+res.result,
+                  url: '../order/order?storeID='+res.result,
                 })
             }
         })

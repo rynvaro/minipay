@@ -44,7 +44,7 @@
         <text class="boxTitleName">{{item.title}}</text>
         <text class="boxTitleMore" bindtap="plates" data-id="{{item._id}}">>>></text>
     </view>
-    <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}" bindtap="store" data-id="{{item.headerStoreId}}"></image>
+    <image mode="aspectFill" class="boxHeaderImage" src="{{item.image}}" bindtap="plates" data-id="{{item._id}}"></image>
     <view class="innerBox">
         <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem" data-id="{{item.storeId}}" bindtap="store">
             <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>

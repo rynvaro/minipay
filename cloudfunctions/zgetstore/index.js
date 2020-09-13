@@ -11,7 +11,6 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
     let storeID = event.storeID
-    let merchantID = event.merchantID
     let discount = 0
     let viplevel = 1
     let store = {}
@@ -20,7 +19,8 @@ exports.main = async (event, context) => {
     let v3discount = 0
     let banners = []
     try {
-        const merchant = await db.collection('merchants').doc(merchantID).get()
+        const storeRecord = await db.collection('mstores').doc(storeID).get()
+        store = storeRecord.data
         const user = await db.collection('users').doc(wxContext.OPENID).get()
         let exp = user.data.data.exp
         if (exp >=0 && exp <1000) {
@@ -30,25 +30,23 @@ exports.main = async (event, context) => {
         } else if (exp >= 10000) {
             viplevel = 3
         }
-        if (merchant.data.discount.discountValue > 9) {
-            discount = merchant.data.discount.discountValue
-            v1discount = merchant.data.discount.discountValue
-            v2discount = merchant.data.discount.discountValue
-            v3discount = merchant.data.discount.discountValue
+        if (store.discount > 9) {
+            discount = store.discount
+            v1discount = store.discount
+            v2discount = store.discount
+            v3discount = store.discount
         } else {
-            v1discount = merchant.data.discount.discountValue + 0.5
-            v2discount = merchant.data.discount.discountValue + 0.3
-            v3discount = merchant.data.discount.discountValue 
+            v1discount = store.discount + 0.5
+            v2discount = store.discount + 0.3
+            v3discount = store.discount
             if (exp >=0 && exp <1000) {
-                discount = merchant.data.discount.discountValue + 0.5
+                discount = store.discount + 0.5
             }else if (exp >=1000 && exp <10000) {
-                discount = merchant.data.discount.discountValue + 0.3
+                discount = store.discount + 0.3
             } else if (exp >= 10000) {
-                discount = merchant.data.discount.discountValue
+                discount = store.discount
             }
         }
-        const storeRecord = await db.collection('stores').doc(storeID).get()
-        store = storeRecord.data.data.data
         banners = storeRecord.data.banners
     }catch(e) {
         throw(e)

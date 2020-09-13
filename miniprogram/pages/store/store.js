@@ -34,7 +34,7 @@ Page({
 
     order: function(){
         wx.navigateTo({
-          url: '../order/order?merchantID='+this.data.store.phone
+          url: '../order/order?storeID='+this.data.store._id
         })
     },
 
@@ -50,7 +50,6 @@ Page({
         name:"zgetstore",
         data: {
           storeID: options.storeID,
-          merchantID: options.storeID,
         },
         success(res) {
             console.log(res)

@@ -1,8 +1,8 @@
 <!--miniprogram/pages/map/map.wxml-->
 
-<map class="map" bgColor="#F6F6F6AA" longitude="{{store.location.longitude}}" latitude="{{store.location.latitude}}" markers="{{markers}}" polyline="{{polyline}}">
+<map class="map" bgColor="#F6F6F6AA" longitude="{{store.longitude}}" latitude="{{store.latitude}}" markers="{{markers}}" polyline="{{polyline}}">
     <view class="backButton" bindtap="back">
-        <view class="leftArrow"></view>
+        <view class="leftArrow" bindtap="back"></view>
     </view>
 
     <!-- <view class="searchButton">
@@ -20,7 +20,7 @@
 
 <view class="mapText">
     <text class="mapTextHeader">{{store.storeName}}</text>
-    <text class="mapTextAddress">{{store.location.address}}</text>
+    <text class="mapTextAddress">{{store.address}}</text>
     <text class="mapTextAddress"></text>
     <view class="mapTextButton" bindtap="searchRoad">查找路线</view>
 </view>

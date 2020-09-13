@@ -11,14 +11,5 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    console.log(event)
-    var mstore = {}
-    
-    try {
-        mstore = await db.collection("mstores").doc(event.storeID).get()
-    }catch(e) {
-        throw(e)
-    }
-
-    return mstore
+    return await db.collection('users').orderBy('createdAt','desc').get()
 }

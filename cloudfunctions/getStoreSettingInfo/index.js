@@ -13,12 +13,12 @@ exports.main = async (event, context) => {
 
     const openid = wxContext.OPENID
 
-    var merchant = {}
+    var mstore = {}
     try {
-        merchant = await db.collection("stores").doc(event.phone).get()
+        mstore = await db.collection("mstores").doc(event.storeID).get()
     }catch(e) {
         throw(e)
     }
 
-    return merchant
+    return mstore
 }

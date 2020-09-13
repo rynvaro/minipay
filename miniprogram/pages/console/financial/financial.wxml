@@ -7,8 +7,8 @@
         <text class="headerLine2Text">{{balance}}</text>
     </view>
     <view class="headerLine3">
-        <view class="headerLine3Button">
-            <text class="headerLine3ButtonText" bindtap="withdraw">提现</text>
+        <view class="headerLine3Button" bindtap="withdraw">
+            <text class="headerLine3ButtonText">提现</text>
         </view>
     </view>
 </view>

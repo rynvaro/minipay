@@ -1,13 +1,13 @@
 <!--miniprogram/pages/console/home/home.wxml-->
 
-<image mode="aspectFill" class="storeImage" wx:if="{{storeImage}}" src="{{storeImage}}"></image>
+<image mode="aspectFill" class="storeImage" wx:if="{{store.storeImages}}" src="{{store.storeImages[0]}}"></image>
 
 <view class="bizConsole">
     <view class="bizConsole1">
         <text class="bizConsole1Text">今日营业额（元）</text>
     </view>
     <view class="bizConsole2">
-        <text class="bizConsole2Text">{{data.dayBi}}</text>
+        <text class="bizConsole2Text">{{store.dayBi}}0</text>
     </view>
     <view class="bizConsole3">
         <view class="bizConsole3Item" bindtap="discount">
@@ -15,7 +15,7 @@
                 <text class="bizConsole3ItemUText">当前折扣率</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">{{data.discount.discountValue}}</text>
+                <text class="bizConsole3ItemDText">{{store.discount}}</text>
             </view>
         </view>
 

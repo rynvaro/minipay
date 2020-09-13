@@ -106,24 +106,33 @@ Page({
       title: '登录中...',
     })
 
+    let thiz = this
+
     wx.cloud.callFunction({
       name:"consoleLogin",
       data:{
-        phone: this.data.phone,
-        password: this.data.password
+        phone: thiz.data.phone,
+        password: thiz.data.password
       },
       success(res) {
         wx.hideLoading()
           console.log(res)
-          if (res.result.data) {
-            app.globalData.phone = res.result.data.phone
-          } else {
-            app.globalData.phone = res.result._id
+          if (res.result == -1) {
+            wx.showToast({
+              title: '商户不存在',
+            })
+            return
           }
-          
+          if (res.result == -2) {
+            wx.showToast({
+              title: '密码错误',
+            })
+            return
+          }
+          app.globalData.storeID = res.result._id
           wx.navigateTo({
             url: '../home/home'
-          })
+          })    
       },
       fail: function(e) {
         console.log(e.errMsg)

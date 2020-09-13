@@ -19,14 +19,14 @@
 
     <view wx:for="{{stores}}" wx:key="id" class="store" bindtap="store" data-id="{{item._id}}">
         <view class="storeL">
-            <image mode="aspectFill" class="storeLImage" src="{{item.data.data.productImage}}"></image>
+            <image mode="aspectFill" class="storeLImage" src="{{item.storeImages[0]}}"></image>
         </view>
         <view class="storeR">
             <view class="storeRBox">
                 <text class="storeRText1">{{item.data.data.storeName}}</text>
                 <view class="storeRText3">
                     <text class="storeRText3Item">{{item.data.data.merchantInfo}}</text>
-                    <text class="storeRText3Item">人均¥{{item.price}}</text>
+                    <text class="storeRText3Item">人均¥{{item.avgPrice}}</text>
                     <text class="storeRText3ItemLocation">{{item.distance}}</text>
                 </view>
                 <text class="storeRText4">营业时间 {{item.data.data.seTime}}</text>

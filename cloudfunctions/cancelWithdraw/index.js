@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
         await db.collection('withdraws').doc(event.id).update({
             data: {
                 status: 4,
-                updatedAt: new Date()
+                updatedAt: Date.parse(new Date())
             },
             success: res => {
                 console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)
@@ -28,12 +28,12 @@ exports.main = async (event, context) => {
 
         var withdrawHis = await db.collection("withdraws").doc(event.id).get()
 
-        merchant = await db.collection("merchants").doc(event.phone).get()
+        mstore = await db.collection("mstores").doc(event.storeID).get()
         // 更新余额 TODO 需要保证事务
-        await db.collection('merchants').doc(event.phone).update({
+        await db.collection('mstores').doc(event.storeID).update({
             data: {
-                balance: merchant.data.balance + withdrawHis.data.withdrawAmount,
-                updatedAt: new Date()
+                balance: mstore.data.balance + withdrawHis.data.withdrawAmount,
+                updatedAt: Date.parse(new Date()),
             },
             success: res => {
                 console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)

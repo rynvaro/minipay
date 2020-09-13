@@ -12,13 +12,13 @@ exports.main = async (event, context) => {
 
   let q = event.q
   let status = event.status
-  let phone = event.phone
+  let storeID = event.storeID
 
   const _ = db.command
 
   console.log(status == 0, status)
 
-  var where = _.and({storeId: _.eq(phone)})
+  var where = _.and({storeId: _.eq(storeID)})
   if (status != 0) {
     where = where.and({status: _.eq(parseInt(status))})
   }

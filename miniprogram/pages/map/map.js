@@ -14,8 +14,8 @@ Page({
     onLoad: function (options) {
       let store = JSON.parse(options.store)
       let marker  = {
-        latitude: store.location.latitude,
-        longitude: store.location.longitude,
+        latitude: store.latitude,
+        longitude: store.longitude,
       }
       this.setData({store: store,markers: [marker]})
     },
@@ -29,7 +29,7 @@ Page({
             latitude: thiz.data.markers[0].latitude,
             longitude: thiz.data.markers[0].longitude,
             name: thiz.data.store.storeName,
-            address: thiz.data.store.location.address,
+            address: thiz.data.store.address,
           })
           // console.log(res)
           // let pointFrom = {

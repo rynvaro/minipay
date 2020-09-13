@@ -62,72 +62,52 @@ Page({
     })
 
     let thiz = this
-    var promise = new Promise(function (resolve, reject) {
-        wx.cloud.callFunction({
-            name:"hasPermission",
+    wx.cloud.callFunction({
+      name:"validateCode",
+      data: {
+        code: thiz.data.code,
+        codeID: thiz.data.codeID,
+      },
+      success(res) {
+          console.log(res)
+          wx.cloud.callFunction({
+            name:"resetPassword",
             data: {
               phone: thiz.data.phone,
-            },
-            success(res) {
-                console.log("----xx-",res)
-                resolve(resolve,true)
-            },
-            fail: function(e) {
-              console.log(e)
-              resolve(resolve,false)
-            }
-        })
-      });
-
-      promise.then(function(hasPermission) {
-        if (!hasPermission){
-          wx.hideLoading()
-          wx.showToast({
-            title: '没有权限',
-          })
-        } else {
-          wx.cloud.callFunction({
-            name:"validateCode",
-            data: {
-              code: thiz.data.code,
-              codeID: thiz.data.codeID,
+              password: thiz.data.password,
             },
             success(res) {
                 console.log(res)
-                wx.cloud.callFunction({
-                  name:"resetPassword",
-                  data: {
-                    phone: thiz.data.phone,
-                    password: thiz.data.password,
-                  },
-                  success(res) {
-                      console.log(res)
-                      wx.showToast({
-                        title: '重置成功',
-                        success: function(){
-                          setTimeout(function(){wx.navigateBack()},500)
-                        }
-                      })
-                  },
-                  fail: function(e) {
-                      console.log(e)
-                      wx.showToast({
-                        title: '重置失败',
-                      })
+                if (res.result == -1) {
+                  wx.showToast({
+                    title: '该手机号不存在',
+                  })
+                  return
+                }
+                wx.showToast({
+                  title: '重置成功',
+                  success: function(){
+                    setTimeout(function(){wx.navigateBack()},500)
                   }
-              })
-
+                })
             },
             fail: function(e) {
-              console.log(e)
-              wx.hideLoading()
-              wx.showToast({
-                title: '验证码错误',
-              })
+                console.log(e)
+                wx.showToast({
+                  title: '重置失败',
+                })
             }
         })
-        }
-      });
+
+      },
+      fail: function(e) {
+        console.log(e)
+        wx.hideLoading()
+        wx.showToast({
+          title: '验证码错误',
+        })
+      }
+  })
 
 
   },
@@ -146,79 +126,51 @@ Page({
     })
 
     let thiz = this
-    var promise = new Promise(function (resolve, reject) {
-        wx.cloud.callFunction({
-            name:"hasPermission",
-            data: {
-              phone: thiz.data.phone,
-            },
-            success(res) {
-                console.log(res)
-                resolve(true)
-            },
-            fail: function(e) {
-              console.log(e.errMsg)
-              resolve(false)
-            }
-        })
-    });
-
-    promise.then(function(hasPermission){
-      console.log("has permission: ", hasPermission)
-      if (!hasPermission) {
-        wx.hideLoading()
-        wx.showToast({
-          title: '没有权限',
-        })
-      } else {
-        if (thiz.data.sendSMSClicked) {
-          return 
-        }
-        thiz.setData({
-          sendSMSClicked: true,
-        })
-
-        thiz.setData({
-          label: thiz.data.seconds + '秒'
-        });
-
-        wx.showLoading({
-          title: '发送中...',
-        })
-
-        // 启动以1s为步长的倒计时
-      var interval = setInterval(() => {
-          countdown(thiz);
-      }, 1000);
-      // 停止倒计时
-      setTimeout(function() {
-          clearInterval(interval);
-      }, thiz.data.seconds * 1000);
-    
-      wx.cloud.callFunction({
-        name:"sendSMS",
-        data: {
-          phone: thiz.data.phone,
-        },
-        success(res) {
-          console.log(res)
-          thiz.setData({
-            codeID: res.result._id
-          })
-          wx.hideLoading()
-          wx.showToast({
-            title: '已发送',
-          })
-        },
-        fail: function(e) {
-          console.log(e.errMsg)
-          wx.hideLoading()
-        }
+    if (thiz.data.sendSMSClicked) {
+        return 
+      }
+      thiz.setData({
+        sendSMSClicked: true,
       })
 
+      thiz.setData({
+        label: thiz.data.seconds + '秒'
+      });
+
+      wx.showLoading({
+        title: '发送中...',
+      })
+
+      // 启动以1s为步长的倒计时
+    var interval = setInterval(() => {
+        countdown(thiz);
+    }, 1000);
+    // 停止倒计时
+    setTimeout(function() {
+        clearInterval(interval);
+    }, thiz.data.seconds * 1000);
+
+    wx.cloud.callFunction({
+      name:"sendSMS",
+      data: {
+        phone: thiz.data.phone,
+      },
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          codeID: res.result._id
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '已发送',
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+        wx.hideLoading()
       }
     })
-    
+
   },
 
   /**

@@ -28,7 +28,7 @@ Page({
             value: 0,
           }
         },
-        merchantID: '',
+        storeID: '',
         payby: 1, // 1 wechat 2 balance
         mustPayment: 0.00,
     },
@@ -81,8 +81,7 @@ Page({
       wx.cloud.callFunction({
           name:"zdorderpay",
           data: {
-            merchantID: thiz.data.merchantID,
-            storeID: thiz.data.merchantID,
+            storeID: thiz.data.storeID,
             payAmount: thiz.data.payAmount,
             mustPayAmount: thiz.data.mustPayment,
             couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
@@ -126,7 +125,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-      this.setData({merchantID: options.merchantID})
+      this.setData({storeID: options.storeID})
       wx.showLoading({
         title: 'loading...',
       })
@@ -135,8 +134,7 @@ Page({
       wx.cloud.callFunction({
           name:"zrebuildorder",
           data: {
-            merchantID: options.merchantID,
-            storeID: options.merchantID,
+            storeID: options.storeID,
           },
           success(res) {
               console.log(res)
@@ -242,8 +240,7 @@ Page({
                         wx.cloud.callFunction({
                           name:"zdorderpay",
                           data: {
-                            merchantID: thiz.data.merchantID,
-                            storeID: thiz.data.merchantID,
+                            storeID: thiz.data.storeID,
                             payAmount: thiz.data.payAmount,
                             couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
                             password: e.detail,

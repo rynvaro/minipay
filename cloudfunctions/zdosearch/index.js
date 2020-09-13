@@ -93,16 +93,16 @@ exports.main = async (event, context) => {
             viplevel = 3
         }
 
-        result = await db.collection("stores").where(db.command.or(
+        result = await db.collection("mstores").where(db.command.or(
             [
               {
-                'data.data.storeName': {
+                storeName: {
                   $regex: '.*' + event.q,
                   $options: 'i'
                 }
               },
               {
-                desc: {
+                storeDesc: {
                   $regex: '.*' + event.q,
                   $options: 'i'
                 }
@@ -111,9 +111,8 @@ exports.main = async (event, context) => {
           )).get()
 
         for (var i = 0; i < result.data.length; i++){
-            let dis = distance(result.data[i].data.data.location.latitude,result.data[i].data.data.location.longitude,lat,lon)
+            let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)
             result.data[i].distance = dis.toFixed(2)+'km'
-            result.data[i].price = 23.8 // TODO
         }
         result.viplevel = viplevel
 

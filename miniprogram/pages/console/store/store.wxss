@@ -58,6 +58,9 @@ page {
     border-radius: 5rpx;
     color: #999999;
     font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -112,4 +115,31 @@ page {
     color: rgb(235, 221, 221);
     border-radius: 20rpx;
     background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+}
+
+.startTime {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.endTime {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settingItemRDesc {
+    margin-left: 20rpx;
+    width: 400rpx;
+    height: 160rpx;
+	min-height: 0.8rem;
+    background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
+    border-radius: 5rpx;
+    color: #999999;
+    font-size: small;
 }
