@@ -18,8 +18,8 @@ exports.main = async (event, context) => {
         const userData = await db.collection('users').doc(wxContext.OPENID).get()
         let user = userData.data.data
 
-        let date = new Date(userData.data.createAt)
-        date.setDate(date.getDate() + 7)
+        let date = new Date(userData.data.createdAt)
+        date.setDate(date.getDate() + 3)
         let now = new Date()
 
         let isNew = false
@@ -34,6 +34,8 @@ exports.main = async (event, context) => {
         if (user.signDate != 0 && formatDate(signDate) < formatDate(now)) {
             terminated = true
         }
+        
+        console.log(isNew,terminated)
 
         if (isNew && signconf.onSale && !terminated) {
             result.confs = signconf.onSaleConfs

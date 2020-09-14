@@ -12,5 +12,33 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    return await db.collection('mstores').orderBy('createdAt','desc').get()
+    let tp = event.tp 
+    let q = event.q
+
+    if (tp == 1) {
+        return await db.collection('mstores').doc(event.id).get()
+    }
+
+
+    let where = {}
+    if (q) {
+        where = db.command.or(
+            [
+                {
+                storeName: {
+                    $regex: '.*' + event.q,
+                    $options: 'i'
+                }
+                },
+                {
+                storeDesc: {
+                    $regex: '.*' + event.q,
+                    $options: 'i'
+                }
+                }
+            ]
+        )
+    }
+
+    return await db.collection('mstores').where(where).orderBy('createdAt','desc').get()
 }

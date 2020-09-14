@@ -19,8 +19,8 @@ exports.main = async (event, context) => {
           data: {
               _id: wxContext.OPENID,
               data: event,
-              createAt: Date.parse(new Date()),
-              updateAt: Date.parse(new Date()),
+              createdAt: Date.parse(new Date()),
+              updatedAt: Date.parse(new Date()),
               inviteCode: inviteCode,
               payPassword: payPassword,
 

@@ -47,7 +47,7 @@ exports.main = async (event, context) => {
             data: event.data,
             inviteCode: event.inviteCode,
             payPassword: event.payPassword,
-            updateAt: Date.parse(new Date())
+            updatedAt: Date.parse(new Date())
         },
         success: res => {
             console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)

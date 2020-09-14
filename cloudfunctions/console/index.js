@@ -18,6 +18,39 @@ exports.main = async (event, context) => {
     }catch(e) {
         return e
     }
+
+    let id = event.id
+    // update
+    if (id) {
+        delete event.id
+        event.updatedAt = Date.parse(new Date())
+        event.geoPoint = db.Geo.Point(event.longitude, event.latitude)
+        let bannerVideos = []
+        let bannerImages = []
+        for (var i = 0; i<event.banners.length; i++) {
+            if (event.banners[i].isVideo) {
+                bannerVideos.push(event.banners[i])
+            }else {
+                bannerImages.push(event.banners[i])
+            }
+        }
+        let banners = bannerVideos.concat(bannerImages)
+        event.banners = banners
+
+        await db.collection('mstores').doc(id).update({
+            data: event,
+            success: res => {
+                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            },
+            fail: err => {
+                console.error('[数据库] [新增记录] 失败：', err)
+                throw(err)
+            }
+        })
+        return
+    }
+
+
     event.balance = 0
     event.orders = 0
     event.password = ''

@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
             return 2 // 今日已签到
         }
 
-        let date = new Date(user.data.data.createAt)
+        let date = new Date(user.data.data.createdAt)
         date.setDate(date.getDate() + 7)
         let isNew = false
         // 新用户
