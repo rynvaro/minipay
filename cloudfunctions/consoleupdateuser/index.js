@@ -29,6 +29,17 @@ exports.main = async (event, context) => {
         })
     }
 
+    if (event.data.exp <=1000) {
+        event.data.exp = 1
+        event.data.expTotal = 1000
+    }else if (event.data.exp > 1000) {
+        event.data.level = 2
+        event.data.expTotal = 10000
+    }else if (event.data.exp > 10000) {
+        event.level = 3
+        event.data.expTotal = 10000
+    }
+
     let id = event._id 
     return await db.collection('users').doc(id).update({
         data: {

@@ -65,6 +65,7 @@ Page({
     },
 
     onLoad: function(e) {
+      
     },
 
     setPhone: function(e) {
@@ -285,7 +286,7 @@ Page({
                   let p2v = 0
                   if (user.level == 1) {
                     p1v = user.exp/1000*100
-                  }else if (user.level == 1) {
+                  }else if (user.level == 2) {
                       p1v = 100
                       p2v = user.exp/9000*100
                   }else if (user.level == 3) {
@@ -302,7 +303,7 @@ Page({
                   // if (user.isFirstPay) {
                   //   redpackShow = true
                   // }
-
+                  app.globalData.viplevel = user.level
                   thiz.setData({
                       user: user,
                       p1v: p1v,

@@ -32,7 +32,7 @@ exports.main = async (event, context) => {
 
         // 0 是附近商家
         if (storeType != 0) {
-            var where =_.and({storeType: _.eq(parseInt(storeType))})
+            var where =_.and({storeType: _.eq(storeType)})
             if (isGeo) {
                 where = where.and({
                     geoPoint: _.geoNear({

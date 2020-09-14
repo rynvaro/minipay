@@ -21,12 +21,24 @@ exports.main = async (event, context) => {
     event.balance = 0
     event.orders = 0
     event.password = ''
-    event.avgPrice = 0 // TODO 更新订单时候 更新
+    event.avgPrice = 0
     event.openid = '',
     event.createdAt = Date.parse(new Date())
     event.updatedAt = Date.parse(new Date())
 
     event.geoPoint = db.Geo.Point(event.longitude, event.latitude)
+
+    let bannerVideos = []
+    let bannerImages = []
+    for (var i = 0; i<event.banners.length; i++) {
+        if (event.banners[i].isVideo) {
+            bannerVideos.push(event.banners[i])
+        }else {
+            bannerImages.push(event.banners[i])
+        }
+    }
+    let banners = bannerVideos.concat(bannerImages)
+    event.banners = banners
 
     await db.collection('mstores').add({
         data: event,

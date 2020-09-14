@@ -31,12 +31,12 @@ exports.main = async (event, context) => {
         }
 
 
-        let exp = user.data.data.exp
+        let level = user.data.data.level
 
         let delta = 0.0
-        if ( exp < 1000 ) {
+        if ( level == 1 ) {
             delta = 0.5
-        }else if (exp >= 1000 && exp <10000) {
+        }else if (level == 2) {
             delta = 0.3
         }
 
@@ -162,12 +162,12 @@ exports.main = async (event, context) => {
         }
 
         let exp = user.data.data.exp + parseInt(totalAmount/10)
-        let level = 1
+        let newLevel = 1
         if (exp > 1000) {
-            level = 2
+            newLevel = 2
         }
         if (exp > 10000) {
-            level = 3
+            newLevel = 3
         }
 
         await db.collection('users').doc(wxContext.OPENID).update({
@@ -176,7 +176,7 @@ exports.main = async (event, context) => {
                     balance: balance,
                     point: user.data.data.point + parseInt(totalAmount/10),
                     exp: exp,
-                    level: level,
+                    level: newLevel,
                     payTimes: user.data.data.payTimes + 1,
                     isFirstPay: isFirstPay,
                 }

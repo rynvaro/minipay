@@ -59,30 +59,17 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success (res) {
-        console.log(res)
         app.globalData.location = res
         wx.showLoading({
           title: 'loading...',
         })
-        wx.cloud.callFunction({
-            name:"zplates",
-            data: {
-              lat: res.latitude,
-              lon: res.longitude
-            },
-            success(res) {
-                wx.hideLoading()
-                console.log(res)
-                thiz.setData({
-                    plates: res.result.plates,
-                    internalPlates: res.result.internalPlates,
-                })
-            },
-            fail: function(e) {
-              wx.hideLoading()
-              console.log(e)
-            }
+        listPlates(thiz,res.latitude,res.longitude)
+      },
+      fail(res) {
+        wx.showLoading({
+          title: 'loading...',
         })
+        listPlates(thiz,0,0)
       }
     })
   },
@@ -122,3 +109,25 @@ Page({
 
   }
 })
+
+function listPlates(thiz,lat,lng) {
+  wx.cloud.callFunction({
+    name:"zplates",
+    data: {
+      lat: lat,
+      lon: lng,
+      level: app.globalData.viplevel,
+    },
+    success(res) {
+      console.log(res)
+        wx.hideLoading()
+        thiz.setData({
+            plates: res.result.plates,
+            internalPlates: res.result.internalPlates,
+        })
+    },
+    fail: function(e) {
+      wx.hideLoading()
+    }
+})
+}

@@ -11,6 +11,7 @@
         </view>
         <view class="searchInput" bindconfirm="search"></view>
     </view>
+    <image class="headerBG" src="../../images/bg/home_header_bg.png"></image>
 </view>
 
 <view class="tabs">
