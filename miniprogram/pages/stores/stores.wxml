@@ -9,7 +9,7 @@
         <text class="tabText" style="color: {{tabColors[1]}}; font-size: {{tabFontSizes[1]}}" bindtap="onTabClick" data-id="1" data-orderType="2">最新商家</text>
         <view class="tabUnderLine" hidden="{{!tabSelected[1]}}"></view>
     </view>
-    <view class="tab">
+    <view class="tab" hidden="{{hidden}}">
         <text class="tabText" style="color: {{tabColors[2]}}; font-size: {{tabFontSizes[2]}}" bindtap="onTabClick" data-id="2" data-orderType="0">附近商家</text>
         <view class="tabUnderLine" hidden="{{!tabSelected[2]}}"></view>
     </view>
@@ -36,25 +36,42 @@
                             <image wx:if="{{vipLevel == 1}}" class="viprightsTinyBoxUIcon" src="../../images/v1StarFilled.png"></image>
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v1Star.png"></image>
                         </view>
-                        <text class="viprightsTinyBoxD">95折</text>
+                         <block wx:if="{{item.discount>9}}">
+                            <text class="viprightsTinyBoxD">{{item.discount}}折</text>
+                        </block>
+                        <block wx:else>
+                            <text class="viprightsTinyBoxD">{{item.discount + 0.5}}折</text>
+                        </block>
                     </view>
                     <view class="viprightsTinyBox">
                         <view class="viprightsTinyBoxU">
                             <image wx:if="{{vipLevel == 2}}" class="viprightsTinyBoxUIcon" src="../../images/v2StarFilled.png"></image>
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v2Star.png"></image>
                         </view>
-                        <text class="viprightsTinyBoxD">9折</text>
+                        <block wx:if="{{item.discount>9}}">
+                            <text class="viprightsTinyBoxD">{{item.discount}}折</text>
+                        </block>
+                        <block wx:else>
+                            <text class="viprightsTinyBoxD">{{item.discount + 0.3}}折</text>
+                        </block>
                     </view>
                     <view class="viprightsTinyBox">
                         <view class="viprightsTinyBoxU">
                             <image wx:if="{{vipLevel == 3}}" class="viprightsTinyBoxUIcon" src="../../images/v3StarFilled.png"></image>
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v3Star.png"></image>
                         </view>
-                        <text class="viprightsTinyBoxD">8折</text>
+                        <text class="viprightsTinyBoxD">{{item.discount}}折</text>
                     </view>
                     <view class="viprightsBGLine"></view>
                 </view>
-                <text class="storeRText5">当前为V{{vipLevel}}会会员，享{{vipDiscount}}买单</text>
+                <block wx:if="{{item.discount > 9}}">
+                    <text class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount}}买单</text>
+                </block>
+                <block wx:else >
+                    <text wx:if="{{vipLevel == 1}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount + 0.5}}买单</text>
+                    <text wx:if="{{vipLevel == 2}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount + 0.3}}买单</text>
+                    <text wx:if="{{vipLevel == 3}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount}}买单</text>
+                </block>
             </view>
         </view>
     </view>

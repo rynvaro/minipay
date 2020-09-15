@@ -13,8 +13,7 @@ exports.main = async (event, context) => {
     let lon = event.lon
 
     let result = {}
-
-    let viplevel = 1
+    
     try {
 
         const hisSearch = await db.collection('his_searchs').where({openid: wxContext.OPENID, q: event.q}).get()
@@ -83,10 +82,6 @@ exports.main = async (event, context) => {
           })
         }
 
-        
-
-        const user = await db.collection('users').doc(wxContext.OPENID).get()
-
         result = await db.collection("mstores").where(db.command.or(
             [
               {
@@ -108,7 +103,6 @@ exports.main = async (event, context) => {
             let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)
             result.data[i].distance = dis.toFixed(2)+'km'
         }
-        result.viplevel = user.data.data.level
 
     }catch(e) {
         throw(e)

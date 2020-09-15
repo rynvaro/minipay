@@ -10,7 +10,7 @@
   <view class="detailItem">
     <text class="detailItemKey">金额</text>
     <view class="detailItemValue">
-      <input class="paymentInput" type="number" placeholder="输入金额" style="text-align:center" bindinput="setPayment"></input>
+      <input class="paymentInput" type="digit" placeholder="输入金额" style="text-align:center" bindinput="setPayment"></input>
       <text class="paymentText">元</text>
     </view>
   </view>
@@ -41,7 +41,7 @@
   <view class="detailItem">
     <text class="detailItemKey">不参与优惠金额</text>
     <view class="detailItemValue">
-      <input class="paymentInput" type="number" placeholder="0.00" style='text-align:center' bindinput="setMustPayment"></input>
+      <input class="paymentInput" type="digit" placeholder="0.00" style='text-align:center' bindinput="setMustPayment"></input>
       <text class="paymentText">元</text>
     </view>
   </view>

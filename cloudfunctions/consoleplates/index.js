@@ -12,11 +12,40 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     let tp = event.tp
 
+
+    // 新增
+    if (tp == 1) {
+        delete event.tp
+        const result = await db.collection('plates').add({
+            data: {
+                image: event.image,
+                title: event.title,
+                index: event.index,
+                items: [],
+            },
+            success: res => {
+                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+              },
+              fail: err => {
+                console.error('[数据库] [新增记录] 失败：', err)
+                throw(err)
+              }
+            })
+        result.image = event.image
+        result.index = event.index
+        result.title = event.title
+        result.items =[]
+        return result
+    }
+
+    // 更新
     if (tp == 2) {
-        
     let id = event._id 
     return await db.collection('plates').doc(id).update({
         data: {
+            linkTo: event.linkTo,
+            title: event.title,
+            index: event.index,
             image: event.image,
             items: event.items,
         },
@@ -28,6 +57,11 @@ exports.main = async (event, context) => {
             throw(err)
           }
         })
+    }
+
+    // get
+    if (tp == 3) {
+        return await db.collection('plates').doc(event._id).get()
     }
 
     return await db.collection('plates').get()

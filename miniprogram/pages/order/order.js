@@ -8,6 +8,7 @@ var animation = animation = wx.createAnimation({
     delay: 0
 })
 animation.translateY(moveY + 'vh').step();
+const app = getApp()
 Page({
 
     /**
@@ -135,6 +136,7 @@ Page({
           name:"zrebuildorder",
           data: {
             storeID: options.storeID,
+            level: app.globalData.viplevel,
           },
           success(res) {
               console.log(res)

@@ -78,7 +78,7 @@ exports.main = async (event, context) => {
             couponId: couponID,
             openid: wxContext.OPENID,
             storeName: store.data.storeName,
-            productImage: store.data.productImages[0],
+            productImage: store.data.storeImages[0],
             payAmount: payAmount,
             realDiscount: realDiscount,
             rebate: rebate,
@@ -230,6 +230,7 @@ exports.main = async (event, context) => {
         // }
         
         orders = store.data.orders
+        let avgPrice = store.data.avgPrice
         if (orders == 0) {
             avgPrice = parseFloat(totalAmount)
         }else {

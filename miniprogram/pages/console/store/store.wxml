@@ -31,7 +31,7 @@
 
         <view class="settingItem">
             <text class="settingItemL">银行卡号</text>
-            <input bindinput="setCardNumber" type="number" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantBankCard}}"></input>
+            <input bindinput="setCardNumber" type="digit" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantBankCard}}"></input>
         </view>
 
         <view class="settingItem">

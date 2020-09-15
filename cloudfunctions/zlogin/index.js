@@ -14,9 +14,10 @@ exports.main = async (event, context) => {
     try {
         result = await db.collection("users").doc(wxContext.OPENID).get()
 
-        const redpacks = await db.collection('redpacks').get()
-        redpack = redpacks.data[0]
-        result.redpackValue = redpack.value
+        // const redpacks = await db.collection('redpacks').get()
+        // redpack = redpacks.data[0]
+        // result.redpackValue = redpack.value
+        result.redpackValue = 500
     } catch(e) {
         throw(e)
     }

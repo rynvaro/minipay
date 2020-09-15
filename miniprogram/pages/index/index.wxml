@@ -163,7 +163,7 @@
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">手机号</text>
-    <input class="moreInfoItemR" type="number" bindinput="setPhone"></input>
+    <input class="moreInfoItemR" type="digit" bindinput="setPhone"></input>
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">验证码</text>
@@ -174,7 +174,7 @@
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">邀请码</text>
-    <input class="moreInfoItemR" type="number" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"  bindinput="setInviteCode"></input>
+    <input class="moreInfoItemR" type="digit" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"  bindinput="setInviteCode"></input>
   </view>
   <view class="moreInfoButtonBox">
     <button class="moreInfoButton" bindtap="submit">提交</button>

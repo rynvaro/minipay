@@ -16,7 +16,9 @@
 
 <view class="line1">
     <text class="storeName">{{store.storeName}}</text>
-    <text class="storeDiscount">{{discount}}折</text>
+    <text wx:if="{{viplevel == 1}}" class="storeDiscount">{{v1discount}}折</text>
+    <text wx:if="{{viplevel == 2}}" class="storeDiscount">{{v2discount}}折</text>
+    <text wx:if="{{viplevel == 3}}" class="storeDiscount">{{v3discount}}折</text>
     <view class="buyButton" bindtap="order">折扣买单</view>
 </view>
 

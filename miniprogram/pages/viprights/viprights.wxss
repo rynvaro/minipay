@@ -90,8 +90,32 @@ page {
     justify-content: center;
 }
 
+.tipsBox {
+    width: 100%;
+    height: 30rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .cardLine3Text {
-    width: 80%;
+    width: 90%;
+    margin-left: 5rpx;
     font-size: x-small;
+    display: flex;
+    align-items: center;
     color: white;
+}
+
+.iconBox {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    height: 20rpx;
+    width: 20rpx;
 }

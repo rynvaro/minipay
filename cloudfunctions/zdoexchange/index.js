@@ -20,8 +20,6 @@ exports.main = async (event, context) => {
 
         coupon = coupons.data[0].coupons[couponId-1]
 
-        console.log(coupon)
-
         if (coupon.point * cnt >user.point) {
             throw(e)
         }

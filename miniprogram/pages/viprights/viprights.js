@@ -1,6 +1,7 @@
 // miniprogram/pages/viprights/viprights.js
 const defaultH = '300rpx'
 const toggledH = '600rpx'
+const app = getApp()
 Page({
     /**
      * 页面的初始数据
@@ -52,6 +53,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
+        this.setData({level: app.globalData.viplevel})
         wx.showLoading({
             title: 'loading...',
           })
@@ -62,8 +64,7 @@ Page({
                   wx.hideLoading()
                   console.log(res)
                   thiz.setData({
-                      level: res.result.level,
-                      cards: res.result.viprights,
+                      cards: res.result.data,
                   })
               },
               fail: function(e) {

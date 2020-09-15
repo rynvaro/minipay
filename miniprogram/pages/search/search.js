@@ -37,7 +37,7 @@ Page({
         success(res) {
             wx.hideLoading()
             console.log(res)
-            thiz.setData({stores: res.result.data, vipLevel: res.result.viplevel, hotShow: false})
+            thiz.setData({stores: res.result.data, hotShow: false})
             thiz.onShow()
         },
         fail: function(e) {
@@ -73,7 +73,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude}})
+    this.setData({vipLevel: app.globalData.viplevel, point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude}})
   },
 
   /**

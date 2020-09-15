@@ -12,6 +12,6 @@
     </block>
   </view>
   <!-- 隐藏的输入框 -->
-  <input type="number" password="{{true}}" value="{{currentValue}}" class='hidden-input' maxlength="{{inputLength}}" focus="{{inputFocus}}" bindinput="_setCurrentValue"></input>
+  <input type="digit" password="{{true}}" value="{{currentValue}}" class='hidden-input' maxlength="{{inputLength}}" focus="{{inputFocus}}" bindinput="_setCurrentValue"></input>
 </view>
 

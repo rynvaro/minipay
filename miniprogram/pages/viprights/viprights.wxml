@@ -28,13 +28,43 @@
     </view>
 
     <view class="cardLine3">
-        <block wx:if="{{item.tips.length > 2 && !toggles[item.id]}}">
-            <text class="cardLine3Text">{{item.tips[0]}}</text>
-            <text class="cardLine3Text" bindtap="toggle" data-id="{{item.id}}">{{item.tips[1]}} >>></text>
+        <block wx:if="{{item.tips.length > 4 && !toggles[item.id]}}">
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[0]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[1]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[2]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text" bindtap="toggle" data-id="{{item.id}}">{{item.tips[3]}} >>></text>
+            </view>
         </block>
         <block wx:else>
             <block wx:for="{{item.tips}}" wx:key="id">
-                <text class="cardLine3Text">{{item}}</text>
+                <view class="tipsBox">
+                    <view class="iconBox">
+                        <image class="icon" src="../../images/star.png"></image>
+                    </view>
+                    <text class="cardLine3Text">{{item}}</text>
+                </view>
             </block>
         </block>
     </view>

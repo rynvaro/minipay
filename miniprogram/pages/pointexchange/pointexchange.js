@@ -1,4 +1,5 @@
 // miniprogram/pages/pointexchange/pointexchange.js
+const app = getApp()
 Page({
 
     /**
@@ -34,6 +35,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      console.log(app.globalData)
+      this.setData({viplevel: app.globalData.viplevel})
         wx.showLoading({
           title: 'loading...',
         })
@@ -46,7 +49,6 @@ Page({
                   thiz.setData({
                       coupons: res.result.data.coupons,
                       bannerUrls: res.result.data.banners,
-                      viplevel: res.result.viplevel,
                   })
               },
               fail: function(e) {

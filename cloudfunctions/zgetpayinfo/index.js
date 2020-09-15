@@ -15,8 +15,6 @@ const subMchId = "1601917642"
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  console.log("event is: ",event)
-
   let id = (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
   let nonceStr = (Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)).substr(0,32).toUpperCase()
   let depositAmount = event.depositAmount*100
@@ -40,10 +38,6 @@ exports.main = async (event, context) => {
       throw(e)
     }
   })
-
-  console.log("deposit is: ",deposit)
-
-  console.log("evn is: ",cloud.DYNAMIC_CURRENT_ENV)
 
   const res = await cloud.cloudPay.unifiedOrder({
     "body" : body,

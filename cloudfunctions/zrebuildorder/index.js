@@ -10,20 +10,18 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
     let storeID = event.storeID
+    let viplevel = event.level
 
     var result = {}
 
     try {
         const store = await db.collection('mstores').doc(storeID).get()
-        const user = await db.collection('users').doc(wxContext.OPENID).get()
-
-        let exp = user.data.data.exp
 
         let delta = 0.0
         if (store.data.discount <=9) {
-            if ( exp < 1000 ) {
+            if ( viplevel == 1 ) {
                 delta = 0.5
-            }else if (exp >= 1000 && exp <10000) {
+            }else if ( viplevel == 2) {
                 delta = 0.3
             }
         }

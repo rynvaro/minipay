@@ -1,4 +1,5 @@
 // miniprogram/pages/store/store.js
+const app = getApp()
 Page({
 
     /**
@@ -18,7 +19,6 @@ Page({
       v1discount: 0,
       v2discount: 0,
       v3discount: 0,
-      discount: 0,
       viplevel: 1,
     },
 
@@ -53,21 +53,31 @@ Page({
         },
         success(res) {
             console.log(res)
+
+            let store = res.result.data
             let autoPlay = true
-            for (var i = 0;i < res.result.banners.length; i++) {
-                if (res.result.banners[i].isVideo) {
+            for (var i = 0;i < store.banners.length; i++) {
+                if (store.banners[i].isVideo) {
                   autoPlay = false
                 }
             }
+
+            let v1discount = store.discount
+            let v2discount = store.discount
+            let v3discount = store.discount
+            if (store.discount <=9 ) {
+              v1discount = store.discount + 0.5
+              v2discount = store.discount + 0.3
+            }
+
             thiz.setData({
               autoplay: autoPlay,
-              store: res.result.store,
-              v1discount: res.result.v1discount,
-              v2discount: res.result.v2discount,
-              v3discount: res.result.v3discount,
-              discount: res.result.discount,
-              viplevel: res.result.viplevel,
-              bannerUrls: res.result.banners,
+              store: store,
+              v1discount: v1discount,
+              v2discount: v2discount,
+              v3discount: v3discount,
+              viplevel: app.globalData.viplevel,
+              bannerUrls: store.banners,
             })
             wx.hideLoading()
         },

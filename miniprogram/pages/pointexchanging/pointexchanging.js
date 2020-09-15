@@ -67,6 +67,7 @@ Page({
 
         wx.showLoading({
           title: 'loading...',
+          mask: true,
         })
 
         let thiz = this

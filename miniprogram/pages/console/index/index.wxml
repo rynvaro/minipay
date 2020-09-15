@@ -11,7 +11,7 @@
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/phone.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" type="number" placeholder="输入手机号" bindinput="setPhone"></input>
+            <input class="inputViewUpInput" type="digit" placeholder="输入手机号" bindinput="setPhone"></input>
           </view>
           <view class="inputViewDown"></view>
         </view>

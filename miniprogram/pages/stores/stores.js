@@ -20,10 +20,9 @@ Page({
       storeType: 1, // 店铺类型：1 餐饮 2 娱乐
       point: {lat: 0, lon: 0},
 
-      vipLevel: 3,
-      vipDiscount: 8,
-
-      stores: []
+      vipLevel: 1,
+      stores: [],
+      hidden: false,
   },
 
   search: function(e) {
@@ -77,22 +76,34 @@ Page({
    */
   onLoad: function (options) {
     let title = '附近商家'
-    if (options.storeType==1) {
+    let storeType = 0
+    let hidden = false
+    if (options.storeType=="4") {
       title="食在上饶"
+      storeType = 1
     }
-    if (options.storeType==1){
+    if (options.storeType=="5"){
         title="玩乐途游"
+        storeType = 2
     }
+    if (options.storeType == "6") {
+      hidden = true
+    }
+
     wx.setNavigationBarTitle({
       title: title,
     })
 
-    this.setData({storeType: options.storeType})
-    this.setData({point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude}})
-      wx.showLoading({
-          title: 'loading...',
-      })
-      listStores(this,1,false,'',false)
+    this.setData({
+      storeType: storeType, 
+      vipLevel: app.globalData.viplevel, 
+      hidden: hidden,
+      point: {lat: app.globalData.location.latitude,lon: app.globalData.location.longitude},
+    })
+    wx.showLoading({
+        title: 'loading...',
+    })
+    listStores(this,1,false,'',false)
   },
 
   /**
@@ -173,7 +184,7 @@ function listStores(thiz, orderType, isSearch, q, isGeo){
       },
       success(res) {
           console.log(res)
-          thiz.setData({stores: res.result.data, vipLevel: res.result.viplevel})
+          thiz.setData({stores: res.result.data})
           wx.hideLoading()
       },
       fail: function(e) {

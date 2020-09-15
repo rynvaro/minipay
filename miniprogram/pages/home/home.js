@@ -9,7 +9,6 @@ Page({
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navBarHeight,
     plates: [],
-    internalPlates: [],
   },
 
   /**
@@ -26,9 +25,17 @@ Page({
   },
 
   plates: function(e) {
-    wx.navigateTo({
-      url: '../plates/plates?plateID=' + e.currentTarget.dataset.id,
-    })
+    console.log(e)
+    let to = e.currentTarget.dataset.to
+    if (to == "1" || to == "2" || to == "3") {
+      wx.navigateTo({
+        url: '../plates/plates?plateID=' + e.currentTarget.dataset.id,
+      })
+    }else if (to == "4" || to == "5" || to == "6") {
+      wx.navigateTo({
+        url: '../stores/stores?storeType='+e.currentTarget.dataset.id,
+      })
+    }
   },
 
   stores: function(e) {
@@ -122,11 +129,11 @@ function listPlates(thiz,lat,lng) {
       console.log(res)
         wx.hideLoading()
         thiz.setData({
-            plates: res.result.plates,
-            internalPlates: res.result.internalPlates,
+            plates: res.result.data,
         })
     },
     fail: function(e) {
+      console.log(e)
       wx.hideLoading()
     }
 })

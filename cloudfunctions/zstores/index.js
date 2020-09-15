@@ -7,29 +7,19 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    const wxContext = cloud.getWXContext()
     const _ = db.command
 
-    let q = event.q
-    let isSearch = event.isSearch // 是否是搜索
     let storeType = event.storeType // 商户类型：1 餐饮 2 娱乐
-    let orderType = event.orderType // 排名类型：1 按照人气 2 按照时间
+    let orderType = parseInt(event.orderType) // 排名类型：1 按照人气 2 按照时间
     let isGeo = event.isGeo // 是否按照附近商家查找
     let lat = event.lat
     let lon = event.lon
 
+    console.log("event is: ",event)
+
     let result = {}
     
-    let viplevel = 1
     try {
-        const user = await db.collection('users').doc(wxContext.OPENID).get()
-        let exp = user.data.data.exp
-        if (exp > 1000 && exp <10000) {
-            viplevel = 2
-        }else if (exp >=10000) {
-            viplevel = 3
-        }
-
         // 0 是附近商家
         if (storeType != 0) {
             var where =_.and({storeType: _.eq(storeType)})
@@ -62,15 +52,10 @@ exports.main = async (event, context) => {
             }).orderBy(orderBy,'desc').get()
         }
 
-        // if (q != '') {
-        //     where = where.and({title: db.RegExp({regexp: '.*'+q +'.*', options: 1})})
-        // }
-
         for (var i = 0; i < result.data.length; i++){
             let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)
             result.data[i].distance = dis.toFixed(2)+'km'
         }
-        result.viplevel = viplevel
 
     }catch(e) {
         throw(e)

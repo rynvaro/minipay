@@ -1,7 +1,7 @@
 <!--miniprogram/pages/storeregister/storeregister.wxml-->
 <input class="title" placeholder="店铺名称" placeholder-class="titlePlaceholder"></input>
 
-<input class="title" placeholder="联系电话" type="number" placeholder-class="titlePlaceholder"></input>
+<input class="title" placeholder="联系电话" type="digit" placeholder-class="titlePlaceholder"></input>
 
 <view class="textarea">
     <textarea class="content" placeholder="备注" placeholder-class="contentPlaceholder"></textarea>

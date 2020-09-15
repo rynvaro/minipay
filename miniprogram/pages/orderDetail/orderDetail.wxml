@@ -10,7 +10,7 @@
   <view class="detailItem">
     <text class="detailItemKey">金额</text>
     <view class="detailItemValue">
-      <input disabled="true" class="paymentInput" type="number" placeholder="输入金额" style="text-align:center" bindinput="setPayment" value="{{order.payAmount}}"></input>
+      <input disabled="true" class="paymentInput" type="digit" placeholder="输入金额" style="text-align:center" bindinput="setPayment" value="{{order.payAmount}}"></input>
       <text class="paymentText">元</text>
     </view>
   </view>
@@ -38,7 +38,7 @@
   <view class="detailItem">
     <text class="detailItemKey">不参与优惠金额</text>
     <view class="detailItemValue">
-      <input disabled="true" class="paymentInput" type="number" placeholder="0.00" style='text-align:center' bindinput="setMustPayment" value="{{order.mustPayAmount}}"></input>
+      <input disabled="true" class="paymentInput" type="digit" placeholder="0.00" style='text-align:center' bindinput="setMustPayment" value="{{order.mustPayAmount}}"></input>
       <text class="paymentText">元</text>
     </view>
   </view>

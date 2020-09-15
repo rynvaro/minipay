@@ -15,21 +15,21 @@
 </view>
 
 <view class="tabs">
-    <view class="tabItem" bindtap="stores" data-id="1">
+    <view class="tabItem" bindtap="stores" data-id="4">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/food.png"></image>
         </view>
         <text class="tabItemD">食在上饶</text>
     </view>
 
-    <view class="tabItem" bindtap="stores" data-id="2">
+    <view class="tabItem" bindtap="stores" data-id="5">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/entertainment.png"></image>
         </view>
         <text class="tabItemD">玩乐途游</text>
     </view>
 
-    <view class="tabItem" bindtap="stores" data-id="0">
+    <view class="tabItem" bindtap="stores" data-id="6">
         <view class="tabItemU">
             <image class="tabItemUIcon" src="../../images/around.png"></image>
         </view>
@@ -43,30 +43,9 @@
             <image class="boxTitleIcon" src="../../images/star.png"></image>
         </view>
         <text class="boxTitleName">{{item.title}}</text>
-        <text class="boxTitleMore" bindtap="plates" data-id="{{item._id}}">>>></text>
+        <text class="boxTitleMore" bindtap="plates" data-id="{{item._id}}" data-to="{{item.linkTo}}">>>></text>
     </view>
-    <image mode="aspectFill" class="boxHeaderImage" src="{{item.image}}" bindtap="plates" data-id="{{item._id}}"></image>
-    <view class="innerBox">
-        <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem" data-id="{{item.storeId}}" bindtap="store">
-            <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
-            <view class="innerBoxItemDesc">
-                <text class="innerBoxItemDescTitle">{{item.discount}}折买单</text>
-                <text class="innerBoxItemDescContent">{{item.desc}}</text>
-            </view>
-        </view>
-    </view>
-</view>
-
-
-<view wx:for="{{internalPlates}}" wx:key="id" class="box">
-    <view class="boxTitle">
-        <view class="boxTitleIconBox">
-            <image class="boxTitleIcon" src="../../images/star.png"></image>
-        </view>
-        <text class="boxTitleName">{{item.title}}</text>
-        <text class="boxTitleMore" bindtap="stores" data-id="{{item.type}}">>>></text>
-    </view>
-    <image mode="aspectFill" class="boxHeaderImage" src="{{item.headerImage}}" bindtap="store" data-id="{{item.headerStoreId}}"></image>
+    <image mode="aspectFill" class="boxHeaderImage" src="{{item.image}}" bindtap="plates" data-id="{{item._id}}" data-to="{{item.linkTo}}"></image>
     <view class="innerBox">
         <view wx:for="{{item.items}}" wx:key="id" class="innerBoxItem" data-id="{{item.storeId}}" bindtap="store">
             <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
