@@ -1,5 +1,5 @@
 <!--miniprogram/pages/stores/stores.wxml-->
-
+<wxs src="../../utils/filter.wxs" module="filters"/>
 <view class="tabs">
     <view class="tab">
         <text class="tabText" style="color: {{tabColors[0]}}; font-size: {{tabFontSizes[0]}}" bindtap="onTabClick" data-id="0" data-orderType="1">人气商家</text>
@@ -37,10 +37,10 @@
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v1Star.png"></image>
                         </view>
                          <block wx:if="{{item.discount>9}}">
-                            <text class="viprightsTinyBoxD">{{item.discount}}折</text>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
                         </block>
                         <block wx:else>
-                            <text class="viprightsTinyBoxD">{{item.discount + 0.5}}折</text>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount + 0.5)}}折</text>
                         </block>
                     </view>
                     <view class="viprightsTinyBox">
@@ -49,10 +49,10 @@
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v2Star.png"></image>
                         </view>
                         <block wx:if="{{item.discount>9}}">
-                            <text class="viprightsTinyBoxD">{{item.discount}}折</text>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
                         </block>
                         <block wx:else>
-                            <text class="viprightsTinyBoxD">{{item.discount + 0.3}}折</text>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount + 0.3)}}折</text>
                         </block>
                     </view>
                     <view class="viprightsTinyBox">
@@ -60,17 +60,17 @@
                             <image wx:if="{{vipLevel == 3}}" class="viprightsTinyBoxUIcon" src="../../images/v3StarFilled.png"></image>
                             <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v3Star.png"></image>
                         </view>
-                        <text class="viprightsTinyBoxD">{{item.discount}}折</text>
+                        <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
                     </view>
                     <view class="viprightsBGLine"></view>
                 </view>
                 <block wx:if="{{item.discount > 9}}">
-                    <text class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount}}买单</text>
+                    <text class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount)}}折买单</text>
                 </block>
                 <block wx:else >
-                    <text wx:if="{{vipLevel == 1}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount + 0.5}}买单</text>
-                    <text wx:if="{{vipLevel == 2}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount + 0.3}}买单</text>
-                    <text wx:if="{{vipLevel == 3}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{item.discount}}买单</text>
+                    <text wx:if="{{vipLevel == 1}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount + 0.5)}}折买单</text>
+                    <text wx:if="{{vipLevel == 2}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount + 0.3)}}折买单</text>
+                    <text wx:if="{{vipLevel == 3}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount)}}折买单</text>
                 </block>
             </view>
         </view>

@@ -6,9 +6,19 @@ Page({
    * 页面的初始数据
    */
   data: {
+    swiperCurrent: 0,//当前所在页面的 index
+    indicatorDots: true, //是否显示面板指示点
+    autoplay: true, //是否自动切换
+    interval: 3000, //自动切换时间间隔,3s
+    duration: 1000, //滑动动画时长1s
+    circular: true, //是否采用衔接滑动
+    bannerUrls: [],
+    
     statusBarHeight: app.globalData.statusBarHeight,
     navBarHeight: app.globalData.navBarHeight,
     plates: [],
+    events: [],
+    eventshow: false,
   },
 
   /**
@@ -63,6 +73,23 @@ Page({
    */
   onShow: function () {
     let thiz = this
+    wx.cloud.callFunction({
+      name:"zevents",
+      success(res) {
+        console.log(res)
+          let eventshow = false
+          if (res.result.data.length > 0) {
+            eventshow = true
+          }
+          thiz.setData({
+              events: res.result.data,
+              eventshow: eventshow
+          })
+      },
+      fail: function(e) {
+        console.log(e)
+      }
+    })
     wx.getLocation({
       type: 'wgs84',
       success (res) {
@@ -136,5 +163,5 @@ function listPlates(thiz,lat,lng) {
       console.log(e)
       wx.hideLoading()
     }
-})
+  })
 }

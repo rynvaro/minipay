@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
  
     const _ = db.command
 
-    const plates =  await db.collection('plates').orderBy('index','asc').get()
+    const plates =  await db.collection('plates').where({status: 1}).orderBy('index','asc').get()
     for (var i = 0; i < plates.data.length; i++) {
         for (var j = 0; j < plates.data[i].items.length; j++) {
             var realDiscount = plates.data[i].items[j].discount

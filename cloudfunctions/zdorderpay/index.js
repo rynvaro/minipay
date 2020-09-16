@@ -232,9 +232,9 @@ exports.main = async (event, context) => {
         orders = store.data.orders
         let avgPrice = store.data.avgPrice
         if (orders == 0) {
-            avgPrice = parseFloat(totalAmount)
+            avgPrice = parseFloat(totalAmount).toFixed(2) * 1
         }else {
-            avgPrice = (avgPrice * orders)+parseFloat(totalAmount)/(orders + 1)
+            avgPrice = ((avgPrice * orders+parseFloat(totalAmount))/(orders + 1)).toFixed(2) * 1
         }
 
         // 商户收入

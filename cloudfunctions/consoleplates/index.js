@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
         delete event.tp
         const result = await db.collection('plates').add({
             data: {
+                status: 0,
                 image: event.image,
                 title: event.title,
                 index: event.index,

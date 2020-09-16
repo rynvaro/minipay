@@ -15,6 +15,19 @@ page {
     color: white;
 }
 
+
+.banner {
+    width: 95%;
+    height: 350rpx;
+    border-radius: 20rpx;
+}
+
+.bannerItem {
+    height: 100%;
+    width: 100%;
+    border-radius: 20rpx;
+}
+
 /* search box */
 .search {
     width: 95%;

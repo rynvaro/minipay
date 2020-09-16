@@ -1,11 +1,20 @@
 // miniprogram/pages/paysuccess/paysuccess.js
+const app = getApp()
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
+        statusBarHeight: app.globalData.statusBarHeight,
+        navBarHeight: app.globalData.navBarHeight,
+        barBG: '#F6F6F6',
+    },
 
+    back: function(e) {
+        wx.switchTab({
+          url: '../index/index',
+        })
     },
 
     /**

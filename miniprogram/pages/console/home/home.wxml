@@ -7,7 +7,7 @@
         <text class="bizConsole1Text">今日营业额（元）</text>
     </view>
     <view class="bizConsole2">
-        <text class="bizConsole2Text">{{store.dayBi}}0</text>
+        <text class="bizConsole2Text">{{store.dayIncome}}</text>
     </view>
     <view class="bizConsole3">
         <view class="bizConsole3Item" bindtap="discount">
@@ -28,7 +28,7 @@
                 <text class="bizConsole3ItemUText">今日订单</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">0</text>
+                <text class="bizConsole3ItemDText">{{store.dayOrders}}</text>
             </view>
         </view>
     </view>

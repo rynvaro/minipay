@@ -22,7 +22,7 @@ exports.main = async (event, context) => {
     try {
         // 0 是附近商家
         if (storeType != 0) {
-            var where =_.and({storeType: _.eq(storeType)})
+            var where =_.and({storeType: _.eq(storeType), deleted: 0})
             if (isGeo) {
                 where = where.and({
                     geoPoint: _.geoNear({
@@ -45,6 +45,7 @@ exports.main = async (event, context) => {
                 orderBy = 'createdAt'
             }
             result = await db.collection('mstores').where({
+                deleted: 0,
                 geoPoint: _.geoNear({
                     geometry: db.Geo.Point(lon,lat),
                     maxDistance: 50000,

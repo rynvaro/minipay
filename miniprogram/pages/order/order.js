@@ -104,15 +104,16 @@ Page({
                 })
                 return
               }
-              wx.showModal({
-                title: '提示',
-                content: '支付成功',
-                success (res) {
-                  wx.switchTab({
-                    url: '../index/index',
-                  })
-                }
+              wx.navigateTo({
+                url: '../paysuccess/paysuccess',
               })
+              // wx.showModal({
+              //   title: '提示',
+              //   content: '支付成功',
+              //   success (res) {
+                  
+              //   }
+              // })
           },
           fail: function(e) {
             console.log(e.errMsg)
@@ -224,7 +225,6 @@ Page({
                 body: "柒号生活-消费",
               },
               success(payInfoRes) {
-                  console.log("pay info is: ",payInfoRes)
                   wx.hideLoading()
 
                   wx.requestPayment({
@@ -238,6 +238,7 @@ Page({
                         // 1. 确认充值结果 TODO
                         wx.showLoading({
                           title: '支付中...',
+                          mask: true,
                         })
                         wx.cloud.callFunction({
                           name:"zdorderpay",

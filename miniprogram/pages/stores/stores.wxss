@@ -123,7 +123,7 @@ page {
 
   .viprightsTinyBox {
       height: 50rpx;
-      width: 50rpx;
+      width: 80rpx;
       z-index: 0;
   }
 

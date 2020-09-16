@@ -66,8 +66,8 @@ Page({
             let v2discount = store.discount
             let v3discount = store.discount
             if (store.discount <=9 ) {
-              v1discount = store.discount + 0.5
-              v2discount = store.discount + 0.3
+              v1discount = (store.discount + 0.5).toFixed(2)
+              v2discount = (store.discount + 0.3).toFixed(2)
             }
 
             thiz.setData({

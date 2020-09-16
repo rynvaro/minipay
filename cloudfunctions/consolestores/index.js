@@ -10,7 +10,6 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    const wxContext = cloud.getWXContext()
 
     let tp = event.tp 
     let q = event.q
@@ -18,11 +17,10 @@ exports.main = async (event, context) => {
     if (tp == 1) {
         return await db.collection('mstores').doc(event.id).get()
     }
-
-
-    let where = {}
+    
+    let where = {deleted: 0}
     if (q) {
-        where = db.command.or(
+        where = where.and(db.command.or(
             [
                 {
                 storeName: {
@@ -37,7 +35,7 @@ exports.main = async (event, context) => {
                 }
                 }
             ]
-        )
+        ))
     }
 
     return await db.collection('mstores').where(where).orderBy('createdAt','desc').get()

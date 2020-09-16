@@ -2,11 +2,45 @@
 
 page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+
+.bar {
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.navBar {
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.leftArrow {
+    width: 20rpx;
+    height: 20rpx;
+    border-bottom: 3rpx solid #000000;
+    border-left: 3rpx solid #000000;
+    transform: rotate(45deg);
+  }
+
+
+.navBarTitle {
+    margin-left: 20rpx;
+    font-size: small;
+}
+
 .paySuc {
-    width: 500rpx;
+    position: relative;
+    width: 560rpx;
     height: 500rpx;
+    z-index: 1;
 }

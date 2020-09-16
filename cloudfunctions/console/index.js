@@ -72,6 +72,8 @@ exports.main = async (event, context) => {
     }
     let banners = bannerVideos.concat(bannerImages)
     event.banners = banners
+    event.storeType = parseInt(event.storeType)
+    event.deleted = 0
 
     await db.collection('mstores').add({
         data: event,

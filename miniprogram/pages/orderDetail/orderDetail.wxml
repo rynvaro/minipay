@@ -55,5 +55,5 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100)}}</text>
+  <text class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount)}}</text>
 </view>

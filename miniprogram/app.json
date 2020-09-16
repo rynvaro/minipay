@@ -1,6 +1,7 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/paysuccess/paysuccess",
         "pages/balance/balance",
         "pages/deposit/deposit",
         "pages/home/home",
@@ -23,7 +24,6 @@
         "pages/storeregister/storeregister",
         "pages/pointexchanging/pointexchanging",
         "pages/accountdetailed/accountdetailed",
-        "pages/paysuccess/paysuccess",
         "pages/map/map",
         "pages/store/store",
         "pages/console/store/store",

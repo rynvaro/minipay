@@ -37,6 +37,16 @@
     </view>
 </view>
 
+<view class="banner" hidden="{{!eventshow}}">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" >
+    <block wx:for="{{events}}" wx:key="id">
+      <swiper-item >
+        <image mode="aspectFill" src="{{item.image}}" class="bannerItem"/>    
+     </swiper-item>
+    </block>
+  </swiper>
+</view>
+
 <view wx:for="{{plates}}" wx:key="id" class="box">
     <view class="boxTitle">
         <view class="boxTitleIconBox">

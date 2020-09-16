@@ -8,7 +8,7 @@
     <view class="cardLin2">
         <view class="box">{{filters.parseToInt((signconf.signs%1000)/100)}}</view>
         <view class="box">{{filters.parseToInt((signconf.signs%100)/10)}}</view>
-        <view class="box">{{signconf.signs%10}}</view>
+        <view class="box">{{signconf.sevenSigns%10}}</view>
         <text class="cardDay">天</text>
     </view>
     <image class="cardBG" src="../../images/bg/sign_bg.png"></image>

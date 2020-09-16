@@ -12,6 +12,7 @@ exports.main = async (event, context) => {
     let cnt = event.cnt
     let couponId = event.couponID
 
+    console.log("event is: ", event)
 
     try {
         const user = await db.collection('users').doc(wxContext.OPENID).get()
