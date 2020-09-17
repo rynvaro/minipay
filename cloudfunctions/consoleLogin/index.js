@@ -20,39 +20,84 @@ const db = cloud.database({
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    let openid = wxContext.OPENID
-    let phone = event.phone
-    let password = event.password
-
-    const mstore = await db.collection('mstores').where({merchantPhone: phone}).get()
-    if (mstore.data.length == 0) {
+    let type = event.type
+    if (type == 'precheck') {
+      const mstore = await db.collection('mstores').where({openid: wxContext.OPENID}).get()
+      if (mstore.data.length > 0 && mstore.data[0].password) {
+        return 1
+      }
       return -1
     }
 
-    let mStore = mstore.data[0]
-    let oldPassword = mStore.password
+    if (type == 'login') {
+      let phone = event.phone
+      let password = event.password
+      let bypass = event.bypass
 
-    // 第一次登录
-    // 更新 openid 和 password
-    if (!oldPassword) {
-      result = await db.collection('mstores').doc(mStore._id).update({
-        data: {
-          password: sha1(password),
-          openid: openid,
-        },
-        success: res => {
-          console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-        },
-        fail: err => {
-          console.error('[数据库] [新增记录] 失败：', err)
-          throw(err)
+      if (bypass) {
+        const mstore = await db.collection('mstores').where({merchantPhone: phone}).get()
+        if (mstore.data.length == 0) {
+          return -1 // first login
         }
-      })
-      return mStore
-    }
-    
-    if (sha1(password) != oldPassword) {
-      return -2
+        let mStore = mstore.data[0]
+        if (!mStore.password) {
+          return -2 // password not set
+        }
+        let oldPassword = mStore.password
+        if (sha1(password) != oldPassword) {
+          return -3 // wrong password
+        }
+        return 1
+      } else {
+        let code = event.code
+        let codeID = event.codeID
+
+        // first login by code
+        const result = await db.collection("codes").doc(codeID).get()
+        if (result.data.code!=code) {
+          return -4 // invalid code
+        }
+        console.log(Date.parse(new Date())/10-result.data.time/10)
+        console.log(Date.parse(new Date()))
+        console.log(result.data.time)
+        if (Date.parse(new Date())/1000-result.data.time/1000 > 10 * 60) {
+          return -5 // code expired
+        }
+        // 验证通过，删除code
+        await db.collection("codes").doc(event.codeID).remove()
+
+        mstore = await db.collection('mstores').where({merchantPhone: phone}).get()
+        if (mstore.data.length == 0) {
+          // 第一次登录 注册基本信息
+          const res = await db.collection('mstores').add({
+            data: {
+              password: '',
+              openid: openid,
+              avgPrice: 0,
+              balance: 0,
+              banners: [],
+              createdAt: Date.parse(new Date()),
+              updatedAt: Date.parse(new Date()),
+              deleted: 0,
+              orders: 0,
+              productImages: [],
+              storeImages: [],
+            },
+            success: res => {
+              console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+            },
+            fail: err => {
+              console.error('[数据库] [新增记录] 失败：', err)
+              throw(err)
+            }
+          })
+          return res
+        }else {
+          // TODO 是否需要兼容现在已经存在的数据
+          return mstore.data[0]
+        }
+      }
+      return {}
     }
 
     return mStore
