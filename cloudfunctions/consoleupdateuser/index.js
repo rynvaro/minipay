@@ -11,6 +11,8 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
+    console.log("event is: ", event)
+
     let tp = event.tp
 
     if (tp == 2) {
@@ -29,14 +31,25 @@ exports.main = async (event, context) => {
         })
     }
 
-    if (event.data.exp <=1000) {
+    // const user = await db.collection('users').doc(id).get()
+
+    // let exp = user.data.exp + event.data.exp
+    // if (exp <= 1000) {
+    //     event.data.level = 1
+    // }else if (exp > 1000 && exp <= 10000) {
+    //     event.data.level = 2
+    // }else if (exp > 10000) {
+    //     event.data.level = 3
+    // }
+
+    if (event.data.exp <= 1000) {
         event.data.level = 1
         event.data.expTotal = 1000
-    }else if (event.data.exp > 1000) {
+    }else if (event.data.exp > 1000 && event.data.exp <=10000) {
         event.data.level = 2
         event.data.expTotal = 10000
     }else if (event.data.exp > 10000) {
-        event.level = 3
+        event.data.level = 3
         event.data.expTotal = 10000
     }
 
