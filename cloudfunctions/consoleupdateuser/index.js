@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
     }
 
     if (event.data.exp <=1000) {
-        event.data.exp = 1
+        event.data.level = 1
         event.data.expTotal = 1000
     }else if (event.data.exp > 1000) {
         event.data.level = 2

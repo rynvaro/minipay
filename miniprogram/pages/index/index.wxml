@@ -10,8 +10,13 @@
     </view>
     <button open-type="getUserInfo" hover-class="pressbtn" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
-      <text class="cardLine3T">距下一等级还需</text>
-      <text class="cardLine3V">{{user.expTotal-user.exp}} 经验</text>
+      <block wx:if="{{user.level < 3}}">
+        <text class="cardLine3T">距下一等级还需</text>
+        <text class="cardLine3V">{{user.expTotal-user.exp}} 经验</text>
+      </block>
+      <block wx:else>
+        <text class="cardLine3TV">v3享最低折扣</text>
+      </block>
       <text class="cardLine3Arrow"></text>
     </view>
     <view class="cardLine4">

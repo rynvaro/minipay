@@ -13,7 +13,7 @@
 
 <view class="box">
     <block wx:for="{{icoupons}}" wx:key="id">
-        <view wx:if="{{item.status==0}}" class="item">
+        <view wx:if="{{item.status == 0 || item.status == -1}}" class="item">
             <view class="itemL">
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
@@ -26,10 +26,19 @@
                     </view>
                 </view>
             </view>
-            <view class="itemR" bindtap="use" data-id="{{item._id}}">
-                <text class="itemRText">立即</text>
-                <text class="itemRText">使用</text>
-            </view>
+            <block wx:if="{{item.status == -1}}">
+                <view class="itemR" data-id="{{item._id}}">
+                    <text class="itemRText" style="font-size: 20rpx">完善信息</text>
+                    <text class="itemRText" style="font-size: 20rpx">后可使用</text>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="itemR" bindtap="use" data-id="{{item._id}}">
+                    <text class="itemRText">立即</text>
+                    <text class="itemRText">使用</text>
+                </view>
+            </block>
+            
             <text wx:if="{{item.coupon.type == 3}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
         </view>
 

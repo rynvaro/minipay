@@ -27,7 +27,12 @@
             <text wx:if="{{user.level == 2}}" class="hLine3VipText">黄金会员</text>
             <text wx:if="{{user.level == 3}}" class="hLine3VipText">铂金会员</text>
             -->
-            <text class="hLine3ExperienceText">距下一等级还需 {{user.expTotal - user.exp}} 经验</text>
+            <block wx:if="{{user.level < 3}}">
+                <text class="hLine3ExperienceText">距下一等级还需 {{user.expTotal - user.exp}} 经验</text>
+            </block>
+            <block wx:else>
+                <text class="hLine3ExperienceText">v3享最低折扣</text>
+            </block>
 
             <view class="tips" bindtap="showTips">
                 <view class="tipsContent">?</view>

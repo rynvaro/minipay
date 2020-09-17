@@ -150,6 +150,13 @@ page {
   
 }
 
+.cardLine3TV {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .cardLine3Arrow {
   width: 10rpx;
   height: 10rpx;

@@ -10,15 +10,18 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
     try {
-        const user = await db.collection('users').doc(wxContext.OPENID).get()
-
-        let redpackValue = event.redpackValue
-        await db.collection('users').doc(wxContext.OPENID).update({
+        await db.collection('icoupons').add({
             data: {
-                redpack: {
-                        redpackValue: redpackValue,
-                        status: -1, // 禁用
-                    }
+                isnew: true,
+                openid: wxContext.OPENID,
+                status: -1,
+                timestamp: Date.parse(new Date()),
+                coupon: {
+                    id: '1',
+                    point: 50,
+                    type: 3,
+                    value: 500,
+                }
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
