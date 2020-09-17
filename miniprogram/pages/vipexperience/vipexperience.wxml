@@ -22,12 +22,12 @@
             <image wx:if="{{user.level == 1}}" class="hLine3VipIcon" src="../../images/v1.png"></image>
             <image wx:if="{{user.level == 2}}" class="hLine3VipIcon" src="../../images/v2.png"></image>
             <image wx:if="{{user.level == 3}}" class="hLine3VipIcon" src="../../images/v3.png"></image>
-
+            <!-- 
             <text wx:if="{{user.level == 1}}" class="hLine3VipText">普通会员</text>
             <text wx:if="{{user.level == 2}}" class="hLine3VipText">黄金会员</text>
             <text wx:if="{{user.level == 3}}" class="hLine3VipText">铂金会员</text>
-            
-            <text class="hLine3ExperienceText">会员经验  {{user.exp}}/{{user.expTotal}}</text>
+            -->
+            <text class="hLine3ExperienceText">距下一等级还需 {{user.expTotal - user.exp}} 经验</text>
 
             <view class="tips" bindtap="showTips">
                 <view class="tipsContent">?</view>

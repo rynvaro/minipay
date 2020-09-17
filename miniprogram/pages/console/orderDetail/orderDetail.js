@@ -5,6 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    wxChecked: false,
+    balanceChecked: false,
+    coupon: {
+      coupon: {
+          value: 0
+      }
+    },
     order: {}
   },
 

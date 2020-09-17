@@ -127,6 +127,12 @@ Page({
     })
   },
 
+  dayorders: function(e) {
+    wx.navigateTo({
+      url: '../orders/orders?type=day',
+    })
+  },
+
   events: function() {
     wx.showToast({
       title: '开发中',

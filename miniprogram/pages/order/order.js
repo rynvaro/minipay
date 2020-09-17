@@ -104,20 +104,16 @@ Page({
                 })
                 return
               }
-              wx.navigateTo({
-                url: '../paysuccess/paysuccess',
+              wx.redirectTo({
+                url: '../orderDetail/orderDetail?id='+res.result._id,
               })
-              // wx.showModal({
-              //   title: '提示',
-              //   content: '支付成功',
-              //   success (res) {
-                  
-              //   }
-              // })
           },
           fail: function(e) {
             console.log(e.errMsg)
             wx.hideLoading()
+            wx.showToast({
+              title: '支付失败',
+            })
           }
       })
       }
@@ -253,8 +249,8 @@ Page({
                           success(res) {
                               console.log(res)
                               wx.hideLoading()
-                              wx.navigateTo({
-                                url: '../paysuccess/paysuccess',
+                              wx.redirectTo({
+                                url: '../orderDetail/orderDetail?id='+res.result._id,
                               })
                           },
                           fail: function(e) {
@@ -273,6 +269,9 @@ Page({
               fail: function(e) {
                 console.log(e.errMsg)
                 wx.hideLoading()
+                wx.showToast({
+                  title: '支付失败',
+                })
               }
             })
           }

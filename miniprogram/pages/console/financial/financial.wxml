@@ -1,4 +1,5 @@
 <!--miniprogram/pages/console/financial/financial.wxml-->
+<wxs src="../../../utils/filter.wxs" module="filters"></wxs>
 <view class="header">
     <view class="headerLine1">
         <text class="headerLine1Text">当前余额</text>
@@ -18,7 +19,7 @@
 
     <block wx:for="{{withdrawHis}}" wx:key="_id">
         <view class="item">
-            <text class="withdrawTime">{{item.publishedAt}}</text>
+            <text class="withdrawTime">{{filters.formatTime(item.publishedAt)}}</text>
             <text class="withdrawAmount">¥{{item.withdrawAmount}}</text>
             <text class="withdrawStatus">
                 <text wx:if="{{item.status==0}}">待审核</text>

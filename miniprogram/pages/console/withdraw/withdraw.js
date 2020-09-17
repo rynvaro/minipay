@@ -169,12 +169,18 @@ Page({
               success(res) {
                   console.log(res)
                   wx.hideLoading()
-                  wx.showToast({
-                    title: '已提交',
-                    success: function(){
-                      setTimeout(function(){wx.navigateBack()},500)
-                    }
-                  })
+                  if (res.result.success) {
+                    wx.showToast({
+                      title: '已提交',
+                      success: function(){
+                        setTimeout(function(){wx.navigateBack()},500)
+                      }
+                    })
+                  }else {
+                    wx.showToast({
+                      title: '提交失败',
+                    })
+                  }
               },
               fail: function(e) {
                 console.log(e.errMsg)

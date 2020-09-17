@@ -22,7 +22,7 @@
     <view class="buyButton" bindtap="order">折扣买单</view>
 </view>
 
-<view class="tips">{{store.sales}}人购买</view>
+<view class="tips">{{store.orders}}人购买</view>
 
 
 <view class="viprights">

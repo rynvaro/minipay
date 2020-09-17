@@ -23,7 +23,7 @@
             <view class="bizConsole3MiddleLine"></view>
         </view>
 
-        <view class="bizConsole3Item" bindtap="orders">
+        <view class="bizConsole3Item" bindtap="dayorders">
             <view class="bizConsole3ItemU">
                 <text class="bizConsole3ItemUText">今日订单</text>
             </view>

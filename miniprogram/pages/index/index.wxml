@@ -10,8 +10,8 @@
     </view>
     <button open-type="getUserInfo" hover-class="pressbtn" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
     <view class="cardLine3" bindtap="vipexperience">
-      <text class="cardLine3T">会员经验</text>
-      <text class="cardLine3V">{{user.exp}}/{{user.expTotal}}</text>
+      <text class="cardLine3T">距下一等级还需</text>
+      <text class="cardLine3V">{{user.expTotal-user.exp}} 经验</text>
       <text class="cardLine3Arrow"></text>
     </view>
     <view class="cardLine4">

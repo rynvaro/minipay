@@ -29,7 +29,7 @@ Page({
         wx.showLoading({
             title: 'loading...',
         })
-        listOrder(this,e.detail.value)
+        listOrder(this,e.detail.value,'all')
     },
 
     onTabClick: function(e) {
@@ -52,7 +52,7 @@ Page({
             currentTabIndex: index,
         })
 
-        listOrder(this,'')
+        listOrder(this,'','all')
     },
 
     /**
@@ -62,7 +62,7 @@ Page({
         wx.showLoading({
             title: 'loading...',
         })
-        listOrder(this,'')
+        listOrder(this,'',options.type)
     },
 
     /**
@@ -115,13 +115,14 @@ Page({
     }
 })
 
-function listOrder(thiz, q){
+function listOrder(thiz, q, type){
     wx.cloud.callFunction({
         name:"orderList",
         data: {
             q: q,
             storeID: app.globalData.storeID,
             status: thiz.data.currentTabIndex,
+            type: type,
         },
         success(res) {
             console.log(res)

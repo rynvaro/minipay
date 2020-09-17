@@ -16,30 +16,31 @@ exports.main = async (event, context) => {
     let couponID = event.couponID
     let mustPayAmount = parseFloat(event.mustPayAmount)
 
-    let payby = event.payby
+    let payby = parseInt(event.payby)
 
     let password = event.password
 
     var result = {}
 
     try {
+        let history = event
+        history.timestamp = Date.parse(new Date())
+        history.type = 'dorderpay'
+        delete history.password
+        db.collection('histories').add({data: history})
         const store = await db.collection('mstores').doc(storeID).get()
         const user = await db.collection('users').doc(wxContext.OPENID).get()
-
         if (payby == 2 && sha1(password) != user.data.payPassword) {
             return -2 // 支付密码错误
         }
 
-
         let level = user.data.data.level
-
         let delta = 0.0
         if ( level == 1 ) {
             delta = 0.5
         }else if (level == 2) {
             delta = 0.3
         }
-
         let realDiscount = store.data.discount + delta
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
@@ -58,8 +59,10 @@ exports.main = async (event, context) => {
             }
         }
 
+        const trans = await db.startTransaction()
+
         if ( couponID != -1 ){
-            await db.collection('icoupons').doc(couponID).update({
+            await trans.collection('icoupons').doc(couponID).update({
                 data: {
                     status: 1,
                 },
@@ -77,6 +80,7 @@ exports.main = async (event, context) => {
             storeId: storeID,
             couponId: couponID,
             openid: wxContext.OPENID,
+            userName: user.data.data.name,
             storeName: store.data.storeName,
             productImage: store.data.storeImages[0],
             payAmount: payAmount,
@@ -91,7 +95,7 @@ exports.main = async (event, context) => {
             status: 1, // 已完成
         }
 
-        await db.collection('iorders').add({
+        result = await trans.collection('iorders').add({
             data: data,
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -102,7 +106,7 @@ exports.main = async (event, context) => {
             }
         })
 
-        await db.collection('orders').add({
+        await trans.collection('orders').add({
             data: data,
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -116,7 +120,7 @@ exports.main = async (event, context) => {
         let deltaPointAndExp = parseInt(totalAmount/10)
         if (deltaPointAndExp > 0) {
             // 积分变更记录
-            await db.collection('pointrecords').add({
+            await trans.collection('pointrecords').add({
                 data: {
                     openid: wxContext.OPENID,
                     type: 4, // 消费
@@ -134,7 +138,7 @@ exports.main = async (event, context) => {
             })
 
             // 经验变更记录
-            await db.collection('exprecords').add({
+            await trans.collection('exprecords').add({
                 data: {
                     openid: wxContext.OPENID,
                     type: 1, // 消费
@@ -170,7 +174,7 @@ exports.main = async (event, context) => {
             newLevel = 3
         }
 
-        await db.collection('users').doc(wxContext.OPENID).update({
+        await trans.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
                     balance: balance,
@@ -238,9 +242,9 @@ exports.main = async (event, context) => {
         }
 
         // 商户收入
-        await db.collection('mstores').doc(storeID).update({
+        await trans.collection('mstores').doc(storeID).update({
             data: {
-                balance: (parseFloat(store.data.balance) + parseFloat(totalAmount)),
+                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(totalAmount)).toFixed(2)),
                 orders: store.data.orders + 1,
                 avgPrice: avgPrice,
             },
@@ -252,11 +256,14 @@ exports.main = async (event, context) => {
                 throw(e)
             }
         })
+
+        await trans.commit()
+
+        return result
+
     }catch(e) {
         throw(e)
     }
-
-    return result
 }
 
 function encodeUTF8(s) {

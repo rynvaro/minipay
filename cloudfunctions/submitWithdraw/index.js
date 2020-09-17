@@ -13,13 +13,20 @@ exports.main = async (event, context) => {
 
     // 1. 获取用户 检查余额
     try {
-        mstore = await db.collection("mstores").doc(event.storeID).get()
+        let history = event
+        history.timestamp = Date.parse(new Date())
+        history.type = 'submitwithdraw'
+        db.collection('histories').add({data: history})
+        const mstore = await db.collection("mstores").doc(event.storeID).get()
         if (mstore.data.balance < event.withdrawAmout) {
             throw("insufficient funds")
         }
 
-        await db.collection('withdraws').add({
+        const trans = await db.startTransaction()
+        const res1 = await trans.collection('withdraws').add({
             data: {
+                storeName: mstore.data.storeName,
+                merchantName: mstore.data.merchantName,
                 storeID: event.storeID,
                 withdrawAmount: event.withdrawAmount,
                 status: 0,// 0 待审核，1 审核中，2 付款中，3 已付款，4 已撤销
@@ -32,11 +39,11 @@ exports.main = async (event, context) => {
             },
             fail: err => {
                 console.error('[数据库] [新增记录] 失败：', err)
-                throw("add error")
+                throw(err)
             }
         })
-        // 更新余额 TODO 需要保证事务
-        await db.collection('mstores').doc(event.storeID).update({
+
+        const res2 = await trans.collection('mstores').doc(event.storeID).update({
             data: {
                 balance: mstore.data.balance - event.withdrawAmount,
                 updatedAt: Date.parse(new Date()),
@@ -46,13 +53,21 @@ exports.main = async (event, context) => {
             },
             fail: err => {
                 console.error('[数据库] [更新记录] 失败：', err)
-                throw("update error")
+                throw(err)
             }
-        })
+        })  
+
+        await trans.commit()
+
+        return {
+            success: true
+        }
 
     }catch(e) {
-        throw(e)
+        console.log(e)
+        return {
+            success: false,
+            error: e,
+        }
     }
-
-    return {}
 }

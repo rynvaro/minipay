@@ -86,7 +86,6 @@ Page({
 
   login: function(){
 
-    // TODO validate data
     if (!/^1[3456789]\d{9}$/.test(this.data.phone)) {
       wx.showToast({
         title: '手机号不合法',
