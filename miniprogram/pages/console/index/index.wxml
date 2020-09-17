@@ -5,13 +5,16 @@
 
 <image class="user-avatar" src="../../../images/basicprofile.jpeg"></image>
 
-<view class="login-box">
-  <text class="login-box-item-header">登录</text>
+<view class="login-box" >
+  <view class="loginBoxHeader">
+    <text class="loginBoxHeaderL">{{title}}</text>
+    <text class="loginBoxHeaderR" bindtap="switch">切换</text>
+  </view>
   <view class="login-box-item-input">
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/phone.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" type="digit" placeholder="输入手机号" bindinput="setPhone"></input>
+            <input class="inputViewUpInput" type="digit" placeholder="手机号" bindinput="setPhone"></input>
           </view>
           <view class="inputViewDown"></view>
         </view>
@@ -22,14 +25,15 @@
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/paswd.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" type="password" placeholder="密码" bindinput="setPassword"></input>
+            <input class="inputViewUpInput" type="password" placeholder="{{passph}}" bindinput="setPassword" style="width: {{passwidth}}"></input>
+            <view class="btn" hidden="{{bypass}}" bindtap="sendSMS">{{label}}</view>
           </view>
           <view class="inputViewDown"></view>
         </view>
     <view class="login-box-item-input-down"></view>
   </view>
 
-  <text class="login-box-item-footer" bindtap="resetPassword">忘记密码?</text>
+  <text class="login-box-item-footer" bindtap="resetPassword" hidden="{{!bypass}}">忘记密码?</text>
 </view>
 
 <button class="login-button" bindtap="login">登录</button>

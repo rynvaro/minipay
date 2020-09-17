@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/console/index/index",
         "pages/index/index",
         "pages/paysuccess/paysuccess",
         "pages/balance/balance",
@@ -7,7 +8,6 @@
         "pages/home/home",
         "pages/vipexperience/vipexperience",
         "pages/point/point",
-        "pages/console/index/index",
         "pages/console/discount/discount",
         "pages/feedback/feedback",
         "pages/console/home/home",
