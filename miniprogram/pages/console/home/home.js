@@ -15,6 +15,19 @@ Page({
     this.setData({show: false})
   },
 
+  showContract: function(e) {
+    if (!this.data.store.complete) {
+      wx.showModal({
+        title: '提示',
+        content: '请先在店铺设置板块完善个人信息。',
+      })
+      return
+    }
+    wx.showToast({
+      title: '已签约',
+    })
+  },
+
   showQRCode: function(e)   {
     this.setData({show: true})
     drawQrcode({
@@ -57,7 +70,7 @@ Page({
       success(res) {
         console.log(res)
         thiz.setData({
-          store:res.result.data
+          store: res.result.data
         })
         wx.hideLoading()
       },
@@ -103,6 +116,12 @@ Page({
 
   },
 
+  setPass: function() {
+    wx.navigateTo({
+      url: '../setpass/setpass',
+    })
+  },
+
   discount: function(){
     wx.navigateTo({
       url: '../discount/discount',
@@ -115,7 +134,7 @@ Page({
     })
   },
 
-  store: function(){
+  toStore: function(){
     wx.navigateTo({
       url: '../store/store',
     })

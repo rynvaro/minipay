@@ -75,6 +75,7 @@ Page({
             data: {
               phone: thiz.data.phone,
               password: thiz.data.password,
+              type: 'reset',
             },
             success(res) {
                 console.log(res)

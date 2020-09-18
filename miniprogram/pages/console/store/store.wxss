@@ -38,6 +38,14 @@ page {
     flex-direction: column;
 }
 
+.title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+}
+
 .settingItem {
     display: flex;
     margin-top: 20rpx;
@@ -45,9 +53,22 @@ page {
 
 .settingItemL {
     margin-top: 10rpx;
-    width: 25%;
+    width: 20%;
     font-size: small;
+    text-align: justify;
 }
+
+.moreInfoItemL {
+    width: 30%;
+    color: #999999;
+    
+  }
+  
+  .settingItemL:after {
+    width: 100%;
+    display: inline-block;
+    content: '';
+  }
 
 .settingItemR {
     margin-left: 20rpx;
@@ -55,12 +76,19 @@ page {
     height: 60rpx;
 	min-height: 0.8rem;
     background: linear-gradient(to right,#E6E6E6, #fdfdfd); 
-    border-radius: 5rpx;
+    border-radius: 10rpx;
     color: #999999;
     font-size: small;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.must {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
 }
 
 
@@ -112,9 +140,9 @@ page {
 .publish:not([size='mini']) {
     margin-top: 50rpx;
     margin-bottom: 50rpx;
-    color: rgb(235, 221, 221);
+    color: white;
     border-radius: 20rpx;
-    background: linear-gradient(to bottom right,#F56507, #ceb8a9); 
+    background-color: #FF7513;
 }
 
 .startTime {
