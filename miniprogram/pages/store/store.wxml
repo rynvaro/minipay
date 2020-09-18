@@ -53,9 +53,9 @@
 <view class="liteBox">
     <text class="liteBoxItem">营业时间：{{store.startTime}}-{{store.endTime}}</text>
     <text class="liteBoxItem">商家电话：{{store.merchantPhone}}</text>
+    <text class="liteBoxItem">商家详情：{{store.storeDesc}}</text>
     <view class="liteBoxItem" bindtap="map">
         <text class="liteBoxItemDL" >商家地址：{{store.address}}</text>
-        <view class="liteBoxItemDR"></view>
     </view>
 </view>
 
@@ -63,4 +63,6 @@
 
 <view class="eventTextUnderLine"></view>
 
-<image mode="widthFix" class="eventImage" src="{{store.productImages[0]}}"></image>
+<block wx:for="{{store.productImages}}">
+    <image mode="widthFix" class="eventImage" src="{{item}}"></image>
+</block>

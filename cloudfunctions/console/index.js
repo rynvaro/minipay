@@ -50,6 +50,27 @@ exports.main = async (event, context) => {
         return
     }
 
+    // const existsStore = await db.collection('mstores').where({merchantPhone: event.merchantPhone, deleted: 0}).get()
+
+    // if (existsStore.data.length > 0) {
+    //     event.updatedAt = Date.parse(new Date())
+    //     event.geoPoint = db.Geo.Point(event.longitude, event.latitude)
+    //     let bannerVideos = []
+    //     let bannerImages = []
+    //     for (var i = 0; i<event.banners.length; i++) {
+    //         if (event.banners[i].isVideo) {
+    //             bannerVideos.push(event.banners[i])
+    //         }else {
+    //             bannerImages.push(event.banners[i])
+    //         }
+    //     }
+    //     let banners = bannerVideos.concat(bannerImages)
+    //     event.banners = banners
+    //     event.storeType = parseInt(event.storeType)
+    //     event.deleted = 0
+    //     return
+    // }
+
 
     event.balance = 0
     event.orders = 0

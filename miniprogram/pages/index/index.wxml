@@ -116,12 +116,6 @@
       <text class="moreListItemD">意见反馈</text>
     </view>
 
-    <view class="moreListItem" bindtap="console">
-      <view class="moreListItemU">
-        <image class="moreListItemUIcon" src="../../images/star.png"></image>
-      </view>
-      <text class="moreListItemD">商家后台</text>
-    </view>
 
   </view>
 

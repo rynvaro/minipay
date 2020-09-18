@@ -8,7 +8,8 @@ cloud.init({
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // TODO 环境ID
-const envId = "dev-osmu3"
+// const envId = "dev-osmu3"
+const envId = "release-8tcge"
 const subMchId = "1601917642"
 
 // 云函数入口函数
