@@ -1,7 +1,10 @@
 {
     "pages": [
-        "pages/console/index/index",
         "pages/index/index",
+        "pages/console/index/index",
+        "pages/console/setpass/setpass",
+        "pages/console/home/home",
+        "pages/console/store/store",
         "pages/paysuccess/paysuccess",
         "pages/balance/balance",
         "pages/deposit/deposit",
@@ -10,7 +13,6 @@
         "pages/point/point",
         "pages/console/discount/discount",
         "pages/feedback/feedback",
-        "pages/console/home/home",
         "pages/order/order",
         "pages/signin/signin",
         "pages/invite/invite",
@@ -26,7 +28,6 @@
         "pages/accountdetailed/accountdetailed",
         "pages/map/map",
         "pages/store/store",
-        "pages/console/store/store",
         "pages/console/orders/orders",
         "pages/console/withdraw/withdraw",
         "pages/console/financial/financial",

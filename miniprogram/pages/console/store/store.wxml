@@ -2,6 +2,41 @@
 
 <view class="settingsBox">
     <view class="settings">
+        
+        <view class="settingItem">
+            <text class="title">商家信息</text>
+        </view>
+        <view class="settingItem">
+            <text class="settingItemL">真实姓名</text>
+            <input bindinput="setRealName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantName}}"></input>
+            <text class="must">*</text>
+        </view>
+
+        <view class="settingItem">
+            <text class="settingItemL">银行卡号</text>
+            <input bindinput="setCardNumber" type="digit" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantBankCard}}"></input>
+            <text class="must">*</text>
+        </view>
+
+        <view class="settingItem">
+            <text class="settingItemL">开户行</text>
+            <input bindinput="setBank" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.bank}}"></input>
+            <text class="must">*</text>
+        </view>
+
+        <view class="settingItem">
+            <text class="settingItemL">手机号</text>
+            <input bindinput="setPhone" disabled="true" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantPhone}}"></input>
+            <text class="must">*</text>
+        </view>
+
+        <button class="publish" bindtap="publishMerchantInfo">提交</button>
+
+
+        <view class="settingItem">
+            <text class="title">店铺信息</text>
+        </view>
+
         <view class="settingItem">
             <text class="settingItemL">店铺门头</text>
 
@@ -12,7 +47,7 @@
                         <image class="settingItemTitleImageTakePhotoUIcon" src="../../../images/orderhis.png"></image>
                     </view>
                     <view class="settingItemTitleImageTakePhotoD">
-                        <text class="settingItemTitleImageTakePhotoDText">点击上传</text>
+                        <text class="settingItemTitleImageTakePhotoDText">等待上传</text>
                     </view>
                 </view>
             </view>
@@ -22,21 +57,6 @@
          <view class="settingItem">
             <text class="settingItemL">店铺名称</text>
             <input bindinput="setStoreName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.storeName}}"></input>
-        </view>
-
-        <view class="settingItem">
-            <text class="settingItemL">真实姓名</text>
-            <input bindinput="setRealName" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantName}}"></input>
-        </view>
-
-        <view class="settingItem">
-            <text class="settingItemL">银行卡号</text>
-            <input bindinput="setCardNumber" type="digit" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantBankCard}}"></input>
-        </view>
-
-        <view class="settingItem">
-            <text class="settingItemL">电话</text>
-            <input bindinput="setPhone" disabled="true" class="settingItemR" placeholder-class="settingItemRPlaceHolder" value="{{store.merchantPhone}}"></input>
         </view>
 
         <view class="settingItem">
@@ -70,6 +90,15 @@
                 <radio value="2" checked="{{store.storeType == 2}}">娱乐</radio>
                 <radio value="3" checked="{{store.storeType == 3}}">其他</radio>
             </radio-group>
+        </view>
+
+        <view class="settingItem">
+            <text class="settingItemL">店铺小类</text>
+            <!-- <radio-group bindchange="change" class="radioGroup">
+                <radio value="1" checked="{{store.storeType == 1}}">餐饮</radio>
+                <radio value="2" checked="{{store.storeType == 2}}">娱乐</radio>
+                <radio value="3" checked="{{store.storeType == 3}}">其他</radio>
+            </radio-group> -->
         </view>
         
 

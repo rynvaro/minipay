@@ -10,32 +10,45 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 // 云函数入口函数
 exports.main = async (event, context) => {
 
-  const mstores = await db.collection('mstores').where({merchantPhone: event.phone}).get()
-  
-  if (mstores.data.length == 0) {
-    return -1
-  }
+  let type = event.type 
 
-  let mstore = mstores.data[0]
-
-  try {
-    await db.collection('mstores').doc(mstore._id).update({
+  if (type == 'setpass') {
+    await db.collection('mstores').doc(event.storeID).update({
       data: {
-          password: sha1(event.password),
-          updatedAt: Date.parse(new Date())
-      },
-      success: res => {
-          console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)
-      },
-      fail: err => {
-          console.error('[数据库] [更新记录] 失败：', err)
-          throw("update error")
+        password: sha1(event.password)
       }
-  })
-  }catch(e) {
-    throw(e)
+    })
+    return 1
   }
 
+  if (type == 'reset') {
+    const mstores = await db.collection('mstores').where({merchantPhone: event.phone}).get()
+  
+    if (mstores.data.length == 0) {
+      return -1
+    }
+  
+    let mstore = mstores.data[0]
+  
+    try {
+      await db.collection('mstores').doc(mstore._id).update({
+        data: {
+            password: sha1(event.password),
+            updatedAt: Date.parse(new Date())
+        },
+        success: res => {
+            console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)
+        },
+        fail: err => {
+            console.error('[数据库] [更新记录] 失败：', err)
+            throw("update error")
+        }
+    })
+    }catch(e) {
+      throw(e)
+    }
+    
+  }
   return {}
 }
 

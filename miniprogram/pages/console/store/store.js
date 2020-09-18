@@ -71,6 +71,13 @@ Page({
       })
     },
 
+    setBank: function(e) {
+      this.data.store.bank=e.detail.value
+      this.setData({
+        store:this.data.store
+      })
+    },
+
     setPhone: function(e) {
       this.data.store.merchantPhone=e.detail.value
       this.setData({
@@ -86,14 +93,7 @@ Page({
       })
     },
 
-    publish: function(e){
-      if (!this.data.store.storeName){
-        wx.showToast({
-          title: '请填写店铺名称',
-        })
-        return 
-      }
-
+    publishMerchantInfo: function(e) {
       if (!this.data.store.merchantName){
         wx.showToast({
           title: '请填写真实姓名',
@@ -108,12 +108,88 @@ Page({
         return 
       }
 
+      if (!this.data.store.bank){
+        wx.showToast({
+          title: '请填写开户行',
+        })
+        return 
+      }
+
       if (!this.data.store.merchantPhone){
         wx.showToast({
           title: '请填写手机号',
         })
         return 
       }
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"hasPermission",
+            data: {
+              storeID: app.globalData.storeID,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(false)
+            }
+        })
+      });
+
+      promise.then(function(hasPermission){
+        console.log("has permission: ", hasPermission)
+        if (!hasPermission) {
+          wx.showToast({
+            title: '没有权限',
+          })
+        } else {
+          wx.cloud.callFunction({
+            name:"storeSetting",
+            data: {
+              id: app.globalData.storeID,
+              merchantName: thiz.data.store.merchantName,
+              merchantPhone: thiz.data.store.merchantPhone,
+              merchantBankCard: thiz.data.store.merchantBankCard,
+              bank: thiz.data.store.bank,
+              type: 'merchant',
+            },
+            success(res) {
+                console.log(res)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '已更新',
+                })
+                wx.navigateBack({
+                  delta: 0,
+                })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              wx.hideLoading()
+              wx.showToast({
+                title: '更新失败',
+              })
+            }
+        })
+        }
+      })
+    },
+
+    publish: function(e){
+      if (!this.data.store.storeName){
+        wx.showToast({
+          title: '请填写店铺名称',
+        })
+        return 
+      }
+
+      
       if (!this.data.store.address){
         wx.showToast({
           title: '请选择地址',
@@ -239,6 +315,7 @@ Page({
                           merchantBankCard: thiz.data.store.merchantBankCard,
                           merchantPhone: thiz.data.store.merchantPhone,
                           storeName: thiz.data.store.storeName,
+                          type: 'store',
                         },
                         success(res) {
                           console.log(res)

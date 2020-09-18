@@ -1,0 +1,9 @@
+<!--miniprogram/pages/console/setpass/setpass.wxml-->
+
+<view class="box">
+    <view class="boxItem">
+        <text class="text">输入密码：</text>
+        <input class="input" type="password" bindinput="setpass" placeholder="输入密码"></input>
+    </view>
+    <button class="btn" bindtap="doSetpass">设置</button>
+</view>

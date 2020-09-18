@@ -44,9 +44,6 @@ exports.main = async (event, context) => {
                     inviteBy: inviteBy,
                     birthday: birthday,
                 },
-                redpack: {
-                    status: 0, //可用
-                },
                 updatedAt: Date.parse(new Date()),
             },
             success: res => {
@@ -57,6 +54,15 @@ exports.main = async (event, context) => {
                 throw(e)
             }
         })
+
+        await db.collection('icoupons').where({openid: wxContext.OPENID, isnew: true}).update({
+            data: {
+                status: 0
+            }
+        })
+        // if (icoupons.data.length>0) {
+        //     await db.collection('icoupons').doc.get()
+        // }
     }catch(e) {
         throw(e)
     }

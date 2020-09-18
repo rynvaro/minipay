@@ -13,6 +13,7 @@ Page({
     bypass: true,
     title: '密码登录',
     passph: '密码',
+    inputType: 'password',
 
     label: '获取验证码',
     code: '',
@@ -35,6 +36,7 @@ Page({
       bypass: true,
       passwidth: '100%',
       passph: '密码',
+      inputType: 'password',
     })
   },
 
@@ -44,6 +46,7 @@ Page({
       bypass: false,
       passwidth: '50%',
       passph: '验证码',
+      inputType: 'text',
     })
   },
 
@@ -81,8 +84,10 @@ Page({
           console.log(res)
           if (res.result == -1) {
             thiz.bycode()
-          }else {
+          }else if (res.result == 1) {
             thiz.bypass()
+          }else {
+            thiz.bycode()
           }
       },
       fail: function(e) {
@@ -135,7 +140,8 @@ Page({
 
   setPassword: function(e) {
     this.setData({
-      password:  e.detail.value
+      password:  e.detail.value,
+      code: e.detail.value,
     })
   },
 
@@ -164,6 +170,8 @@ Page({
     wx.cloud.callFunction({
       name:"consoleLogin",
       data:{
+        code: thiz.data.code,
+        codeID: thiz.data.codeID,
         phone: thiz.data.phone,
         password: thiz.data.password,
         bypass: thiz.data.bypass,
@@ -180,8 +188,27 @@ Page({
             return
           }
           if (res.result == -2) {
+            wx.showModal({
+              title: '提示',
+              title: '请先用验证码方式登录设置密码',
+            })
+            return
+          }
+          if (res.result == -3) {
             wx.showToast({
               title: '密码错误',
+            })
+            return
+          }
+          if (res.result == -4) {
+            wx.showToast({
+              title: '验证码错误',
+            })
+            return
+          }
+          if (res.result == -5) {
+            wx.showToast({
+              title: '验证码已过期',
             })
             return
           }
@@ -194,7 +221,7 @@ Page({
         console.log(e.errMsg)
         wx.hideLoading()
         wx.showToast({
-          title: '密码错误',
+          title: '验证码错误',
         })
       }
     })
