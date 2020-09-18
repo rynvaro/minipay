@@ -148,7 +148,7 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
   color: white;
   background-color: #F56507;
 
