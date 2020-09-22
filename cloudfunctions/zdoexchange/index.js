@@ -80,12 +80,15 @@ exports.main = async (event, context) => {
         }else if (coupon.type==2) {
 
             let exp = user.data.data.exp + coupon.point * cnt
+            let expTotal = 1001
             let level = 1
             if (exp > 1000) {
                 level = 2
+                expTotal = 10001
             }
             if (exp > 10000) {
                 level = 3
+                expTotal = 10001
             }
             await db.collection('users').doc(wxContext.OPENID).update({
                 data: {
@@ -93,6 +96,7 @@ exports.main = async (event, context) => {
                         point: user.data.data.point - coupon.point * cnt,
                         exp: exp,
                         level: level,
+                        expTotal: expTotal,
                     }
                 },
                 success: res => {

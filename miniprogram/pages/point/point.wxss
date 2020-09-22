@@ -66,7 +66,7 @@ page {
     border-radius: 20rpx;
     font-size: 25rpx;
     position: absolute;
-    top: -30rpx;
+    top: 10rpx;
     right: 10rpx;
     display: flex;
     justify-content: center;

@@ -8,7 +8,7 @@ Page({
             avatarUrl:'',
             name: '登录/注册',
             exp: 0,
-            expTotal: 1000,
+            expTotal: 1001,
             city: '',
             country: '',
             gender: 0,
@@ -30,6 +30,8 @@ Page({
         // progress value
         p1v: 0,
         p2v: 0,
+
+        closeRedpack: false,
         open: false,
         redpackShow: false,
         redpackValue: 0,
@@ -50,6 +52,12 @@ Page({
         focused: false,
     },
 
+    seeRedpack: function(e) {
+      wx.navigateTo({
+        url: '../coupon/coupon',
+      })
+    },
+
     onTabItemTap: function(e) {
       console.log(e)
     },
@@ -65,7 +73,11 @@ Page({
     },
 
     onLoad: function(e) {
-      
+      // let code = '2222227hao'
+      // let vcode = code.substr(0,6)
+      // let vtoken = code.substr(6,4)
+      // console.log(vcode)
+      // console.log(vtoken)
     },
 
     setPhone: function(e) {
@@ -332,7 +344,7 @@ Page({
                 name: e.detail.userInfo.nickName,
                 nickName: e.detail.userInfo.nickName,
                 exp: 0,
-                expTotal: 1000,
+                expTotal: 1001,
                 city: e.detail.userInfo.city,
                 country: e.detail.userInfo.country,
                 gender: e.detail.userInfo.gender,

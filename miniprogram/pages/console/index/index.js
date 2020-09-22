@@ -14,6 +14,7 @@ Page({
     title: '密码登录',
     passph: '密码',
     inputType: 'password',
+    focus: false,
 
     label: '获取验证码',
     code: '',
@@ -235,6 +236,8 @@ Page({
       })
       return 
     }
+
+    this.setData({focus: true})
 
     wx.showLoading({
       title: '正在检测...',

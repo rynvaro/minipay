@@ -44,6 +44,8 @@ Page({
 
       if (couponValue < totalAmount) {
         totalAmount = totalAmount - couponValue
+      }else {
+        totalAmount = 0
       }
       totalAmount = (totalAmount + this.data.mustPayment).toFixed(2)
 
@@ -52,11 +54,16 @@ Page({
 
     setMustPayment: function(e) {
       let mustPay = e.detail.value=='' ? 0 : e.detail.value * 1
+      if (mustPay < 0) {
+        mustPay = 0
+      }
 
       let totalAmount = parseFloat(this.data.realAmount)
       let couponValue = this.data.coupon.coupon.value/100
       if (couponValue < totalAmount) {
         totalAmount = totalAmount - couponValue
+      }else {
+        totalAmount = 0
       }
       totalAmount = (totalAmount + mustPay).toFixed(2)
 
@@ -64,9 +71,11 @@ Page({
     },
 
     select: function() {
-      wx.navigateTo({
-        url: '../coupon/coupon?value='+this.data.realAmount,
-      })
+      if (this.data.preOrder.coupons.length > 0){
+        wx.navigateTo({
+          url: '../coupon/coupon?fromorder=true',
+        })
+      }
     },
 
     selectPay: function(e) {
@@ -79,43 +88,7 @@ Page({
           title: 'loading...',
         })
         let thiz = this
-      wx.cloud.callFunction({
-          name:"zdorderpay",
-          data: {
-            storeID: thiz.data.storeID,
-            payAmount: thiz.data.payAmount,
-            mustPayAmount: thiz.data.mustPayment,
-            couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
-            password: e.detail,
-            payby: thiz.data.payby,
-          },
-          success(res) {
-              console.log(res)
-              wx.hideLoading()
-              if (res.result==-1) {
-                wx.showToast({
-                  title: '余额不足',
-                })
-                return
-              }
-              if (res.result==-2) {
-                wx.showToast({
-                  title: '密码错误',
-                })
-                return
-              }
-              wx.redirectTo({
-                url: '../orderDetail/orderDetail?id='+res.result._id,
-              })
-          },
-          fail: function(e) {
-            console.log(e.errMsg)
-            wx.hideLoading()
-            wx.showToast({
-              title: '支付失败',
-            })
-          }
-      })
+      
       }
     },
 
@@ -197,21 +170,61 @@ Page({
     },
 
     pay: function(e){
-      if (this.data.totalAmount <=0 ) {
+      if (this.data.payAmount <=0 ) {
         wx.showToast({
           title: '请输入支付金额',
         })
         return
       }
+      if (this.data.totalAmount <=0 ) {
+        this.setData({payby: 2})
+      }
       wx.showLoading({
-        title: 'loading...',
+        title: '支付中...',
       })
       let thiz = this
           if (this.data.payby == 2) {
-            wx.hideLoading()
-            moveY = 0;
-            action = 'show',
-            animationEvents(this,moveY,action)
+            // wx.hideLoading()
+            // moveY = 0;
+            // action = 'show',
+            // animationEvents(this,moveY,action)
+            wx.cloud.callFunction({
+              name:"zdorderpay",
+              data: {
+                storeID: thiz.data.storeID,
+                payAmount: thiz.data.payAmount,
+                mustPayAmount: thiz.data.mustPayment,
+                couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
+                password: e.detail,
+                payby: thiz.data.payby,
+              },
+              success(res) {
+                  console.log(res)
+                  wx.hideLoading()
+                  if (res.result==-1) {
+                    wx.showToast({
+                      title: '余额不足',
+                    })
+                    return
+                  }
+                  if (res.result==-2) {
+                    wx.showToast({
+                      title: '密码错误',
+                    })
+                    return
+                  }
+                  wx.redirectTo({
+                    url: '../orderDetail/orderDetail?id='+res.result._id,
+                  })
+              },
+              fail: function(e) {
+                console.log(e.errMsg)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '支付失败',
+                })
+              }
+          })
           } else {
             wx.cloud.callFunction({
               name:"zgetpayinfo",

@@ -6,10 +6,20 @@ page {
     align-items: center;
 }
 
-.card {
+.cardBox {
     position: relative;
-    margin-top: 90rpx;
     width: 95%;
+    height: 375rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    position: absolute;
+    top: 80rpx;
+    left: 0;
+    width: 100%;
     height: 300rpx;
     background: linear-gradient(to bottom right,#FF6610, #c44007);
     border-radius: 20rpx;
@@ -30,13 +40,17 @@ page {
     z-index: -1;
 }
 
+.cardLin0 {
+    height: 120rpx;
+}
+
 .cardLin1 {
     height: 150rpx;
     width: 150rpx;
     position: relative;
-    top: -110rpx;
     border-radius: 200rpx;
     background-color: white;
+    z-index: 2;
 }
 
 .cardLin2 {

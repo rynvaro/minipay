@@ -10,6 +10,7 @@ Page({
       statusBarHeight: app.globalData.statusBarHeight,
       navBarHeight: app.globalData.navBarHeight,
       icoupons: [],
+      fromorder: false,
     },
 
     use: function(e){
@@ -23,13 +24,22 @@ Page({
           let couponValue = this.data.icoupons[i].coupon.value/100
           if (couponValue < totalAmount) {
             totalAmount = totalAmount - couponValue
+          }else {
+            totalAmount = 0
           }
           totalAmount = (totalAmount + prevPage.data.mustPayment).toFixed(2)
 
           prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true, totalAmount: totalAmount})
-          wx.navigateBack({
-            delta: 0,
-          })
+          if (this.data.fromorder) {
+            wx.navigateBack({
+              delta: 0,
+            })
+          }else {
+            wx.switchTab({
+              url: '../home/home',
+            })
+          }
+          
         }
       }
     },
@@ -38,6 +48,7 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      this.setData({fromorder: options.fromorder})
       console.log(this)
         wx.showLoading({
             title: 'loading...',
@@ -45,9 +56,6 @@ Page({
           let thiz = this
             wx.cloud.callFunction({
                 name:"zicoupons",
-                data: {
-                  value: options.value,
-                },
                 success(res) {
                     wx.hideLoading()
                     console.log(res)

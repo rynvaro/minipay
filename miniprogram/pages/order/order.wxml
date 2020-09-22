@@ -33,7 +33,13 @@
   <view class="detailItem" bindtap="select">
     <text class="detailItemKey">优惠券</text>
     <view class="detailItemValue">
-      <text >{{coupon.coupon.value/100}}</text>
+      <block wx:if="{{!couponSelected}}">
+        <text wx:if="{{preOrder.coupons.length>0}}" style="color: red">有可用优惠券</text>
+        <text wx:else style="color: #999999">无可用优惠券</text>
+      </block>
+      <block wx:else>
+        <text >{{coupon.coupon.value/100}}</text>
+      </block>
       <view class="couponArrow"></view>
     </view>
   </view>

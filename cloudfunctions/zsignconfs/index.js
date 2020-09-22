@@ -59,6 +59,8 @@ exports.main = async (event, context) => {
             result.sevenSigns = 0
         }
 
+        console.log(new Date().getTimezoneOffset())
+
         if (formatDate(new Date(user.signDate))==formatDate(now)) {
             result.signed = true
         }else {

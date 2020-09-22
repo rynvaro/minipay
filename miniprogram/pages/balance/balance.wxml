@@ -1,11 +1,16 @@
 <!--miniprogram/pages/balance/balance.wxml-->
 
-<view class="card">
+<view class="cardBox">
     <image class="cardLin1" src="{{user.avatarUrl}}"></image>
-    <text class="cardLin2">{{user.name}}</text>
-    <text class="cardLin3">当前余额：{{user.balance/100}}</text>
-    <image class="cardBG" src="../../images/bg/balance_bg.png"></image>
+    <view class="card">
+        <text class="cardLin0"></text>
+        <text class="cardLin2">{{user.name}}</text>
+        <text class="cardLin3">当前余额：{{user.balance/100}}</text>
+        <image class="cardBG" src="../../images/bg/balance_bg.png"></image>
+    </view>
+
 </view>
+
 
 
 <view class="item" bindtap="deposit">

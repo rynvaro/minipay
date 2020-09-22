@@ -25,7 +25,7 @@
         <view class="inputView">
           <view class="inputViewUp">
             <image class="inputViewUpIcon" src="../../../images/paswd.png" mode="scaleToFill"></image>
-            <input class="inputViewUpInput" type="{{inputType}}" placeholder="{{passph}}" bindinput="setPassword" style="width: {{passwidth}}"></input>
+            <input class="inputViewUpInput" type="{{inputType}}" placeholder="{{passph}}" bindinput="setPassword" style="width: {{passwidth}}" focus="{{focus}}"></input>
             <view class="btn" hidden="{{bypass}}" bindtap="sendSMS">{{label}}</view>
           </view>
           <view class="inputViewDown"></view>

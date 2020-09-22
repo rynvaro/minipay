@@ -63,6 +63,6 @@
 
 <view class="eventTextUnderLine"></view>
 
-<block wx:for="{{store.productImages}}">
+<block wx:for="{{store.productImages}}" wx:key="id">
     <image mode="widthFix" class="eventImage" src="{{item}}"></image>
 </block>

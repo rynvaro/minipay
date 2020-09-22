@@ -44,13 +44,13 @@ exports.main = async (event, context) => {
 
     if (event.data.exp <= 1000) {
         event.data.level = 1
-        event.data.expTotal = 1000
+        event.data.expTotal = 1001
     }else if (event.data.exp > 1000 && event.data.exp <=10000) {
         event.data.level = 2
-        event.data.expTotal = 10000
+        event.data.expTotal = 10001
     }else if (event.data.exp > 10000) {
         event.data.level = 3
-        event.data.expTotal = 10000
+        event.data.expTotal = 10001
     }
 
     let id = event._id 

@@ -480,6 +480,19 @@ page {
   left: 170rpx;
 }
 
+.seeRedpack {
+  position: absolute;
+  width: 150rpx;
+  color: white;
+  font-size: large;
+  border-radius: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 260rpx;
+  left: 125rpx;
+}
+
 .redpackValueBox {
   position: absolute;
   top: 10rpx;

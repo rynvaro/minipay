@@ -28,33 +28,34 @@ exports.main = async (event, context) => {
             }
             plates.data[i].items[j].discount = realDiscount
         }
-        // if (plates.data[i].title == '附近商家'){
-        //     if (lat !=0 && lon !=0 ){
-        //         // 附近
-        //         const nears = await db.collection('mstores').where({
-        //             geoPoint: _.geoNear({
-        //                 geometry: db.Geo.Point(lon,lat),
-        //                 maxDistance: 50000,
-        //             })
-        //         }).orderBy('createdAt','desc').limit(4).get()
 
-        //         for (var i = 0; i < nears.data.length; i ++) {
-        //             near = nears.data[i]
-        //             var realDiscount = near.discount
-        //             if (realDiscount <= 9) {
-        //                 let delta = 0.0
-        //                 if ( level == 1 ) {
-        //                     delta = 0.5
-        //                 }else if (level == 2) {
-        //                     delta = 0.3
-        //                 }
-        //                 realDiscount = realDiscount + delta
-        //             }
-        //             near.discount = realDiscount
-        //             plates.data[i].items.push({storeId: near._id, desc: near.storeDesc, discount: near.discount, image: near.promoteImages[0],title: near.storeName})
-        //         }
-        //     }
-        // }
+        if (plates.data[i].title == '附近商家'){
+            if (lat !=0 && lon !=0 ){
+                // 附近
+                const nears = await db.collection('mstores').where({
+                    geoPoint: _.geoNear({
+                        geometry: db.Geo.Point(lon,lat),
+                        maxDistance: 50000,
+                    })
+                }).orderBy('createdAt','desc').limit(4).get()
+
+                for (var x = 0; x < nears.data.length; x ++) {
+                    near = nears.data[x]
+                    var realDiscount = near.discount
+                    if (realDiscount <= 9) {
+                        let delta = 0.0
+                        if ( level == 1 ) {
+                            delta = 0.5
+                        }else if (level == 2) {
+                            delta = 0.3
+                        }
+                        realDiscount = realDiscount + delta
+                    }
+                    near.discount = realDiscount
+                    plates.data[i].items.push({storeId: near._id, desc: near.storeDesc, discount: near.discount, image: near.promoteImages[0],title: near.storeName})
+                }
+            }
+        }
     }
 
     return plates

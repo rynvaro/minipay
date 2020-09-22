@@ -25,8 +25,9 @@ exports.main = async (event, context) => {
                 delta = 0.3
             }
         }
-
         let realDiscount = store.data.discount + delta
+
+        const coupons = await db.collection('icoupons').where({openid: wxContext.OPENID, status: 0}).get()
         
         result = {
             data: {
@@ -34,6 +35,7 @@ exports.main = async (event, context) => {
                 productImage: store.data.productImages[0],
                 storeImage: store.data.storeImages[0],
                 realDiscount: realDiscount,
+                coupons: coupons.data,
             }
         }
 

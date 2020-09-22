@@ -265,97 +265,96 @@ Page({
             title: '没有权限',
           })
         } else {
-                
-                // 1. 上传图片
-                var promise = Promise.all(files.map((filePath, index) => {
-                  if (filePath.startsWith("cloud")){
-                    return new Promise(function(resolve, reject){
-                      resolve(filePath)
-                    })
+          wx.cloud.callFunction({
+            name:"storeSetting",
+            data:{
+              id: thiz.data.store._id,
+              address: thiz.data.store.address,
+              startTime: thiz.data.store.startTime,
+              endTime: thiz.data.store.endTime,
+              storeDesc: thiz.data.store.storeDesc,
+              storeType: thiz.data.store.storeType,
+              storeTypeOne: thiz.data.store.storeType,
+              longitude: thiz.data.store.longitude,
+              latitude: thiz.data.store.latitude,
+              storeName: thiz.data.store.storeName,
+              type: 'store',
+            },
+            success(res) {
+              console.log(res)
+              wx.hideLoading()
+              if (res.result.errCode == 87014) {
+                wx.showModal({
+                  title: '提示',
+                  content: '内容包含敏感词汇，请修改！',
+                  success (res) {
+                    if (res.confirm) {
+                      console.log('用户点击确定')
+                    } else if (res.cancel) {
+                      console.log('用户点击取消')
+                    }
                   }
-
-                  var cloudPath = 'images/' + wxuuid() + filePath.match(/\.[^.]+?$/)[0]
-                  
-                  return new Promise(function (resolve, reject) {
-                    wx.cloud.uploadFile({
-                      cloudPath,
-                      filePath,
-                      success: res => {
-                        console.log('[上传文件] 成功：', res)
-                        resolve(res.fileID)
-                      },
-                      fail: e => {
-                        console.error('[上传文件] 失败：', e)
-                        wx.hideLoading()
-                        wx.showToast({
-                          icon: 'none',
-                          title: '上传失败',
-                        })
-                      }
-                    });
-                  });
-                }));
-
-                // 设置
-                promise.then(function(results){
-                  // thiz.data.store.storeImages[0] = results[0]
-                  // thiz.data.store.productImage[0] = results[1]
-          
-                  wx.cloud.callFunction({
-                        name:"storeSetting",
-                        data:{
-                          id: thiz.data.store._id,
-                          address: thiz.data.store.address,
-                          startTime: thiz.data.store.startTime,
-                          endTime: thiz.data.store.endTime,
-                          storeDesc: thiz.data.store.storeDesc,
-                          storeType: thiz.data.store.storeType,
-                          longitude: thiz.data.store.longitude,
-                          latitude: thiz.data.store.latitude,
-                          merchantBankCard: thiz.data.store.merchantBankCard,
-                          merchantPhone: thiz.data.store.merchantPhone,
-                          storeName: thiz.data.store.storeName,
-                          type: 'store',
-                        },
-                        success(res) {
-                          console.log(res)
-                          wx.hideLoading()
-                          if (res.result.errCode == 87014) {
-                            wx.showModal({
-                              title: '提示',
-                              content: '内容包含敏感词汇，请修改！',
-                              success (res) {
-                                if (res.confirm) {
-                                  console.log('用户点击确定')
-                                } else if (res.cancel) {
-                                  console.log('用户点击取消')
-                                }
-                              }
-                            })
-                            return
-                          }
-                          if (res.result == -1) {
-                            wx.showToast({
-                              title: '发布失败',
-                            })
-                            return
-                          }
-                          wx.showToast({
-                            title: '发布成功',
-                            success: function(){
-                              setTimeout(function(){wx.navigateBack()},2000)
-                            }
-                          })
-                        },
-                        fail: function(e) {
-                          console.log(e.errMsg)
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '发布失败',
-                          })
-                        }
-                      })
                 })
+                return
+              }
+              if (res.result == -1) {
+                wx.showToast({
+                  title: '发布失败',
+                })
+                return
+              }
+              wx.showToast({
+                title: '发布成功',
+                success: function(){
+                  setTimeout(function(){wx.navigateBack()},2000)
+                }
+              })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              wx.hideLoading()
+              wx.showToast({
+                title: '发布失败',
+              })
+            }
+          })
+                // // 1. 上传图片
+                // var promise = Promise.all(files.map((filePath, index) => {
+                //   if (filePath.startsWith("cloud")){
+                //     return new Promise(function(resolve, reject){
+                //       resolve(filePath)
+                //     })
+                //   }
+
+                //   var cloudPath = 'images/' + wxuuid() + filePath.match(/\.[^.]+?$/)[0]
+                  
+                //   return new Promise(function (resolve, reject) {
+                //     wx.cloud.uploadFile({
+                //       cloudPath,
+                //       filePath,
+                //       success: res => {
+                //         console.log('[上传文件] 成功：', res)
+                //         resolve(res.fileID)
+                //       },
+                //       fail: e => {
+                //         console.error('[上传文件] 失败：', e)
+                //         wx.hideLoading()
+                //         wx.showToast({
+                //           icon: 'none',
+                //           title: '上传失败',
+                //         })
+                //       }
+                //     });
+                //   });
+                // }));
+
+                // // 设置
+                // promise.then(function(results){
+                //   // thiz.data.store.storeImages[0] = results[0]
+                //   // thiz.data.store.productImage[0] = results[1]
+          
+                  
+                // })
         }
       })
 

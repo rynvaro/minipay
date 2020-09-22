@@ -62,9 +62,13 @@
     <text class="detailItemValue">{{filters.formatTime(order.timestamp)}}</text>
   </view>
 
+  <view class="detailItem"></view>
+  <view class="detailItem"></view>
+
 </view>
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount)}}</text>
+  <text wx:if="{{order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount > 0}}" class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount)}}</text>
+  <text wx:else class="totalIncomeValue">¥0.00</text>
 </view>

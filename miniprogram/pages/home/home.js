@@ -43,7 +43,7 @@ Page({
       })
     }else if (to == "4" || to == "5" || to == "6") {
       wx.navigateTo({
-        url: '../stores/stores?storeType='+e.currentTarget.dataset.id,
+        url: '../stores/stores?storeType='+to,
       })
     }
   },

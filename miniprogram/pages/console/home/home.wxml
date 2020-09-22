@@ -82,7 +82,7 @@
         </view>
     </view>
 
-    <view class="bizConsoleFItem" bindtap="showContract">
+    <view class="bizConsoleFItem" bindtap="contract">
         <view class="bizConsoleFItemU">
             <image class="bizConsoleFItemUIcon" src="../../../images/advice.png"></image>
         </view>
@@ -101,6 +101,19 @@
         </view>
         </button>
     </view>
+</view>
+
+
+<view class="popBox" animation="{{animation}}" hidden="{{!showContract}}" >
+    <view class="popBoxHeader">
+        <text class="popBoxHeaderL" bindtap="hiddenDiscount">X</text>
+    </view>
+    <view class="discountInfo">
+        <text class="discountInfoText">折扣：</text>
+        <input class="discountInfoInput" type="digit" placeholder="输入协商折扣" bindinput="setdiscount"></input>
+    </view>
+
+    <view class="discountBtn" bindtap="genContract">生成合同</view>
 </view>
 
 <view class="qrcodeBox" hidden="{{!show}}">

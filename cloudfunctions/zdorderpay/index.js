@@ -30,9 +30,9 @@ exports.main = async (event, context) => {
         db.collection('histories').add({data: history})
         const store = await db.collection('mstores').doc(storeID).get()
         const user = await db.collection('users').doc(wxContext.OPENID).get()
-        if (payby == 2 && sha1(password) != user.data.payPassword) {
-            return -2 // 支付密码错误
-        }
+        // if (payby == 2 && sha1(password) != user.data.payPassword) {
+        //     return -2 // 支付密码错误
+        // }
 
         let level = user.data.data.level
         let delta = 0.0
@@ -45,12 +45,18 @@ exports.main = async (event, context) => {
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
         let totalAmount = (parseFloat(realAmount) + mustPayAmount).toFixed(2)
+        if (totalAmount < 0) {
+            totalAmount = 0
+        } 
         
         let couponValue = 0
         if (couponID!=-1) {
             const coupon = await db.collection('icoupons').doc(couponID).get()
             couponValue = coupon.data.coupon.value/100
             totalAmount = (realAmount - couponValue + mustPayAmount).toFixed(2)
+            if (totalAmount < 0) {
+                totalAmount = 0
+            } 
         }
 
         if (payby == 2) {
@@ -167,11 +173,14 @@ exports.main = async (event, context) => {
 
         let exp = user.data.data.exp + parseInt(totalAmount/10)
         let newLevel = 1
+        let expTotal = 1001
         if (exp > 1000) {
             newLevel = 2
+            expTotal = 10001
         }
         if (exp > 10000) {
             newLevel = 3
+            expTotal = 10001
         }
 
         await trans.collection('users').doc(wxContext.OPENID).update({
@@ -180,6 +189,7 @@ exports.main = async (event, context) => {
                     balance: balance,
                     point: user.data.data.point + parseInt(totalAmount/10),
                     exp: exp,
+                    expTotal: expTotal,
                     level: newLevel,
                     payTimes: user.data.data.payTimes + 1,
                     isFirstPay: isFirstPay,

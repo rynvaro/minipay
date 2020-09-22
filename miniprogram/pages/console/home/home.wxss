@@ -99,7 +99,7 @@ page {
 .bizConsoleF {
     margin-top: 20rpx;
     width: 730rpx;
-    height: 200rpx;
+    /* height: 200rpx; */
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -159,4 +159,80 @@ page {
     top: 10rpx;
     right: 20rpx;
     color: black;
+}
+
+
+.popBox {
+    width: 90%;
+    height: 300rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 200rpx;
+    left: 30rpx;
+    box-shadow: 0 20rpx 10rpx 0 #F6F6F6;
+  }
+  
+  .popBoxHeader {
+    width: 100%;
+    margin-top: 20rpx;
+    display: flex;
+    color: #999999;
+  }
+  
+  .popBoxHeaderL {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .popBoxHeaderR {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .discountInfo {
+      width: 95%;
+      height: 150rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .discountInfoText {
+      width: 20%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+  }
+
+  .discountInfoInput {
+    width: 70%;
+    height: 60rpx;
+    background-color: white;
+    border: 1rpx solid #cecece;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10rpx;
+  }
+  
+  .discountBtn {
+      height: 60rpx;
+      background-color: tomato;
+      border-radius: 10rpx;
+      color: white;
+      padding-left: 10rpx;
+      padding-right: 10rpx;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
