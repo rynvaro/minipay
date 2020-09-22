@@ -1,0 +1,10 @@
+<!--miniprogram/pages/paysuccess/paysuccess.wxml-->
+<view class="bar" style="height: {{statusBarHeight + navBarHeight}}px; background-color: {{barBG}}">
+    <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+    <view class="navBar" style="height:{{navBarHeight}}px;">
+        <view class="leftArrow" bindtap="back"></view>
+        <text class="navBarTitle" bindtap="back">关闭</text>
+    </view>
+</view>
+<image class="paySuc" mode="scaleToFill" src="../../images/paysuc.png"></image>
+<text class="sucText">支付成功</text>

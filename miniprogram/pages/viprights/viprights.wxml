@@ -1,0 +1,71 @@
+<!--miniprogram/pages/viprights/viprights.wxml-->
+<view wx:for="{{cards}}" wx:key="id" class="card" style="height: {{cardHeights[item.id]}}">
+    <image wx:if="{{level >= item.level}}" class="cardBGI" src="../../images/viprightsbg.png"></image>
+    <view class="cardLine1">
+        <text wx:if="{{level >= item.level}}" class="cardLine1Text">V{{item.level}}</text>
+        <text wx:else class="cardLine1Text" style="color: white">V{{item.level}}</text>
+    </view>
+    <view wx:if="{{level >= item.level}}" class="cardLine2">
+        <view class="cardLine2P1"></view>
+        <image wx:if="{{level >= 1}}" class="cardLine2V1" src="../../images/v1StarFilled.png"></image>
+        <image wx:else class="cardLine2V1" src="../../images/v1Star.png"></image>
+        <view class="cardLine2P2"></view>
+        <image wx:if="{{level >= 2}}" class="cardLine2V1" src="../../images/v2StarFilled.png"></image>
+        <image wx:else class="cardLine2V1" src="../../images/v2Star.png"></image>
+        <view class="cardLine2P2"></view>
+        <image wx:if="{{level >= 3}}" class="cardLine2V1" src="../../images/v3StarFilled.png"></image>
+        <image wx:else class="cardLine2V1" src="../../images/v3Star.png"></image>
+        <view class="cardLine2P1"></view>
+    </view>
+    <view wx:else class="cardLine2">
+        <view class="cardLine2P1"></view>
+        <image class="cardLine2V1" src="../../images/v1Star.png"></image>
+        <view class="cardLine2P2"></view>
+        <image class="cardLine2V1" src="../../images/v2Star.png"></image>
+        <view class="cardLine2P2"></view>
+        <image class="cardLine2V1" src="../../images/v3Star.png"></image>
+        <view class="cardLine2P1"></view>
+    </view>
+
+    <view class="cardLine3">
+        <block wx:if="{{item.tips.length > 4 && !toggles[item.id]}}">
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[0]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[1]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text">{{item.tips[2]}}</text>
+            </view>
+
+            <view class="tipsBox">
+                <view class="iconBox">
+                    <image class="icon" src="../../images/star.png"></image>
+                </view>
+                <text class="cardLine3Text" bindtap="toggle" data-id="{{item.id}}">{{item.tips[3]}} >>></text>
+            </view>
+        </block>
+        <block wx:else>
+            <block wx:for="{{item.tips}}" wx:key="id">
+                <view class="tipsBox">
+                    <view class="iconBox">
+                        <image class="icon" src="../../images/star.png"></image>
+                    </view>
+                    <text class="cardLine3Text">{{item}}</text>
+                </view>
+            </block>
+        </block>
+    </view>
+</view>

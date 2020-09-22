@@ -1,0 +1,62 @@
+<!--miniprogram/pages/vipexperience/vipexperience.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+
+<view class="bar" style="height: {{statusBarHeight + navBarHeight}}px background-color: {{barBG}}">
+    <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+    <view class="navBar" style="height:{{navBarHeight}}px;">
+        <view class="leftArrow" bindtap="back"></view>
+        <text class="navBarTitle">会员经验</text>
+    </view>
+</view>
+
+<view class="header">
+    <view class="hLine">
+        <view class="hLine0" style="height: {{statusBarHeight + navBarHeight}}px"></view>
+        <view class="hLine1">
+            <image class="hLine1Icon" src="{{user.avatarUrl}}"></image>
+            <text class="hLine1Text">{{user.name}}</text>
+        </view>
+        <progress class="hLine2" percent="{{user.exp/user.expTotal*100}}" activeColor="white" backgroundColor="#FF2B06" stroke-width="2" active="true" />
+        <view class="hLine3">
+
+            <image wx:if="{{user.level == 1}}" class="hLine3VipIcon" src="../../images/v1.png"></image>
+            <image wx:if="{{user.level == 2}}" class="hLine3VipIcon" src="../../images/v2.png"></image>
+            <image wx:if="{{user.level == 3}}" class="hLine3VipIcon" src="../../images/v3.png"></image>
+            <!-- 
+            <text wx:if="{{user.level == 1}}" class="hLine3VipText">普通会员</text>
+            <text wx:if="{{user.level == 2}}" class="hLine3VipText">黄金会员</text>
+            <text wx:if="{{user.level == 3}}" class="hLine3VipText">铂金会员</text>
+            -->
+            <block wx:if="{{user.level < 3}}">
+                <text class="hLine3ExperienceText">距下一等级还需 {{user.expTotal - user.exp}} 经验</text>
+            </block>
+            <block wx:else>
+                <text class="hLine3ExperienceText">v3享最低折扣</text>
+            </block>
+
+            <view class="tips" bindtap="showTips">
+                <view class="tipsContent">?</view>
+            </view>
+        </view>
+    </view>
+    <image class="headerBG" src="../../images/bg/vip_exp_bg.png"></image>
+</view>
+
+<view class="tipsBox" hidden="{{tipsBoxHidden}}">
+    <text>消费10元得1经验，1积分可在积分兑换专区兑换1经验，经验可用于会员等级升级，开启更多会员折扣优惠特权。</text>
+    <view class="tipsBoxClose" bindtap="hideTips">X</view>
+</view>
+
+<view class="history">
+    <view wx:for="{{histories}}" wx:key="id" class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text wx:if="{{item.type==1}}" class="historyItemULText">消费</text>
+                <text wx:if="{{item.type==2}}" class="historyItemULText">积分兑换</text>
+                <text class="historyItemULTime">{{filters.formatTime(item.timestamp)}}</text>
+            </view>
+            <text class="historyItemUR">{{item.action}}{{item.value}}</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+</view>

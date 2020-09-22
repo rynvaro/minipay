@@ -1,0 +1,89 @@
+<!--miniprogram/pages/order/order.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+
+<view class="detailHeader">
+  <image class="detailHeaderLImage" src="{{preOrder.storeImage}}"></image>
+  <text class="detailHeaderRText">{{preOrder.storeName}}</text>
+</view>
+
+<view class="detailItemBox">
+  <view class="detailItem">
+    <text class="detailItemKey">金额</text>
+    <view class="detailItemValue">
+      <input class="paymentInput" type="digit" placeholder="输入金额" style="text-align:center" bindinput="setPayment"></input>
+      <text class="paymentText">元</text>
+    </view>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">折扣</text>
+    <text class="detailItemValue">{{filters.toFixed(preOrder.realDiscount)}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">本单已减</text>
+    <text class="detailItemValue">{{rebate}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">应付</text>
+    <text class="detailItemValue">{{realAmount}}</text>
+  </view>
+
+  <view class="detailItem" bindtap="select">
+    <text class="detailItemKey">优惠券</text>
+    <view class="detailItemValue">
+      <block wx:if="{{!couponSelected}}">
+        <text wx:if="{{preOrder.coupons.length>0}}" style="color: red">有可用优惠券</text>
+        <text wx:else style="color: #999999">无可用优惠券</text>
+      </block>
+      <block wx:else>
+        <text >{{coupon.coupon.value/100}}</text>
+      </block>
+      <view class="couponArrow"></view>
+    </view>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">不参与优惠金额</text>
+    <view class="detailItemValue">
+      <input class="paymentInput" type="digit" placeholder="0.00" style='text-align:center' bindinput="setMustPayment"></input>
+      <text class="paymentText">元</text>
+    </view>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">支付方式</text>
+    <radio-group class="payby" bindchange="selectPay">
+      <radio value="1" class="paybyItem" checked="true">微信</radio>
+      <radio value="2" class="paybyItem">余额</radio>
+    </radio-group>
+  </view>
+
+</view>
+
+<view class="totalIncome">
+  <text class="totalIncomeKey">合计待支付</text>
+  <text class="totalIncomeValue">¥{{totalAmount}}</text>
+  <view class="totalIncomePayButton" bindtap="pay">立即支付</view>
+</view>
+
+<view class="popBox" animation="{{animation}}" hidden="{{!show}}">
+  <view class="popBoxHeader">
+    <text class="popBoxHeaderL" bindtap="hidden">X</text>
+    <text class="popBoxHeaderR">请输入支付密码</text>
+  </view>
+
+  <text class="popBoxLin1">{{preOrder.storeName}}</text>
+  <text class="popBoxLin2">¥{{totalAmount}}</text>
+  <view class="popBoxLin3"></view>
+  <view class="popBoxLin4">
+    <text class="popBoxLin4L">支付方式</text>
+    <text class="popBoxLin4R">余额</text>
+    <view class="popBoxLin4Arrow"></view>
+  </view>
+  <view class="popBoxLin5">
+    <passwordbox bind:change="inputChange"></passwordbox>
+  </view>
+
+</view>

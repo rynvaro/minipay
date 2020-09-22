@@ -55,18 +55,35 @@ page {
   box-shadow: 0rpx 10rpx 50rpx 0rpx #999999;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.login-box-item-header {
-  width: fit-content;
-  margin-left: 40rpx;
+.loginBoxHeader{
+  width: 90%;
   margin-top: 40rpx;
-  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBoxHeaderL {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  font-size: large;
+}
+
+.loginBoxHeaderR {
+  width: 50%;
+  color: #EC9B76;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .login-box-item-input {
   height: 90rpx;
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   margin-left: 40rpx;
@@ -124,4 +141,15 @@ page {
   height: 1rpx;
   background-color: #d3d0d0;
   box-shadow: 0rpx 2rpx 10rpx 0rpx #dad5d5;
+}
+
+.btn {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  color: white;
+  background-color: #F56507;
+
 }

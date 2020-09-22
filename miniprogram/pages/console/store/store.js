@@ -8,31 +8,34 @@ Page({
      * 页面的初始数据
      */
     data: {
-      id:'',
-      uploadStoreImage: false,
-      uploadProductImage: false,
-      data: {
-        storeImage: '',
-        storeName: '',
-        merchantInfo: '',
-        realName: '',
-        cardNumber: '',
-        phone: '',
-        location: {
-          address: '点击选择地址',
-        },
-        seTime: '',
-        productImage: ''
-      }
+      store: {}
     },
+
+    setDesc: function(e) {
+      this.data.store.storeDesc = e.detail.value
+      this.setData({store: this.data.store})
+    },
+
+    bindStartTimeChange: function(e) {
+      this.data.store.startTime = e.detail.value
+      this.setData({store: this.data.store})
+    },
+
+    bindEndTimeChange: function(e) {
+      this.data.store.endTime = e.detail.value
+      this.setData({store: this.data.store})
+    },
+
 
     selectLocation: function(){
       var that = this
       wx.chooseLocation({
         success: function(res) {
           console.log(res)
-          that.data.data.location=res
-          that.setData({data:that.data.data})
+          that.data.store.address=res.address
+          that.data.store.longitude = res.longitude
+          that.data.store.latitude = res.latitude
+          that.setData({store:that.data.store})
         },
         fail:function(e){
           console.log(e)
@@ -41,116 +44,193 @@ Page({
     },
 
     setStoreName: function(e) {
-      this.data.data.storeName=e.detail.value
+      this.data.store.storeName=e.detail.value
       this.setData({
-        data:this.data.data
+        store:this.data.store
       })
     },
 
-    setMerchantInfo: function(e) {
-      this.data.data.merchantInfo=e.detail.value
-      this.setData({
-        data:this.data.data
-      })
-    },
+    // setMerchantInfo: function(e) {
+    //   this.data.data.merchantInfo=e.detail.value
+    //   this.setData({
+    //     data:this.data.data
+    //   })
+    // },
 
     setRealName: function(e) {
-      this.data.data.realName=e.detail.value
+      this.data.store.merchantName=e.detail.value
       this.setData({
-        data:this.data.data
+        store:this.data.store
       })
     },
 
     setCardNumber: function(e) {
-      this.data.data.cardNumber=e.detail.value
+      this.data.store.merchantBankCard=e.detail.value
       this.setData({
-        data:this.data.data
+        store:this.data.store
+      })
+    },
+
+    setBank: function(e) {
+      this.data.store.bank=e.detail.value
+      this.setData({
+        store:this.data.store
       })
     },
 
     setPhone: function(e) {
-      this.data.data.phone=e.detail.value
+      this.data.store.merchantPhone=e.detail.value
       this.setData({
-        data:this.data.data
+        store:this.data.store
       })
     },
 
-    setSETime: function(e) {
-      this.data.data.seTime=e.detail.value
+    change: function(e) {
+      console.log(e)
+      this.data.store.storeType=e.detail.value
       this.setData({
-        data:this.data.data
+        store:this.data.store
       })
     },
 
-    publish: function(e){
-      if (!this.data.data.storeName){
-        wx.showToast({
-          title: '请填写店铺名称',
-        })
-        return 
-      }
-
-      if (!this.data.data.storeName){
-        wx.showToast({
-          title: '请填写店铺名称',
-        })
-        return 
-      }
-
-      if (!this.data.data.merchantInfo){
-        wx.showToast({
-          title: '请填写商家信息',
-        })
-        return 
-      }
-
-      if (!this.data.data.realName){
+    publishMerchantInfo: function(e) {
+      if (!this.data.store.merchantName){
         wx.showToast({
           title: '请填写真实姓名',
         })
         return 
       }
 
-      if (!this.data.data.cardNumber){
+      if (!this.data.store.merchantBankCard){
         wx.showToast({
           title: '请填写收款卡号',
         })
         return 
       }
 
-      if (!this.data.data.phone){
+      if (!this.data.store.bank){
+        wx.showToast({
+          title: '请填写开户行',
+        })
+        return 
+      }
+
+      if (!this.data.store.merchantPhone){
         wx.showToast({
           title: '请填写手机号',
         })
         return 
       }
-      if (!this.data.data.location.name){
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      var promise = new Promise(function (resolve, reject) {
+        wx.cloud.callFunction({
+            name:"hasPermission",
+            data: {
+              storeID: app.globalData.storeID,
+            },
+            success(res) {
+                console.log(res)
+                resolve(true)
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              resolve(false)
+            }
+        })
+      });
+
+      promise.then(function(hasPermission){
+        console.log("has permission: ", hasPermission)
+        if (!hasPermission) {
+          wx.showToast({
+            title: '没有权限',
+          })
+        } else {
+          wx.cloud.callFunction({
+            name:"storeSetting",
+            data: {
+              id: app.globalData.storeID,
+              merchantName: thiz.data.store.merchantName,
+              merchantPhone: thiz.data.store.merchantPhone,
+              merchantBankCard: thiz.data.store.merchantBankCard,
+              bank: thiz.data.store.bank,
+              type: 'merchant',
+            },
+            success(res) {
+                console.log(res)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '已更新',
+                })
+                wx.navigateBack({
+                  delta: 0,
+                })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              wx.hideLoading()
+              wx.showToast({
+                title: '更新失败',
+              })
+            }
+        })
+        }
+      })
+    },
+
+    publish: function(e){
+      if (!this.data.store.storeName){
+        wx.showToast({
+          title: '请填写店铺名称',
+        })
+        return 
+      }
+
+      
+      if (!this.data.store.address){
         wx.showToast({
           title: '请选择地址',
         })
         return 
       }
-      if (!this.data.data.seTime){
+      if (!this.data.store.startTime || !this.data.store.endTime){
         wx.showToast({
           title: '请填写营业时间',
         })
         return 
       }
 
-      if (!this.data.data.storeImage) {
+      if (!this.data.store.storeType){
         wx.showToast({
-          title: '请选择门头图片',
+          title: '请选择店铺类型',
         })
-        return
+        return 
       }
 
-      
-      if (!this.data.data.productImage) {
+      if (!this.data.store.storeDesc){
         wx.showToast({
-          title: '请选择商品详情图片',
+          title: '请输入描述',
         })
-        return
+        return 
       }
+
+      // if (!this.data.store.storeImage) {
+      //   wx.showToast({
+      //     title: '请选择门头图片',
+      //   })
+      //   return
+      // }
+
+      
+      // if (!this.data.data.productImage) {
+      //   wx.showToast({
+      //     title: '请选择商品详情图片',
+      //   })
+      //   return
+      // }
 
       let thiz = this
 
@@ -158,14 +238,14 @@ Page({
         title: '正在发布...',
       })
 
-      var files = [this.data.data.storeImage,this.data.data.productImage]
+      var files = [this.data.store.storeImages[0],this.data.store.productImages[0]]
 
 
       var promise1 = new Promise(function (resolve, reject) {
         wx.cloud.callFunction({
             name:"hasPermission",
             data: {
-              phone: app.globalData.phone,
+              storeID: app.globalData.storeID,
             },
             success(res) {
                 console.log(res)
@@ -185,84 +265,96 @@ Page({
             title: '没有权限',
           })
         } else {
-                
-                // 1. 上传图片
-                var promise = Promise.all(files.map((filePath, index) => {
-                  if (filePath.startsWith("cloud")){
-                    return new Promise(function(resolve, reject){
-                      resolve(filePath)
-                    })
+          wx.cloud.callFunction({
+            name:"storeSetting",
+            data:{
+              id: thiz.data.store._id,
+              address: thiz.data.store.address,
+              startTime: thiz.data.store.startTime,
+              endTime: thiz.data.store.endTime,
+              storeDesc: thiz.data.store.storeDesc,
+              storeType: thiz.data.store.storeType,
+              storeTypeOne: thiz.data.store.storeType,
+              longitude: thiz.data.store.longitude,
+              latitude: thiz.data.store.latitude,
+              storeName: thiz.data.store.storeName,
+              type: 'store',
+            },
+            success(res) {
+              console.log(res)
+              wx.hideLoading()
+              if (res.result.errCode == 87014) {
+                wx.showModal({
+                  title: '提示',
+                  content: '内容包含敏感词汇，请修改！',
+                  success (res) {
+                    if (res.confirm) {
+                      console.log('用户点击确定')
+                    } else if (res.cancel) {
+                      console.log('用户点击取消')
+                    }
                   }
-
-                  var cloudPath = 'images/' + wxuuid() + filePath.match(/\.[^.]+?$/)[0]
-                  
-                  return new Promise(function (resolve, reject) {
-                    wx.cloud.uploadFile({
-                      cloudPath,
-                      filePath,
-                      success: res => {
-                        console.log('[上传文件] 成功：', res)
-                        resolve(res.fileID)
-                      },
-                      fail: e => {
-                        console.error('[上传文件] 失败：', e)
-                        wx.hideLoading()
-                        wx.showToast({
-                          icon: 'none',
-                          title: '上传失败',
-                        })
-                      }
-                    });
-                  });
-                }));
-
-                // 设置
-                promise.then(function(results){
-                  thiz.data.data.storeImage = results[0]
-                  thiz.data.data.productImage = results[1]
-          
-                  wx.cloud.callFunction({
-                        name:"storeSetting",
-                        data:{
-                          id:thiz.data.id,
-                          data:thiz.data.data,
-                        },
-                        success(res) {
-                          console.log(res)
-                          wx.hideLoading()
-                          if (res.result.errCode == 87014) {
-                            wx.showModal({
-                              title: '提示',
-                              content: '内容包含敏感词汇，请修改！',
-                              success (res) {
-                                if (res.confirm) {
-                                  console.log('用户点击确定')
-                                } else if (res.cancel) {
-                                  console.log('用户点击取消')
-                                }
-                              }
-                            })
-                            return
-                          }
-                          wx.showToast({
-                            title: '发布成功',
-                            success: function(){
-                              setTimeout(function(){wx.navigateBack()},2000)
-                            }
-                          })
-                        },
-                        fail: function(e) {
-                          console.log(e.errMsg)
-                          wx.hideLoading()
-                          wx.showToast({
-                            title: '发布失败',
-                          })
-                        }
-                      })
                 })
+                return
+              }
+              if (res.result == -1) {
+                wx.showToast({
+                  title: '发布失败',
+                })
+                return
+              }
+              wx.showToast({
+                title: '发布成功',
+                success: function(){
+                  setTimeout(function(){wx.navigateBack()},2000)
+                }
+              })
+            },
+            fail: function(e) {
+              console.log(e.errMsg)
+              wx.hideLoading()
+              wx.showToast({
+                title: '发布失败',
+              })
+            }
+          })
+                // // 1. 上传图片
+                // var promise = Promise.all(files.map((filePath, index) => {
+                //   if (filePath.startsWith("cloud")){
+                //     return new Promise(function(resolve, reject){
+                //       resolve(filePath)
+                //     })
+                //   }
 
+                //   var cloudPath = 'images/' + wxuuid() + filePath.match(/\.[^.]+?$/)[0]
+                  
+                //   return new Promise(function (resolve, reject) {
+                //     wx.cloud.uploadFile({
+                //       cloudPath,
+                //       filePath,
+                //       success: res => {
+                //         console.log('[上传文件] 成功：', res)
+                //         resolve(res.fileID)
+                //       },
+                //       fail: e => {
+                //         console.error('[上传文件] 失败：', e)
+                //         wx.hideLoading()
+                //         wx.showToast({
+                //           icon: 'none',
+                //           title: '上传失败',
+                //         })
+                //       }
+                //     });
+                //   });
+                // }));
 
-
+                // // 设置
+                // promise.then(function(results){
+                //   // thiz.data.store.storeImages[0] = results[0]
+                //   // thiz.data.store.productImage[0] = results[1]
+          
+                  
+                // })
         }
       })
 
@@ -277,27 +369,22 @@ Page({
       wx.showLoading({
         title: 'loading...',
       })
-      this.data.data.phone=app.globalData.phone
-      this.setData({
-        data:this.data.data
-      })
 
       let thiz = this
       wx.cloud.callFunction({
           name:"getStoreSettingInfo",
           data: {
-            phone: app.globalData.phone,
+            storeID: app.globalData.storeID,
           },
           success(res) {
               console.log(res)
               thiz.setData({
-                  data: res.result.data.data.data,
-                  id:res.result.data._id
+                  store: res.result.data
               })
               wx.hideLoading()
           },
           fail: function(e) {
-            console.log(e.errMsg)
+            console.log(e)
             wx.hideLoading()
           }
       })

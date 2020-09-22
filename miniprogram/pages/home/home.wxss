@@ -1,0 +1,230 @@
+/* miniprogram/pages/home/home.wxss */
+
+
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navBar {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+
+.banner {
+    width: 95%;
+    height: 350rpx;
+    border-radius: 20rpx;
+}
+
+.bannerItem {
+    height: 100%;
+    width: 100%;
+    border-radius: 20rpx;
+}
+
+/* search box */
+.search {
+    width: 95%;
+    background-color: #ffffff;
+    opacity: 0.8;
+    height: 80rpx;
+    border-radius: 20rpx;
+    display: flex;
+  }
+  
+.searchIconBox {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.searchIcon {
+    width: 40rpx;
+    height: 40rpx;
+  }
+  
+.searchInput {
+    width: 85%;
+    height: 100%;
+  }
+
+
+.tabs {
+      width: 100%;
+      height: 200rpx;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+  }
+
+.tabItem {
+      width: 180rpx;
+      height: 180rpx;
+      margin: 20rpx;
+      border-radius: 20rpx;
+      display: flex;
+      flex-direction: column;
+  }
+
+.tabItemU {
+      width: 100%;
+      height: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+  }
+
+.tabItemUIcon {
+    width: 75rpx;
+    height: 75rpx;
+}
+
+.tabItemD {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    font-size: small;
+}
+
+.box {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxTitle {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+}
+
+.boxTitleIconBox {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.boxTitleIcon {
+    width: 36rpx;
+    height: 36rpx;
+}
+
+.boxTitleName {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+
+.boxTitleMore {
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    color: #FF5E00;
+}
+
+.boxHeaderImage {
+    width: 100%;
+    height: 200rpx;
+    border-radius: 20rpx;
+}
+
+.innerBox {
+    margin-top: 20rpx;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.innerBoxItem {
+    width: 340rpx;
+    height: 400rpx;
+    margin: 5rpx;
+    border-radius: 20rpx;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.innerBoxItemImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20rpx;
+    z-index: -1;
+}
+
+.innerBoxItemDesc {
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.6;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.innerBoxItemDescTitle {
+    margin-left: 20rpx;
+    width: 60%;
+    height: 30%;
+    color: white;
+    border-bottom: 2rpx dashed white;
+    display: flex;
+    align-items: center;
+}
+
+.innerBoxItemDescContent {
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:3;
+    margin-left: 20rpx;
+    width: 90%;
+    height: 70%;
+    color: white;
+    font-size: small;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 300rpx;
+    position: relative;
+    z-index: 0;
+}
+
+.headerBG {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}

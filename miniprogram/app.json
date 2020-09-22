@@ -1,55 +1,72 @@
 {
-  "pages": [
-    "pages/console/index/index",
-    "pages/console/orders/orders",
-    "pages/console/modifyPassword/modifyPassword",
-    "pages/console/orderDetail/orderDetail",
-    "pages/console/home/home",
-    "pages/console/withdraw/withdraw",
-    "pages/console/financial/financial",
-    "pages/console/store/store",
-    "pages/console/discount/discount",
-    "pages/index/index",
-    "pages/bizreg/bizreg",
-    "pages/search/search"
-  ],
-  "window": {
-    "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FFF",
-    "navigationBarTitleText": "7HAO",
-    "navigationBarTextStyle": "black"
-  },
-  "tabBar": {
-    "color": "#666666",
-    "selectedColor": "#000000",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home.png"
-      },
-      {
-        "pagePath": "pages/search/search",
-        "text": "查找",
-        "iconPath": "images/search.png",
-        "selectedIconPath": "images/search.png"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "text": "我的",
-        "iconPath": "images/my.png",
-        "selectedIconPath": "images/my.png"
-      }
-    ]
-  },
-  "sitemapLocation": "sitemap.json",
-  "style": "v2",
-  "permission": {
-    "scope.userLocation": {
-      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    "pages": [
+        "pages/index/index",
+        "pages/vipexperience/vipexperience",
+        "pages/point/point",
+        "pages/balance/balance",
+        "pages/console/index/index",
+        "pages/console/home/home",
+        "pages/console/contract/contract",
+        "pages/console/setpass/setpass",
+        "pages/console/store/store",
+        "pages/paysuccess/paysuccess",
+        "pages/deposit/deposit",
+        "pages/home/home",
+        "pages/console/discount/discount",
+        "pages/feedback/feedback",
+        "pages/order/order",
+        "pages/signin/signin",
+        "pages/invite/invite",
+        "pages/coupon/coupon",
+        "pages/stores/stores",
+        "pages/plates/plates",
+        "pages/search/search",
+        "pages/viprights/viprights",
+        "pages/orders/orders",
+        "pages/pointexchange/pointexchange",
+        "pages/storeregister/storeregister",
+        "pages/pointexchanging/pointexchanging",
+        "pages/accountdetailed/accountdetailed",
+        "pages/map/map",
+        "pages/store/store",
+        "pages/console/orders/orders",
+        "pages/console/withdraw/withdraw",
+        "pages/console/financial/financial",
+        "pages/console/orderDetail/orderDetail",
+        "pages/console/modifyPassword/modifyPassword",
+        "pages/orderDetail/orderDetail"
+    ],
+    "window": {
+        "backgroundColor": "#F6F6F6",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#F6F6F6",
+        "navigationBarTitleText": "7HAO",
+        "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+        "color": "#666666",
+        "selectedColor": "#000000",
+        "backgroundColor": "#ffffff",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "会员中心",
+                "iconPath": "images/vcenter.png",
+                "selectedIconPath": "images/vcenter.png"
+            },
+            {
+                "pagePath": "pages/home/home",
+                "text": "柒号生活",
+                "iconPath": "images/home.png",
+                "selectedIconPath": "images/home.png"
+            }
+        ]
+    },
+    "sitemapLocation": "sitemap.json",
+    "style": "v2",
+    "permission": {
+        "scope.userLocation": {
+            "desc": "你的位置信息将用于小程序位置接口的效果展示"
+        }
     }
-  }
 }

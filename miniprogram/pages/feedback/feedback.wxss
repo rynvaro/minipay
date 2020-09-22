@@ -1,0 +1,59 @@
+/* miniprogram/pages/feedback/feedback.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.title {
+    width: 90%;
+    height: 60rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10rpx;
+    background-color: white;
+}
+
+.titleInput {
+    width: 90%;
+    height: 60rpx;
+    background-color: white;
+}
+
+
+.textarea {
+    margin-top: 20rpx;
+    width: 90%;
+    background-color: white;
+    border-radius: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    margin-top: 10rpx;
+    width: 92%;
+    height: 200rpx;
+    background-color: white;
+    border-radius: 10rpx;
+}
+
+.button {
+    margin-top: 30rpx;
+    background-color: #FF540C;
+    color: white;
+}
+
+.tips {
+    margin-top: 50rpx;
+    width: 100%;
+    height: 50rpx;
+    color: #999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

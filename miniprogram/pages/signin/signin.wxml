@@ -1,0 +1,39 @@
+<!--miniprogram/pages/signin/signin.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+<view class="card">
+    <view class="cardLin1" bindtap="point">
+        <text class="cardLin1Text"> 当前积分：{{signconf.point}}</text>
+        <view class="cardLin1Arrow"></view>
+    </view>
+    <view class="cardLin2">
+        <view class="box">{{filters.parseToInt((signconf.signs%1000)/100)}}</view>
+        <view class="box">{{filters.parseToInt((signconf.signs%100)/10)}}</view>
+        <view class="box">{{signconf.sevenSigns%10}}</view>
+        <text class="cardDay">天</text>
+    </view>
+    <image class="cardBG" src="../../images/bg/sign_bg.png"></image>
+</view>
+
+
+<view class="dayBox">
+    <block wx:for="{{signconf.confs}}" wx:key="id" >
+        <view wx:if="{{index+1 <= signconf.sevenSigns}}" class="dayItem1">
+            <text class="dayItemU1">+{{item}}</text>
+            <text class="dayItemD1">第{{index+1}}天</text>
+        </view>
+        <view wx:else class="dayItem">
+            <text class="dayItemU">+{{item}}</text>
+            <text class="dayItemD">第{{index+1}}天</text>
+        </view>
+    </block>
+    
+</view>
+
+
+<button class="button" bindtap="sign" disabled="{{disable}}">{{btnText}}</button>
+
+
+<view class="role">
+    <text class="roleTile">{{signconf.ruleTitle}}</text>
+    <text class="roleContent">{{signconf.rules}}</text>
+</view>

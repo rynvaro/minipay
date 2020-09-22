@@ -1,0 +1,68 @@
+<!--miniprogram/pages/store/store.wxml-->
+<!-- <image mode="aspectFill" class="storeImage"  src="{{store.storeImage}}"></image>
+ -->
+<view class="banner">
+  <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" current="{{current}}">
+    <block wx:for="{{bannerUrls}}" wx:key="id">
+    <swiper-item wx:if="{{item.isVideo}}">
+        <video src="{{item.url}}" class="bannerItem" autoplay="true" bindended="videoEnded"></video>
+     </swiper-item>
+    <swiper-item wx:else>
+        <image mode="aspectFill" src="{{item.url}}" class="bannerItem"/>
+     </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class="line1">
+    <text class="storeName">{{store.storeName}}</text>
+    <text wx:if="{{viplevel == 1}}" class="storeDiscount">{{v1discount}}折</text>
+    <text wx:if="{{viplevel == 2}}" class="storeDiscount">{{v2discount}}折</text>
+    <text wx:if="{{viplevel == 3}}" class="storeDiscount">{{v3discount}}折</text>
+    <view class="buyButton" bindtap="order">折扣买单</view>
+</view>
+
+<view class="tips">{{store.orders}}人购买</view>
+
+
+<view class="viprights">
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 1}}" class="viprightsTinyBoxUIcon" src="../../images/v1StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v1Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v1discount}}折</text>
+    </view>
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 2}}" class="viprightsTinyBoxUIcon" src="../../images/v2StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v2Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v2discount}}折</text>
+    </view>
+    <view class="viprightsTinyBox">
+        <view class="viprightsTinyBoxU">
+            <image wx:if="{{viplevel == 3}}" class="viprightsTinyBoxUIcon" src="../../images/v3StarFilled.png"></image>
+            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v3Star.png"></image>
+        </view>
+        <text class="viprightsTinyBoxD">{{v3discount}}折</text>
+    </view>
+    <view class="viprightsBGLine"></view>
+</view>
+
+<view class="liteBox">
+    <text class="liteBoxItem">营业时间：{{store.startTime}}-{{store.endTime}}</text>
+    <text class="liteBoxItem">商家电话：{{store.merchantPhone}}</text>
+    <text class="liteBoxItem">商家详情：{{store.storeDesc}}</text>
+    <view class="liteBoxItem" bindtap="map">
+        <text class="liteBoxItemDL" >商家地址：{{store.address}}</text>
+    </view>
+</view>
+
+<text class="eventText">活动详情</text>
+
+<view class="eventTextUnderLine"></view>
+
+<block wx:for="{{store.productImages}}" wx:key="id">
+    <image mode="widthFix" class="eventImage" src="{{item}}"></image>
+</block>

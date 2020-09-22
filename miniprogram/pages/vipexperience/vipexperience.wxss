@@ -1,0 +1,231 @@
+/* miniprogram/pages/vipexperience/vipexperience.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+
+.bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.navBar {
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.leftArrow {
+    margin-top: 5rpx;
+    width: 20rpx;
+    height: 20rpx;
+    border-bottom: 5rpx solid white;
+    border-left: 5rpx solid white;
+    transform: rotate(45deg);
+  }
+
+
+.navBarTitle {
+    margin-left: 20rpx;
+    font-size: small;
+    color: white;
+}
+
+
+.tipsBox {
+    position: absolute;
+    top: 200rpx;
+    right: 30rpx;
+    font-size: small;
+    color: #FF6A11;
+    background-color: white;
+    border-radius: 20rpx;
+    height: 150rpx;
+    width: 350rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20rpx;
+}
+
+.tipsBoxClose {
+    width: 30rpx;
+    height: 30rpx;
+    color: red;
+    border: 2rpx double #FFA74F;
+    border-radius: 20rpx;
+    font-size: 25rpx;
+    position: absolute;
+    top: 5rpx;
+    right: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 450rpx;
+    background-color: #FF6610;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+
+.headerBG {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 20rpx;
+    z-index: -1;
+}
+
+.hLine {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.hLine1 {
+    width: 90%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+}
+
+.hLine1Icon {
+    height: 80rpx;
+    width: 80rpx;
+    background-color: white;
+    border-radius: 200rpx;
+}
+
+.hLine1Text {
+    margin-left: 20rpx;
+    font-size: small;
+}
+
+.hLine2 {
+    width: 90%;
+    height: 10%;
+}
+
+.hLine3 {
+    width: 90%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+}
+
+.hLine3VipIcon {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.hLine3VipText {
+    color: wheat;
+    font-size: small;
+    margin-left: 20rpx;
+}
+
+.hLine3ExperienceText {
+    color: wheat;
+    font-size: small;
+    margin-left: 20rpx;
+}
+
+.tips {
+    height: 60%;
+    width: 100rpx;
+    display: flex;
+    margin-left: 10rpx;
+}
+
+.tipsContent {
+    height: 20rpx;
+    width: 20rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    font-size: 20rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FF6610;
+}
+
+.history {
+    margin-top: -60rpx;
+    background-color: white;
+    width: 92%;
+    border-top-left-radius: 20rpx;
+    border-top-right-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+
+.historyItem {
+    width: 90%;
+    height: 120rpx;
+    margin-top: 20rpx;
+}
+
+.historyItemU {
+    height: 95%;
+    display: flex;
+}
+
+.historyItemUL {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20rpx;
+    justify-content: flex-end;
+    margin-bottom: 10rpx;
+}
+
+.historyItemULText {
+    color: #999999;
+}
+
+.historyItemULTime {
+    font-size: 25rpx;
+    color: #999999;
+}
+
+.historyItemUR {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: #FF7920;
+}
+
+.historyItemD {
+    height: 5rpx;
+    background: linear-gradient(to right,#E6E6E6, #fdfdfd);
+}

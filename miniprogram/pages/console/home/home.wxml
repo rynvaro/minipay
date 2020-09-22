@@ -1,13 +1,13 @@
 <!--miniprogram/pages/console/home/home.wxml-->
 
-<image mode="aspectFill" class="storeImage" wx:if="{{storeImage}}" src="{{storeImage}}"></image>
+<image mode="aspectFill" class="storeImage" wx:if="{{store.storeImages.length>0}}" src="{{store.storeImages[0]}}"></image>
 
 <view class="bizConsole">
     <view class="bizConsole1">
         <text class="bizConsole1Text">今日营业额（元）</text>
     </view>
     <view class="bizConsole2">
-        <text class="bizConsole2Text">{{data.dayBi}}</text>
+        <text class="bizConsole2Text">{{store.dayIncome}}</text>
     </view>
     <view class="bizConsole3">
         <view class="bizConsole3Item" bindtap="discount">
@@ -15,7 +15,7 @@
                 <text class="bizConsole3ItemUText">当前折扣率</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">{{data.discount.discountValue}}</text>
+                <text class="bizConsole3ItemDText">{{store.discount}}</text>
             </view>
         </view>
 
@@ -23,12 +23,12 @@
             <view class="bizConsole3MiddleLine"></view>
         </view>
 
-        <view class="bizConsole3Item" bindtap="orders">
+        <view class="bizConsole3Item" bindtap="dayorders">
             <view class="bizConsole3ItemU">
                 <text class="bizConsole3ItemUText">今日订单</text>
             </view>
             <view class="bizConsole3ItemD">
-                <text class="bizConsole3ItemDText">0</text>
+                <text class="bizConsole3ItemDText">{{store.dayOrders}}</text>
             </view>
         </view>
     </view>
@@ -55,7 +55,7 @@
         </view>
     </view>
 
-    <view class="bizConsoleFItem" bindtap="store">
+    <view class="bizConsoleFItem" bindtap="toStore">
         <view class="bizConsoleFItemU">
             <image class="bizConsoleFItemUIcon" src="../../../images/bizsettings.png"></image>
         </view>
@@ -64,14 +64,32 @@
         </view>
     </view>
 
-    <!-- <view class="bizConsoleFItem">
-        <view class="bizConsoleFItemU" bindtap="events">
-            <image class="bizConsoleFItemUIcon" src="../../../images/events.png"></image>
+    <view class="bizConsoleFItem" bindtap="setPass">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/paswd.png"></image>
         </view>
         <view class="bizConsoleFItemD">
-            <text class="bizConsoleFItemDText">活动列表</text>
+            <text class="bizConsoleFItemDText">密码设置</text>
         </view>
-    </view> -->
+    </view>
+
+    <view class="bizConsoleFItem" bindtap="showQRCode">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/qrcode.jpeg"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">二维码</text>
+        </view>
+    </view>
+
+    <view class="bizConsoleFItem" bindtap="contract">
+        <view class="bizConsoleFItemU">
+            <image class="bizConsoleFItemUIcon" src="../../../images/advice.png"></image>
+        </view>
+        <view class="bizConsoleFItemD">
+            <text class="bizConsoleFItemDText">合同签约</text>
+        </view>
+    </view>
 
     <view class="bizConsoleFItem">
         <button open-type="contact" class="bizConsoleFItem">
@@ -83,4 +101,22 @@
         </view>
         </button>
     </view>
+</view>
+
+
+<view class="popBox" animation="{{animation}}" hidden="{{!showContract}}" >
+    <view class="popBoxHeader">
+        <text class="popBoxHeaderL" bindtap="hiddenDiscount">X</text>
+    </view>
+    <view class="discountInfo">
+        <text class="discountInfoText">折扣：</text>
+        <input class="discountInfoInput" type="digit" placeholder="输入协商折扣" bindinput="setdiscount"></input>
+    </view>
+
+    <view class="discountBtn" bindtap="genContract">生成合同</view>
+</view>
+
+<view class="qrcodeBox" hidden="{{!show}}">
+    <canvas style="width: 200px; height: 200px;" canvas-id="myQrcode"></canvas>
+    <text class="close" bindtap="hidden">×</text>
 </view>

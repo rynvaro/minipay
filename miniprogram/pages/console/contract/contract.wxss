@@ -1,0 +1,41 @@
+/* miniprogram/pages/console/contract/contract.wxss */
+
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    width: 95%;
+}
+
+.something {
+    height: 120rpx;
+}
+
+.bottom {
+    height: 100rpx;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: #e7e7e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+.btn {
+    height: 70rpx;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    background-color: red;
+    border-radius: 10rpx;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

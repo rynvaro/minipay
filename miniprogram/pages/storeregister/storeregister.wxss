@@ -1,0 +1,47 @@
+/* miniprogram/pages/storeregister/storeregister.wxss */
+
+page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.title {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 60rpx;
+    border-radius: 10rpx;
+    background-color: white;
+}
+
+.titlePlaceholder {
+    color: #b4b4b4;
+    margin-left: 20rpx;
+    border-radius: 10rpx;
+}
+
+.textarea {
+    margin-top: 20rpx;
+    width: 90%;
+    background-color: white;
+}
+
+.content {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 200rpx;
+    background-color: white;
+    border-radius: 10rpx;
+    margin-left: 20rpx;
+}
+
+.contentPlaceholder {
+    color: #b4b4b4;
+}
+
+.button {
+    margin-top: 30rpx;
+    background-color: #FF540C;
+    color: white;
+}

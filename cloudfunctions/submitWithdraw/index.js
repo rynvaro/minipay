@@ -13,46 +13,61 @@ exports.main = async (event, context) => {
 
     // 1. 获取用户 检查余额
     try {
-        merchant = await db.collection("merchants").doc(event.phone).get()
-        if (merchant.data.balance < event.withdrawAmout) {
+        let history = event
+        history.timestamp = Date.parse(new Date())
+        history.type = 'submitwithdraw'
+        db.collection('histories').add({data: history})
+        const mstore = await db.collection("mstores").doc(event.storeID).get()
+        if (mstore.data.balance < event.withdrawAmout) {
             throw("insufficient funds")
         }
 
-        await db.collection('withdraws').add({
+        const trans = await db.startTransaction()
+        const res1 = await trans.collection('withdraws').add({
             data: {
-                phone: event.phone,
+                storeName: mstore.data.storeName,
+                merchantName: mstore.data.merchantName,
+                storeID: event.storeID,
                 withdrawAmount: event.withdrawAmount,
                 status: 0,// 0 待审核，1 审核中，2 付款中，3 已付款，4 已撤销
                 openid: wxContext.OPENID,
-                publishedAt: new Date(),
-                updatedAt: new Date()
+                publishedAt: Date.parse(new Date()),
+                updatedAt: Date.parse(new Date()),
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
             },
             fail: err => {
                 console.error('[数据库] [新增记录] 失败：', err)
-                throw("add error")
+                throw(err)
             }
         })
-        // 更新余额 TODO 需要保证事务
-        await db.collection('merchants').doc(event.phone).update({
+
+        const res2 = await trans.collection('mstores').doc(event.storeID).update({
             data: {
-                balance: merchant.data.balance - event.withdrawAmount,
-                updatedAt: new Date()
+                balance: mstore.data.balance - event.withdrawAmount,
+                updatedAt: Date.parse(new Date()),
             },
             success: res => {
                 console.log('[数据库] [更新记录] 成功，记录 _id: ', res._id)
             },
             fail: err => {
                 console.error('[数据库] [更新记录] 失败：', err)
-                throw("update error")
+                throw(err)
             }
-        })
+        })  
+
+        await trans.commit()
+
+        return {
+            success: true
+        }
 
     }catch(e) {
-        throw(e)
+        console.log(e)
+        return {
+            success: false,
+            error: e,
+        }
     }
-
-    return {}
 }

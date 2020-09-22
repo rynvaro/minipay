@@ -1,0 +1,114 @@
+/* miniprogram/pages/plates/plates.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.navBar {
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.leftArrow {
+    margin-top: 5rpx;
+    width: 20rpx;
+    height: 20rpx;
+    border-bottom: 5rpx solid #999999;
+    border-left: 5rpx solid #999999;
+    transform: rotate(45deg);
+  }
+
+.navBarIconBox {
+    margin-left: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navBarIcon {
+    width: 42rpx;
+    height: 42rpx;
+}
+
+.navBarTitle {
+    margin-left: 20rpx;
+    font-size: small;
+}
+
+.box {
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerBox {
+    margin-top: 20rpx;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.innerBoxItem {
+    width: 340rpx;
+    height: 400rpx;
+    margin: 5rpx;
+    border-radius: 20rpx;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.innerBoxItemImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20rpx;
+    z-index: -1;
+}
+
+.innerBoxItemDesc {
+    width: 100%;
+    height: 40%;
+    background-color: black;
+    opacity: 0.6;
+    border-bottom-left-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.innerBoxItemDescTitle {
+    margin-left: 20rpx;
+    width: 60%;
+    height: 30%;
+    color: white;
+    border-bottom: 2rpx dashed white;
+    display: flex;
+    align-items: center;
+}
+
+.innerBoxItemDescContent {
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp:3;
+    margin-left: 20rpx;
+    width: 90%;
+    height: 70%;
+    color: white;
+    font-size: small;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

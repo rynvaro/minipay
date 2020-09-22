@@ -1,0 +1,121 @@
+/* miniprogram/pages/viprights/viprights.wxss */
+
+page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F6F6F6;
+}
+
+.card {
+    position: relative;
+    margin-top: 20rpx;
+    width: 95%;
+    height: 300rpx;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #BBBBBB;
+    z-index: 0;
+}
+
+.cardBGI {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20rpx;
+    z-index: -1;
+}
+
+.cardLine1 {
+    height: 100rpx;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.cardLine1Text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 100%;
+    font-size: 80rpx;
+    line-height: 80rpx;
+    font-weight: 900;
+    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cardLine2 {
+    height: 80rpx;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLine2P1 {
+    width: 100rpx;
+    height: 5rpx;
+    background-color: white;
+}
+
+.cardLine2P2 {
+    width: 200rpx;
+    height: 5rpx;
+    background-color: white;
+}
+.cardLine2V1 {
+    height: 50rpx;
+    width: 50rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: small;
+}
+
+.cardLine3 {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tipsBox {
+    width: 100%;
+    height: 30rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardLine3Text {
+    width: 90%;
+    margin-left: 5rpx;
+    font-size: x-small;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.iconBox {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.icon {
+    height: 20rpx;
+    width: 20rpx;
+}

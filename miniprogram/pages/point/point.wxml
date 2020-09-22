@@ -1,0 +1,50 @@
+<!--miniprogram/pages/point/point.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+
+<view class="bar" style="height: {{statusBarHeight + navBarHeight}}px; background-color: {{barBG}}">
+    <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+    <view class="navBar" style="height:{{navBarHeight}}px;">
+        <view class="leftArrow" bindtap="back"></view>
+        <text class="navBarTitle">我的积分</text>
+    </view>
+</view>
+
+<view class="header">
+    <view class="hLine">
+        <!-- 占位 -->
+        <view class="hLine0" style="height: {{statusBarHeight + navBarHeight}}px"></view>
+        <view class="hLine1">
+            <image class="hLine1Icon" src="{{user.avatarUrl}}"></image>
+            <text class="hLine1Text">{{user.name}}</text>
+        </view>
+        <view class="hLine3">
+            <text class="hLine3ExperienceText">我的积分  {{user.point}}</text>
+            <view class="tips" bindtap="showTips">
+                <view class="tipsContent">?</view>
+            </view>
+        </view>
+    </view>
+    <image class="headerBG" src="../../images/bg/vip_exp_bg.png"></image>
+</view>
+
+<view class="tipsBox" hidden="{{tipsBoxHidden}}">
+    <text>积分获取方式:</text>
+    <text>可通过每日签到、日常活动、日常消费、邀请新用户获得。1积分可兑换1经验，消费10元可获得1积分。</text>
+    <view class="tipsBoxClose" bindtap="hideTips">×</view>
+</view>
+
+<view class="history">
+    <view wx:for="{{histories}}" wx:key="id" class="historyItem">
+        <view class="historyItemU">
+            <view class="historyItemUL">
+                <text wx:if="{{item.type==1}}" class="historyItemULText">签到</text>
+                <text wx:if="{{item.type==2}}" class="historyItemULText">兑换优惠券</text>
+                <text wx:if="{{item.type==3}}" class="historyItemULText">兑换会员经验</text>
+                <text wx:if="{{item.type==4}}" class="historyItemULText">消费</text>
+                <text class="historyItemULTime">{{filters.formatTime(item.timestamp)}}</text>
+            </view>
+            <text class="historyItemUR">{{item.action}}{{item.value}}</text>
+        </view>
+        <view class="historyItemD"></view>
+    </view>
+</view>

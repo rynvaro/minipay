@@ -1,0 +1,22 @@
+<!--miniprogram/pages/plates/plates.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"></wxs>
+<view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+<view class="navBar" style="height:{{navBarHeight}}px;">
+    <view class="leftArrow" bindtap="back"></view>
+    <view class="navBarIconBox">
+        <image class="navBarIcon" src="../../images/star.png"></image>
+    </view>
+    <text class="navBarTitle">{{plate.title}}</text>
+</view>
+
+<view class="box">
+    <view class="innerBox">
+        <view wx:for="{{plate.items}}" wx:key="id" class="innerBoxItem" data-id="{{item.storeId}}" bindtap="store">
+            <image mode="aspectFill" class="innerBoxItemImage" src="{{item.image}}"></image>
+            <view class="innerBoxItemDesc">
+                <text class="innerBoxItemDescTitle">{{filters.toFixed(item.discount)}}折买单</text>
+                <text class="innerBoxItemDescContent">{{item.desc}}</text>
+            </view>
+        </view>
+    </view>
+</view>

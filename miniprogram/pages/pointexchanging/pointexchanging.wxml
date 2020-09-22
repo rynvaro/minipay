@@ -1,0 +1,56 @@
+<!--miniprogram/pages/pointexchaning/pointexchanging.wxml-->
+
+<view class="header">
+    <block wx:if="{{coupon.type==1}}" >
+        <view class="headerL">
+            <view class="couponBox">
+                <view class="couponBoxU">
+                    <view class="couponBoxUL">{{coupon.value/100}}</view>
+                    <view class="couponBoxUR">元</view>
+                </view>
+                <view class="couponBoxD">优惠券</view>
+            </view>
+        </view>
+        <view class="headerR">{{coupon.value/100}}元代金券</view>
+    </block>
+    <block wx:else >
+        <view class="headerL">
+            <view class="couponBox">
+                <view>
+                    <view class="couponBoxUVIP">会员</view>
+                    <view class="couponBoxUVIP">经验</view>
+                </view>
+            </view>
+        </view>
+        <view class="headerR">{{coupon.value}}会员经验</view>
+    </block>
+    
+</view>
+
+<view class="exchangeCnt">
+    <text class="exchangeCntText">兑换数量</text>
+
+    <view class="exchangeCntInput">
+        <view class="stepper">
+            <!-- 减号 -->
+            <text class="{{minusStatus}}" bindtap="bindMinus">-</text>
+            <!-- 数值 -->
+            <input type="digit" bindinput="bindManual" value="{{num}}" />
+            <!-- 加号 -->
+            <text class="normal" bindtap="bindPlus">+</text>
+        </view>
+    </view>
+</view>
+
+<view class="sum">
+    <text class="sumL">小计</text>
+    <text class="sumR">{{coupon.point*num}}</text>
+</view>
+
+<view class="point">
+    <text class="pointL">积分</text>
+    <text class="pointR">{{coupon.point*num}}</text>
+</view>
+
+
+<button class="button" bindtap="doExchange">立即兑换</button>

@@ -1,63 +1,91 @@
 <!--miniprogram/pages/search/search.wxml-->
-
-<view class='search-container'>
-    <view class='search-bg'>
-      <input type='text' confirm-type='search' class='search' placeholder-class='search-placeholder' placeholder='搜索你需要的商家热门关键词' bindconfirm='search' bindfocus='onFocus' bindinput='onBlur'></input>
-      <icon class="{{icon_class}}" size='12' type='search' color='#1D1D1D'></icon>
+<wxs src="../../utils/filter.wxs" module="filters"/>
+<view class="search">
+    <view class="searchIconBox">
+        <image class="searchIcon" src="../../images/search.png"></image>
     </view>
-  </view>
+    <input class="searchInput" bindfocus="focus" bindinput="setQ" bindconfirm="search" value="{{q}}"></input>
+</view>
 
-
-<!-- 推荐区 recommendations -->
-  <view class="rec">
-      <view class="rec-tab">
-        <view class="rec-tab-item">
-          <text class="rec-tab-text-left">热门商家</text>
-          <text class="rec-tab-text-left">——</text>
-        </view>
-        <view class="rec-tab-item">
-          <text class="rec-tab-text-right">附近商家</text>
-        </view>
-      </view>
-      <view class="rec-list">
-
-        <block wx:for="{{bizs}}" wx:key="_id">
-        
-            <view class="rec-list-item">
-              <image class="rec-list-item-left" src='{{item.images[0]}}'></image>
-              <view class="rec-list-item-right">
-            <view class="rec-list-item-right-1">
-              <text>{{item.title}}</text>
-            </view>
-            <view class="rec-list-item-right-2">
-              <text class="rec-list-item-right-2-desc">{{item.desc}}</text>
-            </view>
-            <view class="rec-list-item-right-3">
-              <view class="rec-list-item-right-3-l">
-                <!-- <text>⭐️⭐️⭐️⭐️⭐️</text> -->
-              </view>
-              <view class="rec-list-item-right-3-m">
-                <!-- <text>5.0分</text> -->
-              </view>
-              <view class="rec-list-item-right-3-r">
-                <text>{{item.price}}折</text>
-              </view>
-              
-            </view>
-            <view class="rec-list-item-right-4">
-              <view class="rec-list-item-right-4-l">
-                <text class="rec-list-item-right-4-l-text">{{item.location.address}}</text>
-              </view>
-              <view class="rec-list-item-right-4-r">
-                <text>3km</text>
-              </view>
-            </view>
-          </view>
-        </view>
-
+<view class="hotSearch" hidden="{{!hotShow}}">
+    <text class="hotSearchHeader">热门搜索</text>
+    <view class="hostSearchBox">
+        <block wx:for="{{hotSearchs}}" wx:key="id">
+            <text class="hotSearchItem" data-index="{{index}}" bindtap="selectHot">{{item}}</text>
         </block>
+    </view>
+</view>
 
-        
+<view class="hotSearch" hidden="{{!hotShow}}">
+    <text class="hotSearchHeader">历史搜索</text>
+    <view class="hostSearchBox">
+        <block wx:for="{{hisSearchs}}" wx:key="id">
+            <text class="hotSearchItem" data-index="{{index}}" bindtap="selectHis">{{item}}</text>
+        </block>
+    </view>
+</view>
 
-      </view>
-  </view>
+
+<view class="stores">
+
+    <view wx:for="{{stores}}" wx:key="id" class="store" bindtap="store" data-id="{{item._id}}">
+        <view class="storeL">
+            <image mode="aspectFill" class="storeLImage" src="{{item.storeImages[0]}}"></image>
+        </view>
+        <view class="storeR">
+            <view class="storeRBox">
+                <text class="storeRText1">{{item.data.data.storeName}}</text>
+                <view class="storeRText3">
+                    <text class="storeRText3Item">{{item.data.data.merchantInfo}}</text>
+                    <text class="storeRText3Item">人均¥{{item.avgPrice}}</text>
+                    <text class="storeRText3ItemLocation">{{item.distance}}</text>
+                </view>
+                <text class="storeRText4">营业时间 {{item.data.data.seTime}}</text>
+                <view class="viprights">
+                    <view class="viprightsTinyBox">
+                        <view class="viprightsTinyBoxU">
+                            <image wx:if="{{vipLevel == 1}}" class="viprightsTinyBoxUIcon" src="../../images/v1StarFilled.png"></image>
+                            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v1Star.png"></image>
+                        </view>
+                        <block wx:if="{{item.discount>9}}">
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
+                        </block>
+                        <block wx:else>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount + 0.5)}}折</text>
+                        </block>
+                    </view>
+                    <view class="viprightsTinyBox">
+                        <view class="viprightsTinyBoxU">
+                            <image wx:if="{{vipLevel == 2}}" class="viprightsTinyBoxUIcon" src="../../images/v2StarFilled.png"></image>
+                            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v2Star.png"></image>
+                        </view>
+                        <block wx:if="{{item.discount>9}}">
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
+                        </block>
+                        <block wx:else>
+                            <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount + 0.3)}}折</text>
+                        </block>
+                    </view>
+                    <view class="viprightsTinyBox">
+                        <view class="viprightsTinyBoxU">
+                            <image wx:if="{{vipLevel == 3}}" class="viprightsTinyBoxUIcon" src="../../images/v3StarFilled.png"></image>
+                            <image wx:else class="viprightsTinyBoxUIcon" src="../../images/v3Star.png"></image>
+                        </view>
+                        <text class="viprightsTinyBoxD">{{filters.toFixed(item.discount)}}折</text>
+                    </view>
+                    <view class="viprightsBGLine"></view>
+                </view>
+                <block wx:if="{{item.discount > 9}}">
+                    <text class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount)}}买单</text>
+                </block>
+                <block wx:else >
+                    <text wx:if="{{vipLevel == 1}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount + 0.5)}}买单</text>
+                    <text wx:if="{{vipLevel == 2}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount + 0.3)}}买单</text>
+                    <text wx:if="{{vipLevel == 3}}" class="storeRText5">当前为V{{vipLevel}}会会员，享{{filters.toFixed(item.discount)}}买单</text>
+                </block>
+            </view>
+        </view>
+    </view>
+
+</view>
+

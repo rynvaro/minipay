@@ -35,7 +35,7 @@ Page({
       wx.cloud.callFunction({
             name:"getInfo",
             data: {
-              phone: app.globalData.phone,
+              storeID: app.globalData.storeID,
             },
             success(res) {
                 console.log(res)
@@ -55,7 +55,7 @@ Page({
         wx.cloud.callFunction({
             name:"withdraws",
             data: {
-              phone: app.globalData.phone,
+              storeID: app.globalData.storeID,
             },
             success(res) {
                 console.log(res)
@@ -114,14 +114,15 @@ Page({
         wx.cloud.callFunction({
             name:"hasPermission",
             data: {
-              phone: app.globalData.phone,
+              id: e.currentTarget.dataset.id,
+              storeID: app.globalData.storeID,
             },
             success(res) {
                 console.log(res)
                 resolve(true)
             },
             fail: function(e) {
-              console.log(e.errMsg)
+              console.log(e)
               resolve(false)
             }
         })
@@ -138,7 +139,7 @@ Page({
             wx.cloud.callFunction({
               name:"cancelWithdraw",
               data: {
-                phone: app.globalData.phone,
+                storeID: app.globalData.storeID,
                 id: e.currentTarget.dataset.id
               },
               success(res) {
@@ -169,7 +170,7 @@ Page({
         wx.cloud.callFunction({
             name:"hasPermission",
             data: {
-              phone: app.globalData.phone,
+              storeID: app.globalData.storeID,
             },
             success(res) {
                 console.log(res)

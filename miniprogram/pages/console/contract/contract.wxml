@@ -1,0 +1,13 @@
+<!--miniprogram/pages/console/contract/contract.wxml-->
+<import src="../../../utils/wxParse/wxParse.wxml" />
+
+<view class="box">
+    <template is="wxParse" data="{{wxParseData:title.nodes}}"></template>
+</view>
+
+<view class="something"></view>
+
+<view class="bottom" style="opacity: {{opacity}}">
+    <text wx:if="{{approved == 'false'}}" class="btn" bindtap="approve">同意签署</text>
+    <text wx:else class="btn">已签署</text>
+</view>

@@ -19,6 +19,7 @@ Page({
     animation: animation,
     balance: 0,
     withdrawAmount: 0,
+    storeID: '',
     phone: '',
     code: '',
     codeID: '',
@@ -32,7 +33,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      phone: app.globalData.phone,
+      storeID: app.globalData.storeID,
     })
   },
 
@@ -54,17 +55,18 @@ Page({
     wx.cloud.callFunction({
         name:"getInfo",
         data: {
-          phone: app.globalData.phone,
+          storeID: app.globalData.storeID,
         },
         success(res) {
             console.log(res)
             thiz.setData({
-                balance: res.result.data.balance
+                balance: res.result.data.balance,
+                phone: res.result.data.merchantPhone,
             })
             wx.hideLoading()
         },
         fail: function(e) {
-          console.log(e.errMsg)
+          console.log(e)
           wx.hideLoading()
         }
     })
@@ -161,18 +163,24 @@ Page({
             wx.cloud.callFunction({
               name:"submitWithdraw",
               data: {
-                phone: app.globalData.phone,
+                storeID: app.globalData.storeID,
                 withdrawAmount: parseInt(thiz.data.withdrawAmount),
               },
               success(res) {
                   console.log(res)
                   wx.hideLoading()
-                  wx.showToast({
-                    title: '已提交',
-                    success: function(){
-                      setTimeout(function(){wx.navigateBack()},500)
-                    }
-                  })
+                  if (res.result.success) {
+                    wx.showToast({
+                      title: '已提交',
+                      success: function(){
+                        setTimeout(function(){wx.navigateBack()},500)
+                      }
+                    })
+                  }else {
+                    wx.showToast({
+                      title: '提交失败',
+                    })
+                  }
               },
               fail: function(e) {
                 console.log(e.errMsg)
@@ -217,7 +225,7 @@ Page({
     wx.cloud.callFunction({
       name:"sendSMS",
       data: {
-        phone: app.globalData.phone,
+        phone: thiz.data.phone,
       },
       success(res) {
         console.log(res)

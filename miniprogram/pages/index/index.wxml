@@ -1,157 +1,196 @@
 <!--index.wxml-->
 
+<view class="card">
+    <view class="cardLine1">
+      <view class="cardLine1Icon">
+        <image class="cardLine1IconBG" src="{{user.avatarUrl}}"></image>
+        <button open-type="getUserInfo" bindgetuserinfo="register" class="hbt"></button>
+        <view wx:if="{{!phoneFilled}}" class="cardLine1IconText" bindtap="showMoreInfo">完善信息</view>
+      </view>
+    </view>
+    <button open-type="getUserInfo" hover-class="pressbtn" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
+    <view class="cardLine3" bindtap="vipexperience">
+      <block wx:if="{{user.level < 3}}">
+        <text class="cardLine3T">距下一等级还需</text>
+        <text class="cardLine3V">{{user.expTotal-user.exp}} 经验</text>
+      </block>
+      <block wx:else>
+        <text class="cardLine3TV">v3享最低折扣</text>
+      </block>
+      <text class="cardLine3Arrow"></text>
+    </view>
+    <view class="cardLine4">
+      <image class="vipIcon" src="../../images/v1.png"></image>
+      <progress class="vipProgress" percent="{{p1v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
+      <image class="vipIcon" src="../../images/v2.png"></image>
+      <progress class="vipProgress" percent="{{p2v}}" activeColor="white" backgroundColor="#FE3B01" stroke-width="3" />
+      <image class="vipIcon" src="../../images/v3.png"></image>
+    </view>
 
-<!-- TODO 自定义导航栏 -->
-<!-- <view class="navigation">
-  <text class="navigation-text">7HAO</text>
-</view> -->
+    <view class="cardTopRight" bindtap="viprights">
+      <view class="cardTopRightU">
+        <image class="cardTopRightUIcon" src="../../images/viprights.png"></image>
+      </view>
+      <text class="cardTopRightD">会员权益 ></text>
+    </view>
 
-<view class="container">
-  <!-- card -->
-  <view class="card"></view>
-  <!-- assets -->
-  <view class="assets">
-    <view class="assets-item-deposit" bindtap="unfinished">
+    <!-- 背景图片 -->
+    <image mode="aspectFill" class="cardBG" src="../../images/bg/index_card_bg.png"></image>
+</view>
+
+<!-- assets -->
+<view class="assets">
+  <view class="assetsItem" bindtap="balance">
+    <view class="assets-item-content">
+      <text class="assets-item-content-up">余额</text>
+      <text class="assets-item-content-down">{{user.balance/100}}</text>
+    </view>
+  </view>
+  <view class="assetsItem" bindtap="coupon">
+    <view class="assets-item-content">
+      <text class="assets-item-content-up">卡券</text>
+      <text class="assets-item-content-down">我的消费券</text>
+      </view>
+  </view>
+  <view class="assetsItem" bindtap="pointexchange">
       <view class="assets-item-content">
-        <view class="assets-item-content-up">充值</view>
-        <view class="assets-item-content-down">返现，立即提现</view>
+      <text class="assets-item-content-up">兑换</text>
+      <text class="assets-item-content-down">好礼换不停</text>
       </view>
-    </view>
-    <view class="assets-item-ticket" bindtap="unfinished">
-       <view class="assets-item-content">
-        <view class="assets-item-content-up">卡券</view>
-        <view class="assets-item-content-down">我的消费券</view>
-       </view>
-    </view>
-    <view class="assets-item-remaining" bindtap="unfinished">
-       <view class="assets-item-content">
-        <view class="assets-item-content-up">余额</view>
-        <view class="assets-item-content-down">即用即省</view>
-       </view>
-    </view>
   </view>
+</view>
 
-  <!-- signin -->
-  <view class="signin" bindtap="unfinished">
-    <view class="signin-u">
-      <view class="signin-ul">
-        <text class="signin-ul-text">签到专区</text>
-      </view>
-      <view class="signin-ur">
-        <text class="signin-ur-text">签到好礼></text>
-      </view>
-    </view>
-    <view class="signin-d">
-      <view class="signin-d-view">
-        <text class="signin-d-view-text">签到有惊喜，快去看看吧</text>
-      </view>
-    </view>
+<!-- invite -->
+<view class="invite">
+  <view class="inviteLine1">
+    <text class="inviteLine1L">邀请会员·</text>
+    <text class="inviteLine1R">享受更多优惠折扣</text>
   </view>
+  <text class="inviteLine2" bindtap="invite">立即邀请</text>
+  <image class="inviteBG" src="../../images/bg/invite_bg.png"></image>
+</view>
 
+<!-- scan signin -->
+<view class="scanSignin">
+  <view class="scanSigninItem" bindtap="scan">
+    <text class="scanSigninItemU">扫码付款</text>
+    <text class="scanSigninItemD">扫码立即支付</text>
+  </view>
+  <view class="scanSigninItem" bindtap="signin">
+    <text class="scanSigninItemU">签到专区</text>
+    <text class="scanSigninItemD">签到好礼，快去看看吧 ></text>
+  </view>
+</view>
 
-  <!-- more 更多服务 -->
+<!-- more 更多服务 -->
+<view class="more">
+<text class="moreHeader">更多服务</text>
+  <view class="moreList">
 
-  <view class="more">
-    <view class="more-header">
-       <text class="more-header-text">更多服务</text>
-    </view>
-    <view class="more-list">
-      <view class="more-list-line1">
-        <!-- 订单管理 -->
-        <view class="more-list-item-order" bindtap="unfinished">
-
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/order.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">订单管理</text>
-            </view>
-          </view>
-
-        </view>
-
-        <!-- 兑换中心 -->
-        <view class="more-list-item-exchange" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/exchange.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">兑换中心</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 会员积分 -->
-        <view class="more-list-item-point" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/point.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">会员积分</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 联系客服 -->
-        <view class="more-list-item-customer-service" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/customer-service.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">联系客服</text>
-            </view>
-          </view>
-        </view>
-        
+    <view class="moreListItem" bindtap="orders">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/order.png"></image>
       </view>
-
-      <!-- line 2 -->
-      <view class="more-list-line1">
-        <!-- 意见反馈 -->
-        <view class="more-list-item-order" bindtap="unfinished">
-
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/advice.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">意见反馈</text>
-            </view>
-          </view>
-
-        </view>
-
-        <!-- 邀请用户 -->
-        <view class="more-list-item-exchange" bindtap="unfinished">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/invite.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">邀请用户</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 商户入住 -->
-        <view class="more-list-item-point" bindtap="bizreg">
-          <view class="more-list-item-content">
-            <view class="more-list-item-content-u">
-              <image class="more-list-item-content-u-icon" src="../../images/bizreg.png"></image>
-            </view>
-            <view class="more-list-item-content-d">
-              <text class="more-list-item-content-d-text">商户入住</text>
-            </view>
-          </view>
-        </view>
-        
-      </view>
+      <text class="moreListItemD">订单管理</text>
     </view>
+
+    <view class="moreListItem" bindtap="point">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/point.png"></image>
+      </view>
+      <text class="moreListItemD">会员积分</text>
+    </view>
+
+    <view class="moreListItem" bindtap="service">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/customer-service.png"></image>
+      </view>
+      <text class="moreListItemD">联系客服</text>
+    </view>
+    
+
+    <view class="moreListItem" bindtap="feedback">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/advice.png"></image>
+      </view>
+      <text class="moreListItemD">意见反馈</text>
+    </view>
+
+<!--     
+    <view class="moreListItem" bindtap="console">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/star.png"></image>
+      </view>
+      <text class="moreListItemD">商家后台</text>
+    </view> -->
+
 
   </view>
 
+<view class="popBox" style="visibility:{{show ? 'visible':'hidden'}}">
+  <view class="popBoxHeader">
+    <image class="wxlogo" src="../../images/icon64_wx_logo.png"></image>
+  </view>
+  <view class="popBoxContent">
+    <text class="popBoxContentText">点击  去回复  发送”1“</text>
+    <text class="popBoxContentText">添加七号客服微信</text>
+    <button class="popBoxContentButton" open-type="contact">去回复</button>
+  </view>
+
+  <text class="closeAdvice" bindtap="hidden">×</text>
+</view>
+
+
+<view class="redpack" hidden="{{!redpackShow}}">
+  <image wx:if="{{open}}" class="redpackBG" src="../../images/redpackopen.png"></image>
+  <image wx:else class="redpackBG" src="../../images/redpack.png" bindtap="openRedpack"></image>
+  <view class="seeRedpack" bindtap="seeRedpack" hidden="{{!closeRedpack}}">立即查看</view>
+  <view class="closeRedpack" bindtap="hideRedpack" hidden="{{!closeRedpack}}">×</view>
+  <view class="redpackValueBox" hidden="{{!closeRedpack}}">
+    <text class="redpackValue">{{redpackValue}}</text>
+    <text>元</text>
+  </view>
+</view>
+
+
+<view class="moreInfo" hidden="{{!moreInfoShow}}">
+  <view class="moreInfoTitle"> 
+    <text>完善资料</text> 
+    <text>解锁更多惊喜</text> 
+  </view>
+  <!-- <view class="moreInfoItem">
+    <text class="moreInfoItemL">姓名</text>
+    <input class="moreInfoItemR" bindinput="setUsername"></input>
+  </view> -->
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">出生日期</text>
+    <!-- <input class="moreInfoItemR" bindinput="setBirthday"></input> -->
+    <picker class="moreInfoItemR" mode="date" value="{{birthday}}" bindchange="setBirthday">
+      <view class="birthday">{{birthday}}</view>
+  </picker>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">手机号</text>
+    <input class="moreInfoItemR" type="digit" bindinput="setPhone"></input>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">验证码</text>
+    <view class="moreInfoItemR">
+      <input class="moreInfoItemRCode" bindinput="setCode" focus="{{focused}}"></input>
+      <view class="moreInfoItemRButton" bindtap="sendSMS">{{label}}</view>
+    </view>
+  </view>
+  <view class="moreInfoItem">
+    <text class="moreInfoItemL">邀请码</text>
+    <input class="moreInfoItemR" type="digit" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"  bindinput="setInviteCode"></input>
+  </view>
+  <view class="moreInfoButtonBox">
+    <button class="moreInfoButton" bindtap="submit">提交</button>
+  </view>
+
+  <text class="closeMoreInfo" bindtap="clodeMoreInfo">×</text>
+  
+</view>
+
+  
 </view>

@@ -1,0 +1,168 @@
+/* miniprogram/pages/store/store.wxss */
+
+page {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tips {
+    position: absolute;
+    top: 16rpx;
+    right: 18rpx;
+    font-size: small;
+    color: #FFA74F;
+    background-color: white;
+    border-radius: 20rpx;
+    width: 160rpx;
+    display: flex;
+    justify-content: center;
+}
+
+/* .storeImage {
+    width: 100%;
+    height: 400rpx;
+} */
+
+.banner {
+    width: 100%;
+    height: 400rpx;
+}
+
+.swiper {
+    height: 100%;
+    width: 100%;
+}
+
+.bannerItem {
+    height: 100%;
+    width: 100%;
+}
+
+.line1 {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 90rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.storeName {
+    width: 60%;
+    font-weight: bold;
+}
+
+.storeDiscount {
+    width: 10%;
+    font-size: 25rpx;
+    color: #999999;
+}
+
+.buyButton {
+    width: 30%;
+    height: 50rpx;
+    border-radius: 20rpx;
+    color: white;
+    background-color: #FF6610;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viprights {
+    margin-top: 50rpx;
+    width: 100%;
+    height: 100rpx;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    z-index: 0;
+  }
+
+  .viprightsTinyBox {
+      height: 80rpx;
+      width: 80rpx;
+      z-index: 0;
+  }
+
+  .viprightsTinyBoxU {
+      height: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .viprightsTinyBoxUIcon {
+      height: 50rpx;
+      width: 50rpx;
+  }
+
+  .viprightsTinyBoxD {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: small;
+    color: #999999;
+}
+
+  .viprightsBGLine {
+    position: absolute;
+    top: 10rpx;
+    width: 95%;
+    height: 5rpx;
+    background-color: #EEEEEE;
+    z-index: -1;
+  }
+
+.liteBox {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 400rpx;
+    background-color: #F5F5F5;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 30rpx;
+    font-weight: 350;
+    color: #444444;
+}
+
+.liteBoxItem {
+    margin-left: 50rpx;
+    display: flex;
+    align-items: center;
+    font-size: large;
+}
+
+.liteBoxItemDR {
+    width: 15rpx;
+    height: 16rpx;
+    border-top: 5rpx solid #999999;
+    border-right: 5rpx solid #999999;
+    transform: rotate(45deg);
+    margin-right: 20rpx;
+}
+
+.eventText {
+    margin-top: 20rpx;
+    font-size: small;
+}
+
+.eventTextUnderLine {
+    width: 50rpx;
+    height: 6rpx;
+    background-color: #FF6610;
+    border-radius: 20rpx;
+    margin-top: 10rpx;
+}
+
+.eventImage {
+    width: 100%;
+    /* height: 10000rpx; */
+}

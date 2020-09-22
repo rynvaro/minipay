@@ -1,0 +1,27 @@
+<!--miniprogram/pages/map/map.wxml-->
+
+<map class="map" bgColor="#F6F6F6AA" longitude="{{store.longitude}}" latitude="{{store.latitude}}" markers="{{markers}}" polyline="{{polyline}}">
+    <view class="backButton" bindtap="back">
+        <view class="leftArrow" bindtap="back"></view>
+    </view>
+
+    <!-- <view class="searchButton">
+        <image class="backButtonImage" src="../../images/search.png"></image>
+    </view>
+
+    <view class="msgButton">
+        <image class="backButtonImage" src="../../images/customer-service.png"></image>
+    </view>
+
+    <view class="locationButton">
+        <image class="backButtonImage" src="../../images/events.png"></image>
+    </view> -->
+</map>
+
+<view class="mapText">
+    <text class="mapTextHeader">{{store.storeName}}</text>
+    <text class="mapTextAddress">{{store.address}}</text>
+    <text class="mapTextAddress"></text>
+    <view class="mapTextButton" bindtap="searchRoad">查找路线</view>
+</view>
+

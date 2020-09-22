@@ -1,0 +1,84 @@
+<!--miniprogram/pages/coupon/coupon.wxml-->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+
+<view class="header">
+    <view class="bar" style="height: {{statusBarHeight + navBarHeight}}">
+        <view class="statusBar" style="height: {{statusBarHeight}}px"></view>
+        <view class="navBar" style="height:{{navBarHeight}}px;">
+            <view class="leftArrow" bindtap="back"></view>
+            <text class="navBarTitle">我的卡券</text>
+        </view>
+    </view>
+</view>
+
+<view class="box">
+    <block wx:for="{{icoupons}}" wx:key="id">
+        <view wx:if="{{item.status == 0 || item.status == -1}}" class="item">
+            <view class="itemL">
+                <view class="itemLBox">
+                    <view class="itemLBoxL">{{item.coupon.value/100}}</view>
+                    <view class="itemLBoxR">
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRU">无门槛使用券</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRM">新用户卡券</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRD">元</text>
+                    </view>
+                </view>
+            </view>
+            <block wx:if="{{item.status == -1}}">
+                <view class="itemR" data-id="{{item._id}}">
+                    <text class="itemRText" style="font-size: 20rpx">完善信息</text>
+                    <text class="itemRText" style="font-size: 20rpx">后可使用</text>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="itemR" bindtap="use" data-id="{{item._id}}">
+                    <text class="itemRText">立即</text>
+                    <text class="itemRText">使用</text>
+                </view>
+            </block>
+            
+            <text wx:if="{{item.coupon.type == 3}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
+        </view>
+
+        <view wx:elif="{{item.status==1}}" class="itemUsed">
+            <view class="itemL">
+                <view class="itemLBox">
+                    <view class="itemLBoxL">{{item.coupon.value/100}}</view>
+                    <view class="itemLBoxR">
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRU">无门槛使用券</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRM">新用户卡券</text>
+                        <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRD">元</text>
+                    </view>
+                </view>
+            </view>
+            <view class="itemR" style="color: gray">
+                <text class="itemRText">立即</text>
+                <text class="itemRText">使用</text>
+            </view>
+            <text wx:if="{{item.coupon.type == 3}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
+        </view>
+
+        <view wx:elif="{{item.status==2}}" class="itemUsed">
+            <view class="itemL">
+                <view class="itemLBox">
+                    <view class="itemLBoxL">{{item.coupon.value/100}}</view>
+                    <view class="itemLBoxR">
+                        <text class="itemLBoxRU">有效期至2020-08-22</text>
+                        <text class="itemLBoxRM">元店铺优惠券</text>
+                        <text class="itemLBoxRD">元</text>
+                    </view>
+                </view>
+            </view>
+            <view class="itemR">
+                <text class="itemRText" style="color: gray">已过期</text>
+            </view>
+        </view>
+
+    </block>
+    
+
+</view>

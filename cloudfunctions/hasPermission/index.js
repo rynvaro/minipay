@@ -11,10 +11,11 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     const openid = wxContext.OPENID
+    console.log(event,"000")
 
     try {
-        const merchant = await db.collection("merchants").doc(event.phone).get()
-        if (merchant.data.openid != openid) {
+        const mstore = await db.collection("mstores").doc(event.storeID).get()
+        if (mstore.data.openid != openid) {
             throw("permission denied")
         }
     }catch(e) {

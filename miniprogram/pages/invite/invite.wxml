@@ -1,0 +1,71 @@
+<!--miniprogram/pages/invite/invite.wxml-->
+
+<view class="inviteBox">
+    <text class="inviteTitle">专属兑换码</text>
+    <view class="inviteCode">
+        <text class="inviteCodeL">{{user.inviteCode}}</text>
+        <text class="inviteCodeR" bindtap="copy">复制</text>
+    </view>
+    <text class="inviteDesc">点击生成邀请，会打开如下窗口。在此如下点击成邀请，会打开如属兑换码下窗口。在此窗口复制，点击成邀请，会打开如下窗口。在此窗属兑换码口复制，点击成邀请，会打开复制，点击</text>
+</view>
+
+<view class="steps">
+    <view class="stepBGLine"></view>
+    <view class="stepTitle">操作步骤</view>
+    <view class="step">
+        <text class="stepL">识别二维码进入公众号</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <image class="stepQRCode" src="../../images/qrcode.jpeg" data-src="../../images/qrcode.jpeg" ></image>
+            </view>
+        </view>
+    </view>
+
+    <view class="step">
+        <text class="stepL">点击会员中心</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <view class="stepRBoxVIPU">
+                    <image class="stepRBoxVIPUIcon" src="../../images/vcenter.png"></image>
+                </view>
+                <text class="stepRBoxVIPD">会员中心</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="step">
+        <text class="stepL">授权登录并完善信息</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <image class="stepQRCode" src="../../images/auth-icon.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class="step">
+        <text class="stepL">填写邀请码</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <image class="stepQRCode" src="../../images/invite-code.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class="step">
+        <text class="stepL">新用户消费任意金额即可获取红包</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <image class="stepCoupon" src="../../images/coupon-icon.png"></image>
+            </view>
+        </view>
+    </view>
+
+    <view class="step">
+        <text class="stepL">老用户在新用户获取奖励后直接获得邀请奖励</text>
+        <view class="stepR">
+            <view class="stepRBox">
+                <image class="stepCoupon" src="../../images/coupon-icon.png"></image>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,247 @@
+/* miniprogram/pages/order/order.wxss */
+
+page {
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .detailHeader {
+    width: 100%;
+    height: 300rpx;
+    background-color: white;
+    display: flex;
+  }
+  
+  .detailHeaderLImage {
+    height: 250rpx;
+    width: 250rpx;
+    margin-top: 25rpx;
+    margin-left: 25rpx;
+  }
+  
+  .detailHeaderRText {
+    font-size: large;
+    font-weight: bold;
+    margin-top: 100rpx;
+    margin-left: 25rpx;
+  }
+  
+  .detailItemBox {
+    width: 100%;
+    margin-top: 20rpx;
+    background-color: #F6F6F6;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .detailItem {
+    margin-top: 10rpx;
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    background-color: white;
+  }
+  
+  .detailItemKey {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 50rpx;
+  }
+  
+  .detailItemValue {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 50rpx;
+  }
+
+  .paymentInput {
+    width: 180rpx;
+    height: 75%;
+    border: 5rpx solid #FE8633;
+    border-radius: 20rpx;
+    display: flex;
+    justify-content: center;
+    color: #FE8633;
+  }
+
+  .paymentText {
+    margin-left: 10rpx;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .totalIncome {
+    width: 100%;
+    height: 90rpx;
+    position: absolute;
+    bottom: 0;
+    background-color: white;
+    display: flex;
+  }
+  
+  .totalIncomeKey {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 50rpx;
+  }
+  
+  .totalIncomeValue {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    color: red;
+  }
+
+  .couponArrow {
+    width: 20rpx;
+    height: 20rpx;
+    border-top: 2rpx solid black;
+    border-right: 2rpx solid black;
+    transform: rotate(45deg);
+  }
+
+  .totalIncomePayButton {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    color: white;
+    background-color: #FF6610;
+  }
+
+
+  .popBox {
+    width: 90%;
+    height: 600rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    position: absolute;
+    top: 200rpx;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0rpx 20rpx 20rpx 0rpx #808080;
+  }
+
+  .popBoxHeader {
+    width: 100%;
+    margin-top: 20rpx;
+    display: flex;
+  }
+
+  .popBoxHeaderL {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .popBoxHeaderR {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .popBoxLin1 {
+    margin-top: 10rpx;
+    width: 90%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: small;
+  }
+
+  .popBoxLin2 {
+    margin-top: 10rpx;
+    width: 90%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+  }
+
+  .popBoxLin3 {
+    margin-top: 10rpx;
+    width: 90%;
+    height: 4rpx;
+    background-color: #bdbdbd;
+  }
+
+
+  .popBoxLin4 {
+    margin-top: 10rpx;
+    width: 90%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+    color: #999999;
+  }
+
+
+  .popBoxLin4L {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+  }
+
+  .popBoxLin4R {
+    height: 100%;
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+.popBoxLin4Arrow {
+    width: 20rpx;
+    height: 20rpx;
+    border-top: 5rpx solid #999999;
+    border-right: 5rpx solid #999999;
+    transform: rotate(45deg);
+    margin-right: 20rpx;
+}
+
+  .popBoxLin5 {
+    margin-top: 10rpx;
+    width: 90%;
+    height: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .payby {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .paybyItem {
+    margin-left: 20rpx;
+  }

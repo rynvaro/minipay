@@ -1,144 +1,536 @@
 //index.js
-const app = getApp()
+const app = getApp();
 
 Page({
-  data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
-    logged: false,
-    takeSession: false,
-    requestResult: ''
-  },
+    data: {
+        show: false,
+        user: {
+            avatarUrl:'',
+            name: '登录/注册',
+            exp: 0,
+            expTotal: 1001,
+            city: '',
+            country: '',
+            gender: 0,
+            language: '',
+            nickName: '',
+            province: '',
+            balance: 0,
+            point: 0,
+            signs: 0,
+            signDate: 0,
+            sevenSigns: 0,// 七日连续签到数
+            phone: '',
+            payTimes: 0,
+            level: 1,
+        },
+        phoneFilled: true,
+        login: false,
 
-  onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
+        // progress value
+        p1v: 0,
+        p2v: 0,
+
+        closeRedpack: false,
+        open: false,
+        redpackShow: false,
+        redpackValue: 0,
+        redpackBtnShow: false,
+
+        moreInfoShow: false,
+
+        moreInfoPhone: '',
+        moreInfoInviteCode: '',
+
+        code: '',
+        codeID: '',
+        sendSMSClicked: false,
+        seconds: 60,
+        label: '获取验证码',
+        birthday: '点击选择',
+        birthed: false,
+        focused: false,
+    },
+
+    seeRedpack: function(e) {
+      wx.navigateTo({
+        url: '../coupon/coupon',
       })
-      return
-    }
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-            }
+    },
+
+    onTabItemTap: function(e) {
+      console.log(e)
+    },
+
+    setBirthday: function(e) {
+      this.setData({birthday: e.detail.value, birthed: true})
+    },
+
+    console: function(e) {
+      wx.navigateTo({
+        url: '../console/index/index',
+      })
+    },
+
+    onLoad: function(e) {
+      // let code = '2222227hao'
+      // let vcode = code.substr(0,6)
+      // let vtoken = code.substr(6,4)
+      // console.log(vcode)
+      // console.log(vtoken)
+    },
+
+    setPhone: function(e) {
+        this.setData({moreInfoPhone: e.detail.value})
+    },
+
+    setCode: function(e) {
+        this.setData({code: e.detail.value})
+    },
+
+    setInviteCode: function(e) {
+        this.setData({moreInfoInviteCode: e.detail.value})
+    },
+
+    submit: function(e) {
+        // if (this.data.moreInfoUsername.length<=0) {
+        //     wx.showToast({
+        //       title: '请输入姓名',
+        //     })
+        //     return
+        // }
+
+        if (!this.data.birthed) {
+          wx.showToast({
+            title: '请选择出生日期',
           })
+          return
+      }
+
+        if (this.data.moreInfoPhone.length<=0) {
+            wx.showToast({
+              title: '请输入手机号',
+            })
+            return
         }
-      }
-    })
-  },
 
+        if (!/^1[3456789]\d{9}$/.test(this.data.moreInfoPhone)) {
+            wx.showToast({
+              title: '手机号不合法',
+            })
+            return 
+        }
 
-      // -------------------------------
+        if (this.data.code.length <= 0) {
+            wx.showToast({
+              title: '请输入验证码',
+            })
+            return
+        }
 
-      unfinished: function(){
-        wx.showToast({
-          title: '敬请期待...',
-        })
-      },
-
-      showDetail: function(){
-        wx.navigateTo({
-          url: '../detail/detail'
-        })
-      },
-
-      bizreg: function(){
-        wx.navigateTo({
-          url: '../bizreg/bizreg'
-        })
-      },
-  
-      // -------------------------------
-
-
-
-  onGetUserInfo: function(e) {
-    if (!this.data.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
-      })
-    }
-  },
-
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
-      }
-    })
-  },
-
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
+        if (this.data.code.length < 6) {
+            wx.showToast({
+              title: '验证码格式错误',
+            })
+            return
+        }
 
         wx.showLoading({
-          title: '上传中',
+          title: 'loading...',
         })
 
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
+        let thiz = this
 
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
+        var promise = new Promise(function (resolve, reject) {
+            wx.cloud.callFunction({
+                name:"validateCode",
+                data: {
+                  code: thiz.data.code,
+                  codeID: thiz.data.codeID,
+                },
+                success(res) {
+                    console.log(res)
+                    resolve(true)
+                },
+                fail: function(e) {
+                  console.log(e)
+                  resolve(false) // TODO maybe we should not use code
+                }
             })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
+         });
+    
+
+         promise.then(function(validateOK){
+            if (!validateOK) {
+              wx.hideLoading()
+              wx.showToast({
+                title: '验证码错误',
+              })
+            } else {
+                wx.cloud.callFunction({
+                    name:"zupdateuserinfo",
+                    data: {
+                        username: thiz.data.moreInfoUsername,
+                        birthday: thiz.data.birthday,
+                        phone: thiz.data.moreInfoPhone,
+                        inviteBy: thiz.data.moreInfoInviteCode,
+                    },
+                    success(res) {
+                        console.log(res)
+                        wx.hideLoading()
+
+                        if (res.result.errCode == 87014) {
+                          wx.showModal({
+                            title: '提示',
+                            content: '内容包含敏感词汇，请修改！',
+                            success (res) {
+                              if (res.confirm) {
+                                console.log('用户点击确定')
+                              } else if (res.cancel) {
+                                console.log('用户点击取消')
+                              }
+                            }
+                          })
+                          return
+                        }
+
+                        if (res.result==-1) {
+                          wx.showToast({
+                            title: '不能邀请自己',
+                          })
+                          return 
+                        }
+
+                        if (res.result==-2) {
+                          wx.showToast({
+                            title: '邀请码不存在',
+                          })
+                          return 
+                        }
+
+                        wx.showToast({
+                          title: '已更新',
+                        })
+                        thiz.setData({phoneFilled: true, redpackShow:true, open: true, closeRedpack: true})
+                        thiz.clodeMoreInfo()
+                        thiz.onShow()
+                        
+                    },
+                    fail: function(e) {
+                      console.log(e.errMsg)
+                      wx.hideLoading()
+                      wx.showToast({
+                        title: '更新失败',
+                      })
+                    }
+                })
+            }
+        })
+    },
+
+    showMoreInfo: function(e) {
+        this.setData({moreInfoShow: true})
+    },
+
+    clodeMoreInfo: function(e) {
+        this.setData({moreInfoShow: false})
+    },
+
+    invite: function(e) {
+      wx.showToast({
+        title: '暂未开放',
+      })
+        // wx.navigateTo({
+        //   url: '../invite/invite',
+        // })
+    },
+
+    openRedpack: function(e) {
+
+      this.setData({redpackShow: false, moreInfoShow: true})
+
+      wx.showLoading({
+        title: 'loading...',
+      })
+      let thiz = this
+      wx.cloud.callFunction({
+        name:"zopenredpack",
+        data: {
+          redpackValue: thiz.data.redpackValue*100
+        },
+        success(res) {
+            console.log(res)
             wx.hideLoading()
-          }
-        })
+        },
+        fail: function(e) {
+            console.log(e.errMsg)
+            wx.hideLoading()
+            wx.showToast({
+              title: '领取失败',
+            })
+        }
+      })
+    },
 
+    hideRedpack:  function(e) {
+        this.setData({redpackShow: false})
+        this.onShow()
+    },
+
+    viprights: function(e) {
+        wx.navigateTo({
+          url: '../viprights/viprights',
+        })
+    },
+
+    onShow: function(e) {
+        wx.showLoading({
+            title: 'loading...',
+          })
+          let thiz = this
+          wx.cloud.callFunction({
+              name:"zlogin",
+              success(res) {
+                  wx.hideLoading()
+                  console.log(res)
+                  let user = res.result.data.data
+                  let p1v = 0
+                  let p2v = 0
+                  if (user.level == 1) {
+                    p1v = user.exp/1000*100
+                  }else if (user.level == 2) {
+                      p1v = 100
+                      p2v = user.exp/9000*100
+                  }else if (user.level == 3) {
+                    p1v = 100
+                    p2v = 100
+                  }
+
+                  let phoneFilled = true
+                  if (!user.phone) {
+                      phoneFilled = false
+                  }
+
+                  // let redpackShow = false
+                  // if (user.isFirstPay) {
+                  //   redpackShow = true
+                  // }
+                  app.globalData.viplevel = user.level
+                  thiz.setData({
+                      user: user,
+                      p1v: p1v,
+                      p2v: p2v,
+                      login: true,
+                      phoneFilled: phoneFilled,
+                      redpackValue: res.result.redpackValue/100,
+                      // redpackShow: redpackShow,
+                  })
+              },
+              fail: function(e) {
+                wx.hideLoading()
+                console.log(e)
+              }
+          })
+    },
+
+    register: function(e) {
+        if (this.data.login) {
+            return 
+        }
+        console.log(e)
+        this.setData({
+            user: {
+                avatarUrl: e.detail.userInfo.avatarUrl,
+                name: e.detail.userInfo.nickName,
+                nickName: e.detail.userInfo.nickName,
+                exp: 0,
+                expTotal: 1001,
+                city: e.detail.userInfo.city,
+                country: e.detail.userInfo.country,
+                gender: e.detail.userInfo.gender,
+                language: e.detail.userInfo.language,
+                province: e.detail.userInfo.province,
+                province: '',
+                balance: 0,
+                point: 0,
+                signs: 0,
+                signDate: 0,
+                sevenSigns: 0,
+                phone: '',
+                payTimes: 0,
+                level: 1,
+            }
+        })
+        wx.showLoading({
+          title: 'loading...',
+        })
+        let thiz = this
+        wx.cloud.callFunction({
+            name:"zregister",
+            data: thiz.data.user,
+            success(res) {
+                wx.hideLoading()
+                console.log(res)
+                thiz.setData({
+                    login: true,
+                    redpackShow: true,
+                })
+                thiz.onShow()
+            },
+            fail: function(e) {
+              wx.hideLoading()
+              console.log(e)
+            }
+        })
+    },
+
+    scan: function(e) {
+        console.log(e)
+        wx.scanCode({
+            success (res) {
+                console.log(res)
+                wx.navigateTo({
+                  url: '../order/order?storeID='+res.result,
+                })
+            }
+        })
+    },
+
+    vipexperience: function(){
+        wx.navigateTo({
+            url: '../vipexperience/vipexperience?user='+JSON.stringify(this.data.user),
+        })
+    },
+
+    balance: function(){
+        wx.navigateTo({
+            url: '../balance/balance',
+        })
+    },
+
+    coupon: function(){
+        wx.navigateTo({
+            url: '../coupon/coupon',
+        })
+    },
+
+    pointexchange: function(){
+        wx.navigateTo({
+            url: '../pointexchange/pointexchange',
+        })
+    },
+
+    signin: function(){
+        wx.navigateTo({
+            url: '../signin/signin',
+        })
+    },
+
+    orders: function(){
+        wx.navigateTo({
+            url: '../orders/orders',
+        })
+    },
+
+    point: function(){
+        wx.navigateTo({
+            url: '../point/point',
+        })
+    },
+
+    feedback: function(){
+        wx.navigateTo({
+            url: '../feedback/feedback',
+        })
+    },
+
+    storeregister: function(){
+        wx.navigateTo({
+            url: '../storeregister/storeregister',
+        })
+    },
+
+    service: function(e){
+            this.setData({show:true})
+    },
+
+    hidden: function(e) {
+        this.setData({show:false})
+    },
+
+
+  sendSMS: function(e) {
+
+    if (!/^1[3456789]\d{9}$/.test(this.data.moreInfoPhone)) {
+        wx.showToast({
+          title: '请输入合法手机号',
+        })
+        return 
+    }
+
+    if (this.data.sendSMSClicked) {
+      return 
+    }
+    this.setData({
+      sendSMSClicked: true,
+      focused: true,
+    })
+
+    this.setData({
+      label: this.data.seconds + '秒'
+    });
+    // 启动以1s为步长的倒计时
+    var interval = setInterval(() => {
+        countdown(this);
+    }, 1000);
+    // 停止倒计时
+    setTimeout(function() {
+        clearInterval(interval);
+    }, this.data.seconds * 1000);
+
+    wx.showLoading({
+      title: '发送中...',
+    })
+    let thiz = this
+    wx.cloud.callFunction({
+      name:"sendSMS",
+      data: {
+        phone: thiz.data.moreInfoPhone,
       },
-      fail: e => {
-        console.error(e)
+      success(res) {
+        console.log(res)
+        thiz.setData({
+          codeID: res.result._id
+        })
+        wx.hideLoading()
+        wx.showToast({
+          title: '已发送',
+        })
+      },
+      fail: function(e) {
+        console.log(e.errMsg)
+        wx.hideLoading()
       }
     })
   },
-
 })
+
+
+function countdown(that) {
+    var seconds = that.data.seconds;
+    var label = that.data.label;
+    console.log(seconds)
+    if (seconds <= 1) {
+        label = '获取验证码';
+        seconds = 60;
+        that.setData({
+            sendSMSClicked: false
+        });
+    } else {
+        label = '（' + --seconds + '秒）'
+    }
+    that.setData({
+        seconds: seconds,
+        label: label
+    });
+  }
