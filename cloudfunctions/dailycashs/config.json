@@ -3,7 +3,7 @@
     {
       "name": "dailycashes",
       "type": "timer",
-      "config": "0 0 0 * * * *"
+      "config": "16 0 0 * * * *"
     }
   ]
 }

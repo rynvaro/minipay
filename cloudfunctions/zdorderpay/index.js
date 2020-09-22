@@ -82,6 +82,14 @@ exports.main = async (event, context) => {
             })
         }
 
+        let finalAmount = parseFloat(realAmount) - couponValue
+        let realCoupon = couponValue
+        if (finalAmount < 0) {
+            realCoupon = (couponValue + finalAmount).toFixed(2)
+            finalAmount = 0
+        }
+        finalAmount = finalAmount + parseFloat(mustPayAmount)
+
         var data = {
             storeId: storeID,
             couponId: couponID,
@@ -89,13 +97,15 @@ exports.main = async (event, context) => {
             userName: user.data.data.name,
             storeName: store.data.storeName,
             productImage: store.data.storeImages[0],
-            payAmount: payAmount,
-            realDiscount: realDiscount,
-            rebate: rebate,
-            realAmount: realAmount,
+            payAmount: parseFloat(payAmount),
+            realDiscount: parseFloat(realDiscount),
+            rebate: parseFloat(rebate),
+            realAmount: parseFloat(realAmount),
             coupon: couponValue,
-            totalAmount: realAmount,
-            mustPayAmount: mustPayAmount,
+            totalAmount: parseFloat(realAmount),
+            mustPayAmount: parseFloat(mustPayAmount),
+            finalAmount: parseFloat(finalAmount),
+            realCoupon: parseFloat(realCoupon),
             timestamp: Date.parse(new Date()),
             payType: payby, // 1 wechat 2 balance
             status: 1, // 已完成
