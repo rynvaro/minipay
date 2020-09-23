@@ -78,6 +78,13 @@ Page({
       // let vtoken = code.substr(6,4)
       // console.log(vcode)
       // console.log(vtoken)
+      let date = new Date()
+      date.setHours(16, 0, 0, 0)
+      date.setDate(1)
+      // console.log("after set hours", date.getTime())
+      // date.setMonth(date.getMonth()-1)
+      // console.log(date.getTime())
+      console.log(date.getTime())
     },
 
     setPhone: function(e) {

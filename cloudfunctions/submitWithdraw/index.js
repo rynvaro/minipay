@@ -23,8 +23,10 @@ exports.main = async (event, context) => {
         }
 
         const trans = await db.startTransaction()
-        const res1 = await trans.collection('withdraws').add({
+        await trans.collection('withdraws').add({
             data: {
+                bank: mstore.data.bank,
+                bankCard: mstore.data.merchantBankCard,
                 storeName: mstore.data.storeName,
                 merchantName: mstore.data.merchantName,
                 storeID: event.storeID,
@@ -43,7 +45,7 @@ exports.main = async (event, context) => {
             }
         })
 
-        const res2 = await trans.collection('mstores').doc(event.storeID).update({
+        await trans.collection('mstores').doc(event.storeID).update({
             data: {
                 balance: mstore.data.balance - event.withdrawAmount,
                 updatedAt: Date.parse(new Date()),

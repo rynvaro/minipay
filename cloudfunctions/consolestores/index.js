@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
         return await db.collection('mstores').doc(event.id).get()
     }
     
-    let where = {deleted: 0}
+    let where = {}
     if (q) {
         where = where.and(db.command.or(
             [
