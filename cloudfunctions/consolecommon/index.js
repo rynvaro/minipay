@@ -310,5 +310,13 @@ exports.main = async (event, context) => {
         })
     }
 
+    if (tp == 'homeheader') {
+        delete event.tp
+        event.time = new Date().getTime()
+        return await db.collection('homeheader').add({
+            data: event
+        })
+    }
+
    return {}
 }
