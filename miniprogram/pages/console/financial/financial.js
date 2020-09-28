@@ -165,6 +165,14 @@ Page({
         return
       }
 
+      wx.requestSubscribeMessage({
+        tmplIds: ['SLBtHQYki0LoIHTl0YPhKOKfaNAJk55Wuk_01kd2Ogw'],
+        success (res) { },
+        fail(e) {
+          console.log(e)
+        }
+      })
+
       let thiz = this
       var promise = new Promise(function (resolve, reject) {
         wx.cloud.callFunction({

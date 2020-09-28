@@ -47,6 +47,11 @@ exports.main = async (event, context) => {
         })
     }
 
+    if (tp == "storedeletehard") {
+        const toDelete = await db.collection('mstores').doc(event._id).get()
+        return await db.collection('mstores').doc(toDelete.data._id).remove()
+    }
+
     if (tp == "exchangebanners") {
         return await db.collection('plates').where({type: 'banner'}).get()
     }
