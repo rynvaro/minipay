@@ -82,6 +82,14 @@ exports.main = async (event, context) => {
             })
         }
 
+        let finalAmount = parseFloat(realAmount) - couponValue
+        let realCoupon = couponValue
+        if (finalAmount < 0) {
+            realCoupon = (couponValue + finalAmount).toFixed(2)
+            finalAmount = 0
+        }
+        finalAmount = finalAmount + parseFloat(mustPayAmount)
+
         var data = {
             storeId: storeID,
             couponId: couponID,
@@ -89,13 +97,15 @@ exports.main = async (event, context) => {
             userName: user.data.data.name,
             storeName: store.data.storeName,
             productImage: store.data.storeImages[0],
-            payAmount: payAmount,
-            realDiscount: realDiscount,
-            rebate: rebate,
-            realAmount: realAmount,
+            payAmount: parseFloat(payAmount),
+            realDiscount: parseFloat(realDiscount),
+            rebate: parseFloat(rebate),
+            realAmount: parseFloat(realAmount),
             coupon: couponValue,
-            totalAmount: realAmount,
-            mustPayAmount: mustPayAmount,
+            totalAmount: parseFloat(realAmount),
+            mustPayAmount: parseFloat(mustPayAmount),
+            finalAmount: parseFloat(finalAmount),
+            realCoupon: parseFloat(realCoupon),
             timestamp: Date.parse(new Date()),
             payType: payby, // 1 wechat 2 balance
             status: 1, // 已完成
@@ -166,6 +176,10 @@ exports.main = async (event, context) => {
         if (user.data.data.payTimes ==  0) {
             isFirstPay = true
         }
+        let isNew = false 
+        if (new Date().getTime()/1000 - user.data.createdAt/1000 < 7200) {
+            isNew = true
+        }
         let balance = user.data.data.balance
         if (payby == 2) {
             balance = user.data.data.balance - totalAmount*100
@@ -183,17 +197,31 @@ exports.main = async (event, context) => {
             expTotal = 10001
         }
 
+        let userPayAmount = 0
+        if (user.data.data.payAmount) {
+            userPayAmount = user.data.data.payAmount
+        }
+        userPayAmount = userPayAmount + finalAmount
+
+        let userData = {
+            balance: balance,
+            point: user.data.data.point + parseInt(totalAmount/10),
+            exp: exp,
+            expTotal: expTotal,
+            level: newLevel,
+            payTimes: user.data.data.payTimes + 1,
+            payAmount: parseFloat(userPayAmount.toFixed(2)),
+            isFirstPay: isFirstPay,
+            
+        }
+        if (isFirstPay) {
+            userData.firstPayStoreName = store.data.storeName
+            userData.firstPayAmount = finalAmount
+        }
+
         await trans.collection('users').doc(wxContext.OPENID).update({
             data: {
-                data: {
-                    balance: balance,
-                    point: user.data.data.point + parseInt(totalAmount/10),
-                    exp: exp,
-                    expTotal: expTotal,
-                    level: newLevel,
-                    payTimes: user.data.data.payTimes + 1,
-                    isFirstPay: isFirstPay,
-                }
+                data: userData
             },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -251,10 +279,24 @@ exports.main = async (event, context) => {
             avgPrice = ((avgPrice * orders+parseFloat(totalAmount))/(orders + 1)).toFixed(2) * 1
         }
 
+        let subsidy = 0
+        if (isFirstPay && isNew) {
+            subsidy = 5
+            await db.collection('subsidies').add({
+                data: {
+                    timestamp: new Date().getTime(),
+                    storeName: store.data.storeName,
+                    storeId: store.data._id,
+                    userName: user.data.data.name,
+                    subsidy: subsidy,
+                }
+            })
+        }
+
         // 商户收入
         await trans.collection('mstores').doc(storeID).update({
             data: {
-                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(totalAmount)).toFixed(2)),
+                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(totalAmount)+ parseFloat(subsidy)).toFixed(2)),
                 orders: store.data.orders + 1,
                 avgPrice: avgPrice,
             },

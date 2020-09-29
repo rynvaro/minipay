@@ -1,0 +1,5 @@
+<!--miniprogram/pages/event/event.wxml-->
+
+<image mode="withFix" class="detailImage" src="{{event.detailImage}}"></image>
+
+<view class="btn" bindtap="detail">{{event.btnText}}</view>

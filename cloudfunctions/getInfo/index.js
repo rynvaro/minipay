@@ -25,7 +25,9 @@ exports.main = async (event, context) => {
         let dayIncome = 0
         for (var i = 0; i< orders.data.length; i++) {
             console.log(orders.data[i].timestamp, today, orders.data[i]>today)
-            dayIncome += orders.data[i].realAmount - orders.data[i].coupon + orders.data[i].mustPayAmount
+            if (orders.data[i].finalAmount) {
+                dayIncome += orders.data[i].finalAmount
+            }
         }
         mstore.data.dayIncome = dayIncome.toFixed(2)
         mstore.data.dayOrders = orders.data.length

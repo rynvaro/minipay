@@ -1,0 +1,9 @@
+{
+  "triggers":[
+    {
+      "name": "dailycashes",
+      "type": "timer",
+      "config": "16 0 0 * * * *"
+    }
+  ]
+}

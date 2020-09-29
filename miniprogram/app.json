@@ -34,7 +34,8 @@
         "pages/console/financial/financial",
         "pages/console/orderDetail/orderDetail",
         "pages/console/modifyPassword/modifyPassword",
-        "pages/orderDetail/orderDetail"
+        "pages/orderDetail/orderDetail",
+        "pages/event/event"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",

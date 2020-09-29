@@ -19,6 +19,8 @@ Page({
     plates: [],
     events: [],
     eventshow: false,
+
+    homeheader: '../../images/bg/home_header_bg.png'
   },
 
   /**
@@ -26,6 +28,13 @@ Page({
    */
   onLoad: function (options) {
     
+  },
+
+  event: function(e) {
+    console.log(e.currentTarget.dataset)
+    wx.navigateTo({
+      url: '../event/event?event='+JSON.stringify(this.data.events[e.currentTarget.dataset.index]),
+    })
   },
 
   search: function(e) {
@@ -73,6 +82,19 @@ Page({
    */
   onShow: function () {
     let thiz = this
+    wx.cloud.callFunction({
+      name:"zhomeheader",
+      success(res) {
+        console.log(res)
+          console.log("homeheader",res)
+          thiz.setData({
+            homeheader: res.result.data[0].image
+          })
+      },
+      fail: function(e) {
+        console.log(e)
+      }
+    })
     wx.cloud.callFunction({
       name:"zevents",
       success(res) {

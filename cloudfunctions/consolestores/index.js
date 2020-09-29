@@ -14,13 +14,14 @@ exports.main = async (event, context) => {
     let tp = event.tp 
     let q = event.q
 
+
     if (tp == 1) {
         return await db.collection('mstores').doc(event.id).get()
     }
     
-    let where = {deleted: 0}
+    let where = {}
     if (q) {
-        where = where.and(db.command.or(
+        where = db.command.or(
             [
                 {
                 storeName: {
@@ -35,8 +36,22 @@ exports.main = async (event, context) => {
                 }
                 }
             ]
-        ))
+        )
+        return await db.collection('mstores').where(where).orderBy('updatedAt','desc').get()
     }
 
-    return await db.collection('mstores').where(where).orderBy('createdAt','desc').get()
+    let count = await db.collection('mstores').where(where).count()
+
+    let currentPage = event.currentPage
+    let pageSize = event.pageSize
+    let totalCount = count.total
+
+    const results = await db.collection('mstores').skip((currentPage-1)*pageSize).limit(pageSize).orderBy('updatedAt','desc').get()
+
+    return {
+        data: results.data,
+        totalCount: totalCount,
+        currentPage: currentPage,
+        pageSize: pageSize,
+    }
 }

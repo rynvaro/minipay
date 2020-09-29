@@ -11,7 +11,7 @@
         </view>
         <view class="searchInput" bindconfirm="search"></view>
     </view>
-    <image class="headerBG" src="../../images/bg/home_header_bg.png"></image>
+    <image class="headerBG" src="{{homeheader}}"></image>
 </view>
 
 <view class="tabs">
@@ -41,7 +41,7 @@
   <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" >
     <block wx:for="{{events}}" wx:key="id">
       <swiper-item >
-        <image mode="aspectFill" src="{{item.image}}" class="bannerItem"/>    
+        <image mode="aspectFill" src="{{item.image}}" class="bannerItem" data-index="{{index}}" bindtap="event" />    
      </swiper-item>
     </block>
   </swiper>

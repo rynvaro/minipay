@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
         content = content.replace('${approveDate}',formatDate(new Date()))
         await db.collection('mstores').doc(mstores.data[0]._id).update({
             data: {
-                discount: event.discount,
+                discount: parseFloat(event.discount),
             }
         })
         return content
