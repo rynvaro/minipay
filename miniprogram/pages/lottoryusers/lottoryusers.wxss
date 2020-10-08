@@ -1,0 +1,26 @@
+/* miniprogram/pages/lottoryusers/lottoryusers.wxss */
+
+
+page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.winBox {
+    margin-top: 20rpx;
+    height: auto;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.icon {
+    width: 80rpx;
+    height: 80rpx;
+    /* background-color: tan; */
+    margin: 5rpx;
+    border: 1rpx solid #dadada;
+    border-radius: 10rpx;
+}

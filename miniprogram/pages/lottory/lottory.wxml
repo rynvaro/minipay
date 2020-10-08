@@ -1,0 +1,54 @@
+<!--miniprogram/pages/lottory/lottory.wxml-->
+
+<!-- <view class="title">第 1 场</view> -->
+<wxs src="../../utils/filter.wxs" module="filters"/>
+
+<image class="headerImage" src="{{event.image}}"></image>
+<image mode="widthFix" class="footerImage" src="{{event.detailImage[0]}}"></image>
+<view class="temp">
+    <text class="lottoryTime">开奖时间：{{filters.formatTime(event.lottoryTime)}}</text>
+    <button class="contact" open-type="contact">联系客服</button>
+</view>
+
+<view class="buttonBox">
+    <view class="buttonOut">
+        <view wx:if="{{user.status == 1}}" class="buttonIn" bindtap="doLottory">等待审核</view>
+        <view wx:if="{{user.status == 2}}" class="buttonIn" bindtap="doLottory">等待开奖</view>
+        <view wx:if="{{!user.status}}" class="buttonIn" bindtap="doLottory">立即参与</view>
+    </view>
+    <!-- <progress class="progress"  percent="80" activeColor="#C35B49" backgroundColor="#eeeeee" stroke-width="3" /> -->
+</view>
+<view class="usersBox" bindtap="seeall">
+    <text>已有{{len}}人参与，查看全部</text>
+    <view class="arrow" style="{{arrowStyle}}"></view>
+</view>
+<view class="winBox">
+    <block wx:for="{{joinedusers}}" wx:key="id">
+        <image class="icon" src="{{item.avatarUrl}}"></image>
+    </block>
+</view>
+
+<image mode="widthFix" class="footerImage" src="{{event.detailImage[1]}}"></image>
+
+
+<!-- <view class="invite" bindtap="invite">获取资格</view> -->
+
+<!-- <view class="wonBox">
+    <view class="wonTitle">中奖晒单</view>
+    <view class="swiperBox">
+        <swiper class='swiper' autoplay='{{true}}' interval='3000' vertical='{{true}}' circular='{{true}}'>
+        <swiper-item class='item' wx:for='{{txtlist}}' wx:key="id">{{item}}</swiper-item>
+    </swiper>
+    </view>
+</view> -->
+
+<view class="canvasBox" hidden="{{hidden}}">
+    <view class="shareTitle">参与抽奖</view>
+    <view class="shareTips">长按图片保存分享至朋友圈 并把朋友圈发送截图和手机号发送至客服（手机号将作为中奖凭证，请仔细填写），客服审核后即可自动参与抽奖活动。成功参与以及开奖后，小程序会通过微信通知告知您，请留意相关通知。</view>
+    <view class="canvasBoxClose" bindtap="closeCanvasBox">×</view>
+    <canvas 
+        class="canvas" 
+        canvas-id="shareImg"
+        bindlongpress="onCanvasLongPress">
+    </canvas>
+</view>

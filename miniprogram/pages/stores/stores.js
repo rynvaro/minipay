@@ -23,6 +23,12 @@ Page({
       vipLevel: 1,
       stores: [],
       hidden: false,
+      // page
+      pageSize: 10,
+      currentPage: 1,
+      hasNext: false,
+      orderType: 1,
+      isGeo: false,
   },
 
   search: function(e) {
@@ -62,7 +68,7 @@ Page({
         isGeo = true
       }
 
-      listStores(this,orderType,false,'',isGeo)
+      listStores(this,orderType,isGeo,this.data.pageSize,this.data.currentPage)
   },
 
   store: function(e){
@@ -103,7 +109,7 @@ Page({
     wx.showLoading({
         title: 'loading...',
     })
-    listStores(this,1,false,'',false)
+    listStores(this,1,false,this.data.pageSize, this.data.currentPage)
   },
 
   /**
@@ -145,7 +151,12 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.data.hasNext) {
+      wx.showLoading({
+        title: 'loading...',
+      })
+      listStores(this, this.data.orderType, this.data.isGeo, this.data.pageSize, this.data.currentPage)
+    }
   },
 
   /**
@@ -164,27 +175,33 @@ Page({
  * @param {*} q   搜索关键字
  * @param {*} isGeo 是否是Geo
  */
-function listStores(thiz, orderType, isSearch, q, isGeo){
-  console.log("orderType: ",orderType)
-  console.log("isSearch: ",isSearch)
-  console.log("q: ",q)
-  console.log("isGeo: ",isGeo)
-  console.log("storeType: ",thiz.data.storeType)
-  console.log("point: ",thiz.data.point)
+function listStores(thiz, orderType, isGeo,pageSize, currentPage){
+  console.log("orderType: ", orderType)
+  console.log("isGeo: ", isGeo)
+  console.log("storeType: ", thiz.data.storeType)
+  console.log("point: ", thiz.data.point)
+  console.log("currentPage: ", currentPage)
+  console.log("pageSize: ", pageSize)
   wx.cloud.callFunction({
       name:"zstores",
       data: {
           storeType: thiz.data.storeType,
           orderType: orderType,
-          isSearch: isSearch,
-          q: q,
           isGeo: isGeo,
           lat: thiz.data.point.lat,
           lon: thiz.data.point.lon,
+          pageSize: pageSize,
+          currentPage: currentPage,
       },
       success(res) {
           console.log(res)
-          thiz.setData({stores: res.result.data})
+          thiz.setData({
+              stores: thiz.data.stores.concat(res.result.data),
+              hasNext: res.result.hasNext, 
+              currentPage: res.result.currentPage,
+              orderType: res.result.orderType,
+              isGeo: res.result.isGeo,
+            })
           wx.hideLoading()
       },
       fail: function(e) {

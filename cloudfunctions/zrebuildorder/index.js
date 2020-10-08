@@ -12,6 +12,11 @@ exports.main = async (event, context) => {
     let storeID = event.storeID
     let viplevel = event.level
 
+    let tp = ''
+    if (event.tp) {
+        tp = event.tp
+    }
+
     var result = {}
 
     try {
@@ -37,6 +42,10 @@ exports.main = async (event, context) => {
                 realDiscount: realDiscount,
                 coupons: coupons.data,
             }
+        }
+
+        if (tp == 'special') {
+            result.data.basePrice = 13 // 减去的价格
         }
 
     }catch(e) {

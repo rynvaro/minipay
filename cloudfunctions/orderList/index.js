@@ -9,6 +9,11 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+
+  console.log("xxxx-x-x-x-")
+  console.log(wxContext.OPENID)
+  console.log('event is: ',event)
 
   let q = event.q
   let status = event.status

@@ -18,6 +18,7 @@ exports.main = async (event, context) => {
         let now = new Date()
         now.setHours(0, 0, 0, 0)
         let today = now.getTime()
+        console.log(today,"-----")
         const orders = await db.collection('orders').where({
             storeId: _.eq(event.storeID), 
             timestamp: _.gte(today)

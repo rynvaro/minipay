@@ -21,19 +21,21 @@
     </view>
   </view>
 
-  <view class="detailItem">
+  <view class="detailItem" wx:if="{{order.payType != 3}}">
     <text class="detailItemKey">折扣</text>
     <text class="detailItemValue">{{order.realDiscount}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">本单已减</text>
-    <text class="detailItemValue">{{order.rebate}}</text>
+    <text class="detailItemValue" wx:if="{{order.payType != 3}}">{{order.rebate}}</text>
+    <text class="detailItemValue" wx:if="{{order.payType == 3}}">{{order.basePrice}}</text>
   </view>
 
   <view class="detailItem">
     <text class="detailItemKey">支付金额</text>
-    <text class="detailItemValue">{{order.realAmount}}</text>
+    <text class="detailItemValue" wx:if="{{order.payType != 3}}">{{order.realAmount}}</text>
+    <text class="detailItemValue" wx:if="{{order.payType == 3}}">{{order.finalAmount}}</text>
   </view>
 
   <view class="detailItem" >
@@ -50,10 +52,11 @@
   </view>
 
   <view class="detailItem">
-    <text class="detailItemKey">支付方式</text>
+    <text class="payByKey">支付方式</text>
     <radio-group class="payby">
       <radio value="1" class="paybyItem" checked="{{wxChecked}}" disabled="true">微信</radio>
       <radio value="2" class="paybyItem" checked="{{balanceChecked}}" disabled="true">余额</radio>
+      <radio value="2" class="paybyItem" checked="{{overlordChecked}}" disabled="true">霸王餐</radio>
     </radio-group>
   </view>
 
@@ -62,6 +65,10 @@
     <text class="detailItemValue">{{filters.formatTime(order.timestamp)}}</text>
   </view>
 
+  <view wx:if="{{order.payType == 3}}" class="detailItem">
+    <view wx:if="{{order.pay3Confirmed}}" style="color: gray"  class="confirmOrder">确认订单<text class="confirmOrderTipes">(商家确认，用户勿点)</text></view>
+    <view wx:else class="confirmOrder" bindtap="confirmOrder">确认订单<text class="confirmOrderTipes">(商家确认，用户勿点)</text></view>
+  </view>
   <view class="detailItem"></view>
   <view class="detailItem"></view>
 
@@ -69,6 +76,6 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text wx:if="{{order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount > 0}}" class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount)}}</text>
+  <text wx:if="{{order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount > 0}}" class="totalIncomeValue">¥{{order.finalAmount}}</text>
   <text wx:else class="totalIncomeValue">¥0.00</text>
 </view>

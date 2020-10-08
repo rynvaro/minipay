@@ -248,12 +248,12 @@ Page({
     },
 
     invite: function(e) {
-      wx.showToast({
-        title: '暂未开放',
-      })
-        // wx.navigateTo({
-        //   url: '../invite/invite',
-        // })
+      // wx.showToast({
+      //   title: '暂未开放',
+      // })
+        wx.navigateTo({
+          url: '../invite/invite',
+        })
     },
 
     openRedpack: function(e) {
@@ -282,6 +282,13 @@ Page({
         }
       })
     },
+
+    /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
 
     hideRedpack:  function(e) {
         this.setData({redpackShow: false})
@@ -398,11 +405,40 @@ Page({
     scan: function(e) {
         console.log(e)
         wx.scanCode({
-            success (res) {
-                console.log(res)
-                wx.navigateTo({
-                  url: '../order/order?storeID='+res.result,
-                })
+            success (res1) {
+                console.log(res1)
+                wx.cloud.callFunction({
+                  name:"zcheckpopup",
+                  data: {
+                    id: res1.result,
+                  },
+                  success(res) {
+                      console.log(res)
+                      wx.hideLoading()
+                      if (res.result.isPopup) {
+                        if(!res.result.confirmed) {
+                          wx.navigateTo({
+                            url: '../specialorder/specialorder?storeID='+res1.result,
+                          })
+                        }else {
+                          wx.navigateTo({
+                            url: '../orderDetail/orderDetail?id='+res.result.orderId,
+                          })
+                        }
+                      }else {
+                        wx.navigateTo({
+                          url: '../order/order?storeID='+res1.result,
+                        })
+                      }
+                  },
+                  fail: function(e) {
+                    console.log(e.errMsg)
+                    wx.hideLoading()
+                    wx.navigateTo({
+                      url: '../order/order?storeID='+res1.result,
+                    })
+                  }
+              })
             }
         })
     },

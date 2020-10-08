@@ -8,11 +8,41 @@ Page({
         order: {},
         wxChecked: false,
         balanceChecked: false,
+        overlordChecked: false,
         coupon: {
             coupon: {
                 value: 0
             }
         }
+    },
+
+    confirmOrder: function(e) {
+        let thiz = this
+        wx.showLoading({
+          title: 'loading...',
+        })
+        wx.cloud.callFunction({
+            name:"zconfirmorder",
+            data: {
+                id: thiz.data.order._id
+            },
+            success(res) {
+                console.log(res)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '已确认',
+                })
+                thiz.data.order.pay3Confirmed = true
+                thiz.setData({order: thiz.data.order})
+            },
+            fail: function(e) {
+                console.log(e)
+                wx.hideLoading()
+                wx.showToast({
+                    title: '确认失败',
+                })
+            }
+        })
     },
 
     /**
@@ -33,8 +63,10 @@ Page({
                 thiz.setData({order: res.result.order, coupon: res.result.coupon.data})
                 if (res.result.order.payType==1) {
                     thiz.setData({wxChecked: true})
-                }else {
+                }else if (res.result.order.payType==2) {
                     thiz.setData({balanceChecked: true})
+                }else if (res.result.order.payType==3) {
+                    thiz.setData({overlordChecked: true})
                 }
                 wx.hideLoading()
             },

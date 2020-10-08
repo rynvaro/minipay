@@ -1,5 +1,25 @@
 <!--miniprogram/pages/event/event.wxml-->
 
-<image mode="withFix" class="detailImage" src="{{event.detailImage}}"></image>
+<block wx:for="{{event.detailImage}}" wx:key="id">
+    <image mode="widthFix" class="detailImage" src="{{item}}"></image>
+</block>
+<view class="zero"></view>
 
-<view class="btn" bindtap="detail">{{event.btnText}}</view>
+<view class="boo" >
+    <view class="box" hidden="{{!show}}">
+        <view class="boxHeader">选择门店</view>
+        <radio-group bindchange="selectStore">
+            <label style="display:flex;" wx:for="{{event.stores}}" wx:key="id">
+                <radio value="{{item._id}}" style="margin-top: 10rpx">{{item.storeName}}</radio>
+            </label>
+        </radio-group>
+        <view class="buttons">
+            <view class="buttonCancel" bindtap="cancel">取消</view>
+            <view class="buttonConfirm" bindtap="confirm">确认</view>
+        </view>
+    </view>
+    
+    <!-- <view class="btn" bindtap="joinnow">{{event.btnText}}</view> -->
+    <view class="btn" bindtap="detail">立即参与</view>
+</view>
+
