@@ -1,5 +1,41 @@
 //app.js
 App({
+  updateVersions() {
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate((res) => {
+      // res.hasUpdate = true
+      if (res.hasUpdate) {
+        // 新的版本下载中
+        wx.showModal({
+          title: '已经有新版本了哟~',
+          showCancel: false,
+          content:
+            '正在下载中，请不要退出呦'
+        })
+      }
+    })
+    updateManager.onUpdateReady(() => {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，是否重启应用？',
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+    updateManager.onUpdateFailed(function () {
+      // 新的版本下载失败
+      wx.showModal({
+        title: '已经有新版本了哟~',
+        content:
+          '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~'
+      })
+    })
+  },
   onLaunch: function () {
     
     if (!wx.cloud) {
@@ -14,6 +50,7 @@ App({
         // env: 'release-8tcge',
         traceUser: true,
       })
+      this.updateVersions()
     }
 
     const systemInfo = wx.getSystemInfoSync();
@@ -36,5 +73,9 @@ App({
     menuHeight: 0, // 胶囊高度（自定义内容可与胶囊高度保证一致）
     storeID: '', // 商家后台登录后的店铺ID
     viplevel: 1,
+    location: {
+      latitude: 0,
+      longitude: 0
+    }
 }
 })

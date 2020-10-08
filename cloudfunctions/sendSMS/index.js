@@ -17,14 +17,14 @@ exports.main = async (event, context) => {
     var params = {
         "RegionId": "cn-hangzhou",
         "PhoneNumberJson": "[\""+event.phone+"\"]",
-        "SignNameJson": "[\"测试\"]",
-        "TemplateCode": "SMS_12680099",
+        "SignNameJson": "[\"柒号生活\"]",
+        "TemplateCode": "SMS_204116195",
         "TemplateParamJson": "[{\"code\":\""+code+"\"}]"
       }
 
     var client = new Core({
-        accessKeyId: 'LTAI4FqBJQvDkWmw81T2scxy',
-        accessKeySecret: 'r5ZeEbvMz0lLM8tYweQNt0svm25b3b',
+        accessKeyId: 'LTAI4GAwwVzvURzWCt48pX1C',
+        accessKeySecret: '6dKalolTUSuxNkou0rm3PAeoKpWYUv',
         endpoint: 'https://dysmsapi.aliyuncs.com',
         apiVersion: '2017-05-25'
     });

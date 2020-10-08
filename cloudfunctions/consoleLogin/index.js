@@ -49,7 +49,7 @@ exports.main = async (event, context) => {
       let password = event.password
       let bypass = event.bypass
       if (bypass) {
-        const mstore = await db.collection('mstores').where({merchantPhone: phone, deleted: 0}).get()
+        const mstore = await db.collection('mstores').where({merchantPhone: phone}).get()
         if (mstore.data.length == 0) {
           return -1 // first login
         }
@@ -70,7 +70,7 @@ exports.main = async (event, context) => {
         const result = await db.collection("codes").doc(codeID).get()
         
 
-        mstore = await db.collection('mstores').where({merchantPhone: phone, deleted: 0}).get()
+        mstore = await db.collection('mstores').where({merchantPhone: phone}).get()
         if (mstore.data.length == 0) {
           let vcode = code.substr(0,6)
           let vtoken = code.substr(6, 4)
@@ -124,9 +124,24 @@ exports.main = async (event, context) => {
           })
           return res
         }else {
-          if (result.data.code!=code) {
-            return -4 // invalid code
+          // 未登录过
+          if (!mstore.data[0].openid) {
+              let vcode = code.substr(0,6)
+              let vtoken = code.substr(6, 4)
+              if (vtoken != '7hao') {
+                return -4
+              }
+
+              if (result.data.code!=vcode) {
+                return -4 // invalid code
+              }
+          }else {
+            if (result.data.code!=code) {
+              return -4 // invalid code
+            }
           }
+          
+          
           console.log(Date.parse(new Date())/10-result.data.time/10)
           console.log(Date.parse(new Date()))
           console.log(result.data.time)

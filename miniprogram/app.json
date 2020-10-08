@@ -1,6 +1,9 @@
 {
     "pages": [
         "pages/index/index",
+        "pages/event/event",
+        "pages/stores/stores",
+        "pages/lottory/lottory",
         "pages/vipexperience/vipexperience",
         "pages/point/point",
         "pages/balance/balance",
@@ -18,7 +21,6 @@
         "pages/signin/signin",
         "pages/invite/invite",
         "pages/coupon/coupon",
-        "pages/stores/stores",
         "pages/plates/plates",
         "pages/search/search",
         "pages/viprights/viprights",
@@ -35,7 +37,8 @@
         "pages/console/orderDetail/orderDetail",
         "pages/console/modifyPassword/modifyPassword",
         "pages/orderDetail/orderDetail",
-        "pages/event/event"
+        "pages/lottoryusers/lottoryusers",
+        "pages/specialorder/specialorder"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",

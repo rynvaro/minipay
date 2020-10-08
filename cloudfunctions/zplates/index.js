@@ -33,6 +33,7 @@ exports.main = async (event, context) => {
             if (lat !=0 && lon !=0 ){
                 // 附近
                 const nears = await db.collection('mstores').where({
+                    deleted: 0,
                     geoPoint: _.geoNear({
                         geometry: db.Geo.Point(lon,lat),
                         maxDistance: 50000,

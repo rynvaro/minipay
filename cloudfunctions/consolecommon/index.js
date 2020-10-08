@@ -16,17 +16,55 @@ exports.main = async (event, context) => {
    console.log(event)
 
    if (tp == "events") {
-       return await db.collection("events").get()
+       return await db.collection("events").orderBy('index','asc').get()
    }
 
    if (tp == "eventadd") {
        delete event.tp
-       return await db.collection('events').add({
-           data: event
-       })
+       event.status = 1
+       
+       const currentEvent = await db.collection('events').add({
+            data: event
+        })
+
+        if (event.type == '1') {
+            let stores = event.stores
+            if (stores.length > 0) {
+                // 更新快闪店
+                let ids = []
+                for (var i = 0; i<stores.length; i++) {
+                    ids.push(stores[i]._id)
+                }
+     
+                await db.collection('mstores').where({_id: _.in(ids)}).update({
+                    data: {
+                        isPopup: true,
+                        eventId: currentEvent._id
+                    }
+                })
+            }
+        }
+
+       return currentEvent
    }
 
    if (tp == "eventdelete") {
+       await db.collection('lottories').where({eventId: event._id}).remove()
+       const currentEvent = await db.collection('events').doc(event._id).get()
+       if (event.type == '1') {
+        let stores = currentEvent.data.stores
+        var ids = []
+        for (var i = 0; i<stores.length; i++) {
+         ids.push(stores[i]._id)
+        }  
+        await db.collection('mstores').where({_id: _.in(ids)}).update({
+             data: {
+                 isPopup: false,
+                 eventId: ''
+             }
+         }) 
+       }
+       
        return await db.collection('events').doc(event._id).remove()
    }
 
@@ -34,6 +72,30 @@ exports.main = async (event, context) => {
        let id = event._id
         delete event.tp
         delete event._id
+        let dids = event.dids
+        delete event.dids
+        if (dids.length > 0) {
+            await db.collection('mstores').where({_id: _.in(dids)}).update({
+                data: {
+                    isPopup: false,
+                    eventId: ''
+                }
+            })
+        }
+        let stores = event.stores
+       if (stores.length > 0) {
+           // 更新快闪店
+           let ids = []
+           for (var i = 0; i<stores.length; i++) {
+               ids.push(stores[i]._id)
+           }
+           await db.collection('mstores').where({_id: _.in(ids)}).update({
+               data: {
+                   isPopup: true,
+                   eventId: id
+               }
+           })
+       }
         return await db.collection('events').doc(id).update({
             data: event
         })
@@ -323,5 +385,59 @@ exports.main = async (event, context) => {
         })
     }
 
+    if (tp == 'checklottory') {
+        let phone = event.phone
+        const joinedusers = await db.collection('lottories').where({phone: phone}).get()
+        if (joinedusers.data.length == 0) {
+            return -1 // 用户不存在
+        }
+        if (joinedusers.data[0].status == 2) {
+            return 1
+        }
+        await db.collection('lottories').doc(joinedusers.data[0]._id).update({
+            data: {
+                status: 2,
+            }
+        })
+        const eventData = await db.collection('events').doc(joinedusers.data[0].eventId).get()
+        if (joinedusers.data[0].res.QkzsvPewwG2DNQORKHqmlvZxhkhYD9CHKF46lL1w_1M == 'accept') {
+            cloud.openapi.subscribeMessage.send({
+                touser: joinedusers.data[0].openid,
+                templateId:'QkzsvPewwG2DNQORKHqmlvZxhkhYD9CHKF46lL1w_1M',
+                page: 'pages/lottory/lottory?event='+JSON.stringify(eventData.data),
+                // miniprogramState: 'developer',
+                data: {
+                    phrase1:{
+                        value:'审核通过',
+                    },
+                    thing2: {
+                        value: '锦鲤抽奖',
+                    },
+                    date3: {
+                        value: formatDate(new Date())
+                    },
+                    thing4:{
+                        value: '审核通过'
+                    },
+                },
+            })
+            return 1
+        }else {
+            return 'reject'
+        }
+    }
+
    return {}
+}
+
+function formatDate(date) {
+    var year = date.getFullYear()
+    var month = date.getMonth() + 1
+    var day = date.getDate()
+    return [year, month, day].map(formatNumber).join('.')
+  }
+  
+function formatNumber(n) {
+    n = n.toString()
+    return n[1] ? n : '0' + n
 }

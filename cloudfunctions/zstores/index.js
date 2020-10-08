@@ -14,6 +14,9 @@ exports.main = async (event, context) => {
     let isGeo = event.isGeo // 是否按照附近商家查找
     let lat = event.lat
     let lon = event.lon
+    
+    let pageSize = event.pageSize
+    let currentPage = event.currentPage
 
     console.log("event is: ",event)
 
@@ -33,11 +36,11 @@ exports.main = async (event, context) => {
                 })
             }
             if (orderType == 1) {
-                result = await db.collection('mstores').where(where).orderBy('orders','desc').get()
+                result = await db.collection('mstores').where(where).orderBy('orders','desc').skip((currentPage-1)*pageSize).limit(pageSize).get()
             }else if (orderType == 2) {
-                result = await db.collection('mstores').where(where).orderBy('createdAt','desc').get()
+                result = await db.collection('mstores').where(where).orderBy('createdAt','desc').skip((currentPage-1)*pageSize).limit(pageSize).get()
             }else {
-                result = await db.collection('mstores').where(where).get()
+                result = await db.collection('mstores').where(where).skip((currentPage-1)*pageSize).limit(pageSize).get()
             }
         }else {
             let orderBy = 'orders'
@@ -50,8 +53,18 @@ exports.main = async (event, context) => {
                     geometry: db.Geo.Point(lon,lat),
                     maxDistance: 50000,
                 })
-            }).orderBy(orderBy,'desc').get()
+            }).orderBy(orderBy,'desc').skip((currentPage-1)*pageSize).limit(pageSize).get()
         }
+
+        if (result.data.length == pageSize) {
+            result.hasNext = true
+            result.currentPage = currentPage + 1
+        }else {
+            result.hasNext = false
+            result.currentPage = currentPage + 1
+        }
+        result.orderType = orderType
+        result.isGeo = isGeo
 
         for (var i = 0; i < result.data.length; i++){
             let dis = distance(result.data[i].latitude,result.data[i].longitude,lat,lon)

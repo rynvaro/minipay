@@ -10,14 +10,176 @@ page {
     width: 95%;
 }
 
-.btn {
+.zero {
+    height: 120rpx;
+}
+
+.box {
+    width: 100%;
+    height: 390rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #EEEEEE;
+}
+
+.boo {
+    height: 500rpx;
+    width: 100%;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+}
+
+.boxHeader {
     height: 90rpx;
-    background-color: #EEEEEE;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.buttons {
+    width: 100%;
+    display: flex;
+    height: 120rpx;
+}
+
+.buttonCancel {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10rpx;
+    background-color: #dadada;
+}
+
+.buttonConfirm {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10rpx;
+    background-color: rgba(255, 69, 0, 0.8);
+}
+
+.btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90rpx;
+    background-color: rgba(255, 69, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.popBox {
+    width: 90%;
+    height: 700rpx;
+    background-color: white;
+    border-radius: 20rpx;
+    position: absolute;
+    bottom: 0;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .popBoxHeader {
+    width: 100%;
+    margin-top: 20rpx;
+    display: flex;
+    color: #999999;
+  }
+  
+  .popBoxHeaderL {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .popBoxHeaderR {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: small;
+  }
+  
+  .popBoxAmount {
+    width: 100%;
+    margin-top: 10rpx;
+    display: flex;
+    font-size: large;
+  }
+  
+  .popBoxAmountL {
+    width: 45%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .popBoxAmountR {
+    width: 55%;
+  }
+  
+  .popBoxDetail {
+    margin-top: 30rpx;
+    width: 70%;
+    height: 200rpx;
+    display: flex;
+    flex-direction: column;
+    color: #999999;
+    font-size: small;
+  }
+  
+  .popBoxDetailItemU {
+    height: 49%;
+    display: flex;
+  }
+  
+  .popBoxDetailItemUL {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+  
+  .popBoxDetailItemUR {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  
+  
+  .popBoxDetailItemD {
+    height: 49%;
+    display: flex;
+  }
+  
+  .popBoxDetailItemDL {
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .popBoxDetailItemDR {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .popBoxDetailMiddle {
+    height: 2rpx;
+    background-color: #d1cdcd;
+  }

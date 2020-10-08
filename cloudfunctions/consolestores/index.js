@@ -10,6 +10,7 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+    console.log("event is: ", event)
 
     let tp = event.tp 
     let q = event.q

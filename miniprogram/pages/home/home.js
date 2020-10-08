@@ -31,10 +31,26 @@ Page({
   },
 
   event: function(e) {
-    console.log(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '../event/event?event='+JSON.stringify(this.data.events[e.currentTarget.dataset.index]),
-    })
+    let event = this.data.events[e.currentTarget.dataset.index]
+    console.log(event.type,e.currentTarget.dataset.index)
+    switch (event.type) {
+      case "1":
+        wx.navigateTo({
+          url: '../event/event?event='+JSON.stringify(event),
+        })
+        break
+      case "2":
+        wx.navigateTo({
+          url: '../lottory/lottory?event='+JSON.stringify(event),
+        })
+        break
+      case "3":
+        wx.navigateTo({
+          url: '../invite/invite',
+        })
+        break
+    }
+    
   },
 
   search: function(e) {
@@ -86,10 +102,11 @@ Page({
       name:"zhomeheader",
       success(res) {
         console.log(res)
-          console.log("homeheader",res)
-          thiz.setData({
-            homeheader: res.result.data[0].image
-          })
+          if (res.result.data.length > 0) {
+            thiz.setData({
+              homeheader: res.result.data[0].image
+            })
+          }
       },
       fail: function(e) {
         console.log(e)

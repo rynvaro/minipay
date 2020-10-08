@@ -1,0 +1,6 @@
+<!--miniprogram/pages/lottoryusers/lottoryusers.wxml-->
+<view class="winBox">
+    <block wx:for="{{joinedusers}}" wx:key="id">
+        <image class="icon" src="{{item.avatarUrl}}"></image>
+    </block>
+</view>
