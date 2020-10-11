@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/console/index/index",
         "pages/index/index",
         "pages/event/event",
         "pages/stores/stores",
@@ -7,7 +8,6 @@
         "pages/vipexperience/vipexperience",
         "pages/point/point",
         "pages/balance/balance",
-        "pages/console/index/index",
         "pages/console/home/home",
         "pages/console/contract/contract",
         "pages/console/setpass/setpass",

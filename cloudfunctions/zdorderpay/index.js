@@ -114,6 +114,29 @@ exports.main = async (event, context) => {
         }
         finalAmount = finalAmount + parseFloat(mustPayAmount)
 
+        let isFirstPay = false
+        if (user.data.data.payTimes ==  0) {
+            isFirstPay = true
+        }
+        // let isNew = false 
+        // if (new Date().getTime()/1000 - user.data.createdAt/1000 < 7200) {
+        //     isNew = true
+        // }
+
+        let subsidy = 0
+        if (isFirstPay && payby != 3) {
+            subsidy = 5
+            await db.collection('subsidies').add({
+                data: {
+                    timestamp: new Date().getTime(),
+                    storeName: store.data.storeName,
+                    storeId: store.data._id,
+                    userName: user.data.data.name,
+                    subsidy: subsidy,
+                }
+            })
+        }
+
         var data = {
             storeId: storeID,
             couponId: couponID,
@@ -133,6 +156,7 @@ exports.main = async (event, context) => {
             timestamp: Date.parse(new Date()),
             payType: payby, // 1 wechat 2 balance
             status: 1, // 已完成
+            subsidy: subsidy, // 商家补贴
         }
 
         if (payby == 3) {
@@ -211,14 +235,7 @@ exports.main = async (event, context) => {
             })
         }
 
-        let isFirstPay = false
-        if (user.data.data.payTimes ==  0) {
-            isFirstPay = true
-        }
-        let isNew = false 
-        if (new Date().getTime()/1000 - user.data.createdAt/1000 < 7200) {
-            isNew = true
-        }
+        
         let balance = user.data.data.balance
         if (payby == 2) {
             balance = user.data.data.balance - finalAmount*100
@@ -301,24 +318,10 @@ exports.main = async (event, context) => {
             avgPrice = ((avgPrice * orders+parseFloat(finalAmount))/(orders + 1)).toFixed(2) * 1
         }
 
-        let subsidy = 0
-        // if (isFirstPay && isNew && payby !=3) {
-        //     subsidy = 5
-        //     await db.collection('subsidies').add({
-        //         data: {
-        //             timestamp: new Date().getTime(),
-        //             storeName: store.data.storeName,
-        //             storeId: store.data._id,
-        //             userName: user.data.data.name,
-        //             subsidy: subsidy,
-        //         }
-        //     })
-        // }
-
         // 商户收入
         await db.collection('mstores').doc(storeID).update({
             data: {
-                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(finalAmount)+ parseFloat(subsidy)).toFixed(2)),
+                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(finalAmount) +parseFloat(realCoupon)+ parseFloat(subsidy)).toFixed(2)),
                 orders: store.data.orders + 1,
                 avgPrice: avgPrice,
             },

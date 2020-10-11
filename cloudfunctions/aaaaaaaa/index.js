@@ -11,5 +11,5 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
-    return await db.collection('lottories').where({status:1}).count()
+    return await db.collection('mstores').where({deleted:1}).count()
 }

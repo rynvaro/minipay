@@ -40,7 +40,7 @@ exports.main = async (event, context) => {
     where = where.and({title: db.RegExp({regexp: '.*'+q +'.*', options: 1})})
   }
 
-  var result = await db.collection('orders').where(where).get()
+  var result = await db.collection('iorders').where(where).orderBy('timestamp','desc').get()
   
   return result
 }

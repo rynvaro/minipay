@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
 
   var order = {}  
   try {
-    order = await db.collection("orders").doc(event.orderId).get()
+    order = await db.collection("iorders").doc(event.orderId).get()
   }catch(e) {
       throw(e)
   }
