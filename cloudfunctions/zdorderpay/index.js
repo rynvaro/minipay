@@ -53,6 +53,7 @@ exports.main = async (event, context) => {
         }
         let realDiscount = store.data.discount + delta
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
+        let income7 = (payAmount * delta/10).toFixed(2)
         let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
         let totalAmount = (parseFloat(realAmount) + mustPayAmount).toFixed(2)
         if (totalAmount < 0) {
@@ -145,6 +146,7 @@ exports.main = async (event, context) => {
             storeName: store.data.storeName,
             productImage: store.data.storeImages[0],
             payAmount: parseFloat(payAmount),
+            discount: parseFloat(store.data.discount),
             realDiscount: parseFloat(realDiscount),
             rebate: parseFloat(rebate),
             realAmount: parseFloat(realAmount),
@@ -152,6 +154,7 @@ exports.main = async (event, context) => {
             totalAmount: parseFloat(realAmount),
             mustPayAmount: parseFloat(mustPayAmount),
             finalAmount: parseFloat(finalAmount.toFixed(2)),
+            income7: parseFloat(income7),
             realCoupon: parseFloat(realCoupon),
             timestamp: Date.parse(new Date()),
             payType: payby, // 1 wechat 2 balance
@@ -321,7 +324,7 @@ exports.main = async (event, context) => {
         // 商户收入
         await db.collection('mstores').doc(storeID).update({
             data: {
-                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(finalAmount) +parseFloat(realCoupon)+ parseFloat(subsidy)).toFixed(2)),
+                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(finalAmount) +parseFloat(realCoupon)+ parseFloat(subsidy)).toFixed(2)) - parseFloat(income7),
                 orders: store.data.orders + 1,
                 avgPrice: avgPrice,
             },

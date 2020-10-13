@@ -1,6 +1,8 @@
 //index.js
 const app = getApp();
+// const plugin = requirePlugin('WechatSI');
 
+// const db = wx.cloud.database({env: 'dev-osmu3'})
 Page({
     data: {
         show: false,
@@ -73,6 +75,65 @@ Page({
     },
 
     onLoad: function(e) {
+
+      //   console.log(db.collection('todos').get())
+
+      //   const watcher = db.collection('todos').where({status: 1}).watch({
+      //     onChange: function(snapshot) {
+      //       wx.showToast({
+      //         title: 'haha',
+      //       })
+      //       console.log('docs\'s changed events', snapshot.docChanges)
+      //       console.log('query result snapshot after the event', snapshot.docs)
+      //       console.log('is init data', snapshot.type === 'init')
+      //       const innerAudioContext = wx.createInnerAudioContext();
+      // innerAudioContext.autoplay = true;
+      // plugin.textToSpeech({
+      //   lang: "zh_CN",
+      //   tts: true,
+      //   content: "柒号生活到账10元",
+      //   success: function(res) {
+    
+      //     console.log(res);
+      //     // console.log("succ tts", res.filename);
+      //     innerAudioContext.src = res.filename;
+    
+      //     innerAudioContext.onPlay(() => {
+      //       console.log('开始播放');
+    
+      //     })
+    
+      //     innerAudioContext.onStop(() => {
+      //       console.log('i am onStop');
+      //       innerAudioContext.stop();
+      //       //播放停止，销毁该实例
+      //       innerAudioContext.destroy();
+    
+      //     })
+    
+      //     innerAudioContext.onEnded(() => {
+      //       console.log('i am onEnded');
+      //       //播放结束，销毁该实例
+      //       innerAudioContext.destroy();
+      //       console.log('已执行destory()');
+      //     })
+    
+      //     innerAudioContext.onError((res) => {
+      //       /*  console.log(res.errMsg);
+      //        console.log(res.errCode); */
+      //       innerAudioContext.destroy();
+      //     })
+    
+      //   },
+      //   fail: function(res) {
+      //     console.log("fail tts", res)
+      //   }
+      // })
+      //     },
+      //     onError: function(err) {
+      //       console.error('the watch closed because of error', err)
+      //     }
+      //   })
       // let code = '2222227hao'
       // let vcode = code.substr(0,6)
       // let vtoken = code.substr(6,4)
@@ -296,6 +357,16 @@ Page({
     },
 
     viprights: function(e) {
+      // wx.cloud.callFunction({
+      //   name:"aaaaaaaa",
+      //   success(res) {
+      //       console.log(res)
+      //   },
+      //   fail: function(e) {
+      //     console.log(e)
+      //   }
+      // })
+      // return
         wx.navigateTo({
           url: '../viprights/viprights',
         })
