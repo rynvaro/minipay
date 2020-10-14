@@ -109,7 +109,7 @@ Page({
 
   setWithdrawAmount: function(e) {
     this.setData({
-      withdrawAmount: e.detail.value
+      withdrawAmount: parseFloat(e.detail.value)
     })
   },
 
@@ -164,7 +164,7 @@ Page({
               name:"submitWithdraw",
               data: {
                 storeID: app.globalData.storeID,
-                withdrawAmount: parseInt(thiz.data.withdrawAmount),
+                withdrawAmount: parseFloat(thiz.data.withdrawAmount),
               },
               success(res) {
                   console.log(res)

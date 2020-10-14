@@ -19,7 +19,7 @@
 
     <view wx:for="{{stores}}" wx:key="id" class="store" bindtap="store" data-id="{{item._id}}">
         <view class="storeL">
-            <image mode="aspectFill" class="storeLImage" lazy-load="true" src="{{item.storeImages[0]}}"></image>
+            <image mode="aspectFill" class="storeLImage" lazy-load="true" src="{{item.thumbnail}}"></image>
         </view>
         <view class="storeR">
             <view class="storeRBox">

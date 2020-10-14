@@ -72,7 +72,7 @@ App({
     menuBotton: 0, // 胶囊距底部间距（保持底部间距一致）
     menuHeight: 0, // 胶囊高度（自定义内容可与胶囊高度保证一致）
     storeID: '', // 商家后台登录后的店铺ID
-    viplevel: 1,
+    viplevel: 0,
     location: {
       latitude: 0,
       longitude: 0

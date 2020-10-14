@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
             data: {
                 isnew: true,
                 openid: wxContext.OPENID,
-                status: -1,
+                status: 0,
                 timestamp: Date.parse(new Date()),
                 coupon: {
                     id: '1',

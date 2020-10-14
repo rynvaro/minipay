@@ -7,6 +7,21 @@ page {
     justify-content: center;
     align-items: center;
   }
+
+  .waltermark {
+    position: absolute;
+    top: 35rpx;
+    right: -80rpx;
+    font-size: 60rpx;
+    border: 1rpx solid #fd852f;
+    background-color: #ffe3ce;
+    opacity: 0.8;
+    color: #fd8e3f;
+    transform: rotate(45deg);
+    padding-left: 80rpx;
+    padding-right: 80rpx;
+
+  }
   
   .detailHeader {
     width: 100%;

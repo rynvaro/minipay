@@ -16,9 +16,10 @@ const subMchId = "1601917642"
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  const user = await db.collection('users').doc(wxContext.OPENID).get()
+  console.log("event: ", event)
 
-  let id = (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
+  // let id = (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
+  let id = event.orderId
   let nonceStr = (Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)).substr(0,32).toUpperCase()
   let depositAmount = event.depositAmount*100
   let body = event.body

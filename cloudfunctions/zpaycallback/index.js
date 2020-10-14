@@ -20,5 +20,36 @@ exports.main = async (event, context) => {
     }
   })
 
+  let orderId = event.outTradeNo
+  console.log(event)
+  console.log("orderid is: ",orderId)
+  try {
+    const iorder = await db.collection('iorders').doc(orderId).get()
+    if (iorder.data.status == 1) {
+      return { "errcode": 0 } 
+    }
+    cloud.callFunction({
+      name:"zdorderpay",
+      data: {
+        storeID: iorder.data.storeId,
+        orderId: orderId,
+        payby: 1,
+        openid: wxContext.OPENID
+      },
+      success(res) {
+          console.log(res)
+          return { "errcode": 0 } 
+      },
+      fail: function(e) {
+          console.log(e)
+          return { "errcode": 0 } 
+      }
+  })
+  }catch(e) {
+    console.log(e)
+    return { "errcode": 0 } 
+  }
+
+
   return { "errcode": 0 }
 }

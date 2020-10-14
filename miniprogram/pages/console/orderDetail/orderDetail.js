@@ -12,7 +12,10 @@ Page({
           value: 0
       }
     },
-    order: {}
+    order: {
+      totalAmount: 0,
+    },
+    income7: 0,
   },
 
   /**
@@ -23,7 +26,6 @@ Page({
       title: 'loading...',
     })
     let thiz = this
-    console.log(options)
     wx.cloud.callFunction({
       name:"getOrder",
       data: {
@@ -31,7 +33,12 @@ Page({
       },
       success(res) {
           console.log(res)
-          thiz.setData({order: res.result.data})
+          thiz.setData({
+            order: res.result.data,
+            income7: res.result.data.income7,
+            wxChecked: res.result.data.payType === 1,
+            balanceChecked: res.result.data.payType === 2
+          })
           wx.hideLoading()
       },
       fail: function(e) {

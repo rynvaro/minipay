@@ -181,120 +181,147 @@ Page({
       }
       wx.showLoading({
         title: '支付中...',
+        mask: true,
       })
+
       let thiz = this
-          if (this.data.payby == 2) {
-            // wx.hideLoading()
-            // moveY = 0;
-            // action = 'show',
-            // animationEvents(this,moveY,action)
-            wx.cloud.callFunction({
-              name:"zdorderpay",
-              data: {
-                storeID: thiz.data.storeID,
-                payAmount: thiz.data.payAmount,
-                mustPayAmount: thiz.data.mustPayment,
-                couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
-                password: e.detail,
-                payby: thiz.data.payby,
-              },
-              success(res) {
-                  console.log(res)
-                  wx.hideLoading()
-                  if (res.result==-1) {
-                    wx.showToast({
-                      title: '余额不足',
-                    })
-                    return
-                  }
-                  if (res.result==-2) {
-                    wx.showToast({
-                      title: '密码错误',
-                    })
-                    return
-                  }
-                  wx.redirectTo({
-                    url: '../orderDetail/orderDetail?id='+res.result._id,
-                  })
-              },
-              fail: function(e) {
-                console.log(e.errMsg)
-                wx.hideLoading()
-                wx.showToast({
-                  title: '支付失败',
-                })
-              }
+      // 1. 下单
+      // generate order id
+      let orderId = genorderid()
+      // ----------------------
+      wx.cloud.callFunction({
+        name:"ztakeorder",
+        data: {
+          orderId: orderId,
+          storeID: thiz.data.storeID,
+          payAmount: thiz.data.payAmount,
+          mustPayAmount: thiz.data.mustPayment,
+          couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
+        },
+        success(res) {
+            console.log(res)
+            if (thiz.data.payby == 2) {
+              thiz.paybyBalance(orderId)
+            } else {
+              thiz.paybyWechat(orderId)
+            }
+        },
+        fail: function(e) {
+          console.log(e)
+          wx.hideLoading()
+          wx.showToast({
+            title: '下单失败',
           })
-          } else {
-            wx.cloud.callFunction({
-              name:"zgetpayinfo",
-              data: {
-                ip: '127.0.0.1', // TODO
-                depositAmount: parseFloat(thiz.data.totalAmount),
-                body: "柒号生活-消费",
-              },
-              success(payInfoRes) {
-                  wx.hideLoading()
-
-                  wx.requestPayment({
-                      timeStamp: payInfoRes.result.res.payment.timeStamp,
-                      nonceStr: payInfoRes.result.res.payment.nonceStr,
-                      signType: payInfoRes.result.res.payment.signType,
-                      paySign: payInfoRes.result.res.payment.paySign,
-                      package: payInfoRes.result.res.payment.package,
-                      success (payRes) { 
-                        console.log(payRes)
-                        // 1. 确认充值结果 TODO
-                        wx.showLoading({
-                          title: '支付中...',
-                          mask: true,
-                        })
-                        wx.cloud.callFunction({
-                          name:"zdorderpay",
-                          data: {
-                            storeID: thiz.data.storeID,
-                            payAmount: thiz.data.payAmount,
-                            couponID: thiz.data.couponSelected ? thiz.data.coupon._id : -1,
-                            password: e.detail,
-                            payby: thiz.data.payby,
-                            mustPayAmount: thiz.data.mustPayment,
-                          },
-                          success(res) {
-                              console.log(res)
-                              wx.hideLoading()
-                              wx.redirectTo({
-                                url: '../orderDetail/orderDetail?id='+res.result._id,
-                              })
-                          },
-                          fail: function(e) {
-                            console.log(e.errMsg)
-                            wx.hideLoading()
-                          }
-                      })},
-
-                      fail (res) { 
-                        wx.showToast({
-                          title: '支付失败',
-                        })
-                      }
-                    })
-              },
-              fail: function(e) {
-                console.log(e.errMsg)
-                wx.hideLoading()
-                wx.showToast({
-                  title: '支付失败',
-                })
-              }
-            })
-          }
+        }})
+      // ----------------------
+      // 2. 支付
+          
       },
     
       hidden: function(e) {
         moveY = 200;
         action = 'hide';
         animationEvents(this,moveY,action)
-      }
+      },
+
+paybyBalance: function(orderId) {
+  let thiz = this
+  wx.cloud.callFunction({
+    name:"zdorderpay",
+    data: {
+      storeID: thiz.data.storeID,
+      orderId: orderId,
+      payby: thiz.data.payby,
+    },
+    success(res) {
+        console.log(res)
+        wx.hideLoading()
+        if (res.result==-1) {
+          wx.showToast({
+            title: '余额不足',
+          })
+          return
+        }
+        if (res.result==-2) {
+          wx.showToast({
+            title: '密码错误',
+          })
+          return
+        }
+        wx.redirectTo({
+          url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+        })
+    },
+    fail: function(e) {
+      console.log(e.errMsg)
+      wx.hideLoading()
+      wx.showToast({
+        title: '支付失败',
+      })
+    }
+  })
+},
+paybyWechat: function(orderId) {
+  let thiz = this
+  wx.cloud.callFunction({
+    name:"zgetpayinfo",
+    data: {
+      ip: '127.0.0.1', // TODO
+      depositAmount: parseFloat(thiz.data.totalAmount),
+      body: "柒号生活-消费",
+      orderId: orderId,
+    },
+    success(payInfoRes) {
+        wx.hideLoading()
+        wx.requestPayment({
+            timeStamp: payInfoRes.result.res.payment.timeStamp,
+            nonceStr: payInfoRes.result.res.payment.nonceStr,
+            signType: payInfoRes.result.res.payment.signType,
+            paySign: payInfoRes.result.res.payment.paySign,
+            package: payInfoRes.result.res.payment.package,
+            success (payRes) { 
+              console.log(payRes)
+              // 1. 确认充值结果 TODO
+              wx.showLoading({
+                title: '支付中...',
+                mask: true,
+              })
+              wx.cloud.callFunction({
+                name:"zdorderpay",
+                data: {
+                  orderId: orderId,
+                  storeID: thiz.data.storeID,
+                  payby: thiz.data.payby,
+                },
+                success(res) {
+                    console.log(res)
+                    wx.hideLoading()
+                    wx.redirectTo({
+                      url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+                    })
+                },
+                fail: function(e) {
+                  console.log(e.errMsg)
+                  wx.hideLoading()
+                }
+            })},
+
+            fail (res) { 
+              wx.showToast({
+                title: '支付失败',
+              })
+            }
+          })
+    },
+    fail: function(e) {
+      console.log(e.errMsg)
+      wx.hideLoading()
+      wx.showToast({
+        title: '支付失败',
+      })
+    }
+  })
+}
 })
 
 function animationEvents(that, moveY, action){
@@ -318,3 +345,8 @@ function animationEvents(that, moveY, action){
       })
     }
   } 
+
+
+function genorderid(){
+  return (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
+}

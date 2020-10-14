@@ -13,7 +13,8 @@ Page({
             coupon: {
                 value: 0
             }
-        }
+        },
+        walterhidden: true,
     },
 
     confirmOrder: function(e) {
@@ -49,6 +50,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        if (options.showmark) {
+            this.setData({walterhidden: false})
+        }
         let thiz = this
         wx.showLoading({
           title: 'loading...',

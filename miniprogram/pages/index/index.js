@@ -65,7 +65,8 @@ Page({
     },
 
     setBirthday: function(e) {
-      this.setData({birthday: e.detail.value, birthed: true})
+      this.data.user.birthday = e.detail.value
+      this.setData({birthday: e.detail.value, birthed: true,user: this.data.user})
     },
 
     console: function(e) {
@@ -283,7 +284,7 @@ Page({
                         wx.showToast({
                           title: '已更新',
                         })
-                        thiz.setData({phoneFilled: true, redpackShow:true, open: true, closeRedpack: true})
+                        thiz.setData({phoneFilled: true, redpackShow:true})
                         thiz.clodeMoreInfo()
                         thiz.onShow()
                         
@@ -301,6 +302,12 @@ Page({
     },
 
     showMoreInfo: function(e) {
+        // if (this.data.phoneFilled) {
+        //   wx.showToast({
+        //     title: '您已完善',
+        //   })
+        //   return
+        // }
         this.setData({moreInfoShow: true})
     },
 
@@ -319,8 +326,6 @@ Page({
 
     openRedpack: function(e) {
 
-      this.setData({redpackShow: false, moreInfoShow: true})
-
       wx.showLoading({
         title: 'loading...',
       })
@@ -333,6 +338,7 @@ Page({
         success(res) {
             console.log(res)
             wx.hideLoading()
+            thiz.setData({open: true, closeRedpack: true})
         },
         fail: function(e) {
             console.log(e.errMsg)
@@ -462,7 +468,7 @@ Page({
                 console.log(res)
                 thiz.setData({
                     login: true,
-                    redpackShow: true,
+                    // redpackShow: true,
                 })
                 thiz.onShow()
             },
@@ -475,6 +481,13 @@ Page({
 
     scan: function(e) {
         console.log(e)
+        if (!app.globalData.viplevel) {
+          wx.showModal({
+            title: '提示',
+            content: '请先授权登录'
+          })
+          return
+        }
         wx.scanCode({
             success (res1) {
                 console.log(res1)
@@ -505,8 +518,9 @@ Page({
                   fail: function(e) {
                     console.log(e.errMsg)
                     wx.hideLoading()
-                    wx.navigateTo({
-                      url: '../order/order?storeID='+res1.result,
+                    wx.showModal({
+                      title: '提示',
+                      content: '请扫描7号生活二维码'
                     })
                   }
               })

@@ -32,8 +32,13 @@
   </view>
 
   <view class="detailItem">
-    <text class="detailItemKey">支付金额</text>
+    <text class="detailItemKey">折后金额</text>
     <text class="detailItemValue">{{order.realAmount}}</text>
+  </view>
+
+  <view class="detailItem">
+    <text class="detailItemKey">平台抽成</text>
+    <text class="detailItemValue">{{income7}}</text>
   </view>
 
   <view class="detailItem" >
@@ -66,6 +71,5 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text wx:if="{{order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount > 0}}" class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount)}}</text>
-  <text wx:else class="totalIncomeValue">¥0.00</text>
+  <text  class="totalIncomeValue">¥{{filters.toFixed(order.totalAmount - income7)}}</text>
 </view>
