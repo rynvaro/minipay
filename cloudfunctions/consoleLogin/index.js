@@ -37,13 +37,21 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     console.log('event is: ', event)
 
+    /**
+     * 如果根据openid获取到了，则直接登录
+     * 如果根据openid没有获取到有两种情况：
+     *  第一种是：新用户，首次登录
+     *    这种情况直接走验证码方式登录
+     *  第二种是：用户换其他微信登录
+     *    这种默认显示用验证码登录，然后检测该手机号是否存在，如果存在则校验验证码或者密码，如果不存在，就注册为新用户。
+     */
     let type = event.type
     if (type == 'precheck') {
       const mstore = await db.collection('mstores').where({openid: wxContext.OPENID}).get()
-      if (mstore.data.length > 0 && mstore.data[0].password) {
-        return 1
+      if (mstore.data.length > 0) {
+        return {status: 1, data: mstore.data[0]}
       }
-      return -1
+      return {status: -1, msg: "首次登录或者换微信登录"}
     } else if (type == 'login') {
       let phone = event.phone
       let password = event.password
@@ -150,12 +158,13 @@ exports.main = async (event, context) => {
           }
           // 验证通过，删除code
           await db.collection("codes").doc(event.codeID).remove()
-
-          await db.collection('mstores').doc(mstore.data[0]._id).update({
-            data: {
-              openid: wxContext.OPENID,
-            }
-          })
+          if (!mstore.data[0].openid) {
+            await db.collection('mstores').doc(mstore.data[0]._id).update({
+              data: {
+                openid: wxContext.OPENID,
+              }
+            })
+          }
           return mstore.data[0]
         }
       }

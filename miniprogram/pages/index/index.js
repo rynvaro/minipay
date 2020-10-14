@@ -1,6 +1,8 @@
 //index.js
 const app = getApp();
+// const plugin = requirePlugin('WechatSI');
 
+// const db = wx.cloud.database({env: 'dev-osmu3'})
 Page({
     data: {
         show: false,
@@ -63,7 +65,8 @@ Page({
     },
 
     setBirthday: function(e) {
-      this.setData({birthday: e.detail.value, birthed: true})
+      this.data.user.birthday = e.detail.value
+      this.setData({birthday: e.detail.value, birthed: true,user: this.data.user})
     },
 
     console: function(e) {
@@ -73,6 +76,65 @@ Page({
     },
 
     onLoad: function(e) {
+
+      //   console.log(db.collection('todos').get())
+
+      //   const watcher = db.collection('todos').where({status: 1}).watch({
+      //     onChange: function(snapshot) {
+      //       wx.showToast({
+      //         title: 'haha',
+      //       })
+      //       console.log('docs\'s changed events', snapshot.docChanges)
+      //       console.log('query result snapshot after the event', snapshot.docs)
+      //       console.log('is init data', snapshot.type === 'init')
+      //       const innerAudioContext = wx.createInnerAudioContext();
+      // innerAudioContext.autoplay = true;
+      // plugin.textToSpeech({
+      //   lang: "zh_CN",
+      //   tts: true,
+      //   content: "柒号生活到账10元",
+      //   success: function(res) {
+    
+      //     console.log(res);
+      //     // console.log("succ tts", res.filename);
+      //     innerAudioContext.src = res.filename;
+    
+      //     innerAudioContext.onPlay(() => {
+      //       console.log('开始播放');
+    
+      //     })
+    
+      //     innerAudioContext.onStop(() => {
+      //       console.log('i am onStop');
+      //       innerAudioContext.stop();
+      //       //播放停止，销毁该实例
+      //       innerAudioContext.destroy();
+    
+      //     })
+    
+      //     innerAudioContext.onEnded(() => {
+      //       console.log('i am onEnded');
+      //       //播放结束，销毁该实例
+      //       innerAudioContext.destroy();
+      //       console.log('已执行destory()');
+      //     })
+    
+      //     innerAudioContext.onError((res) => {
+      //       /*  console.log(res.errMsg);
+      //        console.log(res.errCode); */
+      //       innerAudioContext.destroy();
+      //     })
+    
+      //   },
+      //   fail: function(res) {
+      //     console.log("fail tts", res)
+      //   }
+      // })
+      //     },
+      //     onError: function(err) {
+      //       console.error('the watch closed because of error', err)
+      //     }
+      //   })
       // let code = '2222227hao'
       // let vcode = code.substr(0,6)
       // let vtoken = code.substr(6,4)
@@ -222,7 +284,7 @@ Page({
                         wx.showToast({
                           title: '已更新',
                         })
-                        thiz.setData({phoneFilled: true, redpackShow:true, open: true, closeRedpack: true})
+                        thiz.setData({phoneFilled: true, redpackShow:true})
                         thiz.clodeMoreInfo()
                         thiz.onShow()
                         
@@ -240,6 +302,12 @@ Page({
     },
 
     showMoreInfo: function(e) {
+        // if (this.data.phoneFilled) {
+        //   wx.showToast({
+        //     title: '您已完善',
+        //   })
+        //   return
+        // }
         this.setData({moreInfoShow: true})
     },
 
@@ -258,8 +326,6 @@ Page({
 
     openRedpack: function(e) {
 
-      this.setData({redpackShow: false, moreInfoShow: true})
-
       wx.showLoading({
         title: 'loading...',
       })
@@ -272,6 +338,7 @@ Page({
         success(res) {
             console.log(res)
             wx.hideLoading()
+            thiz.setData({open: true, closeRedpack: true})
         },
         fail: function(e) {
             console.log(e.errMsg)
@@ -296,6 +363,16 @@ Page({
     },
 
     viprights: function(e) {
+      // wx.cloud.callFunction({
+      //   name:"aaaaaaaa",
+      //   success(res) {
+      //       console.log(res)
+      //   },
+      //   fail: function(e) {
+      //     console.log(e)
+      //   }
+      // })
+      // return
         wx.navigateTo({
           url: '../viprights/viprights',
         })
@@ -391,7 +468,7 @@ Page({
                 console.log(res)
                 thiz.setData({
                     login: true,
-                    redpackShow: true,
+                    // redpackShow: true,
                 })
                 thiz.onShow()
             },
@@ -404,6 +481,13 @@ Page({
 
     scan: function(e) {
         console.log(e)
+        if (!app.globalData.viplevel) {
+          wx.showModal({
+            title: '提示',
+            content: '请先授权登录'
+          })
+          return
+        }
         wx.scanCode({
             success (res1) {
                 console.log(res1)
@@ -434,8 +518,9 @@ Page({
                   fail: function(e) {
                     console.log(e.errMsg)
                     wx.hideLoading()
-                    wx.navigateTo({
-                      url: '../order/order?storeID='+res1.result,
+                    wx.showModal({
+                      title: '提示',
+                      content: '请扫描7号生活二维码'
                     })
                   }
               })

@@ -53,7 +53,11 @@ exports.main = async (event, context) => {
                         realDiscount = realDiscount + delta
                     }
                     near.discount = realDiscount
-                    plates.data[i].items.push({storeId: near._id, desc: near.storeDesc, discount: near.discount, image: near.promoteImages[0],title: near.storeName})
+                    var image = ''
+                    if (near.thumbnail) {
+                        image = near.thumbnail
+                    }
+                    plates.data[i].items.push({storeId: near._id, desc: near.storeDesc, discount: near.discount, image: image ,title: near.storeName})
                 }
             }
         }

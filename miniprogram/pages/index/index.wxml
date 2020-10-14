@@ -5,7 +5,7 @@
       <view class="cardLine1Icon">
         <image class="cardLine1IconBG" src="{{user.avatarUrl}}"></image>
         <button open-type="getUserInfo" bindgetuserinfo="register" class="hbt"></button>
-        <view wx:if="{{!phoneFilled}}" class="cardLine1IconText" bindtap="showMoreInfo">完善信息</view>
+        <!-- <view wx:if="{{!phoneFilled}}" class="cardLine1IconText" bindtap="showMoreInfo">完善信息</view> -->
       </view>
     </view>
     <button open-type="getUserInfo" hover-class="pressbtn" bindgetuserinfo="register" class="cardLine2">{{user.name}}</button>
@@ -101,6 +101,13 @@
       <text class="moreListItemD">会员积分</text>
     </view>
 
+    <view class="moreListItem" bindtap="showMoreInfo">
+      <view class="moreListItemU">
+        <image class="moreListItemUIcon" src="../../images/point.png"></image>
+      </view>
+      <text class="moreListItemD">完善信息</text>
+    </view>
+
     <view class="moreListItem" bindtap="service">
       <view class="moreListItemU">
         <image class="moreListItemUIcon" src="../../images/customer-service.png"></image>
@@ -166,18 +173,19 @@
     <text class="moreInfoItemL">出生日期</text>
     <!-- <input class="moreInfoItemR" bindinput="setBirthday"></input> -->
     <picker class="moreInfoItemR" mode="date" value="{{birthday}}" bindchange="setBirthday">
-      <view class="birthday">{{birthday}}</view>
+      <view class="birthday">{{user.birthday}}</view>
   </picker>
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">手机号</text>
-    <input class="moreInfoItemR" type="digit" bindinput="setPhone"></input>
+    <input class="moreInfoItemR" type="digit" bindinput="setPhone" value="{{user.phone}}"></input>
   </view>
   <view class="moreInfoItem">
     <text class="moreInfoItemL">验证码</text>
     <view class="moreInfoItemR">
       <input class="moreInfoItemRCode" bindinput="setCode" focus="{{focused}}"></input>
-      <view class="moreInfoItemRButton" bindtap="sendSMS">{{label}}</view>
+      <view wx:if="{{!phoneFilled}}" class="moreInfoItemRButton" bindtap="sendSMS">{{label}}</view>
+      <view wx:else class="moreInfoItemRButton" style="color: gray">{{label}}</view>
     </view>
   </view>
   <view class="moreInfoItem">
@@ -185,7 +193,8 @@
     <input class="moreInfoItemR" type="digit" placeholder="可不填" placeholder-class="moreInfoItemRPlaceholder"  bindinput="setInviteCode"></input>
   </view>
   <view class="moreInfoButtonBox">
-    <button class="moreInfoButton" bindtap="submit">提交</button>
+    <button wx:if="{{!phoneFilled}}" class="moreInfoButton" bindtap="submit">提交</button>
+    <button wx:else class="moreInfoButton" disabled="true">已完善</button>
   </view>
 
   <text class="closeMoreInfo" bindtap="clodeMoreInfo">×</text>

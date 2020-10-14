@@ -60,7 +60,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -74,6 +74,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    if (app.globalData.storeID) {
+      wx.navigateTo({
+        url: '../home/home'
+      })
+      return
+    }
     let thiz = this
     wx.cloud.callFunction({
       name:"consoleLogin",
@@ -83,12 +89,13 @@ Page({
       success(res) {
         wx.hideLoading()
           console.log(res)
-          if (res.result == -1) {
+          if (res.result.status == -1) {
             thiz.bycode()
-          }else if (res.result == 1) {
-            thiz.bypass()
-          }else {
-            thiz.bycode()
+          }else if (res.result.status == 1) {
+            app.globalData.storeID = res.result.data._id
+            wx.navigateTo({
+              url: '../home/home'
+            })
           }
       },
       fail: function(e) {

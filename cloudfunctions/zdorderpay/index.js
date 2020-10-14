@@ -12,15 +12,13 @@ exports.main = async (event, context) => {
     console.log("event is ", event)
 
     let storeID = event.storeID
-    let payAmount = parseFloat(event.payAmount)
-    let couponID = event.couponID
-    let mustPayAmount = parseFloat(event.mustPayAmount)
-
+    let orderId = event.orderId
     var payby = parseInt(event.payby)
-
-    var isWechat = payby
-
-    let password = event.password
+    
+    let openid = wxContext.OPENID
+    if (event.openid) {
+        openid = event.openid
+    }
 
     var result = {}
 
@@ -28,69 +26,48 @@ exports.main = async (event, context) => {
         let history = event
         history.timestamp = Date.parse(new Date())
         history.type = 'dorderpay'
-        delete history.password
         db.collection('histories').add({data: history})
+
         const store = await db.collection('mstores').doc(storeID).get()
-        const user = await db.collection('users').doc(wxContext.OPENID).get()
-        // if (payby == 2 && sha1(password) != user.data.payPassword) {
-        //     return -2 // 支付密码错误
+        const user = await db.collection('users').doc(openid).get()
+        const iorder = await db.collection('iorders').doc(orderId).get()
+
+        if (iorder.data.status == 1) {
+            return iorder.data
+        }
+
+        // if (store.data.isPopup) {
+        //     const tmpIorders = await db.collection('iorders').where({payType: 3, eventId: store.data.eventId, openid: openid}).get()
+        //     if (tmpIorders.data.length <= 0) {
+        //         payby = 3
+        //         event.basePrice = 13
+        //     }
         // }
-
-        if (store.data.isPopup) {
-            const tmpIorders = await db.collection('iorders').where({payType: 3, eventId: store.data.eventId, openid: wxContext.OPENID}).get()
-            if (tmpIorders.data.length <= 0) {
-                payby = 3
-                event.basePrice = 13
-            }
-        }
-
-        let level = user.data.data.level
-        let delta = 0.0
-        if ( level == 1 ) {
-            delta = 0.5
-        }else if (level == 2) {
-            delta = 0.3
-        }
-        let realDiscount = store.data.discount + delta
-        let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
-        let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
-        let totalAmount = (parseFloat(realAmount) + mustPayAmount).toFixed(2)
-        if (totalAmount < 0) {
-            totalAmount = 0
-        } 
         
-        let couponValue = 0
-        if (couponID!=-1) {
-            const coupon = await db.collection('icoupons').doc(couponID).get()
-            couponValue = coupon.data.coupon.value/100
-            totalAmount = (realAmount - couponValue + mustPayAmount).toFixed(2)
-            if (totalAmount < 0) {
-                totalAmount = 0
-            } 
-        }
-
+        
         if (payby == 2) {
-            if (user.data.data.balance < totalAmount*100) {
+            if (user.data.data.balance < (iorder.data.finalAmount*100)) {
+                await db.collection('iorders').doc(orderId).remove()
                 return -1
             }
         }
 
-        if (payby == 3) {
-            let eventId = store.data.eventId
-            const tmpIorders = await db.collection('iorders').where({payType: 3, eventId: eventId, openid: wxContext.OPENID}).get()
-            if (tmpIorders.data.length > 0) {
-                let tmpIOrder = tmpIorders.data[0]
-                if (tmpIOrder.pay3Confirmed ) {
-                    return -11
-                }else {
-                    await db.collection('iorders').doc(tmpIOrder._id).remove()
-                }
-            }
-        }
+        // if (payby == 3) {
+        //     let eventId = store.data.eventId
+        //     const tmpIorders = await db.collection('iorders').where({payType: 3, eventId: eventId, openid: openid}).get()
+        //     if (tmpIorders.data.length > 0) {
+        //         let tmpIOrder = tmpIorders.data[0]
+        //         if (tmpIOrder.pay3Confirmed ) {
+        //             return -11
+        //         }else {
+        //             await db.collection('iorders').doc(tmpIOrder._id).remove()
+        //         }
+        //     }
+        // }
 
         // const trans = await db.startTransaction()
 
-        console.log(payby != 3,payby,"0000x0x0x0x00x0")
+        let couponID = iorder.data.couponId
         if ( couponID != -1 && payby != 3){
             await db.collection('icoupons').doc(couponID).update({
                 data: {
@@ -106,22 +83,10 @@ exports.main = async (event, context) => {
             })
         }
 
-        let finalAmount = parseFloat(realAmount) - couponValue
-        let realCoupon = couponValue
-        if (finalAmount < 0) {
-            realCoupon = (couponValue + finalAmount).toFixed(2)
-            finalAmount = 0
-        }
-        finalAmount = finalAmount + parseFloat(mustPayAmount)
-
         let isFirstPay = false
         if (user.data.data.payTimes ==  0) {
             isFirstPay = true
         }
-        // let isNew = false 
-        // if (new Date().getTime()/1000 - user.data.createdAt/1000 < 7200) {
-        //     isNew = true
-        // }
 
         let subsidy = 0
         if (isFirstPay && payby != 3) {
@@ -137,45 +102,51 @@ exports.main = async (event, context) => {
             })
         }
 
-        var data = {
-            storeId: storeID,
-            couponId: couponID,
-            openid: wxContext.OPENID,
-            userName: user.data.data.name,
-            storeName: store.data.storeName,
-            productImage: store.data.storeImages[0],
-            payAmount: parseFloat(payAmount),
-            realDiscount: parseFloat(realDiscount),
-            rebate: parseFloat(rebate),
-            realAmount: parseFloat(realAmount),
-            coupon: couponValue,
-            totalAmount: parseFloat(realAmount),
-            mustPayAmount: parseFloat(mustPayAmount),
-            finalAmount: parseFloat(finalAmount.toFixed(2)),
-            realCoupon: parseFloat(realCoupon),
-            timestamp: Date.parse(new Date()),
-            payType: payby, // 1 wechat 2 balance
-            status: 1, // 已完成
-            subsidy: subsidy, // 商家补贴
-        }
+        // var data = {
+        //     storeId: storeID,
+        //     couponId: couponID,
+        //     openid: openid,
+        //     userName: user.data.data.name,
+        //     storeName: store.data.storeName,
+        //     productImage: store.data.storeImages[0],
+        //     payAmount: parseFloat(payAmount),
+        //     discount: parseFloat(store.data.discount),
+        //     realDiscount: parseFloat(realDiscount),
+        //     rebate: parseFloat(rebate),
+        //     realAmount: parseFloat(realAmount),
+        //     coupon: couponValue,
+        //     totalAmount: parseFloat(realAmount),
+        //     mustPayAmount: parseFloat(mustPayAmount),
+        //     finalAmount: parseFloat(finalAmount.toFixed(2)),
+        //     income7: parseFloat(income7),
+        //     realCoupon: parseFloat(realCoupon),
+        //     timestamp: Date.parse(new Date()),
+        //     payType: payby, // 1 wechat 2 balance
+        //     status: 1, // 已完成
+        //     subsidy: subsidy, // 商家补贴
+        // }
 
-        if (payby == 3) {
-            if (isWechat == 1) {
-                data.pay3Confirmed = true
-            }
-            let basePrice = event.basePrice
-            data.finalAmount = payAmount - basePrice - couponValue
-            if (data.finalAmount < 0) {
-                data.finalAmount = 0
-            }
-            data.finalAmount = parseFloat(data.finalAmount.toFixed(2))
-            finalAmount = data.finalAmount
-            data.basePrice = basePrice
-            data.eventId = store.data.eventId
-        }
+        // if (payby == 3) {
+        //     if (isWechat == 1) {
+        //         data.pay3Confirmed = true
+        //     }
+        //     let basePrice = event.basePrice
+        //     data.finalAmount = payAmount - basePrice - couponValue
+        //     if (data.finalAmount < 0) {
+        //         data.finalAmount = 0
+        //     }
+        //     data.finalAmount = parseFloat(data.finalAmount.toFixed(2))
+        //     finalAmount = data.finalAmount
+        //     data.basePrice = basePrice
+        //     data.eventId = store.data.eventId
+        // }
 
-        result = await db.collection('iorders').add({
-            data: data,
+        result = await db.collection('iorders').doc(orderId).update({
+            data: {
+                status: 1,
+                subsidy: subsidy,
+                payType: payby,
+            },
             success: res => {
                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
             },
@@ -184,24 +155,14 @@ exports.main = async (event, context) => {
                 throw(e)
             }
         })
+        result._id = orderId
 
-        await db.collection('orders').add({
-            data: data,
-            success: res => {
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-            },
-            fail: err => {
-                console.error('[数据库] [新增记录] 失败：', err)
-                throw(e)
-            }
-        })
-
-        let deltaPointAndExp = parseInt(finalAmount/10)
+        let deltaPointAndExp = parseInt(iorder.data.totalAmount/10)
         if (deltaPointAndExp > 0) {
             // 积分变更记录
             await db.collection('pointrecords').add({
                 data: {
-                    openid: wxContext.OPENID,
+                    openid: openid,
                     type: 4, // 消费
                     action: '+',
                     value: deltaPointAndExp,
@@ -219,7 +180,7 @@ exports.main = async (event, context) => {
             // 经验变更记录
             await db.collection('exprecords').add({
                 data: {
-                    openid: wxContext.OPENID,
+                    openid: openid,
                     type: 1, // 消费
                     action: '+',
                     value: deltaPointAndExp,
@@ -238,10 +199,10 @@ exports.main = async (event, context) => {
         
         let balance = user.data.data.balance
         if (payby == 2) {
-            balance = user.data.data.balance - finalAmount*100
+            balance = user.data.data.balance - iorder.data.finalAmount*100
         }
 
-        let exp = user.data.data.exp + parseInt(finalAmount/10)
+        let exp = user.data.data.exp + parseInt(iorder.data.finalAmount/10)
         let newLevel = 1
         let expTotal = 1001
         if (exp > 1000) {
@@ -257,11 +218,11 @@ exports.main = async (event, context) => {
         if (user.data.data.payAmount) {
             userPayAmount = user.data.data.payAmount
         }
-        userPayAmount = userPayAmount + finalAmount
+        userPayAmount = userPayAmount + iorder.data.totalAmount
 
         let userData = {
             balance: balance,
-            point: user.data.data.point + parseInt(finalAmount/10),
+            point: user.data.data.point + parseInt(iorder.data.totalAmount/10),
             exp: exp,
             expTotal: expTotal,
             level: newLevel,
@@ -272,10 +233,10 @@ exports.main = async (event, context) => {
         }
         if (isFirstPay) {
             userData.firstPayStoreName = store.data.storeName
-            userData.firstPayAmount = finalAmount
+            userData.firstPayAmount = iorder.data.totalAmount
         }
 
-        await db.collection('users').doc(wxContext.OPENID).update({
+        await db.collection('users').doc(openid).update({
             data: {
                 data: userData
             },
@@ -313,15 +274,15 @@ exports.main = async (event, context) => {
         orders = store.data.orders
         let avgPrice = store.data.avgPrice
         if (orders == 0) {
-            avgPrice = parseFloat(finalAmount).toFixed(2) * 1
+            avgPrice = parseFloat(iorder.data.totalAmount).toFixed(2) * 1
         }else {
-            avgPrice = ((avgPrice * orders+parseFloat(finalAmount))/(orders + 1)).toFixed(2) * 1
+            avgPrice = ((avgPrice * orders+parseFloat(iorder.data.totalAmount))/(orders + 1)).toFixed(2) * 1
         }
 
         // 商户收入
         await db.collection('mstores').doc(storeID).update({
             data: {
-                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(finalAmount) +parseFloat(realCoupon)+ parseFloat(subsidy)).toFixed(2)),
+                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2)),
                 orders: store.data.orders + 1,
                 avgPrice: avgPrice,
             },

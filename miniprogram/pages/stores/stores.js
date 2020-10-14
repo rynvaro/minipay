@@ -175,7 +175,7 @@ Page({
  * @param {*} q   搜索关键字
  * @param {*} isGeo 是否是Geo
  */
-function listStores(thiz, orderType, isGeo,pageSize, currentPage){
+function listStores(thiz, orderType, isGeo, pageSize, currentPage){
   console.log("orderType: ", orderType)
   console.log("isGeo: ", isGeo)
   console.log("storeType: ", thiz.data.storeType)

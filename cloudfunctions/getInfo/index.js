@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
         now.setHours(0, 0, 0, 0)
         let today = now.getTime()
         console.log(today,"-----")
-        const orders = await db.collection('orders').where({
+        const orders = await db.collection('iorders').where({
             storeId: _.eq(event.storeID), 
             timestamp: _.gte(today)
         }).get()
@@ -27,7 +27,10 @@ exports.main = async (event, context) => {
         for (var i = 0; i< orders.data.length; i++) {
             console.log(orders.data[i].timestamp, today, orders.data[i]>today)
             if (orders.data[i].finalAmount) {
-                dayIncome += orders.data[i].finalAmount
+                dayIncome += orders.data[i].totalAmount
+                if (orders.data[i].income7) {
+                    dayIncome -= orders.data[i].income7
+                }
             }
         }
         mstore.data.dayIncome = dayIncome.toFixed(2)

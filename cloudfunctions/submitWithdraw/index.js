@@ -47,7 +47,7 @@ exports.main = async (event, context) => {
 
         await trans.collection('mstores').doc(event.storeID).update({
             data: {
-                balance: mstore.data.balance - event.withdrawAmount,
+                balance: parseFloat((mstore.data.balance - event.withdrawAmount).toFixed(2)),
                 updatedAt: Date.parse(new Date()),
             },
             success: res => {

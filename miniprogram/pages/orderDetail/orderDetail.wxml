@@ -1,6 +1,8 @@
 <!--miniprogram/pages/orderDetail/orderDetail.wxml-->
 <wxs src="../../utils/filter.wxs" module="filters"/>
 
+<view class="waltermark" hidden="{{walterhidden}}">已付款</view>
+
 <view class="detailHeader">
   <image class="detailHeaderLImage" src="{{order.productImage}}"></image>
   <text class="detailHeaderRText">{{order.storeName}}</text>
@@ -33,7 +35,7 @@
   </view>
 
   <view class="detailItem">
-    <text class="detailItemKey">支付金额</text>
+    <text class="detailItemKey">折后金额</text>
     <text class="detailItemValue" wx:if="{{order.payType != 3}}">{{order.realAmount}}</text>
     <text class="detailItemValue" wx:if="{{order.payType == 3}}">{{order.finalAmount}}</text>
   </view>
@@ -76,6 +78,5 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text wx:if="{{order.totalAmount-coupon.coupon.value/100 + order.mustPayAmount > 0}}" class="totalIncomeValue">¥{{order.finalAmount}}</text>
-  <text wx:else class="totalIncomeValue">¥0.00</text>
+  <text class="totalIncomeValue">¥{{order.finalAmount}}</text>
 </view>

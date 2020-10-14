@@ -83,7 +83,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // if (!app.globalData.storeID) {
+    //   wx.redirectTo({
+    //     url: '../../console/index/index',
+    //   })
+    // }
   },
 
   /**
@@ -102,7 +106,7 @@ Page({
     })
     
     let thiz = this
-
+console.log(app.globalData.storeID)
     wx.cloud.callFunction({
       name:"getInfo",
       data: {

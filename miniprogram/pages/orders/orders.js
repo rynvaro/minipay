@@ -15,7 +15,10 @@ Page({
         tabFontSizes: [tabFontSizeSelected,tabFontSize,tabFontSize,tabFontSize],
         currentTabIndex: 0,
 
-        orders: []
+        orders: [],
+        pageSize: 10,
+        currentPage: 1,
+        hasNext: false,
     },
 
     orderDetail: function(e) {
@@ -28,7 +31,7 @@ Page({
         wx.showLoading({
             title: 'loading...',
         })
-        listOrder(this,e.detail.value)
+        listOrder(this,e.detail.value, this.data.pageSize, this.data.currentPage)
     },
 
     onTabClick: function(e) {
@@ -51,7 +54,7 @@ Page({
             currentTabIndex: index,
         })
 
-        listOrder(this,'')
+        listOrder(this,'', this.data.pageSize, this.data.currentPage)
     },
 
     /**
@@ -61,7 +64,7 @@ Page({
         wx.showLoading({
             title: 'loading...',
         })
-        listOrder(this,'')
+        listOrder(this,'', this.data.pageSize, this.data.currentPage)
     },
 
     /**
@@ -106,6 +109,15 @@ Page({
 
     },
 
+    onReachBottom: function () {
+        if (this.data.hasNext) {
+            wx.showLoading({
+            title: 'loading...',
+            })
+            listOrder(this,'', this.data.pageSize, this.data.currentPage)
+        }
+    },
+
     /**
      * 用户点击右上角分享
      */
@@ -114,17 +126,23 @@ Page({
     }
 })
 
-function listOrder(thiz, q){
+function listOrder(thiz, q, pageSize, currentPage){
     wx.hideLoading()
     wx.cloud.callFunction({
         name:"ziorders",
         data: {
             q: q,
             status: thiz.data.currentTabIndex,
+            pageSize: pageSize,
+            currentPage: currentPage,
         },
         success(res) {
             console.log(res)
-            thiz.setData({orders: res.result.data})
+            thiz.setData({
+                orders: thiz.data.orders.concat(res.result.data),
+                hasNext: res.result.hasNext,
+                currentPage: res.result.currentPage,
+            })
             wx.hideLoading()
         },
         fail: function(e) {

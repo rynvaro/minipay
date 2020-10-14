@@ -20,6 +20,9 @@ exports.main = async (event, context) => {
   let storeID = event.storeID
   let type = event.type
 
+  let pageSize = event.pageSize
+  let currentPage = event.currentPage
+
   const _ = db.command
 
   console.log(status == 0, status)
@@ -40,7 +43,15 @@ exports.main = async (event, context) => {
     where = where.and({title: db.RegExp({regexp: '.*'+q +'.*', options: 1})})
   }
 
-  var result = await db.collection('iorders').where(where).orderBy('timestamp','desc').get()
+  var result = await db.collection('iorders').where(where).orderBy('timestamp','desc').skip((currentPage-1)*pageSize).limit(pageSize).get()
   
+  if (result.data.length == pageSize) {
+      result.hasNext = true
+      result.currentPage = currentPage + 1
+  }else {
+      result.hasNext = false
+      result.currentPage = currentPage + 1
+  }
+
   return result
 }

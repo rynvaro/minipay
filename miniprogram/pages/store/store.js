@@ -33,6 +33,23 @@ Page({
     },
 
     order: function(){
+      if (!app.globalData.viplevel) {
+        wx.showModal({
+          title: '提示',
+          content: '请先在首页授权登录',
+          success (rr) {
+            if (rr.confirm) {
+              wx.switchTab({
+                url: '../index/index',
+              })
+            } else if (rr.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+          
+        })
+        return
+      }
         wx.navigateTo({
           url: '../order/order?storeID='+this.data.store._id
         })
@@ -44,6 +61,7 @@ Page({
     onLoad: function (options) {
       wx.showLoading({
         title: 'loading...',
+        mask: true,
       })
       let thiz = this
       wx.cloud.callFunction({
