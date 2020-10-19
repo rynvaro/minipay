@@ -69,18 +69,12 @@ exports.main = async (event, context) => {
 
         let couponID = iorder.data.couponId
         if ( couponID != -1 && payby != 3){
-            await db.collection('icoupons').doc(couponID).update({
+            const icouponUpdate = await db.collection('icoupons').doc(couponID).update({
                 data: {
                     status: 1,
-                },
-                success: res => {
-                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                },
-                fail: err => {
-                    console.error('[数据库] [新增记录] 失败：', err)
-                    throw(e)
                 }
             })
+            console.log('icouponUpdate: ',icouponUpdate)
         }
 
         let isFirstPay = false
@@ -91,7 +85,7 @@ exports.main = async (event, context) => {
         let subsidy = 0
         if (isFirstPay && payby != 3) {
             subsidy = 5
-            await db.collection('subsidies').add({
+            const subsidyAdd = await db.collection('subsidies').add({
                 data: {
                     timestamp: new Date().getTime(),
                     storeName: store.data.storeName,
@@ -100,6 +94,7 @@ exports.main = async (event, context) => {
                     subsidy: subsidy,
                 }
             })
+            console.log('subsidyAdd: ',subsidyAdd)
         }
 
         // var data = {
@@ -146,13 +141,6 @@ exports.main = async (event, context) => {
                 status: 1,
                 subsidy: subsidy,
                 payType: payby,
-            },
-            success: res => {
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-            },
-            fail: err => {
-                console.error('[数据库] [新增记录] 失败：', err)
-                throw(e)
             }
         })
         result._id = orderId
@@ -160,40 +148,28 @@ exports.main = async (event, context) => {
         let deltaPointAndExp = parseInt(iorder.data.totalAmount/10)
         if (deltaPointAndExp > 0) {
             // 积分变更记录
-            await db.collection('pointrecords').add({
+            const pointrecordAdd = await db.collection('pointrecords').add({
                 data: {
                     openid: openid,
                     type: 4, // 消费
                     action: '+',
                     value: deltaPointAndExp,
                     timestamp: Date.parse(new Date()),
-                },
-                success: res => {
-                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                },
-                fail: err => {
-                    console.error('[数据库] [新增记录] 失败：', err)
-                    throw(e)
                 }
             })
+            console.log('pointrecordAdd: ',pointrecordAdd)
 
             // 经验变更记录
-            await db.collection('exprecords').add({
+            const exprecordAdd =  await db.collection('exprecords').add({
                 data: {
                     openid: openid,
                     type: 1, // 消费
                     action: '+',
                     value: deltaPointAndExp,
                     timestamp: Date.parse(new Date()),
-                },
-                success: res => {
-                    console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                },
-                fail: err => {
-                    console.error('[数据库] [新增记录] 失败：', err)
-                    throw(e)
                 }
             })
+            console.log('pointrecordAdd: ', pointrecordAdd)
         }
 
         
@@ -236,40 +212,34 @@ exports.main = async (event, context) => {
             userData.firstPayAmount = iorder.data.totalAmount
         }
 
-        await db.collection('users').doc(openid).update({
+        const userUpdate = await db.collection('users').doc(openid).update({
             data: {
                 data: userData
-            },
-            success: res => {
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-            },
-            fail: err => {
-                console.error('[数据库] [新增记录] 失败：', err)
-                throw(e)
             }
         })
+        console.log('userUpdate: ',userUpdate)
 
-        // 邀请者收益
-        if (user.data.data.inviteBy && isFirstPay) {
-            const upLineUser = await db.collection('users').where({inviteCode: user.data.data.inviteBy}).get()
-            if (upLineUser.data.length > 0) {
-                upLineU = upLineUser.data[0]
-                await db.collection('users').doc(upLineU._id).update({
-                    data: {
-                        data: {
-                            exp: upLineU.data.balance + 1000
-                        }
-                    },
-                    success: res => {
-                        console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-                    },
-                    fail: err => {
-                        console.error('[数据库] [新增记录] 失败：', err)
-                        throw(e)
-                    }
-                })
-            }
-        }
+        // // 邀请者收益
+        // if (user.data.data.inviteBy && isFirstPay) {
+        //     const upLineUser = await db.collection('users').where({inviteCode: user.data.data.inviteBy}).get()
+        //     if (upLineUser.data.length > 0) {
+        //         upLineU = upLineUser.data[0]
+        //         await db.collection('users').doc(upLineU._id).update({
+        //             data: {
+        //                 data: {
+        //                     balance: upLineU.data.balance + 1000
+        //                 }
+        //             },
+        //             success: res => {
+        //                 console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        //             },
+        //             fail: err => {
+        //                 console.error('[数据库] [新增记录] 失败：', err)
+        //                 throw(e)
+        //             }
+        //         })
+        //     }
+        // }
         
         orders = store.data.orders
         let avgPrice = store.data.avgPrice
@@ -280,20 +250,36 @@ exports.main = async (event, context) => {
         }
 
         // 商户收入
-        await db.collection('mstores').doc(storeID).update({
-            data: {
-                balance: parseFloat((parseFloat(store.data.balance) + parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2)),
-                orders: store.data.orders + 1,
-                avgPrice: avgPrice,
-            },
-            success: res => {
-                console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
-            },
-            fail: err => {
-                console.error('[数据库] [新增记录] 失败：', err)
-                throw(e)
+        
+        let storeUpdate = {
+            stats: { updated: 0 }
+        }
+        let updatedBalance = parseFloat((parseFloat(store.data.balance) + parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2))
+        let ordersCnt = store.data.orders + 1
+        for (var n = 0; n < 5; n++) {
+            if (!storeUpdate.stats.updated) {
+                if (n > 0) {
+                    db.collection('storerrors').add({
+                        data: {
+                            n: n,
+                            storeId: storeID,
+                            error: storeUpdate
+                        }
+                    })
+                }
+                storeUpdate = await db.collection('mstores').doc(storeID).update({
+                    data: {
+                        balance: updatedBalance,
+                        orders: ordersCnt,
+                        avgPrice: avgPrice,
+                    }
+                })
+                console.log("storeUpdate:", n, storeUpdate)
+            }else {
+                break
             }
-        })
+        }
+        
 
         // await trans.commit()
 

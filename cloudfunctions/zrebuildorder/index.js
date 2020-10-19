@@ -30,6 +30,11 @@ exports.main = async (event, context) => {
                 delta = 0.3
             }
         }
+        // 不参与平台抽成
+        if(store.data.norake) {
+            delta = 0
+        }
+
         let realDiscount = store.data.discount + delta
 
         const coupons = await db.collection('icoupons').where({openid: wxContext.OPENID, status: 0}).get()

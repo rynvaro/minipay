@@ -28,7 +28,7 @@ exports.main = async (event, context) => {
 
     const _ = db.command
     const $ = _.aggregate
-    const result = await db.collection('iorders').aggregate().match({timestamp: _.gte(yestdayTimestamp).and(_.lt(todayTimestamp))}).group(
+    const result = await db.collection('iorders').aggregate().match({status: 1, timestamp: _.gte(yestdayTimestamp).and(_.lt(todayTimestamp))}).group(
         {
             _id: yestdayTimestamp,
             value: $.sum('$finalAmount'),

@@ -164,16 +164,23 @@ Page({
         })
         return
       }
-
+      let thiz = this
       wx.requestSubscribeMessage({
         tmplIds: ['SLBtHQYki0LoIHTl0YPhKOKfaNAJk55Wuk_01kd2Ogw'],
-        success (res) { },
+        success (res) { 
+          thiz.withdrawNext()
+        },
         fail(e) {
           console.log(e)
         }
       })
+    },
 
-      let thiz = this
+    withdrawNext: function(){
+      wx.showLoading({
+        title: 'loading...',
+        mask: true,
+      })
       var promise = new Promise(function (resolve, reject) {
         wx.cloud.callFunction({
             name:"hasPermission",
@@ -193,6 +200,7 @@ Page({
 
       promise.then(function(hasPermission){
         console.log("has permission: ", hasPermission)
+        wx.hideLoading()
         if (!hasPermission) {
           wx.showToast({
             title: '没有权限',
@@ -203,6 +211,5 @@ Page({
           })
         }
       })
-      
     }
 })

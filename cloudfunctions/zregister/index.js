@@ -33,6 +33,29 @@ exports.main = async (event, context) => {
             throw(err)
           }
       })
+      await db.collection('icoupons').add({
+        data: {
+            _id: wxContext.OPENID,
+            isnew: true,
+            openid: wxContext.OPENID,
+            status: 0,
+            timestamp: Date.parse(new Date()),
+            coupon: {
+                id: '1',
+                point: 50,
+                type: 3,
+                value: 500,
+            }
+        },
+        success: res => {
+            console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
+        },
+        fail: err => {
+            console.error('[数据库] [新增记录] 失败：', err)
+            throw(e)
+        }
+    })
+    result.redpackvalue = 5
     } catch(e) {
         throw(e)
     }

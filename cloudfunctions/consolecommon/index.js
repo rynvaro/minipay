@@ -177,7 +177,7 @@ exports.main = async (event, context) => {
         const cashflows = await db.collection('cashflows').where({_id: _.gte(monthStart).and(_.lt(monthEnd))}).get()
 
         console.log('day start is: ',dayStart)
-        const dayCashflows = await db.collection('iorders').aggregate().match({timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).group({
+        const dayCashflows = await db.collection('iorders').aggregate().match({status: 1, timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).group({
             _id: null,
             in: $.sum('$finalAmount'),
             coupon: $.sum('$coupon'),
@@ -212,8 +212,8 @@ exports.main = async (event, context) => {
 
         // 订单统计
         // TODO change to orders
-        const monthOrders = await db.collection('iorders').where({timestamp: _.gte(monthStart).and(_.lt(monthEnd))}).get()
-        const dayOrders = await db.collection('iorders').where({timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).get()
+        const monthOrders = await db.collection('iorders').where({status: 1, timestamp: _.gte(monthStart).and(_.lt(monthEnd))}).get()
+        const dayOrders = await db.collection('iorders').where({status: 1, timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).get()
 
         let couponHistories = []
         for (var i = 0; i< monthOrders.data.length; i++) {
@@ -367,14 +367,44 @@ exports.main = async (event, context) => {
         }
     }
 
+    // 更新提现状态
     if (tp == 'withdrawupdate') {
-        return await db.collection('withdraws').doc(event._id).update({
+        const result = await db.collection('withdraws').doc(event._id).update({
             data: {
                 status: parseInt(event.status),
                 realWithdrawAmount: parseFloat(event.realAmount),
                 updatedAt: new Date().getTime()
             }
         })
+        if (event.status == 3) {
+            const currentWidthdraw = await db.collection('withdraws').doc(event._id).get()
+            try {
+                cloud.openapi.subscribeMessage.send({
+                    touser: currentWidthdraw.data.openid,
+                    templateId:'SLBtHQYki0LoIHTl0YPhKOKfaNAJk55Wuk_01kd2Ogw',
+                    // miniprogramState: 'developer',
+                    data: {
+                        amount1:{
+                            value:currentWidthdraw.data.withdrawAmount,
+                        },
+                        thing2: {
+                            value: currentWidthdraw.data.bankCard,
+                        },
+                        amount3: {
+                            value: currentWidthdraw.data.realWithdrawAmount,
+                        },
+                        date4:{
+                            value: formatDate(new Date())
+                        },
+                    },
+                })
+            }catch(e) {
+                console.log(e)
+                return result
+            }
+        }
+        
+        return result
     }
 
     if (tp == 'homeheader') {
@@ -425,6 +455,140 @@ exports.main = async (event, context) => {
         }else {
             return 'reject'
         }
+    }
+
+    if (tp == 'rake') {
+        let id = event.id
+        let norake = true 
+        if (event.norake == 0) {
+            norake = false
+        }
+        return await db.collection('mstores').doc(id).update({
+            data: {
+                norake: norake
+            }
+        })
+    }
+
+    if (tp == 'logout') {
+        let id = event.id
+        return await db.collection('mstores').doc(id).update({
+            data: {
+                openid: ''
+            }
+        })
+    }
+
+    if (tp == 'groupadd') {
+        event.discount = parseFloat(event.discount)
+        let discount = event.discount
+        let stores = event.stores
+        if (stores.length > 0) {
+           let ids = []
+           for (var i = 0; i<stores.length; i++) {
+               ids.push(stores[i]._id)
+           }
+           await db.collection('mstores').where({_id: _.in(ids)}).update({
+               data: {
+                   discount: discount,
+                   norake: true,
+               }
+           })
+        }
+        return await db.collection('groups').add({
+            data: event
+        })
+    }
+
+    if (tp == 'groupupdate') {
+        let discount = parseFloat(event.discount)
+        let id = event._id
+        delete event.tp
+        delete event._id
+        let removes = event.removes
+        delete event.removes
+
+        for (var i = 0;i<removes.length; i++) {
+            await db.collection('mstores').doc(removes[i]._id).update({
+                data: {
+                    discount: removes[i].discount,
+                    norake: false,
+                }
+            })
+        }
+
+        let stores = event.stores
+        if (stores.length > 0) {
+           let ids = []
+           for (var i = 0; i<stores.length; i++) {
+               ids.push(stores[i]._id)
+           }
+           await db.collection('mstores').where({_id: _.in(ids)}).update({
+               data: {
+                   discount: discount,
+                   norake: true,
+               }
+           })
+        }
+        event.discount = parseFloat(event.discount)
+        return await db.collection('groups').doc(id).update({
+            data: event
+        })
+    }
+
+    if (tp == 'groupdelete') {
+        const currentEvent = await db.collection('groups').doc(event._id).get()
+        let stores = currentEvent.data.stores
+        for (var i = 0; i< stores.length; i++) {
+            await db.collection('mstores').doc(stores[i]._id).update({
+                data: {
+                    discount: stores[i].discount,
+                    norake: false,
+                }
+            }) 
+        }
+
+       return await db.collection('groups').doc(event._id).remove()
+    }
+
+    if (tp == 'groupdisable') {
+        const currentGroup = await db.collection('groups').doc(event.id).get()
+        let stores = currentGroup.data.stores
+        for (var i = 0; i<stores.length; i++) {
+            await db.collection('mstores').doc(stores[i]._id).update({
+                data: {
+                    discount: stores[i].discount,
+                    norake: false,
+                }
+            })
+        }
+        return await db.collection('groups').doc(event.id).update({
+            data: {
+                enabled: 0
+            }
+        })
+    }
+
+    if (tp == 'groupenable'){
+        const currentGroup = await db.collection('groups').doc(event.id).get()
+        let stores = currentGroup.data.stores
+        for (var i = 0; i<stores.length; i++) {
+            await db.collection('mstores').doc(stores[i]._id).update({
+               data: {
+                    discount: currentGroup.data.discount,
+                    norake: true,
+               }
+            })
+        }
+        return await db.collection('groups').doc(event.id).update({
+            data: {
+                enabled: 1
+            }
+        })
+    }
+
+    if (tp == 'groups') {
+        return await db.collection('groups').get()
     }
 
    return {}

@@ -7,6 +7,7 @@ Page({
     data: {
         signconf: {
             sevenSigns: 0,
+            signs: 0,
         },
         btnText: '立即签到',
         disable: false,

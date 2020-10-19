@@ -20,16 +20,21 @@ exports.main = async (event, context) => {
         let today = now.getTime()
         console.log(today,"-----")
         const orders = await db.collection('iorders').where({
-            storeId: _.eq(event.storeID), 
-            timestamp: _.gte(today)
+            storeId: _.eq(event.storeID),
+            timestamp: _.gte(today),
+            status: 1,
         }).get()
+
         let dayIncome = 0
         for (var i = 0; i< orders.data.length; i++) {
-            console.log(orders.data[i].timestamp, today, orders.data[i]>today)
-            if (orders.data[i].finalAmount) {
+            // console.log(orders.data[i].timestamp, today, orders.data[i]>today)
+            if (orders.data[i].totalAmount && orders.data[i].status == 1) {
                 dayIncome += orders.data[i].totalAmount
                 if (orders.data[i].income7) {
                     dayIncome -= orders.data[i].income7
+                }
+                if (orders.data[i].subsidy) {
+                    dayIncome += orders.data[i].subsidy
                 }
             }
         }

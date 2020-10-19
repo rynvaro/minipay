@@ -15,13 +15,17 @@ exports.main = async (event, context) => {
     console.log("event is: ", event)
 
     try {
+        if (cnt <= 0) {
+            throw('error')
+        }
         const user = await db.collection('users').doc(wxContext.OPENID).get()
         const coupons = await db.collection('coupons').get()
 
+        console.log("user is: ",user)
 
         coupon = coupons.data[0].coupons[couponId-1]
 
-        if (coupon.point * cnt >user.point) {
+        if (coupon.point * cnt > user.data.data.point) {
             throw(e)
         }
 
