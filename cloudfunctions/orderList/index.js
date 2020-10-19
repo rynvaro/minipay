@@ -27,7 +27,7 @@ exports.main = async (event, context) => {
 
   console.log(status == 0, status)
 
-  var where = _.and({storeId: _.eq(storeID)})
+  var where = _.and({storeId: _.eq(storeID),status: _.eq(1)})
   if (status != 0) {
     where = where.and({status: _.eq(parseInt(status))})
   }

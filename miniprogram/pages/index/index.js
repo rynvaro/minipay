@@ -284,7 +284,7 @@ Page({
                         wx.showToast({
                           title: '已更新',
                         })
-                        thiz.setData({phoneFilled: true, redpackShow:true})
+                        thiz.setData({phoneFilled: true})
                         thiz.clodeMoreInfo()
                         thiz.onShow()
                         
@@ -316,38 +316,39 @@ Page({
     },
 
     invite: function(e) {
-      // wx.showToast({
-      //   title: '暂未开放',
-      // })
-        wx.navigateTo({
-          url: '../invite/invite',
-        })
+      wx.showToast({
+        title: '暂未开放',
+      })
+        // wx.navigateTo({
+        //   url: '../invite/invite',
+        // })
     },
 
     openRedpack: function(e) {
-
-      wx.showLoading({
-        title: 'loading...',
-      })
-      let thiz = this
-      wx.cloud.callFunction({
-        name:"zopenredpack",
-        data: {
-          redpackValue: thiz.data.redpackValue*100
-        },
-        success(res) {
-            console.log(res)
-            wx.hideLoading()
-            thiz.setData({open: true, closeRedpack: true})
-        },
-        fail: function(e) {
-            console.log(e.errMsg)
-            wx.hideLoading()
-            wx.showToast({
-              title: '领取失败',
-            })
-        }
-      })
+      this.setData({open: true, closeRedpack: true})
+      return
+      // wx.showLoading({
+      //   title: 'loading...',
+      // })
+      // let thiz = this
+      // wx.cloud.callFunction({
+      //   name:"zopenredpack",
+      //   data: {
+      //     redpackValue: thiz.data.redpackValue*100
+      //   },
+      //   success(res) {
+      //       console.log(res)
+      //       wx.hideLoading()
+           
+      //   },
+      //   fail: function(e) {
+      //       console.log(e.errMsg)
+      //       wx.hideLoading()
+      //       wx.showToast({
+      //         title: '领取失败',
+      //       })
+      //   }
+      // })
     },
 
     /**
@@ -468,7 +469,8 @@ Page({
                 console.log(res)
                 thiz.setData({
                     login: true,
-                    // redpackShow: true,
+                    redpackShow: true,
+                    redpackValue: res.result.redpackvalue
                 })
                 thiz.onShow()
             },

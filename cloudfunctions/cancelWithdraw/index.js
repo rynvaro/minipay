@@ -12,6 +12,10 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
     try {
+        const w = await db.collection('withdraws').doc(event.id).get()
+        if (w.data.status == 4) {
+            throw("invalid operation")
+        }
         await db.collection('withdraws').doc(event.id).update({
             data: {
                 status: 4,

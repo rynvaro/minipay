@@ -34,6 +34,11 @@ exports.main = async (event, context) => {
         }else if (level == 2) {
             delta = 0.3
         }
+        // 不参与平台抽成
+        if(store.data.norake) {
+            delta = 0
+        }
+
         let realDiscount = store.data.discount + delta
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let income7 = (payAmount * delta/10).toFixed(2)
@@ -43,10 +48,7 @@ exports.main = async (event, context) => {
             totalAmount = 0
         }
 
-        // 不参与平台抽成
-        if(store.data.norake) {
-            income7 = 0
-        }
+        
         /**
          * realAmount 打折后的价格
          * totalAmount 打折后的价格 + 不参与打折的（ 折扣是实际折扣，需要减去平台利润 才是商家收入 ）
