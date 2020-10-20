@@ -36,6 +36,9 @@ const db = cloud.database({
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     console.log('event is: ', event)
+    console.log("u id is: ",wxContext)
+
+    console.log("openid: ",wxContext.OPENID)
 
     /**
      * 如果根据openid获取到了，则直接登录

@@ -1,5 +1,5 @@
 {
-    "name": "aaaaaaaa",
+    "name": "openidsyncer",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
@@ -10,6 +10,6 @@
     "license": "ISC",
     "dependencies": {
         "axios": "^0.20.0",
-        "wx-server-sdk": "~2.3.0"
+        "wx-server-sdk": "~2.3.2"
     }
 }

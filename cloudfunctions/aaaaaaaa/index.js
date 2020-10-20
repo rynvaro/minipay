@@ -1,28 +1,75 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
+const axios = require('axios')
+
 cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 })
 
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
+async function getWeather() {
 
+    console.log('start getWeather')
+  
+    var data = {}
+  
+    try {
+
+      let params = {
+        "touser":"osP5kwiG6nOSI9t6gmAULyh8_40w",
+        "template_id":"WCk1obq17BXnnr5FYU2YM-nfjt-oMxvgFreMDsmGBak",
+        "miniprogram":{
+          "appid":"wx9b588b2b3f090400",
+        },          
+        "data":{
+                "first": {
+                    "value":"收到新订单",
+                    "color":"#173177"
+                },
+                "keyword1":{
+                    "value":"商家名称",
+                    "color":"#173177"
+                },
+                "keyword2": {
+                    "value":"39.8元",
+                    "color":"#173177"
+                },
+                "keyword3": {
+                    "value":"易",
+                    "color":"#173177"
+                },
+                  "keyword4": {
+                    "value":"微信支付",
+                    "color":"#173177"
+                },
+                "keyword5": {
+                    "value":"无",
+                    "color":"#173177"
+                },
+                "remark":{
+                    "value":"请及时处理",
+                    "color":"#173177"
+                }
+        }
+    }
+  
+      var res = await axios.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=38_g477FAmfZkj00VwMngC8Bj-_7d5dV4WPxy7VpMbKHO5WsT5sYMrJFM2nl0bbj_OY1tBxWEbL5xacp2arSUyrizhTbf5tIj5JzWIq3v8pO-f9barQXoqedDn5XrkmMXXbsKIjd7fJ_RD67iU1GDEcADAURS',params)
+  
+      data = res.data
+  
+    } catch (err) {
+      console.log(err)
+    }
+    return data
+  }
 // 云函数入口函数
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     const _ = db.command
 
-    const orders = await db.collection('iorders').where({storeId: 'e373396c5f85580f016ad0ab5d4c586c',status: 1,timestamp: _.gte(1603002947000).and(_.lte(1603030809000))}).get()
-
-    let sum = 0
-
-    for (var i = 0; i< orders.data.length;i++) {
-        sum += parseFloat(orders.data[i].totalAmount)
-        sum += parseFloat(orders.data[i].subsidy)
-        sum -= parseFloat(orders.data[i].income7)
-    }
-
-    return sum
+    const data = getWeather()
+    return data
 
     // let tp = event.tp
     // if (tp == 'list') {

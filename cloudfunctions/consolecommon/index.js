@@ -15,6 +15,17 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+    if (tp == 'wxe') {
+        const tokens =  await db.collection('wxetokens').get()
+        if (tokens.data.length > 0) {
+            await db.collection('wxetokens').doc(tokens.data[0]._id).remove()
+        }
+        event.timestamp = Date.parse(new Date())
+        return await db.collection('wxetokens').add({
+            data: event
+        })
+    }
+
    if (tp == "events") {
        return await db.collection("events").orderBy('index','asc').get()
    }
