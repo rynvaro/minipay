@@ -68,8 +68,22 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     const _ = db.command
 
-    const data = getWeather()
-    return data
+    var date = new Date()
+    date.setHours(16,0,0)
+    console.log(date.getTime())
+    let offset = date.getTimezoneOffset()
+
+
+    console.log(offset)
+
+    return await db.collection('users').where({
+      'data.point': _.gte(700)
+    }).get()
+
+
+
+    // const data = getWeather()
+    // return data
 
     // let tp = event.tp
     // if (tp == 'list') {

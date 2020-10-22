@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
   // let id = (Math.random().toString().substr(2)+Math.random().toString().substr(2)+Math.random().toString().substr(2)).substr(0,32)
   let id = event.orderId
   let nonceStr = (Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)+Math.random().toString(36).substr(2)).substr(0,32).toUpperCase()
-  let depositAmount = event.depositAmount*100
+  let depositAmount = parseInt(event.depositAmount*100)
   let body = event.body
 
   const deposit = await db.collection('deposits').add({
@@ -42,7 +42,7 @@ exports.main = async (event, context) => {
       throw(e)
     }
   })
-
+console.log('amount is: ',depositAmount)
   const res = await cloud.cloudPay.unifiedOrder({
     "body" : body,
     "outTradeNo" : id,

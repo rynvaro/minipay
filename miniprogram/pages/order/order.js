@@ -248,9 +248,12 @@ paybyBalance: function(orderId) {
           })
           return
         }
-        wx.redirectTo({
-          url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+        wx.navigateTo({
+          url: '../paysuccess/paysuccess?orderId='+res.result._id,
         })
+        // wx.redirectTo({
+        //   url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+        // })
     },
     fail: function(e) {
       console.log(e.errMsg)
@@ -296,9 +299,12 @@ paybyWechat: function(orderId) {
                 success(res) {
                     console.log(res)
                     wx.hideLoading()
-                    wx.redirectTo({
-                      url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+                    wx.navigateTo({
+                      url: '../paysuccess/paysuccess?orderId='+res.result._id,
                     })
+                    // wx.redirectTo({
+                    //   url: '../orderDetail/orderDetail?id='+res.result._id+'&showmark=true',
+                    // })
                 },
                 fail: function(e) {
                   console.log(e.errMsg)

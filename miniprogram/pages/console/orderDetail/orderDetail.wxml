@@ -36,11 +36,6 @@
     <text class="detailItemValue">{{order.realAmount}}</text>
   </view>
 
-  <view class="detailItem">
-    <text class="detailItemKey">平台抽成</text>
-    <text class="detailItemValue">{{income7}}</text>
-  </view>
-
   <view class="detailItem" >
     <text class="detailItemKey">优惠券</text>
     <text class="detailItemValue">{{coupon.coupon.value/100}}</text>

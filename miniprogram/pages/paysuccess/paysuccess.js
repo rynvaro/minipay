@@ -8,7 +8,9 @@ Page({
     data: {
         statusBarHeight: app.globalData.statusBarHeight,
         navBarHeight: app.globalData.navBarHeight,
-        barBG: '#F6F6F6',
+        barBG: '#F56613;',
+        orderId: '',
+        paysucInfo: {}
     },
 
     back: function(e) {
@@ -21,7 +23,33 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        this.setData({orderId: options.orderId})
+        let orderId = options.orderId
+        let thiz = this
+        wx.showLoading({
+          title: 'loading...',
+        })
+        wx.cloud.callFunction({
+            name:"zgetpaysucinfo",
+            data: {
+                orderId: orderId
+            },
+            success(res) {
+                console.log(res)
+                thiz.setData({paysucInfo: res.result})
+                wx.hideLoading()
+            },
+            fail: function(e) {
+                console.log(e)
+                wx.hideLoading()
+            }
+        })
+    },
 
+    seeOrder: function(e) {
+        wx.redirectTo({
+          url: '../orderDetail/orderDetail?id='+this.data.orderId+'&showmark=true',
+        })
     },
 
     /**

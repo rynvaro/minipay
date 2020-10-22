@@ -2,6 +2,7 @@
     "pages": [
         "pages/index/index",
         "pages/console/index/index",
+        "pages/paysuccess/paysuccess",
         "pages/event/event",
         "pages/stores/stores",
         "pages/lottory/lottory",
@@ -12,7 +13,6 @@
         "pages/console/contract/contract",
         "pages/console/setpass/setpass",
         "pages/console/store/store",
-        "pages/paysuccess/paysuccess",
         "pages/deposit/deposit",
         "pages/home/home",
         "pages/console/discount/discount",

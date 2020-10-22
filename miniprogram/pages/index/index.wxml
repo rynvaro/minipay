@@ -1,4 +1,5 @@
 <!--index.wxml-->
+<add-tips name="7号生活" logo="../../images/basicprofile.jpeg" />
 
 <view class="card">
     <view class="cardLine1">
@@ -201,5 +202,16 @@
   
 </view>
 
+<view class="popBoxSign" hidden="{{signinTipsHidden}}">
+  <view class="popBoxHeaderSign">
+    <text>签到提醒</text>
+  </view>
+  <view class="popBoxContentSign">
+    <text class="popBoxContentTextSign">今日还未签到哦~~</text>
+    <view class="popBoxContentButtonSign" bindtap="gotoSignin">去签到</view>
+  </view>
+
+  <text class="closeAdvice" bindtap="hiddenSign">×</text>
+</view>
   
 </view>

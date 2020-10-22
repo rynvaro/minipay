@@ -15,46 +15,50 @@ exports.main = async (event, context) => {
         const signConfs = await db.collection('signconfs').get()
         let signconf = signConfs.data[0]
 
-        let signDate = new Date(user.data.data.signDate)
-        let today = Date.parse(new Date())
-        if (user.data.data.signDate != 0 && formatDate(new Date(signDate))==formatDate(new Date(today))) {
-            return 2 // 今日已签到
-        }
 
-        let date = new Date(user.data.data.createdAt)
-        date.setDate(date.getDate() + 7)
-        let isNew = false
-        // 新用户
-        if (formatDate(date) > (formatDate(new Date(today)))){
-            isNew = true
-        }
-        
-        let terminated = false
-        signDate.setDate(signDate.getDate()+1)
-        if (user.data.data.signDate != 0 && formatDate(signDate) != formatDate(new Date(today))) {
-            terminated = true
-        }
-
-
+        let signDate = user.data.data.signDate
         var sevenSigns = user.data.data.sevenSigns + 1
-        var pointDelta = 0
-        let confs = signconf.confs
 
-        if (isNew && !terminated) {
-            confs = signconf.onSaleConfs
+        let todayStart = new Date()
+        todayStart.setHours(-8,0,0,0)
+        let todayStartTime = todayStart.getTime()
+        console.log("todayStartTime: ", todayStartTime)
+        if (signDate >= todayStartTime) { // 今日已签到
+            return 2
         }
-        if (terminated || sevenSigns > 7) {
+
+        let yesterdayStart = new Date()
+        yesterdayStart.setHours(-32, 0, 0, 0)
+        let yesterdayStartTime = yesterdayStart.getTime()
+        console.log("yesterdayStartTime: ", yesterdayStartTime)
+
+        let confs = signconf.confs
+        if (signDate == 0) { // 第一次签到
+            confs = signconf.onSaleConfs
+        }else {
+            if (signDate < yesterdayStartTime) {
+                // 昨日未签到
+                confs = signconf.confs
+                user.data.data.signs = 10
+                sevenSigns = 1
+            }else { // 昨日签到过
+                if (user.data.data.sevenSigns > 0 && user.data.data.signs < 7) {
+                    confs = signconf.onSaleConfs
+                }
+            }
+        }
+
+        if (sevenSigns > 7) {
             sevenSigns = 1
         }
 
         let index = sevenSigns - 1
         pointDelta = confs[index]
 
-
         await db.collection('users').doc(wxContext.OPENID).update({
             data: {
                 data: {
-                    signDate: today,
+                    signDate: new Date().getTime(),
                     signs: user.data.data.signs + 1,
                     point: user.data.data.point + pointDelta,
                     sevenSigns: sevenSigns,

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "柒号生活",
-  "usingComponents": {}
+  "usingComponents": {
+    "add-tips":"/components/add-tips/index"
+  }
 }

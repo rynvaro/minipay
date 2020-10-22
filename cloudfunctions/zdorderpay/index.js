@@ -1,5 +1,6 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
+const axios = require('axios')
 
 cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 
@@ -83,19 +84,19 @@ exports.main = async (event, context) => {
         }
 
         let subsidy = 0
-        if (isFirstPay && payby != 3) {
-            subsidy = 5
-            const subsidyAdd = await db.collection('subsidies').add({
-                data: {
-                    timestamp: new Date().getTime(),
-                    storeName: store.data.storeName,
-                    storeId: store.data._id,
-                    userName: user.data.data.name,
-                    subsidy: subsidy,
-                }
-            })
-            console.log('subsidyAdd: ',subsidyAdd)
-        }
+        // if (isFirstPay && payby != 3) {
+        //     subsidy = 5
+        //     const subsidyAdd = await db.collection('subsidies').add({
+        //         data: {
+        //             timestamp: new Date().getTime(),
+        //             storeName: store.data.storeName,
+        //             storeId: store.data._id,
+        //             userName: user.data.data.name,
+        //             subsidy: subsidy,
+        //         }
+        //     })
+        //     console.log('subsidyAdd: ',subsidyAdd)
+        // }
 
         // var data = {
         //     storeId: storeID,
@@ -169,7 +170,7 @@ exports.main = async (event, context) => {
                     timestamp: Date.parse(new Date()),
                 }
             })
-            console.log('pointrecordAdd: ', pointrecordAdd)
+            console.log('pointrecordAdd: ', exprecordAdd)
         }
 
         
@@ -281,6 +282,8 @@ exports.main = async (event, context) => {
         }
         
 
+        notifyMerchant(store.data,orderId)
+
         // await trans.commit()
 
         return result
@@ -340,3 +343,67 @@ function sha1(s) {
 
     return hex;
 }
+
+
+async function notifyMerchant(store,orderId) {
+    if (!store.unionid) {
+        // 不存在unionid
+        return
+    }
+
+    const iorder = await db.collection('iorders').doc(orderId).get()
+    let order = iorder.data
+    const oauser = await db.collection('oausers').doc(store.unionid).get()
+
+    var payway = "微信支付"
+    if (order.payType == 2) {
+        payway = "余额"
+    }
+
+    try {
+      let params = {
+        "touser": oauser.data.oaopenid,
+        "template_id":"WCk1obq17BXnnr5FYU2YM-nfjt-oMxvgFreMDsmGBak",
+        "miniprogram":{
+          "appid":"wx9b588b2b3f090400",
+          "pagepath":"pages/console/orderDetail/orderDetail?id="+orderId
+        },          
+        "data":{
+                "first": {
+                    "value":"收到新订单",
+                    "color":"#173177"
+                },
+                "keyword1":{
+                    "value":store.storeName,
+                    "color":"#173177"
+                },
+                "keyword2": {
+                    "value":order.totalAmount - order.income7,
+                    "color":"#173177"
+                },
+                "keyword3": {
+                    "value":order.userName,
+                    "color":"#173177"
+                },
+                  "keyword4": {
+                    "value":payway,
+                    "color":"#173177"
+                },
+                "keyword5": {
+                    "value":"无",
+                    "color":"#173177"
+                },
+                "remark":{
+                    "value":"请及时处理~~",
+                    "color":"#173177"
+                }
+        }
+    }
+    const wxetokens = await db.collection('wxetokens').get()
+    let accessToken = wxetokens.data[0].token
+    var res = await axios.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token='+accessToken,params)
+    console.log(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }

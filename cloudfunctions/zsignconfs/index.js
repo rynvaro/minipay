@@ -18,53 +18,59 @@ exports.main = async (event, context) => {
         const userData = await db.collection('users').doc(wxContext.OPENID).get()
         let user = userData.data.data
 
-        let date = new Date(userData.data.createdAt)
-        date.setDate(date.getDate() + 3)
-        let now = new Date()
-
-        let isNew = false
-        // 新用户
-        if (formatDate(date) > (formatDate(now))){
-            isNew = true
-        }
-
-        let signDate = new Date(user.signDate)
-        signDate.setDate(signDate.getDate()+1)
-        let terminated = false
-        if (user.signDate != 0 && formatDate(signDate) < formatDate(now)) {
-            terminated = true
-        }
-        
-        console.log(isNew,terminated)
-
-        if (isNew && signconf.onSale && !terminated) {
-            result.confs = signconf.onSaleConfs
-        }else {
-            result.confs = signconf.confs
-        }
-
         result.ruleTitle = signconf.ruleTitle
         result.rules = signconf.rules
         result.point = user.point
         result.signs = user.signs
-
         result.sevenSigns = user.sevenSigns
-        // 昨日未签到
-        if (user.signDate!=0 && formatDate(signDate) < formatDate(now)) {
-            result.sevenSigns = 0
-        }
-        // 下一个循环
-        let signDate1 = new Date(user.signDate)
-        if (formatDate(signDate1) < formatDate(now) &&  user.sevenSigns == 7) {
-            result.sevenSigns = 0
+
+        // 用户未签到过
+        if (user.signDate == 0){
+            result.confs = signconf.onSaleConfs
+            result.signed = false
+            return result
         }
 
-        console.log(new Date().getTimezoneOffset())
+        let signDate = user.signDate
 
-        if (formatDate(new Date(user.signDate))==formatDate(now)) {
+        let yesterdayStart = new Date()
+        yesterdayStart.setHours(-32, 0, 0, 0)
+        let yesterdayStartTime = yesterdayStart.getTime()
+        console.log("yesterdayStartTime: ", yesterdayStartTime)
+
+        let todayStart = new Date()
+        todayStart.setHours(-8,0,0,0)
+        let todayStartTime = todayStart.getTime()
+        console.log("todayStartTime: ", todayStartTime)
+
+
+        if (signDate < yesterdayStartTime) {
+            // 昨日未签到
+            result.confs = signconf.confs
+            result.sevenSigns = 0
+        }else { // 昨日签到过
+            if (user.sevenSigns > 0 && user.signs < 7 && signconf.onSale) {
+                result.confs = signconf.onSaleConfs
+            }else {
+                result.confs = signconf.confs
+            }
+        }
+
+        
+        
+
+        if (user.signDate >= todayStartTime) {
             result.signed = true
+            // 下一个循环
+            if (user.sevenSigns > 7) {
+                result.sevenSigns = 0
+            }
         }else {
             result.signed = false
+            // 下一个循环
+            if (user.sevenSigns >= 7) {
+                result.sevenSigns = 0
+            }
         }
 
     }catch(e) {
@@ -73,15 +79,3 @@ exports.main = async (event, context) => {
 
     return result
 }
-
-function formatDate(date) {
-    var year = date.getFullYear()
-    var month = date.getMonth() + 1
-    var day = date.getDate()
-    return [year, month, day].map(formatNumber).join('.')
-  }
-  
-  function formatNumber(n) {
-    n = n.toString()
-    return n[1] ? n : '0' + n
-  }

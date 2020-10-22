@@ -74,12 +74,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (app.globalData.storeID) {
-      wx.navigateTo({
-        url: '../home/home'
-      })
-      return
-    }
+    // if (app.globalData.storeID) {
+    //   return
+    // }
     let thiz = this
     wx.cloud.callFunction({
       name:"consoleLogin",
@@ -87,16 +84,15 @@ Page({
         type: 'precheck',
       },
       success(res) {
-        wx.hideLoading()
           console.log(res)
           if (res.result.status == -1) {
             thiz.bycode()
           }else if (res.result.status == 1) {
             app.globalData.storeID = res.result.data._id
-            wx.navigateTo({
-              url: '../home/home'
-            })
+            thiz.bypass()
+            thiz.setData({phone: res.result.data.merchantPhone,password:"specialpassw"})
           }
+          wx.hideLoading()
       },
       fail: function(e) {
         wx.hideLoading()
@@ -142,7 +138,8 @@ Page({
 
   setPhone: function(e) {
     this.setData({
-      phone:  e.detail.value
+      phone:  e.detail.value,
+      password:  '',
     })
   },
 
@@ -154,6 +151,12 @@ Page({
   },
 
   login: function(){
+    if (this.data.password == 'specialpassw') {
+      wx.navigateTo({
+        url: '../../console/home/home',
+      })
+      return
+    }
 
     if (!/^1[3456789]\d{9}$/.test(this.data.phone)) {
       wx.showToast({

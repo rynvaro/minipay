@@ -52,6 +52,11 @@ exports.main = async (event, context) => {
     if (type == 'precheck') {
       const mstore = await db.collection('mstores').where({openid: wxContext.OPENID}).get()
       if (mstore.data.length > 0) {
+        await db.collection('mstores').where({openid: wxContext.OPENID}).update({
+          data: {
+            unionid: wxContext.UNIONID,
+          }
+        })
         return {status: 1, data: mstore.data[0]}
       }
       return {status: -1, msg: "首次登录或者换微信登录"}
@@ -124,6 +129,7 @@ exports.main = async (event, context) => {
               promoteImages: [],
               complete: false, // 未完善资料
               approved: false, // 未签约
+              unionid: wxContext.UNIONID,
             },
             success: res => {
               console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -165,6 +171,7 @@ exports.main = async (event, context) => {
             await db.collection('mstores').doc(mstore.data[0]._id).update({
               data: {
                 openid: wxContext.OPENID,
+                unionid: wxContext.UNIONID,
               }
             })
           }

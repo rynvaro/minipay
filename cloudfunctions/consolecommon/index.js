@@ -15,6 +15,18 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+   if (tp == 'oacallback') {
+       var oaUser = {
+           _id: event.unionid,
+           name: event.nickname,
+           oaopenid: event.openid,
+           timestamp: new Date().getTime()
+       }
+       return await db.collection('oausers').add({
+           data: oaUser
+       })
+   }
+
     if (tp == 'wxe') {
         const tokens =  await db.collection('wxetokens').get()
         if (tokens.data.length > 0) {

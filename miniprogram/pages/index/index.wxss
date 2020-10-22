@@ -409,6 +409,7 @@ page {
   background-color: #FF6610;
   border-top-left-radius: 20rpx;
   border-top-right-radius: 20rpx;
+  color: white;
 }
 
 .wxlogo {
@@ -607,6 +608,63 @@ page {
 .birthday {
   height: 100%;
   width: 350rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 签到提示 */
+.popBoxSign {
+  width: 60%;
+  margin-left: 20%;
+  height: 400rpx;
+  position: absolute;
+  top: 300rpx;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx;
+  box-shadow: 1rpx 10rpx 50rpx 0rpx #999999;
+}
+
+.popBoxHeaderSign {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF6610;
+  border-top-left-radius: 20rpx;
+  border-top-right-radius: 20rpx;
+  color: white;
+}
+
+.popBoxContentSign {
+  width: 100%;
+  height: 70%;
+  background-color: white;
+  border-bottom-left-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popBoxContentTextSign {
+  font-size: small;
+  color: #999999;
+}
+
+.popBoxContentButtonSign {
+  margin-top: 60rpx;
+  background-color: #FF540C;
+  color: white;
+  height: 60rpx;
+  width: 80%;
+  border-radius: 20rpx;
   display: flex;
   justify-content: center;
   align-items: center;

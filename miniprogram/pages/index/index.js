@@ -52,6 +52,17 @@ Page({
         birthday: '点击选择',
         birthed: false,
         focused: false,
+        signinTipsHidden: true,
+    },
+
+    hiddenSign: function(e) {
+      this.setData({signinTipsHidden: true})
+    },
+
+    gotoSignin: function(e) {
+      wx.navigateTo({
+        url: '../signin/signin',
+      })
     },
 
     seeRedpack: function(e) {
@@ -76,7 +87,6 @@ Page({
     },
 
     onLoad: function(e) {
-
       //   console.log(db.collection('todos').get())
 
       //   const watcher = db.collection('todos').where({status: 1}).watch({
@@ -426,6 +436,20 @@ Page({
                 wx.hideLoading()
                 console.log(e)
               }
+          })
+          wx.cloud.callFunction({
+            name:"zchecksignin",
+            success(res) {
+                console.log(res)
+                if (res.result.status != 1) {
+                  thiz.setData({signinTipsHidden: false})
+                }else {
+                  thiz.setData({signinTipsHidden: true})
+                }
+            },
+            fail: function(e) {
+              console.log(e)
+            }
           })
     },
 
