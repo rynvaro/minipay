@@ -18,15 +18,13 @@ exports.main = async (event, context) => {
     let signDate = user.data.data.signDate
 
     let todayStart = new Date()
-    let offse1t = todayStart.getTimezoneOffset()
-    console.log('a offset is: ',offse1t)
-    
+    let offset = todayStart.getTimezoneOffset()
+    todayStart.setHours(todayStart.getHours()+8-offset,0,0,0)
     todayStart.setHours(-8,0,0,0)
     let todayStartTime = todayStart.getTime()
 
-    let offset = todayStart.getTimezoneOffset()
-    console.log('offset is: ',offset)
-    console.log(todayStartTime)
+    console.log("sign date: ", signDate)
+    console.log("today start: ",todayStartTime)
 
     if (signDate < todayStartTime) {
         result.status = -1

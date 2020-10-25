@@ -15,6 +15,61 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+   // 订单列表
+   if (tp == 'orders') {
+        let where = _.and({status: 1})
+        if (event.storeId) {
+            where = where.and({storeId: event.storeId})
+        }
+
+        if (event.startTime && event.endTime) {
+            where = where.and({timestamp: _.gte(event.startTime).and(_.lte(event.endTime))})
+        }
+
+        if (event.q) {
+            let q = event.q.trim()
+            where = where.and({userName: db.RegExp({regexp: '.*' + q + '.*', options: 1})})
+        }
+
+        let count = await db.collection('iorders').where(where).count()
+
+        let currentPage = event.currentPage
+        let pageSize = event.pageSize
+        let totalCount = count.total
+        const orders = await db.collection('iorders').where(where).skip((currentPage-1)*pageSize).limit(pageSize).orderBy('timestamp','desc').get()
+
+        return {
+            data: orders.data,
+            totalCount: totalCount,
+            currentPage: currentPage,
+            pageSize: pageSize,
+        }
+   }
+
+   // 用户列表
+   if (tp == 'userlist') {
+    let q = event.q
+    var where = {}
+    if (q) {
+        where= {'data.name': q}
+    }
+
+    let count = await db.collection('users').where(where).count()
+
+    let currentPage = event.currentPage
+    let pageSize = event.pageSize
+    let totalCount = count.total
+
+    const users = await db.collection('users').where(where).skip((currentPage-1)*pageSize).limit(pageSize).orderBy('createdAt','desc').get()
+
+    return {
+        data: users.data,
+        totalCount: totalCount,
+        currentPage: currentPage,
+        pageSize: pageSize,
+    }
+}
+
    if (tp == 'oacallback') {
        var oaUser = {
            _id: event.unionid,
@@ -161,9 +216,8 @@ exports.main = async (event, context) => {
         })
     }
 
-    if (tp == 'financial') {
-
-
+    // 财务板块汇总
+    if (tp == 'financialsummary') {
         let dayDate = new Date()
         dayDate.setHours(16, 0, 0, 0)
         dayDate.setDate(dayDate.getDate()-1)
@@ -180,7 +234,184 @@ exports.main = async (event, context) => {
         let monthEnd = nowDate.getTime()
         let dayEnd = nowDate.getTime()
 
-        // 1 获取流水信息
+        // 1 月收入和支出以及优惠券
+        const cashflow  = await db.collection('cashflows').aggregate().match({_id: _.gte(monthStart).and(_.lt(monthEnd))}).group({
+            _id: monthStart,
+            in: $.sum('$in'),
+            out: $.sum('$out'),
+            coupon: $.sum('$coupon'),
+        }).end()
+        if (cashflow.list.length <=0) {
+            cashflow.list = [
+                {
+                    in: 0,
+                    out: 0,
+                    coupon: 0,
+                }
+            ]
+        }
+
+        // 日收入以及优惠券
+        const dayCashflows = await db.collection('iorders').aggregate().match({status: 1, timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).group({
+            _id: null,
+            in: $.sum('$totalAmount'),
+            coupon: $.sum('$coupon'),
+            realCoupon: $.sum('$realCoupon')
+        }).end()
+        if (dayCashflows.list.length <=0) {
+            dayCashflows.list = 
+            [
+                {
+                    in: 0,
+                    coupon:0,
+                    realCoupon:0
+                }
+            ]
+        }
+
+        // 日支出
+        const dayCashflowsOut = await db.collection('withdraws').aggregate().match({updatedAt: _.gte(dayStart).and(_.lt(dayEnd)), status: 3}).group({
+            _id: dayStart,
+            out: $.sum('$realWithdrawAmount')
+        }).end()
+
+        if (dayCashflowsOut.list.length <=0) {
+            dayCashflowsOut.list = 
+            [
+                {
+                    out: 0,
+                }
+            ]
+        }
+
+        // 订单统计
+        const monthOrders = await db.collection('iorders').where({status: 1, timestamp: _.gte(monthStart).and(_.lt(monthEnd))}).count()
+        const dayOrders = await db.collection('iorders').where({status: 1, timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).count()
+
+        // 用户统计
+        const monthUsers = await db.collection('users').where({createdAt: _.gte(monthStart).and(_.lt(monthEnd))}).count()
+        const dayUsers = await db.collection('users').where({createdAt: _.gte(dayStart).and(_.lt(dayEnd))}).count()
+
+        // 月赏金令统计
+        const monthSubsidies = await db.collection('subsidies').aggregate().match({timestamp: _.gte(monthStart).and(_.lt(monthEnd))}).group({
+            _id: monthStart,
+            value: $.sum('$subsidy')
+        }).end()
+        if (monthSubsidies.list.length == 0) {
+            monthSubsidies.list = [
+                {
+                    _id: monthStart,
+                    value: 0,
+                }
+            ]
+        }
+
+        // 日赏金统计
+        const daySubsidies = await db.collection('subsidies').aggregate().match({timestamp: _.gte(dayStart).and(_.lt(dayEnd))}).group({
+            _id: dayStart,
+            value: $.sum('$subsidy')
+        }).end()
+        if (daySubsidies.list.length == 0) {
+            daySubsidies.list = [
+                {
+                    _id: dayStart,
+                    value: 0,
+                }
+            ]
+        }
+    
+        // m represents month and d represents day
+        return {
+            m: {
+                in: cashflow.list[0].in,
+                out: cashflow.list[0].out,
+                orders: monthOrders.total,
+                users: monthUsers.total,
+                coupon: cashflow.list[0].coupon,
+                subsidy: monthSubsidies.list[0].value,
+            },
+            d: {
+                in: dayCashflows.list[0].in,
+                out: dayCashflowsOut.list[0].out,
+                orders: dayOrders.total,
+                users: dayUsers.total,
+                coupon: dayCashflows.list[0].realCoupon,
+                subsidy: daySubsidies.list[0].value,
+            }
+        }
+    }
+
+    // 每日收支历史
+    if (tp == 'financialinouthis') {
+        let count = await db.collection('cashflows').count()
+
+        let currentPage = event.currentPage
+        let pageSize = event.pageSize
+        let totalCount = count.total
+
+        const results = await db.collection('cashflows').skip((currentPage-1)*pageSize).limit(pageSize).orderBy('_id','desc').get()
+
+        return {
+            data: results.data,
+            totalCount: totalCount,
+            currentPage: currentPage,
+            pageSize: pageSize,
+        }
+    }
+
+    // 优惠券使用记录
+    if (tp == 'couponhis') {
+        let count = await db.collection('iorders').where({status: 1, coupon: _.gt(0)}).count()
+
+        let currentPage = event.currentPage
+        let pageSize = event.pageSize
+        let totalCount = count.total
+        const monthOrders = await db.collection('iorders').where({status: 1, coupon: _.gt(0)}).skip((currentPage-1)*pageSize).limit(pageSize).orderBy('timestamp','desc').get()
+
+        return {
+            data: monthOrders.data,
+            totalCount: totalCount,
+            currentPage: currentPage,
+            pageSize: pageSize,
+        }
+    }
+
+    // 补贴记录
+    if (tp == 'subsidyhis') {
+
+        let count = await db.collection('subsidies').count()
+
+        let currentPage = event.currentPage
+        let pageSize = event.pageSize
+        let totalCount = count.total
+        const subsides = await db.collection('subsidies').skip((currentPage-1)*pageSize).limit(pageSize).orderBy('timestamp','desc').get()
+
+        return {
+            data: subsides.data,
+            totalCount: totalCount,
+            currentPage: currentPage,
+            pageSize: pageSize,
+        }
+    }
+
+    if (tp == 'financial') {
+        let dayDate = new Date()
+        dayDate.setHours(16, 0, 0, 0)
+        dayDate.setDate(dayDate.getDate()-1)
+        let dayStart = dayDate.getTime()
+
+        
+        let date = new Date()
+        date.setHours(16, 0, 0, 0)
+        date.setDate(0)
+        let monthStart = date.getTime()
+
+        let nowDate = new Date()
+        nowDate.setHours(nowDate.getHours() + 8)
+        let monthEnd = nowDate.getTime()
+        let dayEnd = nowDate.getTime()
+
+        // 1 月收入和支出
         const cashflow  = await db.collection('cashflows').aggregate().match({_id: _.gte(monthStart).and(_.lt(monthEnd))}).group({
             _id: monthStart,
             in: $.sum('$in'),
@@ -332,6 +563,35 @@ exports.main = async (event, context) => {
             ],
             histories: monthUsers.data
         }
+        }
+    }
+
+    // 提现历史
+    if (tp == 'withdrawhis') {
+        let q = event.q
+        var where = {status: _.eq(3)}
+        if (q) {
+            where= {merchantName: q ,status: _.eq(3)}
+        }
+
+        let count = await db.collection('withdraws').where(where).count()
+
+        let currentPage = event.currentPage
+        let pageSize = event.pageSize
+        let totalCount = count.total
+
+        var where = {status: _.eq(3)}
+        if (q) {
+            where= {merchantName: q ,status: _.eq(3)}
+        }
+
+        const withdrawHistories = await db.collection('withdraws').where(where).skip((currentPage-1)*pageSize).limit(pageSize).orderBy('publishedAt','desc').get()
+
+        return {
+            data: withdrawHistories.data,
+            totalCount: totalCount,
+            currentPage: currentPage,
+            pageSize: pageSize,
         }
     }
 

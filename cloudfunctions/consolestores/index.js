@@ -22,23 +22,24 @@ exports.main = async (event, context) => {
     
     let where = {}
     if (q) {
+        q = q.trim()
         where = db.command.or(
             [
                 {
                     storeName: {
-                        $regex: '.*' + event.q,
+                        $regex: '.*' + q,
                         $options: 'i'
                     }
                 },
                 {
                     storeDesc: {
-                        $regex: '.*' + event.q,
+                        $regex: '.*' + q,
                         $options: 'i'
                     }
                 },
                 {
                     merchantPhone: {
-                        $regex: '.*' + event.q,
+                        $regex: '.*' + q,
                         $options: 'i'
                     }
                 }

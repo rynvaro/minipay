@@ -9,7 +9,7 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 // 云函数入口函数
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
-
+    const _ = db.command
     console.log("event is ", event)
 
     let storeID = event.storeID
@@ -252,34 +252,15 @@ exports.main = async (event, context) => {
 
         // 商户收入
         
-        let storeUpdate = {
-            stats: { updated: 0 }
-        }
-        let updatedBalance = parseFloat((parseFloat(store.data.balance) + parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2))
-        let ordersCnt = store.data.orders + 1
-        for (var n = 0; n < 5; n++) {
-            if (!storeUpdate.stats.updated) {
-                if (n > 0) {
-                    db.collection('storerrors').add({
-                        data: {
-                            n: n,
-                            storeId: storeID,
-                            error: storeUpdate
-                        }
-                    })
-                }
-                storeUpdate = await db.collection('mstores').doc(storeID).update({
-                    data: {
-                        balance: updatedBalance,
-                        orders: ordersCnt,
-                        avgPrice: avgPrice,
-                    }
-                })
-                console.log("storeUpdate:", n, storeUpdate)
-            }else {
-                break
+        let updatedBalance = parseFloat((parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2))
+        const storeUpdate = await db.collection('mstores').doc(storeID).update({
+            data: {
+                balance: _.inc(updatedBalance),
+                orders: _.inc(1),
+                avgPrice: avgPrice,
             }
-        }
+        })
+        console.log("storeUpdate:", storeUpdate)
         
 
         notifyMerchant(store.data,orderId)

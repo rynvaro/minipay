@@ -1,133 +1,187 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-const axios = require('axios')
-
-cloud.init({
-    env: cloud.DYNAMIC_CURRENT_ENV
-})
+cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 
 const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
-async function getWeather() {
 
-    console.log('start getWeather')
-  
-    var data = {}
-  
-    try {
-
-      let params = {
-        "touser":"osP5kwiG6nOSI9t6gmAULyh8_40w",
-        "template_id":"WCk1obq17BXnnr5FYU2YM-nfjt-oMxvgFreMDsmGBak",
-        "miniprogram":{
-          "appid":"wx9b588b2b3f090400",
-        },          
-        "data":{
-                "first": {
-                    "value":"收到新订单",
-                    "color":"#173177"
-                },
-                "keyword1":{
-                    "value":"商家名称",
-                    "color":"#173177"
-                },
-                "keyword2": {
-                    "value":"39.8元",
-                    "color":"#173177"
-                },
-                "keyword3": {
-                    "value":"易",
-                    "color":"#173177"
-                },
-                  "keyword4": {
-                    "value":"微信支付",
-                    "color":"#173177"
-                },
-                "keyword5": {
-                    "value":"无",
-                    "color":"#173177"
-                },
-                "remark":{
-                    "value":"请及时处理",
-                    "color":"#173177"
-                }
-        }
-    }
-  
-      var res = await axios.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=38_g477FAmfZkj00VwMngC8Bj-_7d5dV4WPxy7VpMbKHO5WsT5sYMrJFM2nl0bbj_OY1tBxWEbL5xacp2arSUyrizhTbf5tIj5JzWIq3v8pO-f9barQXoqedDn5XrkmMXXbsKIjd7fJ_RD67iU1GDEcADAURS',params)
-  
-      data = res.data
-  
-    } catch (err) {
-      console.log(err)
-    }
-    return data
-  }
 // 云函数入口函数
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
+
+    console.log(wxContext)
+
     const _ = db.command
 
-    var date = new Date()
-    date.setHours(16,0,0)
-    console.log(date.getTime())
-    let offset = date.getTimezoneOffset()
+    wxContext.OPENID = 'oUyaw4jq_vfcGE91SiR5hPokx0oo'
 
+    event.storeID = 'd81cd5415f645694000c6d0d7a01d6d3'
+    event.orderId = '59699023431976766380809897974916'
+    event.payby = 1
 
-    console.log(offset)
+    console.log("event is ", event)
 
-    return await db.collection('users').where({
-      'data.point': _.gte(700)
-    }).get()
-
-
-
-    // const data = getWeather()
-    // return data
-
-    // let tp = event.tp
-    // if (tp == 'list') {
-    //     let count = await db.collection('mstores').count()
-    //     let currentPage = event.currentPage
-    //     let pageSize = 50
-    //     let totalCount = count.total
+    let storeID = event.storeID
+    let orderId = event.orderId
+    var payby = parseInt(event.payby)
     
-    //     const results = await db.collection('mstores').skip((currentPage-1)*pageSize).limit(pageSize).orderBy('createdAt','desc').get()
+    let openid = wxContext.OPENID
+    if (event.openid) {
+        openid = event.openid
+    }
+
+    var result = {}
+
+    try {
+        let history = event
+        history.timestamp = Date.parse(new Date())
+        history.type = 'dorderpay'
+        db.collection('histories').add({data: history})
+
+        const store = await db.collection('mstores').doc(storeID).get()
+        console.log("|**********************|")
+        console.log("|",store.data.balance,"|")
+        console.log("|*****************|")
+        const user = await db.collection('users').doc(openid).get()
+        const iorder = await db.collection('iorders').doc(orderId).get()
+
+        
+        
+        if (payby == 2) {
+            if (user.data.data.balance < (iorder.data.finalAmount*100)) {
+                await db.collection('iorders').doc(orderId).remove()
+                return -1
+            }
+        }
+
+        // const trans = await db.startTransaction()
+
+        let couponID = iorder.data.couponId
+        if ( couponID != -1 && payby != 3){
+            const icouponUpdate = await db.collection('icoupons').doc(couponID).update({
+                data: {
+                    status: 1,
+                }
+            })
+            console.log('icouponUpdate: ',icouponUpdate)
+        }
+
+        let isFirstPay = false
+        if (user.data.data.payTimes ==  0) {
+            isFirstPay = true
+        }
+
+        let subsidy = 0
+       
+        result = await db.collection('iorders').doc(orderId).update({
+            data: {
+                status: 1,
+                subsidy: subsidy,
+                payType: payby,
+            }
+        })
+        result._id = orderId
+
+        let deltaPointAndExp = parseInt(iorder.data.totalAmount/10)
+        if (deltaPointAndExp > 0) {
+            // 积分变更记录
+            const pointrecordAdd = await db.collection('pointrecords').add({
+                data: {
+                    openid: openid,
+                    type: 4, // 消费
+                    action: '+',
+                    value: deltaPointAndExp,
+                    timestamp: Date.parse(new Date()),
+                }
+            })
+            console.log('pointrecordAdd: ',pointrecordAdd)
+
+            // 经验变更记录
+            const exprecordAdd =  await db.collection('exprecords').add({
+                data: {
+                    openid: openid,
+                    type: 1, // 消费
+                    action: '+',
+                    value: deltaPointAndExp,
+                    timestamp: Date.parse(new Date()),
+                }
+            })
+            console.log('pointrecordAdd: ', exprecordAdd)
+        }
+
+        
+        let balance = user.data.data.balance
+        if (payby == 2) {
+            balance = user.data.data.balance - iorder.data.finalAmount*100
+        }
+
+        let exp = user.data.data.exp + parseInt(iorder.data.finalAmount/10)
+        let newLevel = 1
+        let expTotal = 1001
+        if (exp > 1000) {
+            newLevel = 2
+            expTotal = 10001
+        }
+        if (exp > 10000) {
+            newLevel = 3
+            expTotal = 10001
+        }
+
+        let userPayAmount = 0
+        if (user.data.data.payAmount) {
+            userPayAmount = user.data.data.payAmount
+        }
+
+        let userData = {
+            balance: balance,
+            point: _.inc(parseInt(iorder.data.totalAmount/10)),
+            exp: exp,
+            expTotal: expTotal,
+            level: newLevel,
+            payTimes: _.inc(1),
+            payAmount: _.inc(iorder.data.totalAmount),
+            isFirstPay: isFirstPay,
+            
+        }
+        if (isFirstPay) {
+            userData.firstPayStoreName = store.data.storeName
+            userData.firstPayAmount = iorder.data.totalAmount
+        }
+
+        const userUpdate = await db.collection('users').doc(openid).update({
+            data: {
+                data: userData
+            }
+        })
+        console.log('userUpdate: ',userUpdate)
+
+        orders = store.data.orders
+        let avgPrice = store.data.avgPrice
+        if (orders == 0) {
+            avgPrice = parseFloat(iorder.data.totalAmount).toFixed(2) * 1
+        }else {
+            avgPrice = ((avgPrice * orders+parseFloat(iorder.data.totalAmount))/(orders + 1)).toFixed(2) * 1
+        }
+
+        // 商户收入
+        
     
-    //     return {
-    //         data: results.data,
-    //         totalCount: totalCount,
-    //         currentPage: currentPage,
-    //         pageSize: pageSize,
-    //     }
-    // }
+        let updatedBalance = parseFloat(( parseFloat(iorder.data.totalAmount) + parseFloat(subsidy)- parseFloat(iorder.data.income7)).toFixed(2))
+        let ordersCnt = store.data.orders + 1
+        var std = {
+          balance: _.inc(updatedBalance),
+          orders: ordersCnt,
+          avgPrice: avgPrice,
+        }
+        const storeUpdate = await db.collection('mstores').doc(storeID).update({
+            data: std
+        })
+        console.log("storeUpdate:", storeUpdate)
+        // await trans.commit()
 
-    // if (tp == 'update') {
-    //     let thumbnail = event.thumbnail
-    //     let id = event.storeId
-    //     return await db.collection('mstores').doc(id).update({
-    //         data: {
-    //             thumbnail: thumbnail
-    //         }
-    //     })
-    // }
+        return result
 
-    // if (tp == 'addmerchant') {
-    //     return await db.collection('merchants').add({
-    //         data: {
-    //             balance: event.balance,
-    //             bank: event.bank,
-    //             createdAt: event.createdAt,
-    //             updatedAt: event.updatedAt,
-    //             bankcard: event.merchantBankCard,
-    //             name: event.merchantName,
-    //             phone: event.merchantPhone,
-    //             openid: event.openid,
-    //             password: event.password,
-    //         }
-    //     })
-    // }
-
-    return {}
-    
+    }catch(e) {
+        throw(e)
+    }
 }

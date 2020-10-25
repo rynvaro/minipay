@@ -40,6 +40,7 @@ exports.main = async (event, context) => {
         }
         mstore.data.dayIncome = dayIncome.toFixed(2)
         mstore.data.dayOrders = orders.data.length
+        mstore.data.balance = parseFloat(mstore.data.balance.toFixed(2))
     }catch(e) {
         throw(e)
     }
