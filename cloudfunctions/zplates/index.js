@@ -7,9 +7,22 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
+    const wxContext = cloud.getWXContext()
+    console.log("wxContext: ", wxContext)
+    console.log("event is: ",event)
     let level = event.level
     let lat = event.lat
     let lon = event.lon
+
+    // update user location info
+    db.collection('users').doc(wxContext.OPENID).update({
+        data: {
+            data: {
+                lat: event.lat,
+                lon: event.lon,
+            }
+        }
+    })
  
     const _ = db.command
 

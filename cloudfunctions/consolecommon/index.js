@@ -51,7 +51,8 @@ exports.main = async (event, context) => {
     let q = event.q
     var where = {}
     if (q) {
-        where= {'data.name': q}
+        q = q.trim()
+        where= {'data.name': db.RegExp({regexp: '.*' + q + '.*', options: 1})}
     }
 
     let count = await db.collection('users').where(where).count()
