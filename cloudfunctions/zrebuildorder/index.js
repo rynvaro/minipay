@@ -38,6 +38,8 @@ exports.main = async (event, context) => {
         let realDiscount = store.data.discount + delta
 
         const coupons = await db.collection('icoupons').where({openid: wxContext.OPENID, status: 0}).get()
+
+        const rules = await db.collection('couponrules').where({type: 'consumption'}).orderBy('threshold','asc').limit(1).get()
         
         result = {
             data: {
@@ -46,7 +48,12 @@ exports.main = async (event, context) => {
                 storeImage: store.data.storeImages[0],
                 realDiscount: realDiscount,
                 coupons: coupons.data,
+                threshold: -1,
             }
+        }
+
+        if (rules.data.length > 0) {
+            result.data.threshold = rules.data[0].threshold
         }
 
         if (tp == 'special') {

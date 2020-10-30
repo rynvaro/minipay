@@ -1,4 +1,5 @@
 {
   "navigationStyle": "custom",
+  "navigationBarText": "支付成功",
   "usingComponents": {}
 }

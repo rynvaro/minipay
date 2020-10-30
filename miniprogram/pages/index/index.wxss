@@ -615,18 +615,18 @@ page {
 
 /* 签到提示 */
 .popBoxSign {
-  width: 60%;
-  margin-left: 20%;
-  height: 400rpx;
+  width: 90%;
+  margin-left: 3%;
+  height: 500rpx;
   position: absolute;
-  top: 300rpx;
+  top: 200rpx;
   
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 20rpx;
-  box-shadow: 1rpx 10rpx 50rpx 0rpx #999999;
+  box-shadow: 1rpx 10rpx 50rpx 0rpx #ffc3c3;
 }
 
 .popBoxHeaderSign {
@@ -654,8 +654,7 @@ page {
 }
 
 .popBoxContentTextSign {
-  font-size: small;
-  color: #999999;
+  color: #FF6610;
 }
 
 .popBoxContentButtonSign {

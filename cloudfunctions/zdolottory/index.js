@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
             probability: 0.01,
             round: event.round,
             phone: event.phone,
-            status: 1, // 1 等待审核 2 等待开奖
+            status: 2, // 1 等待审核 2 等待开奖
             t: new Date().getTime(),
             res: event.res,
             eventId: event.eventId,

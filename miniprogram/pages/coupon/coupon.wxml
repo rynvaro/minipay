@@ -14,12 +14,15 @@
 <view class="box">
     <block wx:for="{{icoupons}}" wx:key="id">
         <view wx:if="{{item.status == 0 || item.status == -1}}" class="item">
+            <text wx:if="{{item.coupon.type == 1}}" class="couponTips1">此优惠券均可在合作商家直接抵扣使用</text>
+            <text wx:if="{{item.coupon.type == 1}}" class="couponTips">（商家：凡贴了7号生活海报/收款码均为合作商家）</text>
             <view class="itemL">
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.expireAt)}}</text>
                         <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRU">无门槛使用券</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM1">满 {{item.coupon.man/100}} 可用</text>
                         <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
                         <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRM">新用户卡券</text>
                         <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRD">元</text>
@@ -33,10 +36,18 @@
                 </view>
             </block>
             <block wx:else>
-                <view class="itemR" bindtap="use" data-id="{{item._id}}">
-                    <text class="itemRText">立即</text>
-                    <text class="itemRText">使用</text>
-                </view>
+                <block wx:if="{{now - item.timestamp > (24 * 30 * 3600 * 1000)}}">
+                    <view class="itemR" style="font-size: 20rpx;" data-id="{{item._id}}">
+                        <text class="itemRText">已经</text>
+                        <text class="itemRText">过期</text>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="itemR" bindtap="use" data-id="{{item._id}}">
+                        <text class="itemRText">立即</text>
+                        <text class="itemRText">使用</text>
+                    </view>
+                </block>
             </block>
             
             <text wx:if="{{item.coupon.type == 3}}" class="couponTips">不找零，不折现，仅限到店使用，仅限在线支付使用。</text>
@@ -47,7 +58,7 @@
                 <view class="itemLBox">
                     <view class="itemLBoxL">{{item.coupon.value/100}}</view>
                     <view class="itemLBoxR">
-                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.timestamp)}}</text>
+                        <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRU">有效期至{{filters.formatDate(item.expireAt)}}</text>
                         <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRU">无门槛使用券</text>
                         <text wx:if="{{item.coupon.type == 1}}" class="itemLBoxRM">元店铺优惠券</text>
                         <text wx:if="{{item.coupon.type == 3}}" class="itemLBoxRM">新用户卡券</text>

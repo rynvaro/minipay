@@ -208,6 +208,8 @@
   </view>
   <view class="popBoxContentSign">
     <text class="popBoxContentTextSign">今日还未签到哦~~</text>
+    <text class="popBoxContentTextSign">签到经验加速升级噢～</text>
+    <text class="popBoxContentTextSign">积分可以兑换满减优惠券</text>
     <view class="popBoxContentButtonSign" bindtap="gotoSignin">去签到</view>
   </view>
 

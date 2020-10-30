@@ -262,7 +262,26 @@ exports.main = async (event, context) => {
         })
         console.log("storeUpdate:", storeUpdate)
         
+        // 根据条件给用户发放优惠券
+        if (payby == 1) {
+            cloud.callFunction({
+                name:"zgivecoupon",
+                data: {
+                  storeID: iorder.data.storeId,
+                  orderId: orderId,
+                  openid: openid,
+                  amount: iorder.data.finalAmount
+                },
+                success(res) {
+                    console.log(res)
+                },
+                fail: function(e) {
+                    console.log(e)
+                }
+            })
+        }
 
+        // 通知商家下单信息
         notifyMerchant(store.data,orderId)
 
         // await trans.commit()

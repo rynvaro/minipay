@@ -1,8 +1,8 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/console/index/index",
         "pages/paysuccess/paysuccess",
+        "pages/console/index/index",
         "pages/event/event",
         "pages/stores/stores",
         "pages/lottory/lottory",

@@ -15,6 +15,46 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+   if (tp == 'coupondic') {
+       return await db.collection('coupondic').get()
+   }
+
+   if (tp == 'coupondicadd') {
+       let couponinstance = event
+       delete couponinstance.tp
+       couponinstance.value = parseInt(event.value*100)
+       couponinstance.man = parseInt(event.man*100)
+       couponinstance.vpday = parseInt(event.vpday)
+       couponinstance.point = parseInt(event.value)
+       couponinstance.type = 1
+       couponinstance.status = 1
+       return await db.collection('coupondic').add({
+           data: couponinstance
+       })
+   }
+
+   if (tp == 'coupondicdelete') {
+        return await db.collection('coupondic').doc(event.id).remove()
+    }
+
+   if (tp == 'couponrules') {
+       return await db.collection('couponrules').get()
+   }
+   
+
+   if (tp == 'couponruleadd') {
+        let ruleinstance = event
+        delete ruleinstance.tp
+        ruleinstance.threshold = parseInt(event.threshold*100)
+        return await db.collection('couponrules').add({
+            data: ruleinstance
+        })
+    }
+
+    if (tp == 'couponruledelete') {
+        return await db.collection('couponrules').doc(event.id).remove()
+    }
+
    // 订单列表
    if (tp == 'orders') {
         let where = _.and({status: 1})
@@ -101,6 +141,7 @@ exports.main = async (event, context) => {
    if (tp == "eventadd") {
        delete event.tp
        event.status = 1
+       event.timestamp = new Date().getTime()
        
        const currentEvent = await db.collection('events').add({
             data: event

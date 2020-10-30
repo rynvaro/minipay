@@ -11,6 +11,7 @@ Page({
       navBarHeight: app.globalData.navBarHeight,
       icoupons: [],
       fromorder: false,
+      now: 0,
     },
 
     use: function(e){
@@ -21,6 +22,16 @@ Page({
         if (e.currentTarget.dataset.id==this.data.icoupons[i]._id){
 
           let totalAmount = parseFloat(prevPage.data.realAmount)
+
+          console.log(this.data.icoupons[i].coupon.man/100)
+          console.log(totalAmount,this.data.icoupons[i].coupon.man/100)
+          if (totalAmount < this.data.icoupons[i].coupon.man/100) {
+            wx.showToast({
+              title: '满'+this.data.icoupons[i].coupon.man/100+'可用',
+            })
+            return
+          }
+
           let couponValue = this.data.icoupons[i].coupon.value/100
           if (couponValue < totalAmount) {
             totalAmount = totalAmount - couponValue
@@ -85,7 +96,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-
+      this.setData({now: new Date().getTime()})
     },
 
     /**
