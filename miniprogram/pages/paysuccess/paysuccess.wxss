@@ -5,7 +5,7 @@ page {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #F56613;
+    background-color: #F6F6F6;
 }
 
 
@@ -17,31 +17,36 @@ page {
     flex-direction: column;
     align-items: center;
     z-index: 1;
-    background-color: #F56613;
+    background-color: #F6F6F6;
 }
 
 .navBar {
     width: 90%;
     display: flex;
     align-items: center;
-    background-color: #F56613;
+    background-color: #F6F6F6;
+}
+
+.navBarTitleSuc {
+    margin-left: 160rpx;
+    font-size: small;
 }
 
 .leftArrow {
     margin-left: 10rpx;
     width: 20rpx;
     height: 20rpx;
-    border-bottom: 3rpx solid white;
-    border-left: 3rpx solid white;
+    border-bottom: 3rpx solid black;
+    border-left: 3rpx solid black;
     transform: rotate(45deg);
-    background-color: #F56613;
+    background-color: #F6F6F6;
   }
 
 
 .navBarTitle {
     margin-left: 20rpx;
     font-size: small;
-    color: white;
+    color: black;
 }
 
 .payDetail {
@@ -59,8 +64,8 @@ page {
 }
 
 .payTips {
-    color: white;
-    font-size: small;
+    color: #F56613;
+    font-size: large;
     margin-top: 30rpx;
 }
 
@@ -68,22 +73,20 @@ page {
     width: 100%;
     display: flex;
     align-items: center;
+    font-size: large;
 }
 
 .pointTips {
-    color: white;
-    font-size: small;
+    color: #F56613;
 }
 
 .expTips {
-    color: white;
-    font-size: small;
+    color: #F56613;
     margin-left: 20rpx;
 }
 
 .vipTips {
-    color: white;
-    font-size: small;
+    color: #F56613;
 }
 
 .payDetailR {
@@ -95,23 +98,110 @@ page {
 
 .paySuc {
     position: relative;
-    width: 112rpx;
-    height: 100rpx;
+    width: 224rpx;
+    height: 200rpx;
     z-index: 1;
 }
 
-.sucText {
-    color: rgb(255, 255, 255);
-    font-size: large;
+.paySucText {
+    width: 90%;
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: center;
+    color: #F56613;
+}
+
+.detailItem {
+    margin-top: 5rpx;
+    width: 100%;
+    height: 50rpx;
+    display: flex;
+    background-color: #fff;
+    color: #F56613;
+}
+  
+  .detailItemKey {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 50rpx;
+  }
+  
+  .detailItemValue {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 50rpx;
+  }
+
+.tips {
+    margin-top: 30rpx;
+    width: 90%;
+    color: #F56613;
+    /* background-color: #f59056; */
+    border-radius: 20rpx;
+    padding-left: 10rpx;
+    padding-right: 10rpx;
+    border: 1rpx solid #f59056;
+    /* box-shadow: 0rpx 5rpx 5rpx 0rpx #f59056; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .order {
+    margin-top: 50rpx;
     color: white;
     border-radius: 20rpx;
-    border: 1rpx solid white;
-    width: 180rpx;
+    border: 1rpx solid #F56613;
+    background-color: #F56613;
+    width: 280rpx;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: large;
+}
+
+.couponBox {
+    margin-top: 20rpx;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.couponTitle {
     font-size: small;
+    color: #F56613;
+}
+
+.coupon {
+    margin-top: 20rpx;
+    width: 90%;
+    height: 60rpx;
+    background: linear-gradient(to bottom left, #FEEE00, #FD6D06);
+    border-radius: 10rpx;
+    display: flex;
+}
+
+.couponL {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: small;
+}
+
+.couponR {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: red;
 }

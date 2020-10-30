@@ -8,7 +8,7 @@ Page({
     data: {
         statusBarHeight: app.globalData.statusBarHeight,
         navBarHeight: app.globalData.navBarHeight,
-        barBG: '#F56613;',
+        barBG: '#F6F6F6;',
         orderId: '',
         paysucInfo: {}
     },

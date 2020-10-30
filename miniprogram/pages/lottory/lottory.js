@@ -54,7 +54,7 @@ Page({
             return
         }
         if (this.data.user.status == 1) {
-            this.invite()
+            // this.invite()
             return
         }else if (this.data.user.status == 2) {
             wx.showToast({
@@ -71,7 +71,6 @@ Page({
                 '2VGO0yMwUtSXL_OcPbO3BNhVJJV4W0GI_Bgmpe4YOXg'
             ],
             success (res) { 
-                console.log("0-0--")
                 console.log(res)
                 // wx.showLoading({
                 //     title: 'loading...',
@@ -105,9 +104,9 @@ Page({
                 //   title: '参与成功',
                 // })
                 thiz.userlist(defaultLimit)
-                thiz.data.user.status = 1
+                thiz.data.user.status = 2
                 thiz.setData({user: thiz.data.user})
-                thiz.invite()
+                // thiz.invite()
             },
             fail: function(e) {
                 console.log(e)
@@ -247,6 +246,9 @@ Page({
         let event = JSON.parse(options.event)
         event.lottoryTime = Date.parse(event.lottoryTime)
         this.setData({event: event})
+        wx.setNavigationBarTitle({
+          title: event.title,
+        })
         wx.getSystemInfo({
             success: function(res) {
                 rpx = (res.windowWidth/375).toFixed(2)

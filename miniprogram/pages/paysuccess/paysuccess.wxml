@@ -6,20 +6,43 @@
         <text class="navBarTitle" bindtap="back">关闭</text>
     </view>
 </view>
-<view class="payDetail">
-    <view class="payDetailL">
-        <text class="sucText">支付成功</text>
-        <text class="payTips">实际支付￥{{paysucInfo.payAmount}}</text>
-        <view class="pointexp">
-            <text class="pointTips">积分 +{{paysucInfo.point}}</text>
-            <text class="expTips">经验 +{{paysucInfo.exp}}</text>
-        </view>
-        <text class="vipTips">距下一等级还差 {{paysucInfo.toNextLevel}} 经验</text>
-        
-    </view>
-    <view class="payDetailR">
-        <image class="paySuc" mode="scaleToFill" src="../../images/paysuc.png"></image>
-    </view>
+
+<image class="paySuc" mode="scaleToFill" src="../../images/paysuc.png"></image>
+
+<text class="paySucText">支付成功</text>
+
+<view class="tips">
+    <text>恭喜获得经验和积分</text>
+    <text>距离升级又进一步啦，兑换的东西也多了哦～</text>
+    <text>距下一等级还差 {{paysucInfo.toNextLevel}} 经验</text>
+</view>
+
+<view class="detailItem">
+    <text class="detailItemKey">支付金额</text>
+    <text class="detailItemValue">￥{{paysucInfo.payAmount}}</text>
+</view>
+
+<!-- <view class="detailItem">
+    <text class="detailItemKey">支付方式</text>
+    <text class="detailItemValue">微信支付</text>
+</view> -->
+
+<view class="detailItem">
+    <text class="detailItemKey">积分</text>
+    <text class="detailItemValue">+ {{paysucInfo.point}}</text>
+</view>
+
+<view class="detailItem">
+    <text class="detailItemKey">经验</text>
+    <text class="detailItemValue">+ {{paysucInfo.exp}}</text>
 </view>
 
 <view class="order" bindtap="seeOrder">查看订单</view>
+
+<!-- <view class="couponBox">
+    <text class="couponTitle">恭喜获得 5 张优惠券</text>
+    <view class="coupon">
+        <view class="couponL">5元（满20可用）</view>
+        <view class="couponR">立即领取</view>
+    </view>
+</view> -->
