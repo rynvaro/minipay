@@ -15,6 +15,15 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+   if (tp == 'updateuserbalance') {
+       let id = event.id
+       return await db.collection('users').doc(id).update({
+           data: {
+            'data.balance': event.balance
+           }
+       })
+   }
+
    if (tp == 'coupondic') {
        return await db.collection('coupondic').get()
    }
