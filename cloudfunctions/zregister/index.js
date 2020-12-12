@@ -23,7 +23,6 @@ exports.main = async (event, context) => {
               updatedAt: Date.parse(new Date()),
               inviteCode: inviteCode,
               payPassword: payPassword,
-
           },
           success: res => {
             console.log('[数据库] [新增记录] 成功，记录 _id: ', res._id)
@@ -34,29 +33,30 @@ exports.main = async (event, context) => {
           }
       })
 
-      const rules = await db.collection('couponrules').where({type: 'register'}).get()
-      if (rules.data.length > 0) {
-        const tmpCoupn = await db.collection('coupondic').where({code: rules.data[0].code}).get()
-        if (tmpCoupn.data.length > 0) {
-          await db.collection('icoupons').add({
-              data: {
-                  _id: wxContext.OPENID,
-                  isnew: true,
-                  openid: wxContext.OPENID,
-                  status: 0,
-                  timestamp: Date.parse(new Date()),
-                  expireAt: new Date().getTime() + 24 * 3600 * tmpCoupn.data[0].vpday * 1000,
-                  coupon: {
-                      point: tmpCoupn.data[0].point,
-                      type: 3,
-                      value: tmpCoupn.data[0].value,
-                      man: tmpCoupn.data[0].man,
-                  }
-              }
-          })
-        }
-      }
-    result.redpackvalue = 5
+    //   const rules = await db.collection('couponrules').where({type: 'register'}).get()
+    //   if (rules.data.length > 0) {
+    //     const tmpCoupn = await db.collection('coupondic').where({code: rules.data[0].code}).get()
+    //     if (tmpCoupn.data.length > 0) {
+    //       await db.collection('icoupons').add({
+    //           data: {
+    //               _id: wxContext.OPENID,
+    //               isnew: true,
+    //               openid: wxContext.OPENID,
+    //               status: 0,
+    //               timestamp: Date.parse(new Date()),
+    //               expireAt: new Date().getTime() + 24 * 3600 * tmpCoupn.data[0].vpday * 1000,
+    //               coupon: {
+    //                   point: tmpCoupn.data[0].point,
+    //                   type: 3,
+    //                   value: tmpCoupn.data[0].value,
+    //                   man: tmpCoupn.data[0].man,
+    //               }
+    //           }
+    //       })
+    //     }
+    //   }
+    // result.redpackvalue = 5
+
     } catch(e) {
         throw(e)
     }

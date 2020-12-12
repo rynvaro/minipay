@@ -506,52 +506,58 @@ Page({
     },
 
     scan: function(e) {
-        console.log(e)
-        if (!app.globalData.viplevel) {
-          wx.showModal({
-            title: '提示',
-            content: '请先授权登录'
-          })
-          return
-        }
-        wx.scanCode({
-            success (res1) {
-                console.log(res1)
-                wx.cloud.callFunction({
-                  name:"zcheckpopup",
-                  data: {
-                    id: res1.result,
-                  },
-                  success(res) {
-                      console.log(res)
-                      wx.hideLoading()
-                      if (res.result.isPopup) {
-                        if(!res.result.confirmed) {
-                          wx.navigateTo({
-                            url: '../specialorder/specialorder?storeID='+res1.result,
-                          })
-                        }else {
-                          wx.navigateTo({
-                            url: '../orderDetail/orderDetail?id='+res.result.orderId,
-                          })
-                        }
-                      }else {
-                        wx.navigateTo({
-                          url: '../order/order?storeID='+res1.result,
-                        })
-                      }
-                  },
-                  fail: function(e) {
-                    console.log(e.errMsg)
-                    wx.hideLoading()
-                    wx.showModal({
-                      title: '提示',
-                      content: '请扫描7号生活二维码'
-                    })
-                  }
-              })
-            }
-        })
+      wx.redirectTo({
+        url: '../indexpage/indexpage',
+      })
+      // wx.navigateTo({
+      //   url: '../indexpage/indexpage',
+      // })
+        // console.log(e)
+        // if (!app.globalData.viplevel) {
+        //   wx.showModal({
+        //     title: '提示',
+        //     content: '请先授权登录'
+        //   })
+        //   return
+        // }
+        // wx.scanCode({
+        //     success (res1) {
+        //         console.log(res1)
+        //         wx.cloud.callFunction({
+        //           name:"zcheckpopup",
+        //           data: {
+        //             id: res1.result,
+        //           },
+        //           success(res) {
+        //               console.log(res)
+        //               wx.hideLoading()
+        //               if (res.result.isPopup) {
+        //                 if(!res.result.confirmed) {
+        //                   wx.navigateTo({
+        //                     url: '../specialorder/specialorder?storeID='+res1.result,
+        //                   })
+        //                 }else {
+        //                   wx.navigateTo({
+        //                     url: '../orderDetail/orderDetail?id='+res.result.orderId,
+        //                   })
+        //                 }
+        //               }else {
+        //                 wx.navigateTo({
+        //                   url: '../order/order?storeID='+res1.result,
+        //                 })
+        //               }
+        //           },
+        //           fail: function(e) {
+        //             console.log(e.errMsg)
+        //             wx.hideLoading()
+        //             wx.showModal({
+        //               title: '提示',
+        //               content: '请扫描7号生活二维码'
+        //             })
+        //           }
+        //       })
+        //     }
+        // })
     },
 
     vipexperience: function(){

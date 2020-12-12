@@ -1,5 +1,7 @@
 {
     "pages": [
+        "pages/indexpage/indexpage",
+        "pages/orderv2/orderv2",
         "pages/index/index",
         "pages/paysuccess/paysuccess",
         "pages/console/index/index",
@@ -38,7 +40,8 @@
         "pages/console/modifyPassword/modifyPassword",
         "pages/orderDetail/orderDetail",
         "pages/lottoryusers/lottoryusers",
-        "pages/specialorder/specialorder"
+        "pages/specialorder/specialorder",
+        "pages/usage/usage"
     ],
     "window": {
         "backgroundColor": "#F6F6F6",
@@ -46,25 +49,6 @@
         "navigationBarBackgroundColor": "#F6F6F6",
         "navigationBarTitleText": "7HAO",
         "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "color": "#666666",
-        "selectedColor": "#000000",
-        "backgroundColor": "#ffffff",
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "会员中心",
-                "iconPath": "images/vcenter.png",
-                "selectedIconPath": "images/vcenter.png"
-            },
-            {
-                "pagePath": "pages/home/home",
-                "text": "柒号生活",
-                "iconPath": "images/home.png",
-                "selectedIconPath": "images/home.png"
-            }
-        ]
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2",

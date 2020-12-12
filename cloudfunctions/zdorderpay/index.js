@@ -31,7 +31,20 @@ exports.main = async (event, context) => {
 
         const store = await db.collection('mstores').doc(storeID).get()
         const user = await db.collection('users').doc(openid).get()
+        const fanxianConfig = await db.collection('config').doc('fanxianconfig').get()
+
+
+        const lock = await db.collection('iorders').doc(orderId).update({
+            data: {
+                progress: _.inc(1)
+            }
+        })
+        console.log("lock is: ", lock)
         const iorder = await db.collection('iorders').doc(orderId).get()
+        console.log("progress: is", iorder.data.progress)
+        if (iorder.data.progress > 1) {
+            return iorder.data
+        }
 
         if (iorder.data.status == 1) {
             return iorder.data
@@ -78,9 +91,69 @@ exports.main = async (event, context) => {
             console.log('icouponUpdate: ',icouponUpdate)
         }
 
+        let fanxian = iorder.data.fanxian
+
+        let maxFanxian = store.data.maxFanxian
+
+        if (!maxFanxian) {
+            let configMaxFanxian = fanxianConfig.data.maxFanxian
+            maxFanxian = configMaxFanxian
+        }
+
+        if (fanxian > maxFanxian) {
+            fanxian = maxFanxian
+        }
+
+        let percent = iorder.data.percent
         let isFirstPay = false
         if (user.data.data.payTimes ==  0) {
             isFirstPay = true
+            fanxian = parseFloat((fanxianConfig.data.firstFanxianPercent/100 * (iorder.data.payAmount - iorder.data.realCoupon)).toFixed(2))
+            if (fanxian > maxFanxian) {
+                fanxian = maxFanxian
+            }
+            percent = fanxianConfig.data.firstFanxianPercent
+        }
+
+        let isSecondPay = false
+        if (user.data.data.payTimes ==  1) {
+            isSecondPay = true
+            fanxian = parseFloat((fanxianConfig.data.secondFanxianPercent/100 * (iorder.data.payAmount - iorder.data.realCoupon)).toFixed(2))
+            if (fanxian > maxFanxian) {
+                fanxian = maxFanxian
+            }
+            percent = fanxianConfig.data.secondFanxianPercent
+        }
+
+        let isThirdPay = false
+        if (user.data.data.payTimes ==  2) {
+            isThirdPay = true
+            fanxian = parseFloat((fanxianConfig.data.thirdFanxianPercent/100 * (iorder.data.payAmount - iorder.data.realCoupon)).toFixed(2))
+            if (fanxian > maxFanxian) {
+                fanxian = maxFanxian
+            }
+            percent = fanxianConfig.data.thirdFanxianPercent
+        }
+
+        // 参与返现100活动
+        if (store.data.fanxian100) {
+            const fanxian100Records = await db.collection('fanxian100').where({idd: openid + '_' + store.data._id}).get()
+            if (fanxian100Records.data.length == 0) {
+                percent = 100
+                fanxian = iorder.data.payAmount - iorder.data.realCoupon 
+                if (fanxian > maxFanxian) {
+                    fanxian = maxFanxian
+                }
+                await db.collection('fanxian100').add({
+                    data: {
+                        idd: openid + '_' + store.data._id,
+                        openid: openid,
+                        userName: user.data.data.name,
+                        storeId: store.data._id,
+                        storeName: store.data.storeName,
+                    }
+                })
+            }
         }
 
         let subsidy = 0
@@ -141,12 +214,17 @@ exports.main = async (event, context) => {
             data: {
                 status: 1,
                 subsidy: subsidy,
-                payType: payby,
+                fanxian: fanxian,
+                isFirstPay: isFirstPay,
+                isSecondPay: isSecondPay,
+                isThirdPay: isThirdPay,
+                percent: percent,
+                // payType: payby,
             }
         })
         result._id = orderId
 
-        let deltaPointAndExp = parseInt(iorder.data.totalAmount/10)
+        let deltaPointAndExp = parseInt((iorder.data.payAmount + iorder.data.mustPayAmount)/10)
         if (deltaPointAndExp > 0) {
             // 积分变更记录
             const pointrecordAdd = await db.collection('pointrecords').add({
@@ -176,15 +254,73 @@ exports.main = async (event, context) => {
         
         let balance = user.data.data.balance
         if (payby == 2) {
-            balance = user.data.data.balance - iorder.data.finalAmount*100
+            balance = user.data.data.balance - iorder.data.payAmount*100 - iorder.data.mustPayAmount *100 + iorder.data.realCoupon * 100
+            await db.collection('deposits').add({
+                data: {
+                    opendi: openid,
+                    depositAmount: (iorder.data.payAmount + iorder.data.mustPayAmount)*100,
+                    status: 1,
+                    type: 1,// 消费
+                    remarks: '余额消费',
+                    timestamp: Date.parse(new Date()),
+                }
+            })
         }
 
-        let exp = user.data.data.exp + parseInt(iorder.data.finalAmount/10)
+        balance = parseFloat((balance + fanxian*100).toFixed(2))
+        await db.collection('deposits').add({
+            data: {
+                opendi: openid,
+                depositAmount: fanxian * 100,
+                status: 1,
+                type: 2,// 返现
+                remarks: '正常返现',
+                timestamp: Date.parse(new Date()),
+            }
+        })
+        if (iorder.data.payType == 4) {
+            balance = parseFloat((balance - iorder.data.balancePayment * 100 + iorder.data.realCoupon * 100).toFixed(2))
+            await db.collection('deposits').add({
+                data: {
+                    opendi: openid,
+                    depositAmount: iorder.data.balancePayment * 100,
+                    status: 1,
+                    type: 1,// 消费
+                    timestamp: Date.parse(new Date()),
+                }
+            })
+        }
+
+        let firstFanxianComplete = user.data.data.firstFanxianComplete
+
+        let exp = user.data.data.exp + deltaPointAndExp
         let newLevel = 1
         let expTotal = 1001
         if (exp > 1000) {
             newLevel = 2
             expTotal = 10001
+                if (!firstFanxianComplete) {
+                    let firstPayAmount = user.data.data.firstPayAmount
+                    if (!firstPayAmount) {
+                        firstPayAmount = iorder.data.payAmount
+                    }
+                    fanxian = parseFloat(((100-fanxianConfig.data.firstFanxianPercent)/100 * (firstPayAmount)).toFixed(2))
+                    if (fanxian > maxFanxian) {
+                        fanxian = maxFanxian
+                    }
+                    balance = parseFloat((balance + fanxian*100).toFixed(2))
+                    await db.collection('deposits').add({
+                        data: {
+                            opendi: openid,
+                            depositAmount: fanxian * 100,
+                            status: 1,
+                            type: 2,// 返现
+                            remarks: 'v2返现',
+                            timestamp: Date.parse(new Date()),
+                        }
+                    })
+                    firstFanxianComplete = true
+                }
         }
         if (exp > 10000) {
             newLevel = 3
@@ -198,19 +334,29 @@ exports.main = async (event, context) => {
         userPayAmount = userPayAmount + iorder.data.totalAmount
 
         let userData = {
-            balance: balance,
-            point: user.data.data.point + parseInt(iorder.data.totalAmount/10),
+            balance: parseFloat(balance.toFixed(2)),
+            point: user.data.data.point + deltaPointAndExp,
             exp: exp,
             expTotal: expTotal,
             level: newLevel,
             payTimes: user.data.data.payTimes + 1,
             payAmount: parseFloat(userPayAmount.toFixed(2)),
             isFirstPay: isFirstPay,
-            
+            firstFanxianComplete: firstFanxianComplete,
         }
         if (isFirstPay) {
             userData.firstPayStoreName = store.data.storeName
-            userData.firstPayAmount = iorder.data.totalAmount
+            userData.firstPayAmount = parseFloat((iorder.data.payAmount).toFixed(2))
+        }
+
+        if (isSecondPay) {
+            userData.secondPayStoreName = store.data.storeName
+            userData.secondPayAmount = parseFloat((iorder.data.payAmount).toFixed(2))
+        }
+
+        if (isThirdPay) {
+            userData.thirdPayStoreName = store.data.storeName
+            userData.thirdPayAmount = parseFloat((iorder.data.payAmount).toFixed(2))
         }
 
         const userUpdate = await db.collection('users').doc(openid).update({
@@ -263,23 +409,23 @@ exports.main = async (event, context) => {
         console.log("storeUpdate:", storeUpdate)
         
         // 根据条件给用户发放优惠券
-        if (payby == 1) {
-            cloud.callFunction({
-                name:"zgivecoupon",
-                data: {
-                  storeID: iorder.data.storeId,
-                  orderId: orderId,
-                  openid: openid,
-                  amount: iorder.data.finalAmount
-                },
-                success(res) {
-                    console.log(res)
-                },
-                fail: function(e) {
-                    console.log(e)
-                }
-            })
-        }
+        // if (payby == 1) {
+        //     cloud.callFunction({
+        //         name:"zgivecoupon",
+        //         data: {
+        //           storeID: iorder.data.storeId,
+        //           orderId: orderId,
+        //           openid: openid,
+        //           amount: iorder.data.finalAmount
+        //         },
+        //         success(res) {
+        //             console.log(res)
+        //         },
+        //         fail: function(e) {
+        //             console.log(e)
+        //         }
+        //     })
+        // }
 
         // 通知商家下单信息
         notifyMerchant(store.data,orderId)
@@ -358,6 +504,8 @@ async function notifyMerchant(store,orderId) {
     var payway = "微信支付"
     if (order.payType == 2) {
         payway = "余额"
+    }else  if (order.payType == 4) {
+        payway = "微信+余额"
     }
 
     try {
@@ -378,7 +526,7 @@ async function notifyMerchant(store,orderId) {
                     "color":"#173177"
                 },
                 "keyword2": {
-                    "value":order.totalAmount - order.income7,
+                    "value":order.payAmount + order.mustPayAmount - order.realCoupon,
                     "color":"#173177"
                 },
                 "keyword3": {

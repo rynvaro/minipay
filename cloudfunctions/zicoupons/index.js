@@ -14,6 +14,7 @@ exports.main = async (event, context) => {
     if (event.value) {
         where = where.and({coupon:{value: _.lt(event.value*100)}})
     }
+    where = where.and({status: 0})
 
     return await db.collection('icoupons').where(where).orderBy('timestamp','desc').get()
 }

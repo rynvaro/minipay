@@ -9,9 +9,17 @@ const db = cloud.database({env: cloud.DYNAMIC_CURRENT_ENV})
 exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
 
+    const _ = db.command
+    await db.collection('mstores').where({balance: _.gt(0)}).update({
+        data: {
+            balance: 0,
+        }
+    })
+
+    return
+
     console.log(wxContext)
 
-    const _ = db.command
 
     wxContext.OPENID = 'oUyaw4jq_vfcGE91SiR5hPokx0oo'
 

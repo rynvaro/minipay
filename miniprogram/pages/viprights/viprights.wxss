@@ -101,7 +101,7 @@ page {
 .cardLine3Text {
     width: 90%;
     margin-left: 5rpx;
-    font-size: x-small;
+    font-size: small;
     display: flex;
     align-items: center;
     color: white;

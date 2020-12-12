@@ -2,11 +2,16 @@
 <wxs src="../../utils/filter.wxs" module="filters"/>
 <view class="box">
     <view wx:for="{{deposits}}" wx:key="id" class="item">
-        <view class="itemU">
-            <text class="itemUL">充值金额</text>
+        <view class="itemU" wx:if="{{item.type == 1}}">
+            <text class="itemUL">消费</text>
+            <text class="itemUM">-{{item.depositAmount/100}}元</text>
+            <text class="itemUR">{{filters.formatTime(item.timestamp)}}</text>
+        </view>
+
+        <view class="itemU" wx:if="{{item.type == 2}}">
+            <text class="itemUL">返现</text>
             <text class="itemUM">+{{item.depositAmount/100}}元</text>
             <text class="itemUR">{{filters.formatTime(item.timestamp)}}</text>
         </view>
-        <view class="itemD"></view>
     </view>
 </view>

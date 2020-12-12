@@ -18,29 +18,22 @@
   <view class="detailItem">
     <text class="detailItemKey">金额</text>
     <view class="detailItemValue">
-      <input disabled="true" class="paymentInput" type="digit" placeholder="输入金额" style="text-align:center" bindinput="setPayment" value="{{order.payAmount}}"></input>
+      <input disabled="true" class="paymentInput" type="digit" placeholder="输入金额" style="text-align:center" bindinput="setPayment" value="{{filters.toFixed(order.payAmount)}}"></input>
       <text class="paymentText">元</text>
     </view>
   </view>
 
   <view class="detailItem" wx:if="{{order.payType != 3}}">
-    <text class="detailItemKey">折扣</text>
-    <text class="detailItemValue">{{order.realDiscount}}</text>
+    <text class="detailItemKey">返现比例</text>
+    <text class="detailItemValue">{{order.percent}}%</text>
   </view>
 
   <view class="detailItem">
-    <text class="detailItemKey">本单已减</text>
-    <text class="detailItemValue" wx:if="{{order.payType != 3}}">{{order.rebate}}</text>
-    <text class="detailItemValue" wx:if="{{order.payType == 3}}">{{order.basePrice}}</text>
+    <text class="detailItemKey">返现金额</text>
+    <text class="detailItemValue">￥{{order.fanxian}}</text>
   </view>
 
   <view class="detailItem">
-    <text class="detailItemKey">折后金额</text>
-    <text class="detailItemValue" wx:if="{{order.payType != 3}}">{{order.realAmount}}</text>
-    <text class="detailItemValue" wx:if="{{order.payType == 3}}">{{order.finalAmount}}</text>
-  </view>
-
-  <view class="detailItem" >
     <text class="detailItemKey">优惠券</text>
     <text class="detailItemValue">{{coupon.coupon.value/100}}</text>
   </view>
@@ -53,14 +46,21 @@
     </view>
   </view>
 
-  <view class="detailItem">
+  <view class="detailItem" >
+    <text class="detailItemKey">支付方式</text>
+    <text class="detailItemValue" wx:if="{{order.payType == 1}}">微信</text>
+    <text class="detailItemValue" wx:if="{{order.payType == 2}}">余额</text>
+    <text class="detailItemValue" wx:if="{{order.payType == 4}}">微信+余额</text>
+  </view>
+
+  <!-- <view class="detailItem">
     <text class="payByKey">支付方式</text>
     <radio-group class="payby">
       <radio value="1" class="paybyItem" checked="{{wxChecked}}" disabled="true">微信</radio>
       <radio value="2" class="paybyItem" checked="{{balanceChecked}}" disabled="true">余额</radio>
       <radio value="2" class="paybyItem" checked="{{overlordChecked}}" disabled="true">霸王餐</radio>
     </radio-group>
-  </view>
+  </view> -->
 
   <view class="detailItem">
     <text class="detailItemKey">付款时间</text>
@@ -78,5 +78,5 @@
 
 <view class="totalIncome">
   <text class="totalIncomeKey">订单金额</text>
-  <text class="totalIncomeValue">¥{{order.finalAmount}}</text>
+  <text class="totalIncomeValue">¥{{filters.toFixed(order.payAmount + order.mustPayAmount - order.realCoupon)}}</text>
 </view>

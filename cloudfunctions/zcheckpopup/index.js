@@ -10,8 +10,12 @@ exports.main = async (event, context) => {
     const wxContext = cloud.getWXContext()
     const mstore = await db.collection('mstores').doc(event.id).get()
 
+    let canUseBalance = true
+    if (mstore.data.canUseBalance == false) {
+        canUseBalance = false
+    }
     if (!mstore.data.isPopup) {
-        return {isPopup: false}
+        return {isPopup: false, canUseBalance: canUseBalance}
     }
 
     let confirmed = false
@@ -26,5 +30,6 @@ exports.main = async (event, context) => {
         }
     }
 
-    return {isPopup: true, confirmed: confirmed, orderId: orderId}
+    
+    return {isPopup: true, confirmed: confirmed, orderId: orderId, canUseBalance: canUseBalance}
 }

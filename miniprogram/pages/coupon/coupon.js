@@ -21,7 +21,7 @@ Page({
       for (var i = 0;i<this.data.icoupons.length;i++) {
         if (e.currentTarget.dataset.id==this.data.icoupons[i]._id){
 
-          let totalAmount = parseFloat(prevPage.data.realAmount)
+          let totalAmount = parseFloat(prevPage.data.totalAmount)
 
           console.log(this.data.icoupons[i].coupon.man/100)
           console.log(totalAmount,this.data.icoupons[i].coupon.man/100)
@@ -32,15 +32,7 @@ Page({
             return
           }
 
-          let couponValue = this.data.icoupons[i].coupon.value/100
-          if (couponValue < totalAmount) {
-            totalAmount = totalAmount - couponValue
-          }else {
-            totalAmount = 0
-          }
-          totalAmount = (totalAmount + prevPage.data.mustPayment).toFixed(2)
-
-          prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true, totalAmount: totalAmount})
+          prevPage.setData({coupon: this.data.icoupons[i], couponSelected: true})
           if (this.data.fromorder) {
             wx.navigateBack({
               delta: 0,

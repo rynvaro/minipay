@@ -16,6 +16,12 @@ exports.main = async (event, context) => {
     let payAmount = parseFloat(event.payAmount)
     let couponID = event.couponID
     let mustPayAmount = parseFloat(event.mustPayAmount)
+    
+    let payType = parseInt(event.payby)
+    let wxPayment = parseFloat(event.wxPayment.toFixed(2))
+    let balancePayment = parseFloat(event.balancePayment.toFixed(2))
+
+    let location = event.location
 
     var result = {}
 
@@ -39,7 +45,11 @@ exports.main = async (event, context) => {
             delta = 0
         }
 
-        let realDiscount = store.data.discount + delta
+        let realDiscount = store.data.discount
+        if (store.data.discount <= 9 ) {
+            realDiscount += delta
+        }
+        let percent = parseFloat(((10 - realDiscount) * 10).toFixed(2))
         let rebate = (payAmount*(1-(realDiscount/10))).toFixed(2)
         let income7 = (payAmount * delta/10).toFixed(2)
         let realAmount = (payAmount - parseFloat(rebate)).toFixed(2)
@@ -64,8 +74,19 @@ exports.main = async (event, context) => {
             couponValue = coupon.data.coupon.value/100
         }
         let realCoupon = couponValue
-        if (realAmount < realCoupon) {
-            realCoupon = realAmount
+        if (payAmount < realCoupon) {
+            realCoupon = payAmount
+        }
+
+        var fanxian = parseFloat((percent/100 * (payAmount - realCoupon)).toFixed(2))
+        console.log("---x--x-----", percent, fanxian ,payAmount, realCoupon)
+        if (!store.data.maxFanxian) {
+            store.data.maxFanxian = 0
+        }
+        var maxFanxian = parseFloat(store.data.maxFanxian.toFixed(2))
+        var calcFanxian = fanxian
+        if (maxFanxian > 0 && fanxian > maxFanxian) {
+            fanxian = maxFanxian
         }
 
         let finnalAmount = (parseFloat(realAmount) + mustPayAmount - realCoupon).toFixed(2)
@@ -92,6 +113,14 @@ exports.main = async (event, context) => {
             timestamp: Date.parse(new Date()),
             status: -1, // 待支付
             norake: store.data.norake,
+            percent: percent,
+            payType: payType,
+            wxPayment: wxPayment,
+            balancePayment: balancePayment,
+            fanxian: fanxian,
+            calcFanxian: calcFanxian,
+            location: location,
+            progress: 0,
         }
         if (store.data.thumbnail) {
             data.thumbnail = store.data.thumbnail

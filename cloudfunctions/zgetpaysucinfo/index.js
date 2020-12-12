@@ -15,11 +15,12 @@ exports.main = async (event, context) => {
     const order = await db.collection('iorders').doc(orderId).get()
     const user = await db.collection('users').doc(wxContext.OPENID).get()
 
-    let payAmount = order.data.totalAmount
+    let payAmount = order.data.payAmount + order.data.mustPayAmount - order.data.realCoupon
     let point = parseInt(payAmount/10)
     let exp = point
 
     return {
+        fanxian: order.data.fanxian,
         payAmount: payAmount,
         point: point,
         exp: exp,

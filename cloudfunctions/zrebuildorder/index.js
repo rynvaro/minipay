@@ -24,7 +24,7 @@ exports.main = async (event, context) => {
 
         let delta = 0.0
         if (store.data.discount <=9) {
-            if ( viplevel == 1 ) {
+            if ( viplevel == 1 || viplevel == 0) {
                 delta = 0.5
             }else if ( viplevel == 2) {
                 delta = 0.3
@@ -36,6 +36,7 @@ exports.main = async (event, context) => {
         }
 
         let realDiscount = store.data.discount + delta
+        let percent = parseFloat(((10 - realDiscount) * 10).toFixed(2))
 
         const coupons = await db.collection('icoupons').where({openid: wxContext.OPENID, status: 0}).get()
 
@@ -49,6 +50,7 @@ exports.main = async (event, context) => {
                 realDiscount: realDiscount,
                 coupons: coupons.data,
                 threshold: -1,
+                percent: percent,
             }
         }
 

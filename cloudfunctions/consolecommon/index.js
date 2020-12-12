@@ -15,6 +15,62 @@ exports.main = async (event, context) => {
    let tp = event.tp
    console.log(event)
 
+
+   if (tp == "resetbalance") {
+    let id = event.id
+    return await db.collection('mstores').doc(id).update({
+        data: {
+            balance: 0
+        }
+    })
+   }
+
+   if (tp == "maxfanxian") {
+    let id = event.id
+    return await db.collection('mstores').doc(id).update({
+        data: {
+            maxFanxian: event.maxFanxian
+        }
+    })
+   }
+
+   if (tp == "canusebalance") {
+    let id = event.id
+    let canUseBalance = true 
+    if (event.canUseBalance == 0) {
+        canUseBalance = false
+    }
+    return await db.collection('mstores').doc(id).update({
+        data: {
+            canUseBalance: canUseBalance
+        }
+    })
+   }
+
+   if (tp == "fanxian100") {
+    let id = event.id
+    let fanxian100 = true 
+    if (event.fanxian100 == 0) {
+        fanxian100 = false
+    }
+    return await db.collection('mstores').doc(id).update({
+        data: {
+            fanxian100: fanxian100
+        }
+    })
+   }
+
+   if (tp == 'fanxian') {
+       delete event._id
+       return await db.collection('config').doc('fanxianconfig').update({
+           data: event,
+       })
+   }
+
+   if (tp == 'fanxianconfig') {
+        return await db.collection('config').doc('fanxianconfig').get()
+    }
+
    if (tp == 'updateuserbalance') {
        let id = event.id
        return await db.collection('users').doc(id).update({

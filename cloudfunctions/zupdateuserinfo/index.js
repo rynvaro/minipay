@@ -55,11 +55,11 @@ exports.main = async (event, context) => {
             }
         })
 
-        await db.collection('icoupons').where({openid: wxContext.OPENID, isnew: true}).update({
-            data: {
-                status: 0
-            }
-        })
+        // await db.collection('icoupons').where({openid: wxContext.OPENID, isnew: true}).update({
+        //     data: {
+        //         status: 0
+        //     }
+        // })
         // if (icoupons.data.length>0) {
         //     await db.collection('icoupons').doc.get()
         // }

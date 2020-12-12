@@ -39,6 +39,8 @@ exports.main = async (event, context) => {
         console.log("yesterdayStartTime: ", yesterdayStartTime)
 
         let todayStart = new Date()
+        let offset = todayStart.getTimezoneOffset()
+        todayStart.setHours(todayStart.getHours()+8-offset,0,0,0)
         todayStart.setHours(-8,0,0,0)
         let todayStartTime = todayStart.getTime()
         console.log("todayStartTime: ", todayStartTime)

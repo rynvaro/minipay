@@ -37,6 +37,11 @@
     <text class="detailItemValue">+ {{paysucInfo.exp}}</text>
 </view>
 
+<view class="detailItem">
+    <text class="detailItemKey">返现</text>
+    <text class="detailItemValue">￥{{paysucInfo.fanxian}}</text>
+</view>
+
 <view class="order" bindtap="seeOrder">查看订单</view>
 
 <!-- <view class="couponBox">

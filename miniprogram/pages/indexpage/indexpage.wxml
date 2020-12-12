@@ -1,0 +1,66 @@
+<!--miniprogram/pages/indexpage/indexpage.wxml-->
+
+<!-- 大遮罩，获取用户信息 -->
+<button open-type="getUserInfo" bindgetuserinfo="register" class="hbt" hidden="{{maskHidden}}"></button>
+
+<!-- <view class="box" hidden="{{tipsHidden}}">
+    <text class="boxTitle">提示</text>
+    <text class="boxContent">请允许获取位置信息!</text>
+    <view class="boxBtns">
+        <view class="boxBtnL" bindtap="tipsCancel">取消</view>
+        <view class="boxBtnR" bindtap="tipsConfirm">确定</view>
+    </view>
+</view> -->
+
+<view class="banner">
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{duration}}" >
+    <block wx:for="{{banners}}" wx:key="id">
+      <swiper-item >
+        <image mode="aspectFill" src="{{item.bannerlink}}" class="bannerItem" data-index="{{index}}" bindtap="usage" />
+     </swiper-item>
+    </block>
+  </swiper>
+</view>
+
+<view class="stores">
+
+<view wx:for="{{stores}}" wx:key="id" class="store" bindtap="order" data-id="{{item._id}}" data-index="{{index}}">
+    <view class="storeL">
+        <image mode="aspectFill" class="storeLImage" lazy-load="true" src="{{item.thumbnail}}"></image>
+    </view>
+    <view class="storeR">
+        <view class="storeRBox">
+            <text class="storeRText1">{{item.storeName}}</text>
+            <text class="storeRText3Item">{{item.address}}</text>
+            <view class="storeRText3">
+                <text class="storeRText3Item">营业时间 {{item.startTime}}-{{item.endTime}}</text>
+                <text class="storeRText3ItemLocation">{{item.distance}}</text>
+            </view>
+            <!-- <text class="storeRText4"></text> -->
+            <text class="storeRText5">到店买单，最高可享返现： <text class="percent"> {{item.percent}}% </text> <text class="storeRText5End">到余额</text> </text>
+        </view>
+    </view>
+</view>
+
+</view>
+
+<view class="end"></view>
+
+<view class="footer">
+    <view class="footerL">
+        <view class="footerLU">
+            <image class="img" src="../../images/home.png"></image>
+        </view>
+        <text class="footerLD">首页</text>
+    </view>
+    <view class="footerM" bindtap="scan">
+        <view class="scanTips">单单省钱</view>
+        <view class="scanButton">扫码买单</view>
+    </view>
+    <view class="footerR" bindtap="vcenter">
+        <view class="footerRU">
+            <image class="img" src="../../images/vcenter.png"></image>
+        </view>
+        <text class="footerRD">我的</text>
+    </view>
+</view>

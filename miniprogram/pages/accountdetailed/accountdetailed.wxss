@@ -15,7 +15,6 @@ page {
     align-items: center;
     border-radius: 20rpx;
     background-color: white;
-    height: 1000rpx;
 }
 
 .item {

@@ -1,0 +1,3 @@
+<!--miniprogram/pages/usage/usage.wxml-->
+
+<image mode="widthFix" src="{{link}}" style="width: 100%"></image>

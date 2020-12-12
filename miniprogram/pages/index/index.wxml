@@ -74,8 +74,8 @@
 <!-- scan signin -->
 <view class="scanSignin">
   <view class="scanSigninItem" bindtap="scan">
-    <text class="scanSigninItemU">扫码付款</text>
-    <text class="scanSigninItemD">扫码立即支付</text>
+    <text class="scanSigninItemU">返回首页</text>
+    <text class="scanSigninItemD">返回首页</text>
   </view>
   <view class="scanSigninItem" bindtap="signin">
     <text class="scanSigninItemU">签到专区</text>
@@ -149,7 +149,7 @@
 </view>
 
 
-<view class="redpack" hidden="{{!redpackShow}}">
+<!-- <view class="redpack" hidden="{{!redpackShow}}">
   <image wx:if="{{open}}" class="redpackBG" src="../../images/redpackopen.png"></image>
   <image wx:else class="redpackBG" src="../../images/redpack.png" bindtap="openRedpack"></image>
   <view class="seeRedpack" bindtap="seeRedpack" hidden="{{!closeRedpack}}">立即查看</view>
@@ -158,7 +158,7 @@
     <text class="redpackValue">{{redpackValue}}</text>
     <text>元</text>
   </view>
-</view>
+</view> -->
 
 
 <view class="moreInfo" hidden="{{!moreInfoShow}}">
