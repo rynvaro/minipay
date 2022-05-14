@@ -12,6 +12,9 @@ exports.main = async (event, context) => {
 
     let type = event.type
     if (type == 'template') {
+        if (event.discount > 10) {
+            event.discount = parseFloat((event.discount/10).toFixed(2))
+        }
         const mstores = await db.collection('mstores').where({openid: wxContext.OPENID}).get()
         const contracts = await db.collection('contract').get()
         let content = contracts.data[0].title

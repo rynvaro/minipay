@@ -19,13 +19,14 @@
         "checkSiteMap": true,
         "uploadWithSourceMap": true,
         "compileHotReLoad": false,
-        "useMultiFrameRuntime": false,
+        "useMultiFrameRuntime": true,
         "useApiHook": true,
         "babelSetting": {
             "ignore": [],
             "disablePlugins": [],
             "outputPath": ""
         },
+        "bundle": false,
         "useIsolateContext": true,
         "useCompilerModule": true,
         "userConfirmedUseCompilerModuleSwitch": false,
@@ -33,9 +34,10 @@
         "packNpmManually": false,
         "packNpmRelationList": [],
         "minifyWXSS": true,
-        "bundle": false
+        "minifyWXML": true,
+        "useApiHostProcess": true
     },
-    "appid": "wx9b588b2b3f090400",
+    "appid": "wxb9d8628d9bf26f9a",
     "projectname": "7hao",
     "libVersion": "2.8.1",
     "simulatorType": "wechat",
